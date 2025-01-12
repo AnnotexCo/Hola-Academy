@@ -1,17 +1,16 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/constants/color_manager.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextFormField extends StatelessWidget {
   final String label;
   final String hint;
   final IconData prefixIcon;
   final IconData? suffixIcon;
   final bool isPassword;
 
-  const CustomTextField({
+  const CustomTextFormField({
     super.key,
     required this.label,
     required this.hint,

@@ -56,14 +56,14 @@ class LoginScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 40.h),
                     // Email Address
-                    CustomTextField(
+                    CustomTextFormField(
                       label: AppString.emailAddress,
                       hint: AppString.enterYourEmail,
                       prefixIcon: Icons.email,
                     ),
                     SizedBox(height: 20.h),
                     // Password
-                    CustomTextField(
+                    CustomTextFormField(
                       label: AppString.password,
                       hint: AppString.enterYourPassword,
                       prefixIcon: Icons.lock_outline,
