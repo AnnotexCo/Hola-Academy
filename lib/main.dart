@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 
 
-import 'features/auth/forgot_password/UI/forgot_password_screen.dart';
+import 'features/auth/verification/UI/verfication_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: ColorManager.primaryOrangeColor),
             useMaterial3: true,
           ),
-          home: const ForgotPasswordScreen(),
+          home: const VerificationScreen(),
         );
       },
     );
