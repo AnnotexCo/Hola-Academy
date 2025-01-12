@@ -24,7 +24,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   void initState() {
     super.initState();
-     // Initialize with empty strings
+    // Initialize with empty strings
     _codeList = List.filled(6, '');
   }
 
@@ -50,7 +50,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
             children: [
               buildBackArrow(context),
               SizedBox(height: 48.h),
-              buildVerificationMessage(),
+              buildTextMessage(AppString.verification,
+                  AppString.sentVerificationCode, '+20 *** **** ***'),
               SizedBox(height: 48.h),
               _customVerificationInputs(),
               const Spacer(),
@@ -62,7 +63,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
       ),
     );
   }
-
 
   Widget _customVerificationInputs() {
     return Container(
@@ -183,5 +183,4 @@ class _VerificationScreenState extends State<VerificationScreen> {
       ],
     );
   }
-
 }

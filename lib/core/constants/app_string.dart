@@ -27,4 +27,9 @@ class AppString {
       "We have sent a verification code to:";
   static const String didNotReceiveCode = "If you didn't receive a code, ";
   static const String resend = "Resend";
+
+  // Reset Password
+  static const String resetPassword = "Reset Password";
+  static const String confirmPassword = "Confirm Password";
+  static const String reset = "Reset";
 }

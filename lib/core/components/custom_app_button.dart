@@ -42,7 +42,7 @@ class CustomAppButton extends StatelessWidget {
             ),
             if (icon != null) ...[
               SizedBox(width: 10.w),
-              Icon(icon, size: 20.sp, color: ColorManager.whiteColor),
+              Icon(icon, size: 25.sp, color: ColorManager.whiteColor),
             ],
           ],
         ),

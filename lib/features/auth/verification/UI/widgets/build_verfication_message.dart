@@ -1,37 +1,45 @@
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../core/constants/app_string.dart';
 import '../../../../../core/constants/color_manager.dart';
 
-Widget buildVerificationMessage() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
+Widget buildTextMessage(
+  String? title,
+  String? description,
+  String? subTitle,
+) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      if (title != null && title.isNotEmpty) 
         Text(
-          AppString.verification,
+          title,
           style: TextStyle(
             fontSize: 32.sp,
             fontWeight: FontWeight.w600,
             color: ColorManager.textRedColor,
           ),
         ),
-        SizedBox(height: 25.h),
+      if (title != null && title.isNotEmpty) SizedBox(height: 25.h), 
+
+      if (description != null && description.isNotEmpty) 
         Text(
-          AppString.sentVerificationCode,
+          description,
           style: TextStyle(
             fontSize: 16.sp,
             color: ColorManager.textRedColor,
           ),
         ),
+
+      if (subTitle != null && subTitle.isNotEmpty) 
         Text(
-          '+20 *** **** ***',
+          subTitle,
           style: TextStyle(
             fontSize: 16.sp,
             fontWeight: FontWeight.w600,
             color: ColorManager.textRedColor,
           ),
         ),
-      ],
-    );
-  }
+    ],
+  );
+}
