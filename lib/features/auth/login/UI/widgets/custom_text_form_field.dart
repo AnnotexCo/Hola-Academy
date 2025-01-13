@@ -6,9 +6,11 @@ import '../../../../../core/constants/color_manager.dart';
 class CustomTextFormField extends StatelessWidget {
   final String label;
   final String hint;
-  final IconData prefixIcon;
-  final IconData? suffixIcon;
+  final Widget prefixIcon;
+  final Widget? suffixIcon;
   final bool isPassword;
+  final String? Function(String?)? validator; // Validator for form validation
+  final TextEditingController? controller; // Controller for field value
 
   const CustomTextFormField({
     super.key,
@@ -17,6 +19,8 @@ class CustomTextFormField extends StatelessWidget {
     required this.prefixIcon,
     this.suffixIcon,
     this.isPassword = false,
+    this.validator,
+    this.controller,
   });
 
   @override
@@ -24,6 +28,7 @@ class CustomTextFormField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Label
         Padding(
           padding: EdgeInsets.only(left: 8.w, bottom: 8.h),
           child: Text(
@@ -35,26 +40,18 @@ class CustomTextFormField extends StatelessWidget {
             ),
           ),
         ),
-        TextField(
-          obscureText: isPassword,
+        // Input Field
+        TextFormField(
+          controller: controller, // Bind controller
+          obscureText: isPassword, // Toggle visibility for passwords
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(
               color: ColorManager.textRedColor,
               fontSize: 16.sp,
             ),
-            prefixIcon: Icon(
-              prefixIcon,
-              color: ColorManager.textRedColor,
-              size: 22.sp,
-            ),
-            suffixIcon: suffixIcon != null
-                ? Icon(
-                    suffixIcon,
-                    color: ColorManager.textRedColor,
-                    size: 22.sp,
-                  )
-                : null,
+            prefixIcon: prefixIcon, // Use Widget directly
+            suffixIcon: suffixIcon, // Use Widget directly
             filled: true,
             fillColor: ColorManager.backgroundPinkColor,
             border: OutlineInputBorder(
@@ -66,6 +63,7 @@ class CustomTextFormField extends StatelessWidget {
               horizontal: 20.w,
             ),
           ),
+          validator: validator, // Use validator for field validation
         ),
       ],
     );

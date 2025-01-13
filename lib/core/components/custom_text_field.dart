@@ -8,6 +8,8 @@ class CustomTextField extends StatelessWidget {
   final Widget? prefix;
   final Widget? suffix;
   final String label;
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
 
   const CustomTextField({
     super.key,
@@ -15,6 +17,8 @@ class CustomTextField extends StatelessWidget {
     this.prefix,
     this.suffix,
     required this.label,
+    this.validator,
+    this.controller,
   });
 
   @override
@@ -33,48 +37,37 @@ class CustomTextField extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          width: 382.w,
-          height: 60.h,
-          decoration: BoxDecoration(
-            color: ColorManager.backgroundPinkColor,
-          ),
-          child: TextFormField(
-            decoration: InputDecoration(
-              hintText: hint,
-              hintStyle: TextStyle(
-                color: ColorManager.textRedColor,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w400,
-              ),
-              prefixIcon: prefix,
-              prefixStyle: TextStyle(
-                color: ColorManager.textRedColor,
-                fontSize: 29.sp,
-              ),
-              suffixIcon: suffix,
-              suffixStyle: TextStyle(
-                color: ColorManager.textRedColor,
-                fontSize: 29.sp,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.r),
-                borderSide: BorderSide(color: ColorManager.textRedColor),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.r),
-                borderSide: BorderSide(color: ColorManager.textRedColor),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.r),
-                borderSide: BorderSide(color: ColorManager.textRedColor),
-              ),
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: 16.w,
-                vertical: 20.h,
-              ),
+        TextFormField(
+          controller: controller,
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: TextStyle(
+              color: ColorManager.textRedColor,
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w400,
             ),
+            prefixIcon: prefix,
+            suffixIcon: suffix,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(color: ColorManager.textRedColor),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(color: ColorManager.textRedColor),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(color: ColorManager.textRedColor),
+            ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 20.h,
+            ),
+            fillColor: ColorManager.backgroundPinkColor, 
+            filled: true, 
           ),
+          validator: validator,
         ),
       ],
     );
