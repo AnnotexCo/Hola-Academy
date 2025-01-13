@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
+import 'package:hola_academy/features/auth/register/UI/register_screen.dart';
 import 'package:hola_academy/features/auth/reset_password/UI/reset_password.dart';
 
 import '../../../../core/components/custom_app_button.dart';
@@ -144,7 +145,12 @@ class _LoginScreenState extends State<LoginScreen> {
       alignment: Alignment.centerRight,
       child: TextButton(
         onPressed: () {
-         Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordScreen(),),);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ForgotPasswordScreen(),
+            ),
+          );
         },
         child: Text(
           AppString.forgotPassword,
@@ -164,7 +170,12 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () {
           if (_formKey.currentState?.validate() ?? false) {
             // Handle login logic
-             Navigator.push(context, MaterialPageRoute(builder: (context) => ResetPassword(),),);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ResetPassword(),
+              ),
+            );
           }
         },
       ),
@@ -176,6 +187,11 @@ class _LoginScreenState extends State<LoginScreen> {
       child: TextButton(
         onPressed: () {
           // Navigate to sign-up screen
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RegisterScreen(),
+              ));
         },
         child: Text(
           AppString.dontHaveAccount,

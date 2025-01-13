@@ -54,12 +54,18 @@ class CustomTextFormField extends StatelessWidget {
             validator: validator,
             obscureText: isPassword,
             readOnly: readOnly,
+            style: TextStyle(
+              color: ColorManager.textRedColor,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w600,
+            ),
             decoration: InputDecoration(
               hintText: hint,
               iconColor: ColorManager.textRedColor,
               hintStyle: TextStyle(
                 color: ColorManager.textRedColor,
                 fontSize: 16.sp,
+                fontWeight: FontWeight.w400,
               ),
               errorStyle: TextStyle(
                 color: ColorManager
