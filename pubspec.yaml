@@ -3,7 +3,7 @@ description: "Master swimming with ease through personalized lessons, progress
   tracking, and expert guidance - all in one app!"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
@@ -12,6 +12,7 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.8
+  easy_date_timeline: ^2.0.6
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.9.3
@@ -24,7 +25,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:

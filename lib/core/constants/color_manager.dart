@@ -5,4 +5,5 @@ class ColorManager {
   static const Color backgroundPinkColor = Color(0xFFF8ECE9);
   static const Color textRedColor = Color(0xFFC96852);
   static const Color whiteColor = Color(0xFFFFFFFF);
+  static const Color backgroundColor = Color(0xFFFFFFFF);
 }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
-import 'package:hola_academy/features/auth/login/UI/login_screen.dart';
-
-
+import 'package:hola_academy/features/layout/layout_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,10 +20,11 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'Hola Academy',
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: ColorManager.primaryOrangeColor),
+            colorScheme: ColorScheme.fromSeed(
+                seedColor: ColorManager.primaryOrangeColor),
             useMaterial3: true,
           ),
-          home: const LoginScreen(),
+          home: LayoutScreen(),
         );
       },
     );
