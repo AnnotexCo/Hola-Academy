@@ -39,6 +39,11 @@ class CustomTextField extends StatelessWidget {
         ),
         TextFormField(
           controller: controller,
+            style: TextStyle(
+              color: ColorManager.textRedColor,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w400,
+            ),
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(

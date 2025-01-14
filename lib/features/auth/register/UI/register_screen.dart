@@ -7,7 +7,6 @@ import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/auth/login/UI/login_screen.dart';
 import 'package:hola_academy/features/auth/register/UI/widgets/custom_button.dart';
 import 'package:hola_academy/features/auth/register/UI/widgets/custom_text_form_field.dart';
-import 'package:hola_academy/features/auth/register/UI/widgets/gender_dialog.dart';
 import 'package:hola_academy/features/auth/register/UI/widgets/terms_dialog.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -64,7 +63,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       AppString.register,
                       style: TextStyle(
                           color: ColorManager.textRedColor,
-                          fontSize: 48.sp,
+                          fontSize: 43.sp,
                           fontWeight: FontWeight.w400),
                     ),
                     Padding(
