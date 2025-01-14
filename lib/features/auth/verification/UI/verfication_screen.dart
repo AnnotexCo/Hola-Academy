@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
+import 'package:hola_academy/features/auth/reset_password/UI/reset_password.dart';
 
 import '../../../../core/components/custom_app_button.dart';
 import '../../../../core/constants/color_manager.dart';
@@ -42,22 +43,33 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              buildBackArrow(context),
-              SizedBox(height: 48.h),
-              buildTextMessage(AppString.verification,
-                  AppString.sentVerificationCode, '+20 *** **** ***'),
-              SizedBox(height: 48.h),
-              _customVerificationInputs(),
-              const Spacer(),
-              _buildTextButtons(),
-              SizedBox(height: 32.h),
-            ],
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight:
+                  MediaQuery.of(context).size.height, // Ensure minimum height
+            ),
+            child: IntrinsicHeight(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    buildBackArrow(context),
+                    SizedBox(height: 48.h),
+                    buildTextMessage(AppString.verification,
+                        AppString.sentVerificationCode, '+20 *** **** ***'),
+                    SizedBox(height: 48.h),
+                    _customVerificationInputs(),
+                    const Spacer(),
+                    _buildTextButtons(),
+                    SizedBox(height: 32.h),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -151,6 +163,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
             final code = _codeList.join();
             if (code.length == 6) {
               // TODO: verification logic here
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ResetPassword(),
+                  ));
             }
           },
         ),
