@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Hola Academy',
           theme: ThemeData(
+            scaffoldBackgroundColor: ColorManager.whiteColor,
             primaryColor: ColorManager.textRedColor,
             colorScheme: ColorScheme.fromSeed(
                 seedColor: ColorManager.primaryOrangeColor),

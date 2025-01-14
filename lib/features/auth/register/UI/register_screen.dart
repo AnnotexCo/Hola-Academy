@@ -9,6 +9,7 @@ import 'package:hola_academy/features/auth/register/UI/widgets/custom_button.dar
 import 'package:hola_academy/features/auth/register/UI/widgets/custom_text_form_field.dart';
 import 'package:hola_academy/features/auth/register/UI/widgets/gender_dialog.dart';
 import 'package:hola_academy/features/auth/register/UI/widgets/terms_dialog.dart';
+import 'package:hola_academy/features/profile/UI/profile_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -27,6 +28,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  bool _isPasswordVisible = false;
+  bool _isConfirmPasswordVisible = false;
   final TextEditingController readController = TextEditingController();
   bool isTermsRead = false;
   String? selectedGender;
@@ -37,14 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(ImageManager.onBoardingImage3),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          _buildBackground(),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -60,6 +56,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
+                    SizedBox(height: 21.h),
                     Text(
                       AppString.register,
                       style: TextStyle(
@@ -276,8 +273,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               label: AppString.password,
                               hint: AppString.enterYourPassword,
                               prefixIcon: Icons.lock_outline,
-                              suffixIcon: ImageManager.eye,
-                              isPassword: true,
+                              //suffixIcon: ImageManager.eye,
+                              suffixIcon: GestureDetector(
+                                onTap: () => setState(() =>
+                                    _isPasswordVisible = !_isPasswordVisible),
+                                child: Icon(
+                                  _isPasswordVisible
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
+                                  color: ColorManager.textRedColor,
+                                ),
+                              ),
+                              isPassword: !_isPasswordVisible,
+
                               controller: passwordController,
                               keyboardType: TextInputType.text,
                               validator: (value) {
@@ -302,8 +310,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               label: AppString.confirmPassword,
                               hint: AppString.enterYourPassword,
                               prefixIcon: Icons.lock_outline,
-                              suffixIcon: ImageManager.eye,
-                              isPassword: true,
+                              suffixIcon: GestureDetector(
+                                onTap: () => setState(() =>
+                                    _isConfirmPasswordVisible = !_isConfirmPasswordVisible),
+                                child: Icon(
+                                  _isConfirmPasswordVisible
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
+                                  color: ColorManager.textRedColor,
+                                ),
+                              ),
+                              isPassword: !_isConfirmPasswordVisible,
                               controller: confirmPasswordController,
                               keyboardType: TextInputType.text,
                               validator: (value) {
@@ -327,7 +344,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             CustomTextFormField(
                               label: AppString.howDidYouHearAboutUs,
                               hint: '',
-                              suffixIcon: ImageManager.roundDoubleAltArrowDown,
+                              suffixIcon: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20.w,
+                                ),
+                                child: SvgPicture.asset(
+                                  ImageManager.roundDoubleAltArrowDown,
+                                  height: 24.h,
+                                  width: 24.w,
+                                ),
+                              ),
                               readOnly: true,
                               controller: readController,
                             ),
@@ -380,42 +406,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => LoginScreen(),
+                                        builder: (context) => ProfileScreen(),
                                       ));
                                 }),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => LoginScreen(),
-                                    ));
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    AppString.alreadyHaveAnAccount,
-                                    style: TextStyle(
-                                      color: ColorManager.textRedColor,
-                                      fontSize: 10.sp,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                  Text(
-                                    AppString.login,
-                                    style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      decorationColor:
-                                          ColorManager.textRedColor,
-                                      color: ColorManager.textRedColor,
-                                      fontSize: 10.sp,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            _buildSignUpPrompt(),
                             SizedBox(
                               height: 15.h,
                             ),
@@ -476,8 +470,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 gender,
                 style: TextStyle(
                   // Default text color
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w400,
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             );
@@ -487,6 +481,52 @@ class _RegisterScreenState extends State<RegisterScreen> {
               selectedGender = newValue; // Update the selected value
             });
           },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSignUpPrompt() {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => LoginScreen(),
+            ));
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            AppString.alreadyHaveAnAccount,
+            style: TextStyle(
+              color: ColorManager.textRedColor,
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          Text(
+            AppString.login,
+            style: TextStyle(
+              decoration: TextDecoration.underline,
+              decorationColor: ColorManager.textRedColor,
+              color: ColorManager.textRedColor,
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBackground() {
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(ImageManager.onBoardingImage3),
+          fit: BoxFit.cover,
         ),
       ),
     );

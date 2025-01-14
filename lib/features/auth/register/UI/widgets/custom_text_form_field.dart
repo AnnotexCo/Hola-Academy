@@ -8,7 +8,7 @@ class CustomTextFormField extends StatelessWidget {
   final String label;
   final String hint;
   final IconData? prefixIcon;
-  final String? suffixIcon;
+  final Widget? suffixIcon;
   final bool isPassword;
   final bool readOnly;
   final TextEditingController controller;
@@ -84,18 +84,7 @@ class CustomTextFormField extends StatelessWidget {
                         color: ColorManager.textRedColor,
                       ))
                   : null,
-              suffixIcon: suffixIcon != null
-                  ? Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 20.w,
-                      ),
-                      child: SvgPicture.asset(
-                        suffixIcon!,
-                        height: isPassword ? 15.w : 24.h,
-                        width: 24.w,
-                      ),
-                    )
-                  : null,
+              suffixIcon: suffixIcon,
               filled: true,
               fillColor: ColorManager.backgroundPinkColor,
               border: OutlineInputBorder(

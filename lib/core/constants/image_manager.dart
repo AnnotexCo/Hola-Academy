@@ -16,6 +16,10 @@ class ImageManager {
   static const String ellipse = "assets/icons/ellipse.svg";
   static const String hola = "assets/images/hola.png";
 
+  //Profile Icons
+  static const String profileFrame = 'assets/icons/profile_screen_frame.png';
+  static const String logOut = 'assets/icons/log-out.svg';
+
   static const String classesIcon = 'assets/icons/classes_icon.svg';
   static const String notification = 'assets/icons/notification_icon.svg';
   static const String profile = 'assets/icons/profile_icon.svg';
