@@ -2,6 +2,10 @@ class ImageManager {
   static const String onBoardingImage3 =
       'assets/images/onboarding/onboarding3.png';
 
+  static const String onBoardingImage2 =
+      'assets/images/onboarding/onboarding2.png';
+  static const String onBoardingImage1 =
+      'assets/images/onboarding/onboarding1.png';
   // Register Icons
   static const String user = "assets/icons/solar_user-bold.svg";
   static const String phone = "assets/icons/local_phone.svg";
