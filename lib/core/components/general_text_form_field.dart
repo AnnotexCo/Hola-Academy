@@ -22,6 +22,7 @@ class GeneralTextFormField extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final double? borderRadius;
   final Color? iconColor;
+  final int? maxLines; 
 
   const GeneralTextFormField({
     super.key,
@@ -44,6 +45,7 @@ class GeneralTextFormField extends StatelessWidget {
     this.contentPadding,
     this.borderRadius,
     this.iconColor,
+     this.maxLines,
   });
 
   // Helper method to create an Icon widget from IconData
@@ -58,7 +60,7 @@ class GeneralTextFormField extends StatelessWidget {
       child: Icon(
         icon,
         size: size ?? 24.sp,
-        color: color,
+        color: color ?? ColorManager.textRedColor,
       ),
     );
   }
@@ -91,6 +93,7 @@ class GeneralTextFormField extends StatelessWidget {
             validator: validator,
             obscureText: isPassword,
             readOnly: readOnly,
+            maxLines: maxLines,
             onTap: onTap,
             style: textStyle ??
                 TextStyle(

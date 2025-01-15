@@ -1,0 +1,173 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/constants/color_manager.dart';
+import 'package:hola_academy/core/constants/app_string.dart';
+
+import '../../../core/components/custom_app_button.dart';
+import '../../../core/components/general_text_form_field.dart';
+import '../../../core/components/title_widget.dart';
+import 'widgets/additional_notes_section.dart';
+import 'widgets/parent_guardian_section.dart';
+import 'widgets/payment_upload_section.dart';
+
+class BookProgramScreen extends StatefulWidget {
+  const BookProgramScreen({super.key});
+
+  @override
+  State<BookProgramScreen> createState() => _BookProgramScreenState();
+}
+
+class _BookProgramScreenState extends State<BookProgramScreen> {
+  bool hasHealthIssues = false;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, size: 24.sp),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(
+          AppString.bookProgram,
+          style: TextStyle(
+            fontSize: 20.sp,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(16.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                  child: const TitleWidget(
+                title: AppString.additionalDetailsForBooking,
+                color: Color(0xff3B4045),
+              )),
+              SizedBox(height: 24.h),
+              buildPersonalDetailsSection(),
+              SizedBox(height: 32.h),
+              buildParentGuardianSection(),
+              SizedBox(height: 32.h),
+              buildAdditionalNotesSection(),
+              SizedBox(height: 32.h),
+              buildPaymentUploadSection(),
+              SizedBox(height: 32.h),
+              buildBookButton(),
+              SizedBox(height: 24.h),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildPersonalDetailsSection() {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      GeneralTextFormField(
+        label: AppString.yourNationality,
+        hint: AppString.yourNationality,
+        prefixIcon: GeneralTextFormField.createIcon(
+          Icons.public,
+        ),
+        fillColor: const Color(0xFFFFF3F3),
+      ),
+      SizedBox(height: 16.h),
+      GeneralTextFormField(
+        label: AppString.yourAddress,
+        hint: AppString.yourAddress,
+        prefixIcon: GeneralTextFormField.createIcon(
+          Icons.location_on_outlined,
+        ),
+        fillColor: const Color(0xFFFFF3F3),
+      ),
+      SizedBox(height: 16.h),
+      buildHealthStatusSection(),
+    ],
+  );
+}
+
+Widget buildHealthStatusSection() {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const TitleWidget(title: AppString.healthStatus),
+      SizedBox(height: 8.h),
+      Row(
+        children: [
+          buildRadioOption(
+            AppString.yes,
+            true,
+            hasHealthIssues: hasHealthIssues,
+            onChanged: (value) {
+              setState(() {
+                hasHealthIssues = value ?? false;
+              });
+            },
+          ),
+          SizedBox(width: 24.w),
+          buildRadioOption(
+            AppString.no,
+            false,
+            hasHealthIssues: hasHealthIssues,
+            onChanged: (value) {
+              setState(() {
+                hasHealthIssues = value ?? false;
+              });
+            },
+          ),
+        ],
+      ),
+      SizedBox(height: 8.h),
+      if (hasHealthIssues)
+        GeneralTextFormField(
+          label: '',
+          hint: AppString.pleaseSpecify,
+          fillColor: const Color(0xFFFFF3F3),
+        ),
+    ],
+  );
+}
+
+Widget buildRadioOption(String label, bool value,
+    {required bool hasHealthIssues, required Function onChanged}) {
+  return Row(
+    children: [
+      Radio<bool>(
+        value: value,
+        groupValue: hasHealthIssues,
+        activeColor: ColorManager.textRedColor,
+        onChanged: (bool? newValue) {
+          setState(() {
+            hasHealthIssues = newValue ?? false;
+          });
+        },
+      ),
+      Text(
+        label,
+        style: TextStyle(
+          fontSize: 14.sp,
+          color: Colors.black87,
+        ),
+      ),
+    ],
+  );
+}
+
+
+
+  Widget buildBookButton() {
+    return Center(
+      child: CustomAppButton(
+        text: AppString.book,
+        onPressed: () {
+          // Handle booking logic
+        },
+      ),
+    );
+  }
+}
