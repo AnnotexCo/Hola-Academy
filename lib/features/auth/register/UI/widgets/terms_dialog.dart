@@ -6,19 +6,20 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
 class TermsDialog extends StatelessWidget {
-  const TermsDialog({super.key});
+  void Function()? onAgree;
+  void Function()? onDisagree;
+  TermsDialog({super.key, required this.onAgree, required this.onDisagree});
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.r),
-      ),
-      backgroundColor: ColorManager.whiteColor,
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          maxHeight: 694.h,
-          maxWidth: 382.w, // Set the width to 382 logical pixels
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 120.h, horizontal: 29.w),
+      child: Container(
+        height: 694.h,
+        width: 382.w,
+        decoration: BoxDecoration(
+          color: ColorManager.whiteColor,
+          borderRadius: BorderRadius.circular(15.r),
         ),
         child: SingleChildScrollView(
           child: Padding(
@@ -39,7 +40,10 @@ class TermsDialog extends StatelessWidget {
                     Text(
                       AppString.termsTitle,
                       style: TextStyle(
-                          fontSize: 18.sp, fontWeight: FontWeight.w400),
+                          decoration: TextDecoration.none,
+                          color: Colors.black,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w400),
                     ),
                   ],
                 ),
@@ -84,10 +88,7 @@ class TermsDialog extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        
-                        Navigator.pop(context); // Close dialog
-                      },
+                      onTap: onAgree,
                       child: Container(
                         width: 120.w,
                         height: 30.h,
@@ -97,8 +98,9 @@ class TermsDialog extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            'Agree',
+                            AppString.agree,
                             style: TextStyle(
+                                decoration: TextDecoration.none,
                                 color: ColorManager.whiteColor,
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w400),
@@ -107,9 +109,7 @@ class TermsDialog extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context); // Close dialog
-                      },
+                      onTap: onDisagree,
                       child: Container(
                         width: 120.w,
                         height: 30.h,
@@ -124,8 +124,9 @@ class TermsDialog extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            'Disagree',
+                            AppString.disagree,
                             style: TextStyle(
+                                decoration: TextDecoration.none,
                                 color: ColorManager.primaryOrangeColor,
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w400),
@@ -153,6 +154,7 @@ class Title extends StatelessWidget {
     return Text(
       title,
       style: TextStyle(
+          decoration: TextDecoration.none,
           fontSize: 16.sp,
           fontWeight: FontWeight.w400,
           color: ColorManager.darkGreyForFontColor),
@@ -166,23 +168,29 @@ class SubTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 3.w,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: 3.h, right: 6.w),
-          child: SvgPicture.asset(ImageManager.ellipse),
-        ),
-        Text(
-          subTitle,
-          style: TextStyle(
-              fontFamily: 'Poppins',
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w400,
-              color: ColorManager.lightGreyForFontColor),
-        )
-      ],
+    return SizedBox(
+      width: 340.w,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 3.w,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: 3.h, right: 6.w),
+            child: SvgPicture.asset(ImageManager.ellipse),
+          ),
+          Expanded(
+            child: Text(
+              subTitle,
+              style: TextStyle(
+                  decoration: TextDecoration.none,
+                  fontFamily: 'Poppins',
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w400,
+                  color: ColorManager.lightGreyForFontColor),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

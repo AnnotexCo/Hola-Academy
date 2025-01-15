@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/auth/login/UI/login_screen.dart';
 import 'package:hola_academy/features/auth/register/UI/widgets/custom_button.dart';
+import 'package:hola_academy/features/auth/register/UI/widgets/custom_drop_down_selection.dart';
 import 'package:hola_academy/features/auth/register/UI/widgets/custom_text_form_field.dart';
-import 'package:hola_academy/features/auth/register/UI/widgets/gender_dialog.dart';
 import 'package:hola_academy/features/auth/register/UI/widgets/terms_dialog.dart';
 import 'package:hola_academy/features/profile/UI/profile_screen.dart';
 
@@ -34,6 +33,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool isTermsRead = false;
   String? selectedGender;
   final List<String> genderOptions = ['Male', 'Female'];
+  String? selectedHearAboutUs;
+  final List<String> hearAboutUsOptions = ['Social media', 'From friend'];
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +62,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       AppString.register,
                       style: TextStyle(
                           color: ColorManager.textRedColor,
-                          fontSize: 48.sp,
+                          fontSize: 43.sp,
                           fontWeight: FontWeight.w400),
                     ),
                     Padding(
@@ -258,17 +259,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 return null;
                               },
                             ),
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  AppString.gender,
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: ColorManager.textRedColor,
-                                  ),
-                                )),
-                            genderSelection(),
+                            CustomDropDownSelection(
+                              value: selectedGender,
+                              hint: AppString.chooseYourGender,
+                              label: AppString.gender,
+                              options: genderOptions,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  selectedGender =
+                                      newValue; // Update the selected value
+                                });
+                              },
+                            ),
                             CustomTextFormField(
                               label: AppString.password,
                               hint: AppString.enterYourPassword,
@@ -312,7 +314,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               prefixIcon: Icons.lock_outline,
                               suffixIcon: GestureDetector(
                                 onTap: () => setState(() =>
-                                    _isConfirmPasswordVisible = !_isConfirmPasswordVisible),
+                                    _isConfirmPasswordVisible =
+                                        !_isConfirmPasswordVisible),
                                 child: Icon(
                                   _isConfirmPasswordVisible
                                       ? Icons.visibility_outlined
@@ -341,21 +344,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 return null; // Validation passed
                               },
                             ),
-                            CustomTextFormField(
-                              label: AppString.howDidYouHearAboutUs,
+                            CustomDropDownSelection(
+                              value: selectedHearAboutUs,
                               hint: '',
-                              suffixIcon: Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 20.w,
-                                ),
-                                child: SvgPicture.asset(
-                                  ImageManager.roundDoubleAltArrowDown,
-                                  height: 24.h,
-                                  width: 24.w,
-                                ),
-                              ),
-                              readOnly: true,
-                              controller: readController,
+                              label: AppString.howDidYouHearAboutUs,
+                              options: hearAboutUsOptions,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  selectedHearAboutUs =
+                                      newValue; // Update the selected value
+                                });
+                              },
                             ),
                             Row(children: [
                               Checkbox(
@@ -379,7 +378,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   await showDialog(
                                     context: context,
                                     builder: (context) {
-                                      return TermsDialog();
+                                      return TermsDialog(
+                                        onAgree: () {
+                                          setState(() {
+                                            isTermsRead = true;
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                        onDisagree: () {
+                                          setState(() {
+                                            isTermsRead = false;
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                      );
                                     },
                                   );
                                 },
@@ -423,65 +435,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget genderSelection() {
-    return Center(
-      child: Container(
-        height: 60.h,
-        padding: EdgeInsets.symmetric(horizontal: 19.w),
-        decoration: BoxDecoration(
-          color: ColorManager.backgroundPinkColor, // Light background color
-          borderRadius: BorderRadius.circular(12.r), // Rounded corners
-        ),
-        child: DropdownButton<String>(
-          value: selectedGender, // Current selected value
-          isExpanded: true, // Dropdown matches the container width
-          underline: const SizedBox(), // Removes default underline
-          icon: SvgPicture.asset(
-            ImageManager.roundDoubleAltArrowDown,
-            width: 24.w,
-            height: 24.h,
-          ),
-          dropdownColor:
-              ColorManager.backgroundPinkColor, // Dropdown menu background
-          style: TextStyle(
-            color: ColorManager.textRedColor, // Text color
-            fontSize: 18, // Font size
-            fontWeight: FontWeight.w400, // Font weight
-          ),
-          hint: Padding(
-            padding: EdgeInsets.only(left: 19.w),
-            child: Text(
-              'Choose your gender', // Placeholder text
-              style: TextStyle(
-                color: ColorManager.textRedColor,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ),
-          items: genderOptions.map((String gender) {
-            return DropdownMenuItem<String>(
-              value: gender,
-              child: Text(
-                gender,
-                style: TextStyle(
-                  // Default text color
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            );
-          }).toList(),
-          onChanged: (String? newValue) {
-            setState(() {
-              selectedGender = newValue; // Update the selected value
-            });
-          },
-        ),
       ),
     );
   }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
+import 'package:hola_academy/features/auth/verification/UI/verfication_screen.dart';
 
 import '../../../../core/components/custom_app_button.dart';
 import '../../../../core/components/custom_text_field.dart';
 import '../../../../core/constants/color_manager.dart';
+
 import 'widgets/custom_toggle_switch.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -25,50 +27,58 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: Center(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  SizedBox(height: 20.h),
-                  _buildBackButton(context),
-                  SizedBox(height: 32.h),
-                  _buildTitle(),
-                  SizedBox(height: 12.h),
-                  _buildDescription(),
-                  SizedBox(height: 32.h),
-                  CustomToggleSwitch(
-                    isEmailSelected: isEmailSelected,
-                    onToggle: (value) => setState(() => isEmailSelected = value),
+          child: SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height,
+              ),
+              child: IntrinsicHeight(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20.h),
+                      _buildBackButton(context),
+                      SizedBox(height: 32.h),
+                      _buildTitle(),
+                      SizedBox(height: 12.h),
+                      _buildDescription(),
+                      SizedBox(height: 32.h),
+                      CustomToggleSwitch(
+                        isEmailSelected: isEmailSelected,
+                        onToggle: (value) =>
+                            setState(() => isEmailSelected = value),
+                      ),
+                      SizedBox(height: 50.h),
+                      CustomTextField(
+                        controller: _inputController,
+                        label: isEmailSelected
+                            ? AppString.enterYourEmail
+                            : AppString.enterYourPhoneNumber,
+                        hint: isEmailSelected
+                            ? '____@gmail.com'
+                            : '+20  _ _ _ _ _ _ _ _ _ _',
+                        prefix: Icon(
+                          isEmailSelected ? Icons.email : Icons.phone,
+                          color: ColorManager.textRedColor,
+                          size: 30.sp,
+                        ),
+                        validator: (value) => _validateInput(value),
+                      ),
+                      const Spacer(),
+                      Center(
+                        child: CustomAppButton(
+                          text: AppString.send,
+                          icon: Icons.send,
+                          onPressed: _onSubmit,
+                        ),
+                      ),
+                      SizedBox(height: 16.h),
+                      _buildBackToSignIn(context),
+                      SizedBox(height: 32.h),
+                    ],
                   ),
-                  SizedBox(height: 50.h),
-                  CustomTextField(
-                    controller: _inputController,
-                    label: isEmailSelected
-                        ? AppString.enterYourEmail
-                        : AppString.enterYourPhoneNumber,
-                    hint: isEmailSelected
-                        ? '____@gmail.com'
-                        : '+20  _ _ _ _ _ _ _ _ _ _',
-                    prefix: Icon(
-                      isEmailSelected ? Icons.email : Icons.phone,
-                      color: ColorManager.textRedColor,
-                      size: 30.sp,
-                    ),
-                    validator: (value) => _validateInput(value),
-                  ),
-                  const Spacer(),
-                  Center(
-                    child: CustomAppButton(
-                      text: AppString.send,
-                      icon: Icons.send,
-                      onPressed: _onSubmit,
-                    ),
-                  ),
-                  SizedBox(height: 16.h),
-                  _buildBackToSignIn(context),
-                  SizedBox(height: 32.h),
-                ],
+                ),
               ),
             ),
           ),
@@ -161,6 +171,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(isEmailSelected ? "Email sent!" : "SMS sent!")),
       );
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => VerificationScreen(),
+          ));
     }
   }
 }

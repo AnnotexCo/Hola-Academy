@@ -6,6 +6,7 @@ import 'package:hola_academy/features/auth/verification/UI/verfication_screen.da
 import 'package:hola_academy/features/home/home_screen.dart';
 import 'package:hola_academy/features/layout/layout_screen.dart';
 
+import '../../features/auth/register/UI/register_screen.dart';
 import 'routes.dart';
 
 class AppRouter {
@@ -14,6 +15,10 @@ class AppRouter {
       // home screen
       case Routes.homeScreen:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+      // register screen
+      case Routes.registerScreen:
+        return MaterialPageRoute(builder: (_) => const RegisterScreen());
+
       // Login Screen
       case Routes.loginScreen:
         return MaterialPageRoute(builder: (_) => const LoginScreen());

@@ -18,7 +18,8 @@ class ResetPassword extends StatefulWidget {
 class _ResetPasswordState extends State<ResetPassword> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
@@ -26,29 +27,39 @@ class _ResetPasswordState extends State<ResetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                buildBackArrow(context),
-                SizedBox(height: 48.h),
-                buildTextMessage(AppString.resetPassword, null,null),
-                SizedBox(height: 48.h),
-                _buildPasswordField(),
-                SizedBox(height: 35.h),
-                _buildConfirmPasswordField(),
-                const Spacer(),
-                CustomAppButton(
-                  text: AppString.reset,
-                  onPressed: _onResetPassword,
-                  icon: Icons.restart_alt,
+          child: SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height,
+              ),
+              child: IntrinsicHeight(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      buildBackArrow(context),
+                      SizedBox(height: 48.h),
+                      buildTextMessage(AppString.resetPassword, null, null),
+                      SizedBox(height: 48.h),
+                      _buildPasswordField(),
+                      SizedBox(height: 35.h),
+                      _buildConfirmPasswordField(),
+                      const Spacer(),
+                      CustomAppButton(
+                        text: AppString.reset,
+                        onPressed: _onResetPassword,
+                        icon: Icons.restart_alt,
+                      ),
+                      SizedBox(height: 80.h),
+                    ],
+                  ),
                 ),
-                SizedBox(height: 32.h),
-              ],
+              ),
             ),
           ),
         ),
@@ -95,8 +106,8 @@ class _ResetPasswordState extends State<ResetPassword> {
         color: ColorManager.textRedColor,
       ),
       suffix: GestureDetector(
-        onTap: () =>
-            setState(() => _isConfirmPasswordVisible = !_isConfirmPasswordVisible),
+        onTap: () => setState(
+            () => _isConfirmPasswordVisible = !_isConfirmPasswordVisible),
         child: Icon(
           _isConfirmPasswordVisible
               ? Icons.visibility_outlined

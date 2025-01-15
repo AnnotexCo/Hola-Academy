@@ -1,0 +1,87 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:hola_academy/core/constants/app_string.dart';
+import 'package:hola_academy/core/constants/color_manager.dart';
+import 'package:hola_academy/core/constants/image_manager.dart';
+
+class CustomProfileAppBar extends StatelessWidget {
+  bool? qrCode = false;
+  CustomProfileAppBar({super.key, this.qrCode});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 31.h,
+      ),
+      child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Icon(
+              Icons.arrow_back_ios_new,
+              color: ColorManager.textRedColor,
+            ),
+            Row(
+              children: [
+                if (qrCode == true)
+                  GestureDetector(
+                      onTap: () async {
+                        return showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(vertical: 131.h),
+                              child: Container(
+                                  height: 702.h,
+                                  width: 439.w,
+                                  //padding: EdgeInsets.symmetric(vertical: 131.h),
+                                  decoration: BoxDecoration(
+                                    color: ColorManager.whiteColor,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(25.r),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: SvgPicture.asset(
+                                      ImageManager.scanQr,
+                                      height: 250.h,
+                                      width: 150.w,
+                                    ),
+                                  )),
+                            );
+                          },
+                        );
+                      },
+                      child: SvgPicture.asset(ImageManager.scanQr)),
+                SizedBox(
+                  width: 20.w,
+                ),
+                SvgPicture.asset(ImageManager.logOut),
+                ShaderMask(
+                  shaderCallback: (bounds) => LinearGradient(
+                    colors: [
+                      ColorManager.linearGradient1,
+                      ColorManager.linearGradient2,
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ).createShader(
+                      Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
+                  child: Text(
+                    AppString.logOut,
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontFamily: 'Besley',
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white, // Important: set a base color
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ]),
+    );
+  }
+}

@@ -43,13 +43,19 @@ class CustomTextFormField extends StatelessWidget {
         // Input Field
         TextFormField(
           controller: controller, // Bind controller
-          obscureText: isPassword, // Toggle visibility for passwords
+          obscureText: isPassword,// Toggle visibility for passwords
+            style: TextStyle(
+              color: ColorManager.textRedColor,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w400,
+            ), 
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(
               color: ColorManager.textRedColor,
               fontSize: 16.sp,
             ),
+            
             prefixIcon: prefixIcon, // Use Widget directly
             suffixIcon: suffixIcon, // Use Widget directly
             filled: true,

@@ -4,10 +4,10 @@ import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/auth/register/UI/register_screen.dart';
-import 'package:hola_academy/features/auth/reset_password/UI/reset_password.dart';
+import 'package:hola_academy/features/layout/layout_screen.dart';
 
-import '../../../../core/components/custom_app_button.dart';
 import '../../forgot_password/UI/forgot_password_screen.dart';
+import '../../register/UI/widgets/custom_button.dart';
 import 'widgets/custom_text_form_field.dart';
 import 'widgets/social_button.dart';
 
@@ -165,17 +165,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildLoginButton() {
     return Center(
-      child: CustomAppButton(
+      child: CustomButton(
         text: AppString.login,
-        onPressed: () {
+        onTap: () {
           if (_formKey.currentState?.validate() ?? false) {
             // Handle login logic
             Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ResetPassword(),
-              ),
-            );
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LayoutScreen(),
+                ));
           }
         },
       ),
@@ -220,9 +219,9 @@ class _LoginScreenState extends State<LoginScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            socialButton(Icons.g_mobiledata),
+            socialButton(ImageManager.googleLogo),
             SizedBox(width: 20.w),
-            socialButton(Icons.apple),
+            socialButton(ImageManager.appleLogo),
           ],
         ),
       ],
