@@ -6,7 +6,7 @@ import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/auth/login/UI/login_screen.dart';
 import 'package:hola_academy/features/auth/register/UI/widgets/custom_button.dart';
 import 'package:hola_academy/features/auth/register/UI/widgets/custom_drop_down_selection.dart';
-import 'package:hola_academy/features/auth/register/UI/widgets/custom_text_form_field.dart';
+import 'package:hola_academy/core/components/general_text_form_field.dart';
 import 'package:hola_academy/features/auth/register/UI/widgets/terms_dialog.dart';
 import 'package:hola_academy/features/profile/UI/profile_screen.dart';
 
@@ -50,8 +50,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               decoration: BoxDecoration(
                 color: ColorManager.whiteColor,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(60.r),
-                  topRight: Radius.circular(60.r),
+                  topLeft: Radius.circular(30.r),
+                  topRight: Radius.circular(30.r),
                 ),
               ),
               child: SingleChildScrollView(
@@ -74,10 +74,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: Column(
                           spacing: 10.h,
                           children: [
-                            CustomTextFormField(
+                            GeneralTextFormField(
                               label: AppString.fullName,
                               hint: AppString.firstName,
-                              prefixIcon: Icons.person,
+                              prefixIcon: GeneralTextFormField.createIcon(
+                                Icons.person,
+                                color: ColorManager.textRedColor,
+                              ),
                               controller: nameController,
                               keyboardType: TextInputType.name,
                               validator: (value) {
@@ -93,10 +96,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 return null;
                               },
                             ),
-                            CustomTextFormField(
+                            GeneralTextFormField(
                               label: AppString.phoneNumber,
                               hint: AppString.yourPhone,
-                              prefixIcon: Icons.phone,
+                              prefixIcon: GeneralTextFormField.createIcon(
+                                Icons.phone,
+                                color: ColorManager.textRedColor,
+                              ),
                               controller: phoneController,
                               keyboardType: TextInputType.phone,
                               validator: (value) {
@@ -109,10 +115,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 return null;
                               },
                             ),
-                            CustomTextFormField(
+                            GeneralTextFormField(
                               label: AppString.parentNumber,
                               hint: AppString.whatsAppNumber,
-                              prefixIcon: Icons.phone,
+                              prefixIcon: GeneralTextFormField.createIcon(
+                                Icons.phone,
+                                color: ColorManager.textRedColor,
+                              ),
                               controller: parentPhoneController,
                               keyboardType: TextInputType.phone,
                               validator: (value) {
@@ -125,17 +134,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 return null;
                               },
                             ),
-                            CustomTextFormField(
+                            GeneralTextFormField(
                               label: AppString.emailAddress,
                               hint: AppString.enterYourEmail,
-                              prefixIcon: Icons.email,
+                              prefixIcon: GeneralTextFormField.createIcon(
+                                Icons.email,
+                                color: ColorManager.textRedColor,
+                              ),
                               controller: emailController,
                               keyboardType: TextInputType.emailAddress,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter your email address';
                                 }
-                                // Regular Expression for email validation
                                 if (!RegExp(
                                         r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
                                     .hasMatch(value)) {
@@ -144,11 +155,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 return null;
                               },
                             ),
-                            CustomTextFormField(
+                            GeneralTextFormField(
                               label: AppString.birthDay,
                               hint: AppString.chooseYourBirthDate,
                               readOnly: true,
-                              prefixIcon: Icons.calendar_month,
+                              prefixIcon: GeneralTextFormField.createIcon(
+                                Icons.calendar_month,
+                                color: ColorManager.textRedColor,
+                              ),
                               controller: birthDayController,
                               keyboardType: TextInputType.datetime,
                               onTap: () async {
@@ -166,16 +180,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       backgroundColor:
                                           ColorManager.backgroundPinkColor,
                                       child: Container(
-                                        height: 241.h, // 60% of screen height
+                                        height: 241.h,
                                         decoration: BoxDecoration(
                                           color:
                                               ColorManager.backgroundPinkColor,
                                           borderRadius:
                                               BorderRadius.circular(8.r),
                                           border: Border.all(
-                                            color: ColorManager
-                                                .textRedColor, // Border color
-                                            width: 1, // Border width
+                                            color: ColorManager.textRedColor,
+                                            width: 1,
                                           ),
                                         ),
                                         child: Theme(
@@ -201,8 +214,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                 birthDayController.text =
                                                     "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
                                               });
-                                              Navigator.pop(
-                                                  context); // Close the dialog after selection
+                                              Navigator.pop(context);
                                             },
                                           ),
                                         ),
@@ -210,47 +222,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     );
                                   },
                                 );
-
-                                /*showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(1900), // Earliest date
-                                  lastDate: DateTime.now(), // Latest date
-                                  builder: (context, child) {
-                                    return Theme(
-                                      data: ThemeData.light().copyWith(
-                                        primaryColor: ColorManager
-                                            .backgroundPinkColor, // Header background color
-                                        hintColor: ColorManager
-                                            .textRedColor, // Selection color
-                                        colorScheme: ColorScheme.light(
-                                          primary: ColorManager
-                                              .textRedColor, // Selection color
-                                          onPrimary: Colors
-                                              .white, // Text color on selection
-                                          surface: Colors.red[
-                                              50]!, // Calendar background color
-                                        ),
-                                        dialogBackgroundColor: ColorManager
-                                            .backgroundPinkColor, // Background color
-                                        textButtonTheme: TextButtonThemeData(
-                                          style: TextButton.styleFrom(
-                                            foregroundColor: ColorManager
-                                                .textRedColor, // Button text color
-                                          ),
-                                        ),
-                                      ),
-                                      child: child!,
-                                    );
-                                  },
-                                );
-                        
-                                if (pickedDate != null) {
-                                  setState(() {
-                                    birthDayController.text =
-                                        "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
-                                  });
-                                }*/
                               },
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -271,11 +242,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 });
                               },
                             ),
-                            CustomTextFormField(
+                            GeneralTextFormField(
                               label: AppString.password,
                               hint: AppString.enterYourPassword,
-                              prefixIcon: Icons.lock_outline,
-                              //suffixIcon: ImageManager.eye,
+                              prefixIcon: GeneralTextFormField.createIcon(
+                                Icons.lock_outline,
+                                color: ColorManager.textRedColor,
+                              ),
                               suffixIcon: GestureDetector(
                                 onTap: () => setState(() =>
                                     _isPasswordVisible = !_isPasswordVisible),
@@ -287,7 +260,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ),
                               isPassword: !_isPasswordVisible,
-
                               controller: passwordController,
                               keyboardType: TextInputType.text,
                               validator: (value) {
@@ -305,13 +277,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     .hasMatch(value)) {
                                   return 'Password must include at least one special character';
                                 }
-                                return null; // Validation passed
+                                return null;
                               },
                             ),
-                            CustomTextFormField(
+                            GeneralTextFormField(
                               label: AppString.confirmPassword,
                               hint: AppString.enterYourPassword,
-                              prefixIcon: Icons.lock_outline,
+                              prefixIcon: GeneralTextFormField.createIcon(
+                                Icons.lock_outline,
+                                color: ColorManager.textRedColor,
+                              ),
                               suffixIcon: GestureDetector(
                                 onTap: () => setState(() =>
                                     _isConfirmPasswordVisible =
@@ -341,7 +316,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     .hasMatch(value)) {
                                   return 'Password must include at least one special character';
                                 }
-                                return null; // Validation passed
+                                return null;
                               },
                             ),
                             CustomDropDownSelection(

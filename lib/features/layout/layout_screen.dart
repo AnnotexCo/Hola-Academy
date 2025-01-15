@@ -6,6 +6,7 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/home/home_screen.dart';
 
+import '../profile/UI/profile_screen.dart';
 import '../schedule_evaluation/UI/schedule_evaluation_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
@@ -19,7 +20,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController();
 
-  final List<Widget> _screens = [HomeScreen(),ScheduleEvaluationScreen()];
+  final List<Widget> _screens = [HomeScreen(),ScheduleEvaluationScreen(),ProfileScreen()];
 
   @override
   void initState() {
