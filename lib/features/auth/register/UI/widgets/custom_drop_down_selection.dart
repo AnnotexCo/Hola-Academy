@@ -11,7 +11,7 @@ class CustomDropDownSelection extends StatelessWidget {
   final List<String> options;
   final Function(String?) onChanged;
 
-  CustomDropDownSelection({super.key,
+  const CustomDropDownSelection({super.key,
     required this.value,
     required this.hint,
     required this.label,
@@ -85,6 +85,6 @@ class CustomDropDownSelection extends StatelessWidget {
           ),
         ),
       ],
-    );;
+    );
   }
 }

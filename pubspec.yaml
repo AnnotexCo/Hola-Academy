@@ -33,6 +33,7 @@ flutter:
     - assets/images/onboarding/
     - assets/images/
     - assets/icons/
+    - assets/social/
   # example:
   # fonts:
   #   - family: Schyler

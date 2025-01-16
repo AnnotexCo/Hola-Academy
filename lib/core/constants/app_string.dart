@@ -100,4 +100,32 @@ class AppString {
   static const String booked = "Booked";
   static const String terms = "Terms";
   static const String contactUs = "Contact Us";
+
+   // Personal Info Screen
+  static const String editYourinformation = "Edit Your information";
+
+  // Contact Us Screen
+  static const String instagram = "Instagram";
+  static const String facebook = "Facebook";
+  static const String tikTok = "TikTok";
+  static const String whatsApp = "WhatsApp";
+
+
+  // Book Program Screen
+  static const String bookProgram = "Book Program";
+  static const String additionalDetailsForBooking = "Additional Details For Booking";
+  static const String yourNationality = "Your Nationality";
+  static const String yourAddress = "Your Address";
+  static const String healthStatus = "Health Status";
+  static const String yes = "Yes";
+  static const String no = "No";
+  static const String pleaseSpecify = "Please specify";
+  static const String parentGuardianInformation = "Parent/Guardian Information Form";
+  static const String nationality = "Nationality";
+  static const String address = "Address";
+  static const String additionalNotesTitle = "If you have any additional notes or specific requests, please include them in the field below. This will help us better accommodate your needs.";
+  static const String enterNotesHere = "Enter your notes here";
+  static const String uploadPaymentProofTitle = "Please upload a valid proof of payment (screenshot of the transfer or a receipt) to confirm your booking. Ensure the details are clear and visible for verification purposes.";
+  static const String upload = "Upload";
+  static const String book = "Book";
 }

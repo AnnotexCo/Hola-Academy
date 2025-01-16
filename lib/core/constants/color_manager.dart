@@ -14,5 +14,8 @@ class ColorManager {
   static const Color graycolorHeadline = Color(0xFF6C757D);
 
   static const Color redMagmaColor = Color(0xffBB4227);
+  static const Color backgroundLightPink = Color(0xffFAF0EA);
   static const Color shadowColor = Color(0xffCED2D9);
+  static const Color blackFontColor = Color(0xff2D3135);
+  static const Color blackColor = Color(0xff000000);
 }

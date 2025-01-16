@@ -8,7 +8,8 @@ import 'package:hola_academy/features/layout/layout_screen.dart';
 
 import '../../forgot_password/UI/forgot_password_screen.dart';
 import '../../register/UI/widgets/custom_button.dart';
-import 'widgets/custom_text_form_field.dart';
+
+import '../../../../core/components/general_text_form_field.dart';
 import 'widgets/social_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -55,12 +56,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       _buildTitle(AppString.welcomeBack),
                       SizedBox(height: 40.h),
                       // Email Address Field
-                      CustomTextFormField(
+                      GeneralTextFormField(
                         controller: _emailController,
                         label: AppString.emailAddress,
                         hint: AppString.enterYourEmail,
-                        prefixIcon: const Icon(Icons.email,
-                            color: ColorManager.textRedColor),
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(
+                            left: 24.w,
+                            right: 33.w,
+                            top: 9.h,
+                            bottom: 7.h,
+                          ),
+                          child: Icon(
+                            Icons.email,
+                            color: ColorManager.textRedColor,
+                            size: 24.sp,
+                          ),
+                        ),
+                        keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Email is required";
@@ -72,24 +85,43 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       ),
                       SizedBox(height: 20.h),
-                      // Password Field
-                      CustomTextFormField(
+                      GeneralTextFormField(
                         controller: _passwordController,
                         label: AppString.password,
                         hint: AppString.enterYourPassword,
-                        prefixIcon: const Icon(Icons.lock_outline,
-                            color: ColorManager.textRedColor),
+                        isPassword: !_isPasswordVisible,
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(
+                            left: 24.w,
+                            right: 33.w,
+                            top: 9.h,
+                            bottom: 7.h,
+                          ),
+                          child: Icon(
+                            Icons.lock_outline,
+                            color: ColorManager.textRedColor,
+                            size: 24.sp,
+                          ),
+                        ),
                         suffixIcon: GestureDetector(
                           onTap: () => setState(
                               () => _isPasswordVisible = !_isPasswordVisible),
-                          child: Icon(
-                            _isPasswordVisible
-                                ? Icons.visibility_outlined
-                                : Icons.visibility_off_outlined,
-                            color: ColorManager.textRedColor,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: 24.w,
+                              right: 33.w,
+                              top: 9.h,
+                              bottom: 7.h,
+                            ),
+                            child: Icon(
+                              _isPasswordVisible
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined,
+                              color: ColorManager.textRedColor,
+                              size: 24.sp,
+                            ),
                           ),
                         ),
-                        isPassword: !_isPasswordVisible,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Password is required";
