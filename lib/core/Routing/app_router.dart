@@ -5,7 +5,9 @@ import 'package:hola_academy/features/auth/reset_password/UI/reset_password.dart
 import 'package:hola_academy/features/auth/verification/UI/verfication_screen.dart';
 import 'package:hola_academy/features/home/home_screen.dart';
 import 'package:hola_academy/features/layout/layout_screen.dart';
-
+import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
+import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
+import 'package:hola_academy/features/profile/UI/profile_screen.dart';
 import '../../features/auth/register/UI/register_screen.dart';
 import 'routes.dart';
 
@@ -36,6 +38,16 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const VerificationScreen());
       case Routes.layoutScreen:
         return MaterialPageRoute(builder: (_) => const LayoutScreen());
+
+      case Routes.profileScreen:
+      return MaterialPageRoute(builder: (_) => const ProfileScreen());
+
+      case Routes.personalInfoScreen:
+      return MaterialPageRoute(builder: (_) => const PersonalInfoScreen());
+
+      case Routes.contactUsScreen:
+      return MaterialPageRoute(builder: (_) => ContactUsScreen());
+
 
       default:
         return null;

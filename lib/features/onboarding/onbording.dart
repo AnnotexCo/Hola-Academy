@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/components/custom_app_button.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
+import 'package:hola_academy/features/auth/register/UI/register_screen.dart';
 import 'package:hola_academy/features/home/home_screen.dart';
 
 import 'content_model.dart';
@@ -122,7 +123,12 @@ class OnbordingState extends State<Onbording> {
                         height: 50.h,
                         width: 300.w,
                         child: CustomAppButton(
-                            text: "Create Account", onPressed: () {}),
+                            text: "Create Account",
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return const RegisterScreen();
+                              },));
+                            }),
                       )),
               currentIndex != contents.length - 1
                   ? Positioned(

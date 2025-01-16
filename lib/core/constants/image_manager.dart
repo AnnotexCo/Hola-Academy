@@ -20,18 +20,6 @@ class ImageManager {
   static const String ellipse = "assets/icons/ellipse.svg";
   static const String hola = "assets/images/hola.png";
 
-  //Profile Icons
-  static const String profileFrame = 'assets/images/profile_screen_frame.png';
-  static const String logOut = 'assets/icons/log-out.svg';
-  static const String scanQr = 'assets/icons/scan_qr.svg';
-  static const String pic = 'assets/images/pic.png';
-  static const String personalInformation =
-      'assets/icons/personal_information.svg';
-  static const String sms = 'assets/icons/sms.svg';
-  static const String terms = 'assets/icons/terms.svg';
-  static const String booking = 'assets/icons/booking.svg';
-  static const String transaction = 'assets/icons/transaction.svg';
-  static const String analysis = 'assets/icons/analysis.svg';
 
   // login Icons
   static const String googleLogo = 'assets/icons/google_logo.svg';
@@ -41,4 +29,25 @@ class ImageManager {
   static const String notification = 'assets/icons/notification_icon.svg';
   static const String profile = 'assets/icons/profile_icon.svg';
   static const String home = 'assets/icons/home_icon.svg';
+
+
+  //Profile Icons
+  static const String profileFrame = 'assets/images/profile_screen_frame.png';
+  static const String logOut = 'assets/icons/log-out.svg';
+  static const String scanQr = 'assets/icons/scan_qr.svg';
+  static const String gender = 'assets/icons/gender.svg';
+  static const String pic = 'assets/images/pic.png';
+  static const String personalInformation =
+      'assets/icons/personal_information.svg';
+  static const String sms = 'assets/icons/sms.svg';
+  static const String terms = 'assets/icons/terms.svg';
+  static const String booking = 'assets/icons/booking.svg';
+  static const String transaction = 'assets/icons/transaction.svg';
+  static const String analysis = 'assets/icons/analysis.svg';
+
+  // Contact Us Screen
+  static const String instagram = 'assets/social/instagram.svg';
+  static const String facebook = 'assets/social/facebook.svg';
+  static const String tiktok = 'assets/social/tiktok.svg';
+  static const String whatsapp = 'assets/social/whatsapp.svg';
 }

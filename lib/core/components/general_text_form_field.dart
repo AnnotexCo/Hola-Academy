@@ -9,6 +9,8 @@ class GeneralTextFormField extends StatelessWidget {
   final Widget? suffixIcon;
   final bool isPassword;
   final bool readOnly;
+  final bool? isFill;
+  final bool? isBorder;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
@@ -31,6 +33,8 @@ class GeneralTextFormField extends StatelessWidget {
     this.suffixIcon,
     this.isPassword = false,
     this.readOnly = false,
+    this.isFill = true,
+    this.isBorder = false,
     this.controller,
     this.keyboardType,
     this.validator,
@@ -115,11 +119,15 @@ class GeneralTextFormField extends StatelessWidget {
                   ),
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
-              filled: true,
+              filled: isFill,
               fillColor: fillColor ?? ColorManager.backgroundPinkColor,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(borderRadius ?? 15.r),
-                borderSide: BorderSide.none,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(borderRadius ?? 8.r),
+                borderSide: isBorder == false
+                    ? BorderSide.none
+                    : BorderSide(
+                        color: ColorManager.textRedColor,
+                      ),
               ),
               contentPadding: contentPadding ??
                   EdgeInsets.symmetric(

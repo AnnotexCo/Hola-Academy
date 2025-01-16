@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/features/onboarding/onbording.dart';
-
+import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
                 seedColor: ColorManager.primaryOrangeColor),
             useMaterial3: true,
           ),
-          home: Onbording(),
+          home: ContactUsScreen(),
         );
       },
     );

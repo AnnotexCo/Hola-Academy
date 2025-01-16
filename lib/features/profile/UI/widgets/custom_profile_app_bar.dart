@@ -19,9 +19,14 @@ class CustomProfileAppBar extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(
-              Icons.arrow_back_ios_new,
-              color: ColorManager.textRedColor,
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(
+                Icons.arrow_back_ios_new,
+                color: ColorManager.textRedColor,
+              ),
             ),
             Row(
               children: [
