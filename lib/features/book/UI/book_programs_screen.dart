@@ -25,33 +25,37 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
     return Scaffold(
 
       body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomAppBar(
-                title: AppString.bookProgram,
-                onPressed: () {},
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomAppBar(
+              title: AppString.bookProgram,
+              onPressed: () {},
+            ),
+            Padding(
+              padding: EdgeInsets.all(16.w),
+              child: Column(
+                children: [
+                  Center(
+                      child: const TitleWidget(
+                    title: AppString.additionalDetailsForBooking,
+                    color: Color(0xff3B4045),
+                  )),
+                  SizedBox(height: 24.h),
+                  buildPersonalDetailsSection(),
+                  SizedBox(height: 32.h),
+                  buildParentGuardianSection(),
+                  SizedBox(height: 32.h),
+                  buildAdditionalNotesSection(),
+                  SizedBox(height: 32.h),
+                  buildPaymentUploadSection(),
+                  SizedBox(height: 32.h),
+                  buildBookButton(),
+                  SizedBox(height: 24.h),
+                ],
               ),
-              Center(
-                  child: const TitleWidget(
-                title: AppString.additionalDetailsForBooking,
-                color: Color(0xff3B4045),
-              )),
-              SizedBox(height: 24.h),
-              buildPersonalDetailsSection(),
-              SizedBox(height: 32.h),
-              buildParentGuardianSection(),
-              SizedBox(height: 32.h),
-              buildAdditionalNotesSection(),
-              SizedBox(height: 32.h),
-              buildPaymentUploadSection(),
-              SizedBox(height: 32.h),
-              buildBookButton(),
-              SizedBox(height: 24.h),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
