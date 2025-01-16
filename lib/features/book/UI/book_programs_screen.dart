@@ -61,7 +61,7 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
     );
   }
 
-  Widget buildPersonalDetailsSection() {
+ Widget buildPersonalDetailsSection() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -87,7 +87,6 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
     ],
   );
 }
-
 Widget buildHealthStatusSection() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,20 +128,15 @@ Widget buildHealthStatusSection() {
     ],
   );
 }
-
 Widget buildRadioOption(String label, bool value,
-    {required bool hasHealthIssues, required Function onChanged}) {
+    {required bool hasHealthIssues,  required Function(bool?) onChanged}) {
   return Row(
     children: [
       Radio<bool>(
         value: value,
         groupValue: hasHealthIssues,
         activeColor: ColorManager.textRedColor,
-        onChanged: (bool? newValue) {
-          setState(() {
-            hasHealthIssues = newValue ?? false;
-          });
-        },
+        onChanged: onChanged,
       ),
       Text(
         label,
@@ -154,7 +148,6 @@ Widget buildRadioOption(String label, bool value,
     ],
   );
 }
-
 
 
   Widget buildBookButton() {

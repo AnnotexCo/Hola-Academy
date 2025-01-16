@@ -89,57 +89,54 @@ class GeneralTextFormField extends StatelessWidget {
         ),
 
         // Input Field
-        SizedBox(
-          height: height ?? 60.h,
-          child: TextFormField(
-            controller: controller,
-            keyboardType: keyboardType ?? TextInputType.text,
-            validator: validator,
-            obscureText: isPassword,
-            readOnly: readOnly,
-            maxLines: isPassword
-                ? 1
-                : maxLines, // Force maxLines to 1 if isPassword is true
-            onTap: onTap,
-            style: textStyle ??
+        TextFormField(
+          controller: controller,
+          keyboardType: keyboardType ?? TextInputType.text,
+          validator: validator,
+          obscureText: isPassword,
+          readOnly: readOnly,
+          maxLines: isPassword
+              ? 1
+              : maxLines, // Force maxLines to 1 if isPassword is true
+          onTap: onTap,
+          style: textStyle ??
+              TextStyle(
+                color: ColorManager.textRedColor,
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w600,
+              ),
+          decoration: InputDecoration(
+            hintText: hint,
+            iconColor: iconColor ?? ColorManager.textRedColor,
+            hintStyle: hintStyle ??
                 TextStyle(
                   color: ColorManager.textRedColor,
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w400,
                 ),
-            decoration: InputDecoration(
-              hintText: hint,
-              iconColor: iconColor ?? ColorManager.textRedColor,
-              hintStyle: hintStyle ??
-                  TextStyle(
-                    color: ColorManager.textRedColor,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w400,
-                  ),
-              errorStyle: errorStyle ??
-                  TextStyle(
-                    color: ColorManager.errorRedColor,
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w400,
-                  ),
-              prefixIcon: prefixIcon,
-              suffixIcon: suffixIcon,
-              filled: isFill,
-              fillColor: fillColor ?? ColorManager.backgroundPinkColor,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(borderRadius ?? 8.r),
-                borderSide: isBorder == false
-                    ? BorderSide.none
-                    : BorderSide(
-                        color: ColorManager.textRedColor,
-                      ),
-              ),
-              contentPadding: contentPadding ??
-                  EdgeInsets.symmetric(
-                    vertical: 15.h,
-                    horizontal: 20.w,
-                  ),
+            errorStyle: errorStyle ??
+                TextStyle(
+                  color: ColorManager.errorRedColor,
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w400,
+                ),
+            prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
+            filled: isFill,
+            fillColor: fillColor ?? ColorManager.backgroundPinkColor,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(borderRadius ?? 8.r),
+              borderSide: isBorder == false
+                  ? BorderSide.none
+                  : BorderSide(
+                      color: ColorManager.textRedColor,
+                    ),
             ),
+            contentPadding: contentPadding ??
+                EdgeInsets.symmetric(
+                  vertical: 15.h,
+                  horizontal: 20.w,
+                ),
           ),
         ),
       ],

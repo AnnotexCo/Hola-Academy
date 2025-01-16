@@ -19,7 +19,7 @@ import '../../../../core/constants/app_string.dart';
             Icons.person,
             size: 20.sp,
           ),
-          fillColor: const Color(0xFFFFF3F3),
+         
         ),
         SizedBox(height: 16.h),
         GeneralTextFormField(
@@ -28,7 +28,7 @@ import '../../../../core/constants/app_string.dart';
           prefixIcon: GeneralTextFormField.createIcon(
             Icons.public,
           ),
-          fillColor: const Color(0xFFFFF3F3),
+         
         ),
         SizedBox(height: 16.h),
         GeneralTextFormField(
@@ -37,7 +37,7 @@ import '../../../../core/constants/app_string.dart';
           prefixIcon: GeneralTextFormField.createIcon(
             Icons.location_on_outlined,
           ),
-          fillColor: const Color(0xFFFFF3F3),
+         
         ),
         SizedBox(height: 16.h),
         GeneralTextFormField(
@@ -47,7 +47,6 @@ import '../../../../core/constants/app_string.dart';
             Icons.email,
           ),
           keyboardType: TextInputType.emailAddress,
-          fillColor: const Color(0xFFFFF3F3),
         ),
         SizedBox(height: 16.h),
         GeneralTextFormField(
@@ -57,7 +56,7 @@ import '../../../../core/constants/app_string.dart';
             Icons.phone_outlined,
           ),
           keyboardType: TextInputType.phone,
-          fillColor: const Color(0xFFFFF3F3),
+         
         ),
       ],
     );
