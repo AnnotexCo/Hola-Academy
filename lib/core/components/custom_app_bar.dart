@@ -4,9 +4,10 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 
 class CustomAppBar extends StatelessWidget {
   final Widget? widget;
+  final String? text;
   final void Function()? onPressed;
 
-  const CustomAppBar({super.key, this.onPressed, this.widget});
+  const CustomAppBar({super.key, this.onPressed, this.widget, this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class CustomAppBar extends StatelessWidget {
                   color: ColorManager.redMagmaColor,
                 )),
             Text(
-              "Programs",
+              text ?? "Programs",
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 18.sp,
