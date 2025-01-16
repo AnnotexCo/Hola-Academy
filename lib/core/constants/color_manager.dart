@@ -11,7 +11,7 @@ class ColorManager {
   static const Color backgroundColor = Color(0xFFFFFFFF);
   static const Color linearGradient1 = Color(0xffFEF5E9);
   static const Color linearGradient2 = Color(0xffF09C1F);
-
+  static const Color backgroundLightPink = Color(0xffFAF0EA);
   static const Color shadowColor = Color(0xffCED2D9);
   static const Color blackFontColor = Color(0xff2D3135);
   static const Color blackColor = Color(0xff000000);

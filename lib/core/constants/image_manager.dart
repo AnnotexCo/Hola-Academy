@@ -25,6 +25,7 @@ class ImageManager {
   static const String googleLogo = 'assets/icons/google_logo.svg';
   static const String appleLogo = 'assets/icons/apple_logo.svg';
 
+  // Bottom Navigation Bar Icons
   static const String classesIcon = 'assets/icons/classes_icon.svg';
   static const String notification = 'assets/icons/notification_icon.svg';
   static const String profile = 'assets/icons/profile_icon.svg';
@@ -50,4 +51,8 @@ class ImageManager {
   static const String facebook = 'assets/social/facebook.svg';
   static const String tiktok = 'assets/social/tiktok.svg';
   static const String whatsapp = 'assets/social/whatsapp.svg';
+
+
+// book icons
+  static const String upload = 'assets/icons/upload.svg';
 }
