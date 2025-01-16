@@ -6,6 +6,8 @@ import 'package:hola_academy/features/classes/widgets/DropDownButton.dart';
 import 'package:hola_academy/features/classes/widgets/program_widget.dart';
 import 'package:hola_academy/features/classes/widgets/tap_bar.dart';
 
+import '../../core/constants/app_string.dart';
+
 class ClassesScreen extends StatelessWidget {
   const ClassesScreen({super.key});
 
@@ -17,6 +19,7 @@ class ClassesScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
           CustomAppBar(
+            title: AppString.programs,
             widget: DropDown(),
             onPressed: () {},
           ),

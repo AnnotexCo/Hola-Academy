@@ -71,6 +71,6 @@ class CustomProfileBackgroung extends StatelessWidget {
           ],
         ),
       ],
-    );;
+    );
   }
 }

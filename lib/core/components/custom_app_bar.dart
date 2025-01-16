@@ -5,8 +5,8 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 class CustomAppBar extends StatelessWidget {
   final Widget? widget;
   final void Function()? onPressed;
-
-  const CustomAppBar({super.key, this.onPressed, this.widget});
+  final String title;
+  const CustomAppBar({super.key, this.onPressed, this.widget, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +25,10 @@ class CustomAppBar extends StatelessWidget {
         borderRadius: BorderRadius.only(
             bottomRight: Radius.circular(25.r),
             bottomLeft: Radius.circular(25.r)),
-        color: Color(0xffF5F5F5),
+        color: ColorManager.whiteColor,
       ),
       child: Padding(
-        padding: EdgeInsets.only(top: 67.h, right: 35.w, left: 28.w),
+        padding: EdgeInsets.only(top: 67.h, right: 35.w, left: 15.w),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,7 +43,7 @@ class CustomAppBar extends StatelessWidget {
                   color: ColorManager.redMagmaColor,
                 )),
             Text(
-              "Programs",
+             title,
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 18.sp,

@@ -239,7 +239,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
     );
   }
 
-  Widget _buildMenuItem({
+  Widget buildMenuItem({
     required String icon,
     required String text,
     bool last = false,
