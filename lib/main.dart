@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 
+import 'features/not_found/not_found_screen.dart';
 import 'features/schedule_evaluation/UI/schedule_evaluation_screen.dart';
 
 void main() {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
                 seedColor: ColorManager.primaryOrangeColor),
             useMaterial3: true,
           ),
-          home: ScheduleEvaluationScreen(),
+          home: NotFoundScreen(),
         );
       },
     );
