@@ -24,7 +24,7 @@ class GeneralTextFormField extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final double? borderRadius;
   final Color? iconColor;
-  final int? maxLines; 
+  final int? maxLines;
 
   const GeneralTextFormField({
     super.key,
@@ -49,7 +49,7 @@ class GeneralTextFormField extends StatelessWidget {
     this.contentPadding,
     this.borderRadius,
     this.iconColor,
-     this.maxLines,
+    this.maxLines,
   });
 
   // Helper method to create an Icon widget from IconData
@@ -97,7 +97,9 @@ class GeneralTextFormField extends StatelessWidget {
             validator: validator,
             obscureText: isPassword,
             readOnly: readOnly,
-            maxLines: maxLines,
+            maxLines: isPassword
+                ? 1
+                : maxLines, // Force maxLines to 1 if isPassword is true
             onTap: onTap,
             style: textStyle ??
                 TextStyle(

@@ -125,9 +125,11 @@ class OnbordingState extends State<Onbording> {
                         child: CustomAppButton(
                             text: "Create Account",
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                return const RegisterScreen();
-                              },));
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return RegisterScreen();
+                                },
+                              ));
                             }),
                       )),
               currentIndex != contents.length - 1

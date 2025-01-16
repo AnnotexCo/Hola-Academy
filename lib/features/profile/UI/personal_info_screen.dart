@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hola_academy/core/components/custom_colored_outline_button.dart';
-import 'package:hola_academy/core/components/custom_text_field.dart';
 import 'package:hola_academy/core/components/general_text_form_field.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
-import 'package:hola_academy/features/auth/register/UI/widgets/custom_drop_down_selection.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
 
@@ -19,6 +17,7 @@ class PersonalInfoScreen extends StatefulWidget {
 }
 
 class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
 
   final TextEditingController phoneController = TextEditingController();
@@ -27,7 +26,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
 
   final TextEditingController passwordController = TextEditingController();
 
-  final bool _isPasswordVisible = false;
+  bool _isPasswordVisible = false;
 
   String? selectedGender;
 
@@ -49,102 +48,169 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
             ]),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 27.w),
-              child: Column(
-                spacing: 8.h,
-                children: [
-                  GeneralTextFormField(
-                    hint: 'Jennifer James',
-                    label: AppString.fullName,
-                    labelStyle: TextStyle(
-                      fontSize: 18.sp,
-                      color: ColorManager.blackFontColor,
-                      fontWeight: FontWeight.w500,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  spacing: 8.h,
+                  children: [
+                    GeneralTextFormField(
+                      hint: 'Jennifer James',
+                      label: AppString.fullName,
+                      labelStyle: TextStyle(
+                        fontSize: 18.sp,
+                        color: ColorManager.blackFontColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      isFill: false,
+                      isBorder: true,
+                      suffixIcon: Icon(
+                        Icons.person,
+                        color: ColorManager.textRedColor,
+                      ),
+                      controller: nameController,
+                      keyboardType: TextInputType.name,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your first name';
+                        }
+                        if (value.length < 2) {
+                          return 'First name must be at least 2 characters';
+                        }
+                        if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
+                          return 'First name can only contain letters';
+                        }
+                        return null;
+                      },
                     ),
-                    isFill: false,
-                    isBorder: true,
-                    suffixIcon: Icon(
-                      Icons.person,
-                      color: ColorManager.textRedColor,
+                    GeneralTextFormField(
+                      hint: 'Jennifer.James@gmail.com',
+                      label: AppString.emailAddress,
+                      labelStyle: TextStyle(
+                        fontSize: 18.sp,
+                        color: ColorManager.blackFontColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      isFill: false,
+                      isBorder: true,
+                      suffixIcon: Icon(
+                        Icons.email,
+                        color: ColorManager.textRedColor,
+                      ),
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your email address';
+                        }
+                        if (!RegExp(
+                                r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+                            .hasMatch(value)) {
+                          return 'Enter a valid email address';
+                        }
+                        return null;
+                      },
                     ),
-                  ),
-                  GeneralTextFormField(
-                    hint: 'Jennifer.James@gmail.com',
-                    label: AppString.emailAddress,
-                    labelStyle: TextStyle(
-                      fontSize: 18.sp,
-                      color: ColorManager.blackFontColor,
-                      fontWeight: FontWeight.w500,
+                    GeneralTextFormField(
+                      hint: '*****************',
+                      label: AppString.password,
+                      labelStyle: TextStyle(
+                        fontSize: 18.sp,
+                        color: ColorManager.blackFontColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      isFill: false,
+                      isBorder: true,
+                      suffixIcon: GestureDetector(
+                        onTap: () => setState(
+                            () => _isPasswordVisible = !_isPasswordVisible),
+                        child: Icon(
+                          _isPasswordVisible
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                          color: ColorManager.textRedColor,
+                        ),
+                      ),
+                      isPassword: !_isPasswordVisible,
+                      controller: passwordController,
+                      keyboardType: TextInputType.text,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Password cannot be empty';
+                        } else if (value.length < 8) {
+                          return 'Password must be at least 8 characters long';
+                        } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
+                          return 'Password must include at least one uppercase letter';
+                        } else if (!RegExp(r'[a-z]').hasMatch(value)) {
+                          return 'Password must include at least one lowercase letter';
+                        } else if (!RegExp(r'[0-9]').hasMatch(value)) {
+                          return 'Password must include at least one number';
+                        } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]')
+                            .hasMatch(value)) {
+                          return 'Password must include at least one special character';
+                        }
+                        return null;
+                      },
                     ),
-                    isFill: false,
-                    isBorder: true,
-                    suffixIcon: Icon(
-                      Icons.email,
-                      color: ColorManager.textRedColor,
-                    ),
-                  ),
-                  GeneralTextFormField(
-                    hint: '*****************',
-                    label: AppString.password,
-                    labelStyle: TextStyle(
-                      fontSize: 18.sp,
-                      color: ColorManager.blackFontColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    isFill: false,
-                    isBorder: true,
-                    suffixIcon: Icon(
-                      Icons.lock,
-                      color: ColorManager.textRedColor,
-                    ),
-                  ),
-                  /*CustomDropDownSelection(
-                    value: selectedGender,
-                    hint: AppString.chooseYourGender,
-                    label: AppString.gender,
-                    options: genderOptions,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedGender = newValue; // Update the selected value
-                      });
-                    },
-                  ),*/
-                  GeneralTextFormField(
-                    hint: 'Female',
-                    label: AppString.gender,
-                    labelStyle: TextStyle(
-                      fontSize: 18.sp,
-                      color: ColorManager.blackFontColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    isFill: false,
-                    isBorder: true,
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Padding(
-                        padding: const EdgeInsets.all(3),
-                        child: SvgPicture.asset(
-                          ImageManager.gender,
-                          width: 24.w,
+                    /*CustomDropDownSelection(
+                      value: selectedGender,
+                      hint: AppString.chooseYourGender,
+                      label: AppString.gender,
+                      options: genderOptions,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedGender = newValue; // Update the selected value
+                        });
+                      },
+                    ),*/
+                    GeneralTextFormField(
+                      hint: 'Female',
+                      label: AppString.gender,
+                      labelStyle: TextStyle(
+                        fontSize: 18.sp,
+                        color: ColorManager.blackFontColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      isFill: false,
+                      isBorder: true,
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(3),
+                          child: SvgPicture.asset(
+                            ImageManager.gender,
+                            width: 24.w,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  GeneralTextFormField(
-                    hint: '01258672352',
-                    label: AppString.phoneNumber,
-                    labelStyle: TextStyle(
-                      fontSize: 18.sp,
-                      color: ColorManager.blackFontColor,
-                      fontWeight: FontWeight.w500,
+                    GeneralTextFormField(
+                      hint: '01258672352',
+                      label: AppString.phoneNumber,
+                      labelStyle: TextStyle(
+                        fontSize: 18.sp,
+                        color: ColorManager.blackFontColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      isFill: false,
+                      isBorder: true,
+                      suffixIcon: Icon(
+                        Icons.person,
+                        color: ColorManager.textRedColor,
+                      ),
+                      controller: phoneController,
+                      keyboardType: TextInputType.phone,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your phone number';
+                        }
+                        if (!RegExp(r'^\d{10,15}$').hasMatch(value)) {
+                          return 'Enter a valid phone number (10-15 digits)';
+                        }
+                        return null;
+                      },
                     ),
-                    isFill: false,
-                    isBorder: true,
-                    suffixIcon: Icon(
-                      Icons.person,
-                      color: ColorManager.textRedColor,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             SizedBox(
@@ -161,6 +227,10 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 height: 43.h,
                 width: 216.w,
                 onTap: () {
+                  //if (_formKey.currentState!.validate() &&
+                  //selectedGender != null) {
+                  // Process data
+                  //}
                   Navigator.pop(context);
                 })
           ]),
