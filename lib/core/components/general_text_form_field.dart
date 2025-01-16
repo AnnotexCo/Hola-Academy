@@ -9,6 +9,8 @@ class GeneralTextFormField extends StatelessWidget {
   final Widget? suffixIcon;
   final bool isPassword;
   final bool readOnly;
+  final bool? isFill;
+  final bool? isBorder;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
@@ -22,7 +24,7 @@ class GeneralTextFormField extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final double? borderRadius;
   final Color? iconColor;
-  final int? maxLines; 
+  final int? maxLines;
 
   const GeneralTextFormField({
     super.key,
@@ -32,6 +34,8 @@ class GeneralTextFormField extends StatelessWidget {
     this.suffixIcon,
     this.isPassword = false,
     this.readOnly = false,
+    this.isFill = true,
+    this.isBorder = false,
     this.controller,
     this.keyboardType,
     this.validator,
@@ -45,7 +49,7 @@ class GeneralTextFormField extends StatelessWidget {
     this.contentPadding,
     this.borderRadius,
     this.iconColor,
-     this.maxLines,
+    this.maxLines,
   });
 
   // Helper method to create an Icon widget from IconData
@@ -93,7 +97,9 @@ class GeneralTextFormField extends StatelessWidget {
             validator: validator,
             obscureText: isPassword,
             readOnly: readOnly,
-            maxLines: maxLines,
+            maxLines: isPassword
+                ? 1
+                : maxLines, // Force maxLines to 1 if isPassword is true
             onTap: onTap,
             style: textStyle ??
                 TextStyle(
@@ -118,11 +124,15 @@ class GeneralTextFormField extends StatelessWidget {
                   ),
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
-              filled: true,
+              filled: isFill,
               fillColor: fillColor ?? ColorManager.backgroundPinkColor,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(borderRadius ?? 15.r),
-                borderSide: BorderSide.none,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(borderRadius ?? 8.r),
+                borderSide: isBorder == false
+                    ? BorderSide.none
+                    : BorderSide(
+                        color: ColorManager.textRedColor,
+                      ),
               ),
               contentPadding: contentPadding ??
                   EdgeInsets.symmetric(

@@ -8,6 +8,8 @@ class CustomTextField extends StatelessWidget {
   final Widget? prefix;
   final Widget? suffix;
   final String label;
+  final Color? labelColor;
+  final bool? isFill;
   final String? Function(String?)? validator;
   final TextEditingController? controller;
 
@@ -16,7 +18,9 @@ class CustomTextField extends StatelessWidget {
     required this.hint,
     this.prefix,
     this.suffix,
+    this.isFill = true,
     required this.label,
+    this.labelColor,
     this.validator,
     this.controller,
   });
@@ -27,23 +31,26 @@ class CustomTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(left: 8.w, bottom: 15.h),
+          padding: EdgeInsets.only(
+            left: 8.w,
+            bottom: 8.h,
+          ),
           child: Text(
             label,
             style: TextStyle(
               fontSize: 19.sp,
-              color: ColorManager.textRedColor,
+              color: labelColor ?? ColorManager.textRedColor,
               fontWeight: FontWeight.w500,
             ),
           ),
         ),
         TextFormField(
           controller: controller,
-            style: TextStyle(
-              color: ColorManager.textRedColor,
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w400,
-            ),
+          style: TextStyle(
+            color: ColorManager.textRedColor,
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w400,
+          ),
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(
@@ -69,8 +76,8 @@ class CustomTextField extends StatelessWidget {
               horizontal: 16.w,
               vertical: 20.h,
             ),
-            fillColor: ColorManager.backgroundPinkColor, 
-            filled: true, 
+            fillColor: ColorManager.backgroundPinkColor,
+            filled: isFill,
           ),
           validator: validator,
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hola_academy/core/components/custom_colored_outline_button.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
@@ -108,32 +109,17 @@ class TermsDialog extends StatelessWidget {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: onDisagree,
-                      child: Container(
+                    CustomColoredOutlineButton(
                         width: 120.w,
                         height: 30.h,
-                        decoration: BoxDecoration(
-                          color: ColorManager.whiteColor,
-                          borderRadius: BorderRadius.circular(15.r),
-                          border: Border.all(
-                            color:
-                                ColorManager.primaryOrangeColor, // Border color
-                            width: 1.w, // Border width
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            AppString.disagree,
-                            style: TextStyle(
-                                decoration: TextDecoration.none,
-                                color: ColorManager.primaryOrangeColor,
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ),
-                    ),
+                        radius: 15.r,
+                        title: AppString.disagree,
+                        style: TextStyle(
+                            decoration: TextDecoration.none,
+                            color: ColorManager.primaryOrangeColor,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400),
+                        onTap: onDisagree),
                   ],
                 ),
               ],

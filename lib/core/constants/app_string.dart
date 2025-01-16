@@ -101,6 +101,16 @@ class AppString {
   static const String terms = "Terms";
   static const String contactUs = "Contact Us";
 
+   // Personal Info Screen
+  static const String editYourinformation = "Edit Your information";
+
+  // Contact Us Screen
+  static const String instagram = "Instagram";
+  static const String facebook = "Facebook";
+  static const String tikTok = "TikTok";
+  static const String whatsApp = "WhatsApp";
+
+
   // Book Program Screen
   static const String bookProgram = "Book Program";
   static const String additionalDetailsForBooking = "Additional Details For Booking";
