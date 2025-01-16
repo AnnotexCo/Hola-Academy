@@ -6,7 +6,8 @@ class ScheduleEvaluationScreen extends StatefulWidget {
   const ScheduleEvaluationScreen({super.key});
 
   @override
-  State<ScheduleEvaluationScreen> createState() => _ScheduleEvaluationScreenState();
+  State<ScheduleEvaluationScreen> createState() =>
+      _ScheduleEvaluationScreenState();
 }
 
 class _ScheduleEvaluationScreenState extends State<ScheduleEvaluationScreen> {
@@ -54,43 +55,45 @@ class _ScheduleEvaluationScreenState extends State<ScheduleEvaluationScreen> {
             Container(
               height: 100.h,
               margin: EdgeInsets.symmetric(vertical: 16.h),
-              child: ScrollConfiguration(
-                behavior: CustomScrollBehavior(),
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  itemCount: 7,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    bool isSelected = index == selectedDayIndex;
-                    DateTime date = DateTime.now().add(Duration(days: index));
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedDayIndex = index;
-                          selectedDate = date;
-                        });
-                      },
-                      child: TweenAnimationBuilder(
-                        duration: const Duration(milliseconds: 300),
-                        tween: Tween<double>(
-                          begin: isSelected ? 1.1 : 1.0,
-                          end: isSelected ? 1.1 : 1.0,
-                        ),
-                        builder: (context, scale, child) {
-                          return Transform.scale(
-                            scale: scale,
-                            child: DayTile(
-                              day: date.day,
-                              isSelected: isSelected,
-                              weekDay: _getWeekDay(date.weekday),
-                            ),
-                          );
-                        },
+              child: PageView.builder(
+                controller: PageController(
+                    viewportFraction: 0.2, initialPage: selectedDayIndex),
+                onPageChanged: (index) {
+                  setState(() {
+                    selectedDayIndex = index;
+                    selectedDate = DateTime.now().add(Duration(days: index));
+                  });
+                },
+                itemCount: 7,
+                itemBuilder: (context, index) {
+                  bool isSelected = index == selectedDayIndex;
+                  DateTime date = DateTime.now().add(Duration(days: index));
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedDayIndex = index;
+                        selectedDate = date;
+                      });
+                    },
+                    child: TweenAnimationBuilder(
+                      duration: const Duration(milliseconds: 300),
+                      tween: Tween<double>(
+                        begin: isSelected ? 1.1 : 1.0,
+                        end: isSelected ? 1.1 : 1.0,
                       ),
-                    );
-                  },
-                ),
+                      builder: (context, scale, child) {
+                        return Transform.scale(
+                          scale: scale,
+                          child: DayTile(
+                            day: date.day,
+                            isSelected: isSelected,
+                            weekDay: _getWeekDay(date.weekday),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
               ),
             ),
 
@@ -245,7 +248,9 @@ class DayTile extends StatelessWidget {
           Container(
             height: 12.h,
             decoration: BoxDecoration(
-              color: isSelected ? const Color(0xFFF09C1F) : const Color(0xFFF8D198),
+              color: isSelected
+                  ? const Color(0xFFF09C1F)
+                  : const Color(0xFFF8D198),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(8.r),
                 topRight: Radius.circular(8.r),
@@ -255,7 +260,7 @@ class DayTile extends StatelessWidget {
           // Main white card
           Container(
             height: 70.h,
-            width: 60.w,
+            width: 75.w,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -276,7 +281,8 @@ class DayTile extends StatelessWidget {
                 Text(
                   weekDay,
                   style: TextStyle(
-                    color: isSelected ? const Color(0xFFF09C1F) : Colors.black54,
+                    color:
+                        isSelected ? const Color(0xFFF09C1F) : Colors.black54,
                     fontSize: 12.sp,
                   ),
                 ),
@@ -284,7 +290,8 @@ class DayTile extends StatelessWidget {
                 Text(
                   day.toString(),
                   style: TextStyle(
-                    color: isSelected ? const Color(0xFFF09C1F) : Colors.black87,
+                    color:
+                        isSelected ? const Color(0xFFF09C1F) : Colors.black87,
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
                   ),

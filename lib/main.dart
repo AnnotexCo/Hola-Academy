@@ -5,6 +5,9 @@ import 'package:hola_academy/features/auth/login/UI/login_screen.dart';
 import 'package:hola_academy/features/book/UI/book_programs_screen.dart';
 import 'package:hola_academy/features/onboarding/onbording.dart';
 
+import 'features/schedule_evaluation/UI/schedule_evaluation_screen.dart';
+
+
 
 void main() {
   runApp(const MyApp());
@@ -30,7 +33,7 @@ class MyApp extends StatelessWidget {
                 seedColor: ColorManager.primaryOrangeColor),
             useMaterial3: true,
           ),
-          home: BookProgramScreen(),
+          home: ScheduleEvaluationScreen(),
         );
       },
     );
