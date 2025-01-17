@@ -101,6 +101,14 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // Pre-cache images to avoid flashing
+    precacheImage(AssetImage(ImageManager.profileFrame), context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
