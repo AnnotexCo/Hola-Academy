@@ -13,6 +13,7 @@ import 'package:hola_academy/features/profile/UI/booked_screen.dart';
 import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
 import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
 import 'package:hola_academy/features/profile/UI/profile_screen.dart';
+import '../../features/analytics/UI/analytics_skills_screen.dart';
 import '../../features/auth/register/UI/register_screen.dart';
 import '../../features/book/UI/book_programs_screen.dart';
 import '../../features/not_found/not_found_screen.dart';
@@ -83,6 +84,10 @@ class AppRouter {
       // book programs
       case Routes.bookProgramsScreen:
         return MaterialPageRoute(builder: (_) => const BookProgramScreen());
+
+      // analytics
+      case Routes.analyticsSkillsScreen:
+        return MaterialPageRoute(builder: (_) => const AnalyticsSkillsScreen());
 
       // not found
       case Routes.notFoundScreen:

@@ -70,7 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     icon: ImageManager.analysis,
                     text: AppString.analytics,
                     onTap: () {
-                      Navigator.pushNamed(context, Routes.notFoundScreen);
+                      Navigator.pushNamed(context, Routes.analyticsSkillsScreen);
                     },
                   ),
                   _buildMenuItem(
