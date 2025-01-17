@@ -26,7 +26,9 @@ class ProgramCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(22.r),
           ),
-          child: Image.asset(ImageManager.programImage, fit: BoxFit.fill),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(22.r),
+              child: Image.asset(ImageManager.programImage, fit: BoxFit.fill)),
         ),
         Positioned(
             top: 8.h,
