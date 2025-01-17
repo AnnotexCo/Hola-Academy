@@ -22,12 +22,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController _inputController = TextEditingController();
   final FocusNode _inputFocusNode = FocusNode(); // Add FocusNode
 
- @override
+  @override
   void dispose() {
     _inputController.dispose();
     _inputFocusNode.dispose(); // Dispose of the FocusNode
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,7 +140,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           text: TextSpan(
             text: AppString.backToSignIn,
             style: TextStyle(
-              color: ColorManager.textRedColor.withOpacity(0.7),
+              color: ColorManager.textRedColor.withValues(alpha: 0.7),
               fontSize: 14.sp,
             ),
             children: [
@@ -189,7 +190,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     }
   }
 
-   void _onToggleSwitch(bool value) {
+  void _onToggleSwitch(bool value) {
     setState(() {
       isEmailSelected = value;
       // Close the keyboard before switching input types

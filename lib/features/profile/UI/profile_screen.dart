@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
@@ -24,96 +25,101 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       body: SafeArea(
           child: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: 18.w,
+        padding: EdgeInsets.only(
+          top: 0.h,
         ),
-        child: Column(children: [
-          Stack(alignment: Alignment.topCenter, children: [
-            CustomProfileBackgroung(),
-            CustomProfileAppBar(qrCode: true),
-          ]),
-          Spacer(),
-          Container(
-            //height: 341.h,
-            width: 385.w,
-            decoration: BoxDecoration(
-              color: ColorManager.whiteColor,
-              borderRadius: BorderRadius.all(
-                Radius.circular(12.r),
+        child: SingleChildScrollView(
+          child: Column(spacing: 56.h, children: [
+            Stack(alignment: Alignment.topCenter, children: [
+              CustomProfileBackgroung(),
+              CustomProfileAppBar(qrCode: true),
+            ]),
+            Container(
+              height: 420.h,
+              width: 385.w,
+              decoration: BoxDecoration(
+                color: ColorManager.whiteColor,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(12.r),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: ColorManager.shadowColor,
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(1, 2),
+                  )
+                ],
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: ColorManager.shadowColor,
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: Offset(1, 2),
-                )
-              ],
+              child: ListView(
+                shrinkWrap: true, // Adjusts to content size
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  _buildMenuItem(
+                    icon: ImageManager.personalInformation,
+                    text: AppString.personalInformation,
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return PersonalInfoScreen();
+                        },
+                      ));
+                    },
+                  ),
+                  _buildMenuItem(
+                    icon: ImageManager.analysis,
+                    text: AppString.analytics,
+                    onTap: () {
+                      Navigator.pushNamed(context, Routes.notFoundScreen);
+                    },
+                  ),
+                  _buildMenuItem(
+                    icon: ImageManager.transaction,
+                    text: AppString.transaction,
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return TransactionsScreen();
+                        },
+                      ));
+                    },
+                  ),
+                  _buildMenuItem(
+                    icon: ImageManager.booking,
+                    text: AppString.booked,
+                    onTap: () {
+                      Navigator.pushNamed(context, Routes.bookProgramsScreen);
+                    },
+                  ),
+                  _buildMenuItem(
+                    icon: ImageManager.terms,
+                    text: AppString.terms,
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return TermsScreen();
+                        },
+                      ));
+                    },
+                  ),
+                  _buildMenuItem(
+                    icon: ImageManager.sms,
+                    text: AppString.contactUs,
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return ContactUsScreen();
+                        },
+                      ));
+                    },
+                    last: true,
+                  ),
+                ],
+              ),
             ),
-            child: ListView(
-              shrinkWrap: true, // Adjusts to content size
-              physics: NeverScrollableScrollPhysics(),
-              children: [
-                _buildMenuItem(
-                  icon: ImageManager.personalInformation,
-                  text: AppString.personalInformation,
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return PersonalInfoScreen();
-                      },
-                    ));
-                  },
-                ),
-                _buildMenuItem(
-                  icon: ImageManager.analysis,
-                  text: AppString.analytics,
-                  onTap: () {},
-                ),
-                _buildMenuItem(
-                  icon: ImageManager.transaction,
-                  text: AppString.transaction,
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return TransactionsScreen();
-                      },
-                    ));
-                  },
-                ),
-                _buildMenuItem(
-                  icon: ImageManager.booking,
-                  text: AppString.booked,
-                  onTap: () {},
-                ),
-                _buildMenuItem(
-                  icon: ImageManager.terms,
-                  text: AppString.terms,
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return TermsScreen();
-                      },
-                    ));
-                  },
-                ),
-                _buildMenuItem(
-                  icon: ImageManager.sms,
-                  text: AppString.contactUs,
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return ContactUsScreen();
-                      },
-                    ));
-                  },
-                  last: true,
-                ),
-              ],
-            ),
-          ),
-          Spacer(),
-        ]),
+            SizedBox(height: 1.h)
+          ]),
+        ),
       )),
     );
   }

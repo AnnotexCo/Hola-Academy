@@ -114,7 +114,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 contentPadding: EdgeInsets.symmetric(vertical: 1.h),
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
-                    color: ColorManager.textRedColor.withOpacity(0.3),
+                    color: ColorManager.textRedColor.withValues(alpha: 0.3),
                     width: 1,
                   ),
                 ),
@@ -177,7 +177,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
             Text(
               AppString.didNotReceiveCode,
               style: TextStyle(
-                color: ColorManager.textRedColor.withOpacity(0.7),
+                color: ColorManager.textRedColor.withValues(alpha: 0.7),
                 fontSize: 14.sp,
               ),
             ),

@@ -9,7 +9,6 @@ import 'package:hola_academy/features/auth/register/UI/widgets/custom_drop_down_
 import 'package:hola_academy/core/components/general_text_form_field.dart';
 import 'package:hola_academy/features/auth/register/UI/widgets/terms_dialog.dart';
 import 'package:hola_academy/features/layout/layout_screen.dart';
-import 'package:hola_academy/features/profile/UI/profile_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

@@ -15,13 +15,13 @@ class ProgramWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(12.r),
             boxShadow: [
               BoxShadow(
-                  color: ColorManager.primaryOrangeColor.withOpacity(0.2),
+                  color: ColorManager.primaryOrangeColor.withValues(alpha: 0.2),
                   spreadRadius: 1,
                   blurRadius: 5,
                   offset: Offset(2, 2),
                   blurStyle: BlurStyle.outer)
             ]),
-        height: 94.h,
+        height: 96.h,
         width: 398.w,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,

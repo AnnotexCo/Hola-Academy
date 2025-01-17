@@ -8,7 +8,7 @@ class WelcomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50.h,
+      height: 55.h,
       width: 188.w,
       child: Row(
         children: [

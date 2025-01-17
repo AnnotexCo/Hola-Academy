@@ -55,6 +55,7 @@ class ImageManager {
 
 // book icons
   static const String upload = 'assets/icons/upload.svg';
+  static const String successfullyPurchased = 'assets/images/successful-purchase.svg';
 
   // Transactions Icons
   static const String confirm = 'assets/icons/confirm.svg';

@@ -128,6 +128,7 @@ class AppString {
   static const String uploadPaymentProofTitle = "Please upload a valid proof of payment (screenshot of the transfer or a receipt) to confirm your booking. Ensure the details are clear and visible for verification purposes.";
   static const String upload = "Upload";
   static const String book = "Book";
+  static const String successfullyPurchased = "Transaction completed successfully.\nYou're all set!";
 
   // Schedule Evaluation Screen
   static const String availableEvaluation = "Available Evaluation";

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -20,7 +19,7 @@ class CustomToggleSwitch extends StatelessWidget {
       width: 291.w,
       height: 45.h,
       decoration: BoxDecoration(
-        color: ColorManager.textRedColor.withOpacity(0.1),
+        color: ColorManager.textRedColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8.r),
       ),
       child: Row(

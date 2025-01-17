@@ -4,11 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
+import 'package:hola_academy/features/classes/classes_screen.dart';
 import 'package:hola_academy/features/home/home_screen.dart';
+import 'package:hola_academy/features/schedule_evaluation/UI/schedule_evaluation_screen.dart';
 
-import '../book/UI/book_programs_screen.dart';
 import '../profile/UI/profile_screen.dart';
-import '../schedule_evaluation/UI/schedule_evaluation_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
   const LayoutScreen({super.key});
@@ -21,7 +21,12 @@ class _LayoutScreenState extends State<LayoutScreen> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController();
 
-  final List<Widget> _screens = [HomeScreen(),ScheduleEvaluationScreen(),BookProgramScreen(),ProfileScreen()];
+  final List<Widget> _screens = [
+    HomeScreen(),
+    ClassesScreen(),
+    ScheduleEvaluationScreen(),
+    ProfileScreen()
+  ];
 
   @override
   void initState() {
@@ -105,34 +110,32 @@ class _LayoutScreenState extends State<LayoutScreen> {
         statusBarColor: Colors.white,
         statusBarIconBrightness: Brightness.dark,
       ),
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          body: PageView(
-            controller: _pageController,
-            onPageChanged: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-            children: _screens,
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            
-            selectedLabelStyle:
-                TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400),
-            unselectedLabelStyle:
-                TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400),
-            items: _navBarItems(),
-            selectedItemColor:
-                ColorManager.primaryOrangeColor, // Color for selected item
-            unselectedItemColor: Colors.grey, // Color for unselected items
-            showUnselectedLabels: true, // Show labels for unselected items
-            type: BottomNavigationBarType
-                .fixed, // Fixed layout for consistent display)
-            currentIndex: _selectedIndex,
-            onTap: _onItemTapped,
-          ),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          children: _screens,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: ColorManager.backgroundColor,
+          selectedLabelStyle:
+              TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400),
+          unselectedLabelStyle:
+              TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400),
+          items: _navBarItems(),
+          selectedItemColor:
+              ColorManager.primaryOrangeColor, // Color for selected item
+          unselectedItemColor: Colors.grey, // Color for unselected items
+          showUnselectedLabels: true, // Show labels for unselected items
+          type: BottomNavigationBarType
+              .fixed, // Fixed layout for consistent display)
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/custom_app_bar.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/features/classes/widgets/DropDownButton.dart';
@@ -45,7 +46,11 @@ class ClassesScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: EdgeInsets.only(bottom: 28.0.h),
-                    child: ProgramWidget(),
+                    child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.detailsScreen);
+                        },
+                        child: ProgramWidget()),
                   );
                 }),
           )
