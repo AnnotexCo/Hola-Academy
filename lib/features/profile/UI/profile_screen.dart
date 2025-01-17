@@ -35,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               CustomProfileAppBar(qrCode: true),
             ]),
             Container(
-              height: 400.h,
+              height: 420.h,
               width: 385.w,
               decoration: BoxDecoration(
                 color: ColorManager.whiteColor,
