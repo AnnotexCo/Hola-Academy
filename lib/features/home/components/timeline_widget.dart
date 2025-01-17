@@ -46,7 +46,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
                   width: 68.w,
                   decoration: isActive
                       ? BoxDecoration(
-                          color: Colors.orange,
+                          color: ColorManager.primaryOrangeColor,
                           borderRadius: BorderRadius.circular(10.r),
                           boxShadow: [
                               BoxShadow(

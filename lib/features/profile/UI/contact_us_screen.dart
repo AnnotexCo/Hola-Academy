@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
-import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';

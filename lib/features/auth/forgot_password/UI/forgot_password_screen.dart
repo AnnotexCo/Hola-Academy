@@ -20,7 +20,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   bool isEmailSelected = true;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _inputController = TextEditingController();
+  final FocusNode _inputFocusNode = FocusNode(); // Add FocusNode
 
+ @override
+  void dispose() {
+    _inputController.dispose();
+    _inputFocusNode.dispose(); // Dispose of the FocusNode
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,12 +53,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       SizedBox(height: 32.h),
                       CustomToggleSwitch(
                         isEmailSelected: isEmailSelected,
-                        onToggle: (value) =>
-                            setState(() => isEmailSelected = value),
+                        onToggle: (value) => _onToggleSwitch(value),
                       ),
                       SizedBox(height: 50.h),
                       CustomTextField(
                         controller: _inputController,
+                        focusNode: _inputFocusNode,
+                        keyboardType: isEmailSelected
+                            ? TextInputType.emailAddress
+                            : TextInputType.phone,
                         label: isEmailSelected
                             ? AppString.enterYourEmail
                             : AppString.enterYourPhoneNumber,
@@ -177,5 +187,17 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             builder: (context) => VerificationScreen(),
           ));
     }
+  }
+
+   void _onToggleSwitch(bool value) {
+    setState(() {
+      isEmailSelected = value;
+      // Close the keyboard before switching input types
+      _inputFocusNode.unfocus();
+      Future.delayed(const Duration(milliseconds: 100), () {
+        // Refocus on the text field with the new keyboard type
+        _inputFocusNode.requestFocus();
+      });
+    });
   }
 }

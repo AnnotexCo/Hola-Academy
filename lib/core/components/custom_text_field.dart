@@ -12,6 +12,8 @@ class CustomTextField extends StatelessWidget {
   final bool? isFill;
   final String? Function(String?)? validator;
   final TextEditingController? controller;
+  final TextInputType? keyboardType;
+  final FocusNode? focusNode;
 
   const CustomTextField({
     super.key,
@@ -23,6 +25,7 @@ class CustomTextField extends StatelessWidget {
     this.labelColor,
     this.validator,
     this.controller,
+     this.keyboardType, this.focusNode,
   });
 
   @override
@@ -46,6 +49,8 @@ class CustomTextField extends StatelessWidget {
         ),
         TextFormField(
           controller: controller,
+          focusNode: focusNode,
+          keyboardType: keyboardType ?? TextInputType.text,
           style: TextStyle(
             color: ColorManager.textRedColor,
             fontSize: 18.sp,

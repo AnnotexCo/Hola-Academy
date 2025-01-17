@@ -128,4 +128,19 @@ class AppString {
   static const String uploadPaymentProofTitle = "Please upload a valid proof of payment (screenshot of the transfer or a receipt) to confirm your booking. Ensure the details are clear and visible for verification purposes.";
   static const String upload = "Upload";
   static const String book = "Book";
+
+  // Schedule Evaluation Screen
+  static const String availableEvaluation = "Available Evaluation";
+
+
+  // Programs and Classes
+  static const String programs = "Programs";
+  static const String classes = "Classes";
+  static const String available = "Available";
+
+  // Transactions Screen
+  static const String viewAllTransaction = "View All Transaction";
+  static const String historyTransaction = "History Transaction";
+  static const String myBalance = "My Balance";
+
 }

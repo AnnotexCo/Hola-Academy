@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 
+import '../../../core/components/custom_app_bar.dart';
 import '../../../core/components/custom_app_button.dart';
 import '../../../core/components/general_text_form_field.dart';
 import '../../../core/components/title_widget.dart';
@@ -22,49 +23,45 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, size: 24.sp),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          AppString.bookProgram,
-          style: TextStyle(
-            fontSize: 20.sp,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
+
       body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                  child: const TitleWidget(
-                title: AppString.additionalDetailsForBooking,
-                color: Color(0xff3B4045),
-              )),
-              SizedBox(height: 24.h),
-              buildPersonalDetailsSection(),
-              SizedBox(height: 32.h),
-              buildParentGuardianSection(),
-              SizedBox(height: 32.h),
-              buildAdditionalNotesSection(),
-              SizedBox(height: 32.h),
-              buildPaymentUploadSection(),
-              SizedBox(height: 32.h),
-              buildBookButton(),
-              SizedBox(height: 24.h),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomAppBar(
+              title: AppString.bookProgram,
+              onPressed: () {},
+            ),
+            Padding(
+              padding: EdgeInsets.all(16.w),
+              child: Column(
+                children: [
+                  Center(
+                      child: const TitleWidget(
+                    title: AppString.additionalDetailsForBooking,
+                    color: Color(0xff3B4045),
+                  )),
+                  SizedBox(height: 24.h),
+                  buildPersonalDetailsSection(),
+                  SizedBox(height: 32.h),
+                  buildParentGuardianSection(),
+                  SizedBox(height: 32.h),
+                  buildAdditionalNotesSection(),
+                  SizedBox(height: 32.h),
+                  buildPaymentUploadSection(),
+                  SizedBox(height: 32.h),
+                  buildBookButton(),
+                  SizedBox(height: 24.h),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget buildPersonalDetailsSection() {
+ Widget buildPersonalDetailsSection() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -90,7 +87,6 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
     ],
   );
 }
-
 Widget buildHealthStatusSection() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,20 +128,15 @@ Widget buildHealthStatusSection() {
     ],
   );
 }
-
 Widget buildRadioOption(String label, bool value,
-    {required bool hasHealthIssues, required Function onChanged}) {
+    {required bool hasHealthIssues,  required Function(bool?) onChanged}) {
   return Row(
     children: [
       Radio<bool>(
         value: value,
         groupValue: hasHealthIssues,
         activeColor: ColorManager.textRedColor,
-        onChanged: (bool? newValue) {
-          setState(() {
-            hasHealthIssues = newValue ?? false;
-          });
-        },
+        onChanged: onChanged,
       ),
       Text(
         label,
@@ -157,7 +148,6 @@ Widget buildRadioOption(String label, bool value,
     ],
   );
 }
-
 
 
   Widget buildBookButton() {

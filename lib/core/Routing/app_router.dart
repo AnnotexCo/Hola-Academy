@@ -12,6 +12,10 @@ import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
 import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
 import 'package:hola_academy/features/profile/UI/profile_screen.dart';
 import '../../features/auth/register/UI/register_screen.dart';
+import '../../features/book/UI/book_programs_screen.dart';
+import '../../features/classes/classes_screen.dart';
+import '../../features/not_found/not_found_screen.dart';
+import '../../features/schedule_evaluation/UI/schedule_evaluation_screen.dart';
 import 'routes.dart';
 
 class AppRouter {
@@ -41,13 +45,15 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const VerificationScreen());
       case Routes.layoutScreen:
         return MaterialPageRoute(builder: (_) => const LayoutScreen());
-
+      // profile
       case Routes.profileScreen:
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
 
+      // personal info
       case Routes.personalInfoScreen:
         return MaterialPageRoute(builder: (_) => const PersonalInfoScreen());
 
+      // contact us
       case Routes.contactUsScreen:
         return MaterialPageRoute(builder: (_) => ContactUsScreen());
 
@@ -59,7 +65,22 @@ class AppRouter {
 
       case Routes.programlevlScreen:
         return MaterialPageRoute(builder: (_) => ProgramLevlScreen());
+      // schedule evaluation
+      case Routes.scheduleEvaluationScreen:
+      return MaterialPageRoute(builder: (_) => const ScheduleEvaluationScreen());
 
+      // book programs
+      case Routes.bookProgramsScreen:
+      return MaterialPageRoute(builder: (_) => const BookProgramScreen());
+
+      // not found
+      case Routes.notFoundScreen:
+        return MaterialPageRoute(builder: (_) => const NotFoundScreen());
+
+      // classes screen
+      case Routes.classesScreen:
+        return MaterialPageRoute(builder: (_) => const ClassesScreen());
+        
       default:
         return null;
     }

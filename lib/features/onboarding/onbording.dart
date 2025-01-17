@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/components/custom_app_button.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
+import 'package:hola_academy/features/auth/login/UI/login_screen.dart';
 import 'package:hola_academy/features/auth/register/UI/register_screen.dart';
-import 'package:hola_academy/features/home/home_screen.dart';
 
 import 'content_model.dart';
 
