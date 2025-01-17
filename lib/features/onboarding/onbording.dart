@@ -206,28 +206,34 @@ class OnboardingState extends State<Onboarding> {
                               child: SizedBox(
                                 height: 50.h,
                                 width: 300.w,
-                                child: Text.rich(
-                                  TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: "Already have an account? ",
-                                        style: TextStyle(
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w400,
-                                          color: ColorManager.whiteColor,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, Routes.loginScreen);
+                                  },
+                                  child: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: "Already have an account? ",
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w400,
+                                            color: ColorManager.whiteColor,
+                                          ),
                                         ),
-                                      ),
-                                      TextSpan(
-                                        text: "Login",
-                                        style: TextStyle(
-                                          decoration: TextDecoration.underline,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.bold,
-                                          color: ColorManager.whiteColor,
-                                          decorationThickness: 2.0,
+                                        TextSpan(
+                                          text: "Login",
+                                          style: TextStyle(
+                                            decoration: TextDecoration.underline,
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: ColorManager.whiteColor,
+                                            decorationThickness: 2.0,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),

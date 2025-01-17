@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/custom_app_bar.dart';
+import 'package:hola_academy/core/components/custom_colored_outline_button.dart';
 import 'package:hola_academy/features/home/components/program_card.dart';
+
+import '../../core/constants/color_manager.dart';
 
 class DetailClassScreen extends StatelessWidget {
   const DetailClassScreen({super.key});
@@ -15,7 +18,12 @@ class DetailClassScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 18.h,
           children: [
-            CustomAppBar(),
+            CustomAppBar(
+              title: "Private",
+              widget: CustomColoredOutlineButton(radius: 25, title: 'Book Now', style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w300, color: ColorManager.primaryOrangeColor), height: 30.h, width: 86.w, onTap: (){
+                Navigator.pushNamed(context, Routes.bookProgramsScreen);
+              }),
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 40.0.w),
               child: Column(

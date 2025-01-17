@@ -18,14 +18,14 @@ class CustomAppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 300.w,
-      height: 52.h,
+      width: 203.w,
+      height: 50.h,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: ColorManager.primaryOrangeColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.r),
+            borderRadius: BorderRadius.circular(32.r),
           ),
           padding: EdgeInsets.symmetric(vertical: 8.h),
         ),
