@@ -86,9 +86,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   _buildMenuItem(
                     icon: ImageManager.booking,
-                    text: AppString.booked,
+                    text: AppString.bookProgram,
                     onTap: () {
-                      Navigator.pushNamed(context, Routes.bookedScreen);
+                      Navigator.pushNamed(context, Routes.bookProgramsScreen);
                     },
                   ),
                   _buildMenuItem(
