@@ -7,6 +7,8 @@ import '../../../core/components/custom_app_bar.dart';
 import '../../../core/components/custom_app_button.dart';
 import '../../../core/components/general_text_form_field.dart';
 import '../../../core/components/title_widget.dart';
+import '../../../core/constants/image_manager.dart';
+import '../../not_found/not_found_screen.dart';
 import 'widgets/additional_notes_section.dart';
 import 'widgets/parent_guardian_section.dart';
 import 'widgets/payment_upload_section.dart';
@@ -155,6 +157,10 @@ Widget buildRadioOption(String label, bool value,
       child: CustomAppButton(
         text: AppString.book,
         onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => NotFoundScreen(
+            svgPath: ImageManager.successfullyPurchased,
+            title: AppString.successfullyPurchased,
+          )));
           // Handle booking logic
         },
       ),
