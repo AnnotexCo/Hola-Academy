@@ -134,7 +134,7 @@ class OnboardingState extends State<Onboarding> {
                           // Skip button
                           if (index != contents.length - 1)
                             Positioned(
-                              top: 810.h,
+                              top: 846.h,
                               left: 45.w,
                               child: GestureDetector(
                                 onTap: () {
@@ -155,7 +155,7 @@ class OnboardingState extends State<Onboarding> {
                           // Create Account button
                           if (index == contents.length - 1)
                             Positioned(
-                              top: 780.h,
+                              top: 835.h,
                               left: 72.w,
                               right: 68.w,
                               child: SizedBox(
@@ -177,7 +177,7 @@ class OnboardingState extends State<Onboarding> {
                           // Next button
                           if (index != contents.length - 1)
                             Positioned(
-                              top: 810.h,
+                              top: 864.h,
                               right: 45.w,
                               child: GestureDetector(
                                 onTap: () {
@@ -200,7 +200,7 @@ class OnboardingState extends State<Onboarding> {
                           // Login link
                           if (index == contents.length - 1)
                             Positioned(
-                              top: 835.h,
+                              top: 892.h,
                               left: 108.w,
                               right: 103.w,
                               child: SizedBox(

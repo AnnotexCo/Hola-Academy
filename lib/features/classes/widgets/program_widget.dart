@@ -21,7 +21,7 @@ class ProgramWidget extends StatelessWidget {
                   offset: Offset(2, 2),
                   blurStyle: BlurStyle.outer)
             ]),
-        height: 94.h,
+        height: 96.h,
         width: 398.w,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,

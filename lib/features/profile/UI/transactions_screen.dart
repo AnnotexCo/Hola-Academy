@@ -29,7 +29,7 @@ class TransactionsScreen extends StatelessWidget {
                     children: [
                       if (coach)
                         Container(
-                          height: 111.h,
+                          height: 120.h,
                           width: 383.w,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(colors: [
