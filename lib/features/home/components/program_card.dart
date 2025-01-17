@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/constants/image_manager.dart';
 
 class ProgramCard extends StatelessWidget {
   final double? height;
@@ -25,8 +26,7 @@ class ProgramCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(22.r),
           ),
-          child:
-              Image.asset("assets/images/programimage.png", fit: BoxFit.fill),
+          child: Image.asset(ImageManager.programImage, fit: BoxFit.fill),
         ),
         Positioned(
             top: 8.h,

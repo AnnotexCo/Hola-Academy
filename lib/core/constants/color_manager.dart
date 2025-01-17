@@ -19,4 +19,5 @@ class ColorManager {
   static const Color blackFontColor = Color(0xff2D3135);
   static const Color blackColor = Color(0xff000000);
   static const Color lightYellow = Color(0xFFFAE0BA);
+  static const Color lightOrange = Color(0xFFF3B04C);
 }
