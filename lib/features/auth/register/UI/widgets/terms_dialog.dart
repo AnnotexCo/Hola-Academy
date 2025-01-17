@@ -31,7 +31,8 @@ class TermsDialog extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  spacing: 27.w,
+                  //spacing: 27.w,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Image.asset(
                       ImageManager.hola,
