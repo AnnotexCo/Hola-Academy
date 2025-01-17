@@ -9,6 +9,7 @@ import 'package:hola_academy/features/classes/program_levl_screen.dart';
 import 'package:hola_academy/features/home/home_screen.dart';
 import 'package:hola_academy/features/layout/layout_screen.dart';
 import 'package:hola_academy/features/onboarding/onbording.dart';
+import 'package:hola_academy/features/profile/UI/booked_screen.dart';
 import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
 import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
 import 'package:hola_academy/features/profile/UI/profile_screen.dart';
@@ -62,6 +63,11 @@ class AppRouter {
       case Routes.contactUsScreen:
         return MaterialPageRoute(builder: (_) => ContactUsScreen());
 
+      // Booked
+      case Routes.bookedScreen:
+        return MaterialPageRoute(builder: (_) => const BookedScreen());
+
+      // classes
       case Routes.classesScreen:
         return MaterialPageRoute(builder: (_) => ClassesScreen());
 

@@ -144,4 +144,7 @@ class AppString {
   static const String historyTransaction = "History Transaction";
   static const String myBalance = "My Balance";
 
+  // Booked Screen
+
+
 }

@@ -60,4 +60,7 @@ class ImageManager {
   // Transactions Icons
   static const String confirm = 'assets/icons/confirm.svg';
 
+  // Home Screen 
+  static const String  programImage = "assets/images/programimage.png";
+
 }
