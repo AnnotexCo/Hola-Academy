@@ -16,4 +16,5 @@ class Routes {
   static const String scheduleEvaluationScreen = "/scheduleEvaluationScreen";
   static const String bookProgramsScreen = "/bookProgramsScreen";
   static const String notFoundScreen = "/notFoundScreen";
+  static const String analyticsSkillsScreen = "/analyticsSkillsScreen";
 }
