@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:hola_academy/core/components/custom_app_bar.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
-import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/profile/UI/widgets/transaction_card.dart';
 
 class TransactionsScreen extends StatelessWidget {

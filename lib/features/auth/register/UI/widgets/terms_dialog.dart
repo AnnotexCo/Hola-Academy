@@ -7,9 +7,10 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
 class TermsDialog extends StatelessWidget {
-  void Function()? onAgree;
-  void Function()? onDisagree;
-  TermsDialog({super.key, required this.onAgree, required this.onDisagree});
+  final void Function()? onAgree;
+  final void Function()? onDisagree;
+  const TermsDialog(
+      {super.key, required this.onAgree, required this.onDisagree});
 
   @override
   Widget build(BuildContext context) {

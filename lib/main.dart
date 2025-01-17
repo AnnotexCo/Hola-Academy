@@ -1,24 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/Routing/app_router.dart';
+import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
-import 'package:hola_academy/features/classes/classes_screen.dart';
-import 'package:hola_academy/features/auth/login/UI/login_screen.dart';
-import 'package:hola_academy/features/book/UI/book_programs_screen.dart';
-import 'package:hola_academy/features/onboarding/onbording.dart';
-import 'package:hola_academy/features/auth/register/UI/register_screen.dart';
-
-import 'features/schedule_evaluation/UI/schedule_evaluation_screen.dart';
-import 'package:hola_academy/features/auth/login/UI/login_screen.dart';
-import 'package:hola_academy/features/book/UI/book_programs_screen.dart';
-import 'package:hola_academy/features/onboarding/onbording.dart';
-import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp(appRouter: AppRouter()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final AppRouter appRouter;
+  const MyApp({super.key, required this.appRouter});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +20,8 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
+          initialRoute: Routes.onboarding,
+          onGenerateRoute: appRouter.generateRoute,
           debugShowCheckedModeBanner: false,
           title: 'Hola Academy',
           theme: ThemeData(
@@ -37,7 +31,6 @@ class MyApp extends StatelessWidget {
                 seedColor: ColorManager.primaryOrangeColor),
             useMaterial3: true,
           ),
-          home: ClassesScreen(),
         );
       },
     );

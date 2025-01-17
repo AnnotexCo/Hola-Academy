@@ -14,7 +14,9 @@ class ProgramLevlScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 18.h,
           children: [
-            CustomAppBar(),
+            CustomAppBar(
+              title: "Level A",
+            ),
             ProgramLevlDetailWidget()
           ],
         ),

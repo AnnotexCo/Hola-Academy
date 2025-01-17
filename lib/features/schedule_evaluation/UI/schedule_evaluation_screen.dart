@@ -44,7 +44,7 @@ class _ScheduleEvaluationScreenState extends State<ScheduleEvaluationScreen> {
               itemBuilder: (context, index) {
                 bool isSelected = index == selectedDayIndex;
                 DateTime date = DateTime.now().add(Duration(days: index));
-                double scale = isSelected ? 1.0 : 0.9; 
+                double scale = isSelected ? 1.0 : 0.9;
                 double rotationAngle =
                     isSelected ? 0 : 0.01; // Slight  for unselected
 
@@ -153,7 +153,7 @@ class _ScheduleEvaluationScreenState extends State<ScheduleEvaluationScreen> {
                             Text(
                               'Level A',
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.8),
+                                color: Colors.white.withValues(alpha: 0.8),
                                 fontSize: 12.sp,
                               ),
                             ),
@@ -253,7 +253,7 @@ class DayTile extends StatelessWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
+                  color: Colors.black.withValues(alpha: 0.2),
                   blurRadius: 4,
                   offset: const Offset(0, 2),
                 ),

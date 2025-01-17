@@ -57,7 +57,7 @@ class _TapBarState extends State<TapBar> with SingleTickerProviderStateMixin {
           boxShadow: [
             BoxShadow(
               blurStyle: BlurStyle.inner,
-              color: Colors.black.withOpacity(0.1), // Shadow color
+              color: Colors.black.withValues(alpha: 0.1), // Shadow color
               spreadRadius: 0, // How wide the shadow spreads
               blurRadius: 4, // How soft the shadow is
               offset: Offset(0, 4), // The shadow's offset

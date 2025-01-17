@@ -6,14 +6,15 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
 class CustomProfileAppBar extends StatelessWidget {
-  bool? qrCode = false;
-  CustomProfileAppBar({super.key, this.qrCode});
+  final bool qrCode;
+  const CustomProfileAppBar({super.key, this.qrCode = false});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: 31.h,
+        vertical: 10.h,
+        horizontal: 31.w,
       ),
       child: Row(
           mainAxisSize: MainAxisSize.max,

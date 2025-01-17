@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/custom_app_bar.dart';
 import 'package:hola_academy/features/home/components/program_card.dart';
 
@@ -67,9 +68,9 @@ Age Range: Suitable for ages 3 to 60. \nGender: The program can be tailored for 
                                     return Padding(
                                       padding: EdgeInsets.only(right: 18.w),
                                       child: GestureDetector(
-                                        onTap: (){
-
-                                          
+                                        onTap: () {
+                                          Navigator.pushNamed(context,
+                                              Routes.programlevlScreen);
                                         },
                                         child: ProgramCard(
                                           backgroundColor: Color(0xffF7E9E9),
