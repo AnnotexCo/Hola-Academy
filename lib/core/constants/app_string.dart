@@ -137,4 +137,10 @@ class AppString {
   static const String programs = "Programs";
   static const String classes = "Classes";
   static const String available = "Available";
+
+  // Transactions Screen
+  static const String viewAllTransaction = "View All Transaction";
+  static const String historyTransaction = "History Transaction";
+  static const String myBalance = "My Balance";
+
 }

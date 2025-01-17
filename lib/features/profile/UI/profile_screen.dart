@@ -6,12 +6,19 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
 import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
+import 'package:hola_academy/features/profile/UI/terms_screen.dart';
+import 'package:hola_academy/features/profile/UI/transactions_screen.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +73,13 @@ class ProfileScreen extends StatelessWidget {
                 _buildMenuItem(
                   icon: ImageManager.transaction,
                   text: AppString.transaction,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return TransactionsScreen();
+                      },
+                    ));
+                  },
                 ),
                 _buildMenuItem(
                   icon: ImageManager.booking,
@@ -76,7 +89,13 @@ class ProfileScreen extends StatelessWidget {
                 _buildMenuItem(
                   icon: ImageManager.terms,
                   text: AppString.terms,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return TermsScreen();
+                      },
+                    ));
+                  },
                 ),
                 _buildMenuItem(
                   icon: ImageManager.sms,

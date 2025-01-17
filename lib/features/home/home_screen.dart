@@ -21,6 +21,9 @@ class HomeScreen extends StatelessWidget {
               spacing: 18.h,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(
+                  height: 13.h,
+                ),
                 WelcomeHeader(),
                 AddBaner(),
                 SizedBox(
