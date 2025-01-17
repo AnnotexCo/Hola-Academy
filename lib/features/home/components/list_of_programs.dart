@@ -4,12 +4,26 @@ import 'package:hola_academy/features/home/components/program_card.dart';
 
 class ListOfPrograms extends StatelessWidget {
   final String title;
-   const ListOfPrograms({super.key, required this.title});
+  final double? hight;
+  final double? width;
+  final String? text;
+  final Color? color;
+  final EdgeInsets? edgeInsets;
+  final Color? backgroundColor;
+  const ListOfPrograms(
+      {super.key,
+      required this.title,
+      this.hight,
+      this.width,
+      this.edgeInsets,
+      this.text,
+      this.color,
+      this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 18.0.w, top: 0, bottom: 0),
+      padding: edgeInsets ?? EdgeInsets.only(left: 18.0.w, top: 0, bottom: 0),
       child: SizedBox(
         height: 230.h,
         width: double.infinity,
@@ -34,7 +48,13 @@ class ListOfPrograms extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: EdgeInsets.only(right: 18.w),
-                      child: ProgramCard(),
+                      child: ProgramCard(
+                        backgroundColor: backgroundColor,
+                        color: color,
+                        text: text,
+                        height: hight?.h,
+                        width: width?.w,
+                      ),
                     );
                   }),
             ),
