@@ -8,6 +8,7 @@ import 'package:hola_academy/features/classes/detail_class_screen.dart';
 import 'package:hola_academy/features/classes/program_levl_screen.dart';
 import 'package:hola_academy/features/home/home_screen.dart';
 import 'package:hola_academy/features/layout/layout_screen.dart';
+import 'package:hola_academy/features/notifications/notifications_screen.dart';
 import 'package:hola_academy/features/onboarding/onbording.dart';
 import 'package:hola_academy/features/profile/UI/booked_screen.dart';
 import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
@@ -92,6 +93,8 @@ class AppRouter {
       // not found
       case Routes.notFoundScreen:
         return MaterialPageRoute(builder: (_) => const NotFoundScreen());
+      case Routes.notificationsScreen:
+        return MaterialPageRoute(builder: (_) => const NotificationsScreen());
 
       default:
         return null;

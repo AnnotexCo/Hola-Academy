@@ -6,7 +6,7 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/classes/classes_screen.dart';
 import 'package:hola_academy/features/home/home_screen.dart';
-import 'package:hola_academy/features/schedule_evaluation/UI/schedule_evaluation_screen.dart';
+import 'package:hola_academy/features/notifications/notifications_screen.dart';
 
 import '../profile/UI/profile_screen.dart';
 
@@ -24,7 +24,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
   final List<Widget> _screens = [
     HomeScreen(),
     ClassesScreen(),
-    ScheduleEvaluationScreen(),
+    NotificationsScreen(),
     ProfileScreen()
   ];
 
