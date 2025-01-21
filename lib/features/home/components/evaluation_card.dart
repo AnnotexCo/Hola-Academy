@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 
+import '../../../core/Routing/routes.dart';
+
 class EvaluationAppointmentCard extends StatelessWidget {
   final VoidCallback? onScheduleCheck;
   final String location;
@@ -52,7 +54,7 @@ class EvaluationAppointmentCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildScheduleButton(),
+                      _buildScheduleButton(context),
                       SizedBox(height: 12.h),
                       _buildLocationInfo(),
                       SizedBox(height: 12.h),
@@ -78,7 +80,7 @@ class EvaluationAppointmentCard extends StatelessWidget {
     );
   }
 
-  Widget _buildScheduleButton() {
+  Widget _buildScheduleButton(context) {
     return Row(
       children: [
         Icon(
@@ -89,7 +91,10 @@ class EvaluationAppointmentCard extends StatelessWidget {
         SizedBox(width: 8.w),
         Expanded(
           child: InkWell(
-            onTap: onScheduleCheck,
+            onTap: () {
+              Navigator.pushNamed(context, Routes.scheduleEvaluationScreen);
+            },
+            //  onScheduleCheck,
             child: RichText(
               text: TextSpan(
                 text: 'To Check Your Available Schedule, ',
