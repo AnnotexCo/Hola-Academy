@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constants/color_manager.dart';
 
 class GeneralTextFormField extends StatelessWidget {
-  final String label;
+  final String? label;
   final String hint;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -28,7 +28,7 @@ class GeneralTextFormField extends StatelessWidget {
 
   const GeneralTextFormField({
     super.key,
-    required this.label,
+    this.label,
     required this.hint,
     this.prefixIcon,
     this.suffixIcon,
@@ -75,10 +75,11 @@ class GeneralTextFormField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Label
+        if(label!=null && label!.isNotEmpty)
         Padding(
           padding: EdgeInsets.only(left: 8.w, bottom: 8.h),
           child: Text(
-            label,
+            label!,
             style: labelStyle ??
                 TextStyle(
                   fontSize: 16.sp,
