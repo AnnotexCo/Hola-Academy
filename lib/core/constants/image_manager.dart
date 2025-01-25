@@ -63,4 +63,7 @@ class ImageManager {
   // Home Screen 
   static const String  programImage = "assets/images/programimage.png";
 
+  //Admin Home Screen
+  static const String  addBanner = "assets/images/ads-baner.png";
+
 }

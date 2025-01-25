@@ -19,5 +19,7 @@ class Routes {
   static const String bookedScreen = "/bookedScreen";
   static const String analyticsSkillsScreen = "/analyticsSkillsScreen";
   static const String notificationsScreen = "/notificationsScreen";
+  static const String homeAdminScreen = "/homeAdminScreen";
+  static const String requestsScreen = "/requestsScreen";
   
 }
