@@ -21,5 +21,6 @@ class Routes {
   static const String notificationsScreen = "/notificationsScreen";
   static const String homeAdminScreen = "/homeAdminScreen";
   static const String requestsScreen = "/requestsScreen";
-  
+  static const String traineesScreen = "/traineesScreen";
+
 }

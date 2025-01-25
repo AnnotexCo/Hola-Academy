@@ -16,6 +16,7 @@ import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
 import 'package:hola_academy/features/profile/UI/profile_screen.dart';
 import '../../features/Admin/home/UI/home_admin_screen.dart';
 import '../../features/Admin/requests/UI/requests_screen.dart';
+import '../../features/Admin/trainees/UI/trainees_screen.dart';
 import '../../features/analytics/UI/analytics_skills_screen.dart';
 import '../../features/auth/register/UI/register_screen.dart';
 import '../../features/book/UI/book_programs_screen.dart';
@@ -104,6 +105,9 @@ class AppRouter {
 
       case Routes.requestsScreen:
         return MaterialPageRoute(builder: (_) => RequestsScreen());
+
+      case Routes.traineesScreen:
+        return MaterialPageRoute(builder: (_) => const TraineesScreen());
 
       default:
         return null;
