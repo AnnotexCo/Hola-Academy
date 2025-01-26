@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hola_academy/features/admin/admin_transactions_screen.dart';
 import 'package:hola_academy/features/auth/forgot_password/UI/forgot_password_screen.dart';
 import 'package:hola_academy/features/auth/login/UI/login_screen.dart';
 import 'package:hola_academy/features/auth/reset_password/UI/reset_password.dart';
@@ -95,6 +96,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const NotFoundScreen());
       case Routes.notificationsScreen:
         return MaterialPageRoute(builder: (_) => const NotificationsScreen());
+
+      // admin transactions
+      case Routes.adminTransactionsScreen:
+        return MaterialPageRoute(builder: (_) => AdminTransactionsScreen());
 
       default:
         return null;
