@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
-          initialRoute: Routes.homeAdminScreen,
+          initialRoute: Routes.homeScreenCoach,
           onGenerateRoute: appRouter.generateRoute,
           debugShowCheckedModeBanner: false,
           title: 'Hola Academy',
@@ -36,3 +36,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+//resizeToAvoidBottomInset: true,

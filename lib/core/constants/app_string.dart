@@ -158,4 +158,17 @@ class AppString {
   static const String email = "Email";
   static const String category = "Category";
   static const String level = "Level";
+
+  // Evaluation Screen
+  static const String evaluate = "Evaluate";
+  static const String skills = "Skills";
+  static const String armStrokeTechnique = "Arm Stroke Technique";
+  static const String legKickCoordination = "Leg Kick Coordination";
+  static const String breathingPatternConsistency = "Breathing Pattern Consistency";
+  static const String headPosition = "Head Positioning";
+  static const String coreStabilityWhileFloating = "Core Stability While Floating";
+  static const String save = "Save";
+  static const String cancel = "Cancel";
+  static const String feedback = "Add your feedback:";
+  static const String feedbackHint = "Provide feedback on the trainee’s performance";
 }

@@ -25,4 +25,6 @@ class ColorManager {
   static const Color darkRedColor = Color(0xffAA3C23);
 
   static const Color softPinkColor = Color(0xffF7E9E9);
+  static const Color itemRedColor = Color(0xffD1806E);
+  static const Color softGrey = Color(0xffF0F0F0);
 }
