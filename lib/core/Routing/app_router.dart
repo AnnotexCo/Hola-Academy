@@ -7,6 +7,7 @@ import 'package:hola_academy/features/classes/classes_screen.dart';
 import 'package:hola_academy/features/classes/detail_class_screen.dart';
 import 'package:hola_academy/features/classes/program_levl_screen.dart';
 import 'package:hola_academy/features/home/home_screen.dart';
+import 'package:hola_academy/features/home/home_screen_coach.dart';
 import 'package:hola_academy/features/layout/layout_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
 import 'package:hola_academy/features/onboarding/onbording.dart';
@@ -27,6 +28,10 @@ class AppRouter {
       // home screen
       case Routes.homeScreen:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+
+      // home screen
+      case Routes.homeScreenCoach:
+        return MaterialPageRoute(builder: (_) => const HomeScreenCoach());
 
       //onBoarding
       case Routes.onboarding:

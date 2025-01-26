@@ -20,7 +20,6 @@ class ImageManager {
   static const String ellipse = "assets/icons/ellipse.svg";
   static const String hola = "assets/images/hola.png";
 
-
   // login Icons
   static const String googleLogo = 'assets/icons/google_logo.svg';
   static const String appleLogo = 'assets/icons/apple_logo.svg';
@@ -30,7 +29,6 @@ class ImageManager {
   static const String notification = 'assets/icons/notification_icon.svg';
   static const String profile = 'assets/icons/profile_icon.svg';
   static const String home = 'assets/icons/home_icon.svg';
-
 
   //Profile Icons
   static const String profileFrame = 'assets/images/profile_screen_frame.png';
@@ -52,15 +50,20 @@ class ImageManager {
   static const String tiktok = 'assets/social/tiktok.svg';
   static const String whatsapp = 'assets/social/whatsapp.svg';
 
-
 // book icons
   static const String upload = 'assets/icons/upload.svg';
-  static const String successfullyPurchased = 'assets/images/successful-purchase.svg';
+  static const String successfullyPurchased =
+      'assets/images/successful-purchase.svg';
 
   // Transactions Icons
   static const String confirm = 'assets/icons/confirm.svg';
 
-  // Home Screen 
-  static const String  programImage = "assets/images/programimage.png";
+  // Home Screen
+  static const String programImage = "assets/images/programimage.png";
+  static const String backgroundSession = "assets/images/backgroundSession.png";
+  static const String reminderImageCoach =
+      "assets/images/reminderSessionImage.png";
 
+  static const String evaluateBackgroundVector =
+      "assets/icons/evaluatevector1.svg";
 }
