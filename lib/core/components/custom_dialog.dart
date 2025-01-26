@@ -19,7 +19,7 @@ class CustomDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0.r),
+        borderRadius: BorderRadius.circular(30.0.r),
       ),
       elevation: 0.0,
       backgroundColor: Colors.transparent,
@@ -31,7 +31,7 @@ class CustomDialog extends StatelessWidget {
             margin: EdgeInsets.only(top: 16.h),
             decoration: BoxDecoration(
               color: const Color(0xFFFEF5E9),
-              borderRadius: BorderRadius.circular(16.r),
+              borderRadius: BorderRadius.circular(30.r),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -43,22 +43,22 @@ class CustomDialog extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CircleAvatar(
-                        radius: 30.r, 
+                        radius: 30.r,
                         backgroundImage: AssetImage(imageUrl!),
                       ),
-                      SizedBox(width: 8.w),
-             Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 24.sp,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFFF09C1F),
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+                      SizedBox(width: 19.w),
+                      Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 24.sp,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFFF09C1F),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ],
                   ),
-               
+
                 SizedBox(height: 16.h),
 
                 // Components

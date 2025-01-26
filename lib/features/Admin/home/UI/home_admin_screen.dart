@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/features/home/components/timeline_widget.dart';
 
@@ -22,7 +23,6 @@ class HomeAdminScreen extends StatelessWidget {
                 const WelcomeWidget(),
                 SizedBox(height: 16.h),
                 const AdWidget(),
-           
                 SizedBox(height: 16.h),
                 SizedBox(
                   height: 80.h,
@@ -33,6 +33,10 @@ class HomeAdminScreen extends StatelessWidget {
                 SectionHeader(
                   title: 'New Requests (3)',
                   action: 'View All',
+                  onPressed: () {
+                    // Navigate to the new requests screen
+                    Navigator.of(context).pushNamed(Routes.requestsScreen);
+                  },
                 ),
                 SizedBox(height: 16.h),
                 const NewRequestsSection(),
@@ -47,6 +51,10 @@ class HomeAdminScreen extends StatelessWidget {
                 SectionHeader(
                   title: 'Trainee',
                   action: 'View All',
+                  onPressed: () {
+                    // Navigate to the new requests screen
+                    Navigator.of(context).pushNamed(Routes.traineesScreen);
+                  },
                 ),
                 SizedBox(height: 16.h),
                 const CoachesSection(),
@@ -63,12 +71,14 @@ class SectionHeader extends StatelessWidget {
   final String title;
   final String? action;
   final Color? color;
+  final void Function()? onPressed;
 
   const SectionHeader({
     super.key,
     required this.title,
-     this.action,
+    this.action,
     this.color,
+    this.onPressed,
   });
 
   @override
@@ -85,17 +95,17 @@ class SectionHeader extends StatelessWidget {
           ),
         ),
         if (action != null && action!.isNotEmpty)
-        TextButton(
-          onPressed: () {},
-          child: Text(
-            action!,
-            style: TextStyle(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w400,
-              color: color ?? ColorManager.textRedColor,
+          TextButton(
+            onPressed: onPressed,
+            child: Text(
+              action!,
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w400,
+                color: color ?? ColorManager.textRedColor,
+              ),
             ),
           ),
-        ),
       ],
     );
   }
@@ -199,7 +209,7 @@ class CurvedBarPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
-      ..color = ColorManager.primaryOrangeColor 
+      ..color = ColorManager.primaryOrangeColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = 6; // Adjust the thickness of the bar
 
@@ -246,7 +256,7 @@ class AdWidget extends StatelessWidget {
           // Text Section
           Positioned(
             top: 20.h,
-            left: 16.w,
+            //left: 16.w,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

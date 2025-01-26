@@ -70,4 +70,7 @@ class ImageManager {
   //Admin Home Screen
   static const String  addBanner = "assets/images/ads-baner.png";
 
+  // Admin Trainee Screen
+  static const String category = 'assets/icons/category.svg';
+
 }
