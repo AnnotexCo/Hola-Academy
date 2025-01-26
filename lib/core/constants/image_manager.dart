@@ -66,4 +66,7 @@ class ImageManager {
 
   static const String evaluateBackgroundVector =
       "assets/icons/evaluatevector1.svg";
+  //Admin Home Screen
+  static const String  addBanner = "assets/images/ads-baner.png";
+
 }
