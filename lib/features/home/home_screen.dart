@@ -16,16 +16,16 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: ColorManager.backgroundColor,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.0.w),
+          padding: EdgeInsets.symmetric(horizontal: 20.0.w),
           child: SingleChildScrollView(
             child: Column(
               spacing: 18.h,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
                   height: 13.h,
                 ),
-                WelcomeHeader(),
+                Align(alignment: Alignment.centerLeft, child: WelcomeHeader()),
                 AddBaner(),
                 SizedBox(
                   height: 80.h,
