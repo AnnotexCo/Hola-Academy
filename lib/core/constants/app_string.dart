@@ -147,4 +147,9 @@ class AppString {
   // Booked Screen
 
 
+// Admin *********************************
+  //Transactions Screen
+  static const String moneyIn = "Money in";
+  static const String moneyOut = "Money out";
+
 }
