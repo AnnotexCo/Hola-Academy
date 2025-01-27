@@ -26,5 +26,6 @@ class Routes {
   // Admin Routes
   static const String homeAdminScreen = "/homeAdminScreen";
   static const String adminTransactionsScreen = "/adminTransactionsScreen";  
+  static const String adminQrCodeScannerScreen = "/adminQrCodeScannerScreen";
 
 }

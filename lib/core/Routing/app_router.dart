@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hola_academy/features/admin/scanner/qr_code_scanner_screen.dart';
 import 'package:hola_academy/features/admin/transactions/admin_transactions_screen.dart';
 import 'package:hola_academy/features/auth/forgot_password/UI/forgot_password_screen.dart';
 import 'package:hola_academy/features/auth/login/UI/login_screen.dart';
@@ -115,9 +116,11 @@ class AppRouter {
       case Routes.traineesScreen:
         return MaterialPageRoute(builder: (_) => const TraineesScreen());
 
-      // admin transactions
       case Routes.adminTransactionsScreen:
         return MaterialPageRoute(builder: (_) => AdminTransactionsScreen());
+
+      case Routes.adminQrCodeScannerScreen:
+        return MaterialPageRoute(builder: (_) => const QRCodeScannerScreen());
 
       default:
         return null;
