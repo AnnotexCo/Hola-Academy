@@ -6,15 +6,15 @@ class AddBaner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 108.h,
-      width: 362.w,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.r),
-      ),
-      child: Image.asset(
-        "assets/images/addpaner.png",
-        fit: BoxFit.contain,
+    return SizedBox(
+      height: 107.h,
+      width: 380.w,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20.r),
+        child: Image.asset(
+          "assets/images/addpaner.png",
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
