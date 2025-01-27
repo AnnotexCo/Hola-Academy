@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QRCodeScannerScreen extends StatefulWidget {
@@ -88,3 +88,4 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
     super.dispose();
   }
 }
+*/

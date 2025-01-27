@@ -119,8 +119,8 @@ class AppRouter {
       case Routes.adminTransactionsScreen:
         return MaterialPageRoute(builder: (_) => AdminTransactionsScreen());
 
-      case Routes.adminQrCodeScannerScreen:
-        return MaterialPageRoute(builder: (_) => const QRCodeScannerScreen());
+      //case Routes.adminQrCodeScannerScreen:
+        //return MaterialPageRoute(builder: (_) => const QRCodeScannerScreen());
 
       default:
         return null;
