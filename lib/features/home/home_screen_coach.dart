@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/components/calender_widget.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
+import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/home/components/add_baner.dart';
 
 import 'package:hola_academy/features/home/components/timeline_widget.dart';
 import 'package:hola_academy/features/home/components/welcome_header.dart';
 import 'package:hola_academy/features/home/components_coach/evaluate_card.dart';
 import 'package:hola_academy/features/home/components_coach/session_card.dart';
+import 'package:hola_academy/features/trainee/widgets/evaluate_dialog.dart';
+import 'package:hola_academy/features/trainee/widgets/feedback_dialog.dart';
 
 class HomeScreenCoach extends StatelessWidget {
   const HomeScreenCoach({super.key});
@@ -28,7 +31,22 @@ class HomeScreenCoach extends StatelessWidget {
                   height: 13.h,
                 ),
                 Align(alignment: Alignment.centerLeft, child: WelcomeHeader()),
-                AddBaner(),
+                GestureDetector(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return EvaluateDialog(
+                              imageUrl: ImageManager.pic,
+                              traineeName: 'Robert Fox',
+                              courseTitle: 'Basic Swimming Techniques',
+                              onCancel: () {
+                                Navigator.of(context).pop();
+                              },
+                            );
+                          });
+                    },
+                    child: AddBaner()),
                 SizedBox(
                   height: 80.h,
                   width: double.infinity,

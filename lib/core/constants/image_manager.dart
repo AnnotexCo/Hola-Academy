@@ -57,6 +57,7 @@ class ImageManager {
 
   // Transactions Icons
   static const String confirm = 'assets/icons/confirm.svg';
+  static const String expenses = 'assets/icons/expenses.svg';
 
   // Home Screen
   static const String programImage = "assets/images/programimage.png";
@@ -68,5 +69,8 @@ class ImageManager {
       "assets/icons/evaluatevector1.svg";
   //Admin Home Screen
   static const String  addBanner = "assets/images/ads-baner.png";
+
+  // Admin Trainee Screen
+  static const String category = 'assets/icons/category.svg';
 
 }

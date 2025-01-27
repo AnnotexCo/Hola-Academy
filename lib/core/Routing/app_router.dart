@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hola_academy/features/admin/admin_transactions_screen.dart';
+import 'package:hola_academy/features/admin/transactions/admin_transactions_screen.dart';
 import 'package:hola_academy/features/auth/forgot_password/UI/forgot_password_screen.dart';
 import 'package:hola_academy/features/auth/login/UI/login_screen.dart';
 import 'package:hola_academy/features/auth/reset_password/UI/reset_password.dart';

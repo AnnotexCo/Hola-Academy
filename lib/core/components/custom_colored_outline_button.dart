@@ -8,11 +8,13 @@ class CustomColoredOutlineButton extends StatelessWidget {
   final double height;
   final double radius;
   final String title;
+  final Color? backgroundColor;
   final TextStyle style;
   const CustomColoredOutlineButton(
       {super.key,
       required this.radius,
       required this.title,
+      this.backgroundColor,
       required this.style,
       required this.height,
       required this.width,
@@ -26,7 +28,7 @@ class CustomColoredOutlineButton extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: ColorManager.whiteColor,
+          color: backgroundColor??ColorManager.whiteColor,
           borderRadius: BorderRadius.circular(radius),
           border: Border.all(
             color: ColorManager.primaryOrangeColor, // Border color

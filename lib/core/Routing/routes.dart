@@ -20,10 +20,11 @@ class Routes {
   static const String analyticsSkillsScreen = "/analyticsSkillsScreen";
   static const String notificationsScreen = "/notificationsScreen";
   static const String homeScreenCoach = "/homeScreenCoach";
-  static const String homeAdminScreen = "/homeAdminScreen";
+
   static const String requestsScreen = "/requestsScreen";
   static const String traineesScreen = "/traineesScreen";
   // Admin Routes
+  static const String homeAdminScreen = "/homeAdminScreen";
   static const String adminTransactionsScreen = "/adminTransactionsScreen";  
 
 }
