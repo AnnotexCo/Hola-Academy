@@ -33,12 +33,15 @@ class HomeScreen extends StatelessWidget {
                   child: TimelineWidget(),
                 ),
                 EvaluationAppointmentCard(),
-                Text(
-                  "Programs",
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF6C757D),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Programs",
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF6C757D),
+                    ),
                   ),
                 ),
                 ListOfPrograms(

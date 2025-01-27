@@ -56,54 +56,47 @@ class HomeScreenCoach extends StatelessWidget {
                   title: "You Have a Swimming Level A Session On Monday",
                   time: "5:00 PM",
                 ),
-                Padding(
-                  padding: EdgeInsets.only(left: 18.0.w, top: 0, bottom: 0),
-                  child: SizedBox(
-                    height: 300.h,
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      spacing: 18.h,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Evaluate Students",
-                            style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xff6C757D),
-                            )),
-                        SizedBox(
-                          height: 245.h,
-                          width: double.infinity,
-                          child: ListView(
-                            padding: EdgeInsets.zero,
-                            scrollDirection: Axis.horizontal,
-                            children: [
-                              EvaluateCard(
-                                backgroundColor: Color(0xffF5BD69),
-                                title: "Educational",
-                                vectorColor: Color(0xffBD5151),
-                              ),
-                              SizedBox(
-                                width: 18.w,
-                              ),
-                              EvaluateCard(
-                                backgroundColor: Color(0xffBD5151),
-                                title: "Training",
-                                vectorColor: ColorManager.whiteColor,
-                              ),
-                            ],
-                          ),
+                SizedBox(
+                  height: 300.h,
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    spacing: 18.h,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Evaluate Students",
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xff6C757D),
+                          )),
+                      SizedBox(
+                        height: 245.h,
+                        width: double.infinity,
+                        child: ListView(
+                          padding: EdgeInsets.zero,
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            EvaluateCard(
+                              backgroundColor: Color(0xffF5BD69),
+                              title: "Educational",
+                              vectorColor: Color(0xffBD5151),
+                            ),
+                            SizedBox(
+                              width: 18.w,
+                            ),
+                            EvaluateCard(
+                              backgroundColor: Color(0xffBD5151),
+                              title: "Training",
+                              vectorColor: ColorManager.whiteColor,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                CalendarWidget(
-                  eventTitle: 'Hi',
-                  eventDate: "2025-1-5",
-                  eventTime: '5:00 PM',
-                ),
+                CalendarWidget(),
                 SizedBox(
                   height: 13.h,
                 ),

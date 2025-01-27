@@ -1,145 +1,187 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarWidget extends StatefulWidget {
-  final String eventTitle;
-  final String eventDate;
-  final String eventTime;
-
-  const CalendarWidget({
-    super.key,
-    required this.eventTitle,
-    required this.eventDate,
-    required this.eventTime,
-  });
+  const CalendarWidget({super.key});
 
   @override
   _CalendarWidgetState createState() => _CalendarWidgetState();
 }
 
 class _CalendarWidgetState extends State<CalendarWidget> {
-  DateTime _focusedDay = DateTime.now();
+  final DateTime _focusedDay = DateTime(2025, 1, 1);
   DateTime? _selectedDay;
+
+  final Set<DateTime> pastLessons = {
+    DateTime.utc(2025, 2, 1),
+    DateTime.utc(2025, 2, 5),
+    DateTime.utc(2025, 2, 10),
+    DateTime.utc(2025, 2, 15),
+  };
+
+  final Set<DateTime> upcomingLessons = {
+    DateTime.utc(2025, 2, 17),
+    DateTime.utc(2025, 2, 19),
+    DateTime.utc(2025, 2, 24),
+    DateTime.utc(2025, 2, 26),
+  };
+
+  final Set<DateTime> missedLessons = {
+    DateTime.utc(2025, 1, 29),
+    DateTime.utc(2025, 2, 3),
+    DateTime.utc(2025, 2, 14),
+  };
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          height: 298.h,
           width: 320.w,
           decoration: BoxDecoration(
-              color: ColorManager.backgroundColor,
-              borderRadius: BorderRadius.circular(10.r),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    blurStyle: BlurStyle.outer,
-                    offset: Offset(0, 2))
-              ]),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.r),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
           child: TableCalendar(
-            rowHeight: 40.h,
+            availableGestures: AvailableGestures.horizontalSwipe,
+            firstDay: DateTime.utc(2025, 1, 1),
+            lastDay: DateTime.utc(2030, 12, 31),
+            focusedDay: _focusedDay,
             calendarFormat: CalendarFormat.month,
             daysOfWeekHeight: 30,
-            daysOfWeekVisible: true,
-            firstDay: DateTime.utc(2020, 1, 1),
-            lastDay: DateTime.utc(2030, 12, 31),
             daysOfWeekStyle: DaysOfWeekStyle(
-                decoration: BoxDecoration(
-                  color: ColorManager.backgroundColor,
-                ),
+                weekdayStyle: TextStyle(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xff7E818C)),
                 weekendStyle:
-                    TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w400),
-                weekdayStyle:
-                    TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w400)),
-            focusedDay: _focusedDay,
+                    TextStyle(fontSize: 12.sp, color: Color(0xff7E818C))),
+            rowHeight: 40.h,
             selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-            onDaySelected: (selectedDay, focusedDay) {
-              setState(() {
-                _selectedDay = selectedDay;
-                _focusedDay = focusedDay;
-              });
-            },
+            calendarBuilders: CalendarBuilders(
+              defaultBuilder: (context, date, _) {
+                if (_containsDate(pastLessons, date)) {
+                  return _buildLessonMarker(date, Color(0xffE0A89C));
+                } else if (_containsDate(upcomingLessons, date)) {
+                  return _buildLessonMarker(date, Color(0xffBB4227));
+                } else if (_containsDate(missedLessons, date)) {
+                  return _buildMissedLessonMarker(date);
+                }
+                return null;
+              },
+            ),
             calendarStyle: CalendarStyle(
-              tablePadding: EdgeInsets.symmetric(horizontal: 20.w),
-              cellPadding: EdgeInsets.only(top: 8),
-              cellAlignment: Alignment.topCenter,
-              rowDecoration: BoxDecoration(
-                color: ColorManager.backgroundColor,
-              ),
-              cellMargin: EdgeInsets.zero,
-              weekNumberTextStyle:
-                  TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
-              rangeStartTextStyle:
-                  TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
-              rangeEndTextStyle:
-                  TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
-              disabledTextStyle:
-                  TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
-              holidayTextStyle:
-                  TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
-              weekendTextStyle:
-                  TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
-              outsideTextStyle:
-                  TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
-              withinRangeTextStyle:
-                  TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
-              todayTextStyle:
-                  TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
-              selectedTextStyle:
-                  TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
-              defaultTextStyle:
-                  TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
+              todayTextStyle: TextStyle(color: Colors.black, fontSize: 14.sp),
               todayDecoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.grey,
                 shape: BoxShape.circle,
               ),
+              selectedTextStyle: TextStyle(fontSize: 14.sp),
               selectedDecoration: BoxDecoration(
-                color: Colors.orange,
                 shape: BoxShape.circle,
               ),
-              outsideDaysVisible: false,
+              tableBorder: TableBorder(borderRadius: BorderRadius.circular(50)),
+              outsideDaysVisible: true,
+              outsideTextStyle: TextStyle(fontSize: 14.sp, color: Colors.grey),
+              defaultTextStyle: TextStyle(fontSize: 14.sp),
             ),
             headerStyle: HeaderStyle(
-              formatButtonShowsNext: false,
-              headerMargin: EdgeInsets.symmetric(horizontal: 20.w),
-              headerPadding: EdgeInsets.zero,
-              rightChevronIcon: Icon(
-                Icons.arrow_forward_ios_outlined,
-                color: Color(0xffFE7700),
-                size: 15.sp,
-              ),
-              leftChevronIcon: Icon(
-                size: 15.sp,
-                Icons.arrow_back_ios_new_rounded,
-                color: Color(0xffFE7700),
-              ),
-              formatButtonVisible: false,
               titleCentered: true,
-              formatButtonPadding: EdgeInsets.all(2.sp),
-              formatButtonDecoration: BoxDecoration(
-                color: Color(0xffADD8E6),
-                borderRadius: BorderRadius.circular(3.r),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
-              ),
+              formatButtonVisible: false,
+              rightChevronIcon: Icon(Icons.arrow_forward_ios_outlined,
+                  size: 15.sp, color: Colors.orange),
+              leftChevronIcon: Icon(Icons.arrow_back_ios_new_rounded,
+                  size: 15.sp, color: Colors.orange),
               titleTextStyle:
-                  TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w700),
-              formatButtonTextStyle: TextStyle(
-                  backgroundColor: Color(0xffADD8E6),
-                  fontSize: 10.sp,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xff434050)),
+                  TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
             ),
           ),
         ),
+        SizedBox(height: 10.h),
+        Align(alignment: Alignment.centerLeft, child: _buildLegend()),
+      ],
+    );
+  }
+
+  bool _containsDate(Set<DateTime> dates, DateTime date) {
+    return dates.any((d) => isSameDay(d, date));
+  }
+
+  Widget _buildLessonMarker(DateTime date, Color color) {
+    return Center(
+      child: Container(
+        width: 24,
+        height: 24,
+        decoration: BoxDecoration(
+          color: color,
+          shape: BoxShape.circle,
+        ),
+        child: Center(
+          child: Text(
+            '${date.day}',
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w400,
+                fontSize: 14.sp),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMissedLessonMarker(DateTime date) {
+    return Center(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          _buildLessonMarker(date, Color(0xffB96024)),
+          Icon(Icons.close, color: Colors.white, size: 26.sp),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLegend() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _buildLegendItem(Color(0xffE0A89C), "Past Lessons"),
+        SizedBox(width: 20.w),
+        _buildLegendItem(Color(0xffBB4227), "Upcoming Lessons"),
+        SizedBox(width: 30.w),
+      ],
+    );
+  }
+
+  Widget _buildLegendItem(Color color, String label, {IconData? icon}) {
+    return Row(
+      children: [
+        Container(
+          width: 18.w,
+          height: 18.h,
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.circle,
+          ),
+          child:
+              icon != null ? Icon(icon, color: Colors.white, size: 12) : null,
+        ),
+        SizedBox(width: 4.w),
+        Text(label,
+            style: TextStyle(
+                fontSize: 14.sp,
+                color: Color(0xff9DA3A8),
+                fontWeight: FontWeight.w400)),
       ],
     );
   }
