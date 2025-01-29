@@ -144,7 +144,7 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
                       child: _profileImage != null
                           ? Image.file(_profileImage!, fit: BoxFit.fill)
                           : Image.network(
-                              'https://s3-alpha-sig.figma.com/img/e915/f882/38ac6007aa5be950081f8f386a727a10?Expires=1737936000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=q7Gqf~xP2DuXMzmxmyIllwcM4Bi2JqGk~M78tq5nYVmVHgqta1RtLLVgxx~UkJgYfaiZpk090R7glwe6Y9DP3CO0ItgZW~RrpJqcmzMoalU9YR8hfUm~azHvjtc1xfCaaExOQnP6UV1aOPvx8QizON25RBlvYizobt3jTiqVmKcL0pwIcaSFAh1qQ6fe5GayPDxfW9Ds~8fiyqxVzK0l6zl~nKa9L-otRwWfs5NL~6R3kHhmmwuH2P9Vjji8yo192lzPi-TRxkIY9JRzX1zCMPK57N4cRGMvMO4tnW0gZxlDjAWuDzzpsYVtw5efQLCbQ-hQMM31vAXcr1g-RI8Tlg__'), // Replace with your image URL
+                              'https://s3-alpha-sig.figma.com/img/e915/f882/38ac6007aa5be950081f8f386a727a10?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=hiBut43BEiezw7m5NASleNYmzS9ziNOyQwj14kS9CtjVkZGITJghYIRAldrTH1OyxwSXz22e8fgTtrRG3WJw71uOrpLM9-Wt9-6ock3dQLpCTqCCCXpDC~y6HSo1Ss9K1e7iWdCpdqA-omyk0LiafqJ4jQs4Ra~lEqnSX0bKrZM5x9t37F74rQPXbXdZG1B~yngERKh-1EKQOz97k3bid33Wa~HXvGu~PdrbC5Ac6-yR8KTc4CiHImZm2fcTlJIuXIPaCd115nsVC4NG8oeZNJUzC0i1us7Sb5A3ifygBZTgYqJwUeA9bXpxbVV5PSlxO2G8RrEcGcg-ElwdC6HJdA__'), // Replace with your image URL
                     ),
                   ),
                 ),

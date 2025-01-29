@@ -20,6 +20,7 @@ class Routes {
   static const String analyticsSkillsScreen = "/analyticsSkillsScreen";
   static const String notificationsScreen = "/notificationsScreen";
   static const String homeScreenCoach = "/homeScreenCoach";
+  static const String splashScreen = "/splashScreen";
 
   static const String requestsScreen = "/requestsScreen";
   static const String traineesScreen = "/traineesScreen";
@@ -27,5 +28,8 @@ class Routes {
   static const String homeAdminScreen = "/homeAdminScreen";
   static const String adminTransactionsScreen = "/adminTransactionsScreen";  
   static const String adminQrCodeScannerScreen = "/adminQrCodeScannerScreen";
+
+  // Logout Routes
+  static const String logoutScreen = "/logoutScreen";
 
 }

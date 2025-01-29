@@ -3,6 +3,7 @@ import 'package:hola_academy/features/admin/scanner/qr_code_scanner_screen.dart'
 import 'package:hola_academy/features/admin/transactions/admin_transactions_screen.dart';
 import 'package:hola_academy/features/auth/forgot_password/UI/forgot_password_screen.dart';
 import 'package:hola_academy/features/auth/login/UI/login_screen.dart';
+import 'package:hola_academy/features/auth/logout/logout_screen.dart';
 import 'package:hola_academy/features/auth/reset_password/UI/reset_password.dart';
 import 'package:hola_academy/features/auth/verification/UI/verfication_screen.dart';
 import 'package:hola_academy/features/classes/classes_screen.dart';
@@ -17,6 +18,7 @@ import 'package:hola_academy/features/profile/UI/booked_screen.dart';
 import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
 import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
 import 'package:hola_academy/features/profile/UI/profile_screen.dart';
+import 'package:hola_academy/features/splash/splash_screen.dart';
 import '../../features/Admin/home/UI/home_admin_screen.dart';
 import '../../features/Admin/requests/UI/requests_screen.dart';
 import '../../features/Admin/trainees/UI/trainees_screen.dart';
@@ -121,6 +123,11 @@ class AppRouter {
 
       //case Routes.adminQrCodeScannerScreen:
         //return MaterialPageRoute(builder: (_) => const QRCodeScannerScreen());
+      case Routes.splashScreen:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
+     
+      case Routes.logoutScreen:
+        return MaterialPageRoute(builder: (_) => const LogoutScreen());
 
       default:
         return null;

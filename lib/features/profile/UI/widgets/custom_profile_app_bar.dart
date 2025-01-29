@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
@@ -64,25 +65,34 @@ class CustomProfileAppBar extends StatelessWidget {
                 SizedBox(
                   width: 20.w,
                 ),
-                SvgPicture.asset(ImageManager.logOut),
-                ShaderMask(
-                  shaderCallback: (bounds) => LinearGradient(
-                    colors: [
-                      ColorManager.linearGradient1,
-                      ColorManager.linearGradient2,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.logoutScreen);
+                  },
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(ImageManager.logOut),
+                      ShaderMask(
+                        shaderCallback: (bounds) => LinearGradient(
+                          colors: [
+                            ColorManager.linearGradient1,
+                            ColorManager.linearGradient2,
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ).createShader(
+                            Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
+                        child: Text(
+                          AppString.logOut,
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontFamily: 'Besley',
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white, // Important: set a base color
+                          ),
+                        ),
+                      ),
                     ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ).createShader(
-                      Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
-                  child: Text(
-                    AppString.logOut,
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontFamily: 'Besley',
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white, // Important: set a base color
-                    ),
                   ),
                 ),
               ],

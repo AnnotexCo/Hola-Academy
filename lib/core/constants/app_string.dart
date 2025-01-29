@@ -171,4 +171,7 @@ class AppString {
   static const String cancel = "Cancel";
   static const String feedback = "Add your feedback:";
   static const String feedbackHint = "Provide feedback on the trainee’s performance";
+
+  // Logout Screen
+  static const String logingOut = "Logging out";
 }
