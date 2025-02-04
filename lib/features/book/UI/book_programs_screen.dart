@@ -12,6 +12,7 @@ import '../../not_found/not_found_screen.dart';
 import 'widgets/additional_notes_section.dart';
 import 'widgets/parent_guardian_section.dart';
 import 'widgets/payment_upload_section.dart';
+import 'widgets/person_info_card.dart';
 
 class BookProgramScreen extends StatefulWidget {
   const BookProgramScreen({super.key});
@@ -47,6 +48,8 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
                   buildPersonalDetailsSection(),
                   SizedBox(height: 32.h),
                   buildParentGuardianSection(),
+                  SizedBox(height: 32.h),
+                  PersonalInfoCard(),
                   SizedBox(height: 32.h),
                   buildAdditionalNotesSection(),
                   SizedBox(height: 32.h),

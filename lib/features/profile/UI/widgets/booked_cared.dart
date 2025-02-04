@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 
 class BookedCard extends StatelessWidget {
