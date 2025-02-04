@@ -53,7 +53,7 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
                   SizedBox(height: 32.h),
                   buildAdditionalNotesSection(),
                   SizedBox(height: 32.h),
-                  buildPaymentUploadSection(),
+                  PaymentUploadSection(),
                   SizedBox(height: 32.h),
                   buildBookButton(),
                   SizedBox(height: 24.h),
