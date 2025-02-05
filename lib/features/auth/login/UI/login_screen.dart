@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/auth/register/UI/register_screen.dart';
 import 'package:hola_academy/features/layout/layout_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../forgot_password/UI/forgot_password_screen.dart';
 import '../../register/UI/widgets/custom_button.dart';
@@ -23,7 +25,51 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _roleController = TextEditingController();
   bool _isPasswordVisible = false;
+
+  Future<void> _login() async {
+    if (_formKey.currentState!.validate()) {
+      // Simulate a login process
+      String role = _roleController.text;
+      String password = _passwordController.text;
+
+      // Check credentials (this is just a mock check)
+      if (role == 'admin') {
+        // Save user role to SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('userRole', 'admin');
+
+        // Navigate to the home screen
+        Navigator.pushReplacementNamed(context, Routes.homeAdminScreen);
+      } else if (role == 'user') {
+        // Save user role to SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('userRole', 'user');
+
+        // Navigate to the home screen
+        Navigator.pushReplacementNamed(context, Routes.layoutScreen);
+      } else if (role == 'trainee') {
+        // Save user role to SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('userRole', 'trainee');
+
+        // Navigate to the home screen
+        Navigator.pushReplacementNamed(context, Routes.layoutScreen);
+      }else if (role == 'coach') {
+        // Save user role to SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('userRole', 'coach');
+
+        // Navigate to the home screen
+        Navigator.pushReplacementNamed(context, Routes.layoutScreen);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Invalid credentials')),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +101,32 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: 40.h),
                       _buildTitle(AppString.welcomeBack),
                       SizedBox(height: 40.h),
+                      GeneralTextFormField(
+                        controller: _roleController,
+                        label: 'Role',
+                        hint: 'Enter your role',
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(
+                            left: 24.w,
+                            right: 33.w,
+                            top: 9.h,
+                            bottom: 7.h,
+                          ),
+                          child: Icon(
+                            Icons.person,
+                            color: ColorManager.textRedColor,
+                            size: 24.sp,
+                          ),
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Role is required";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 20.h),
                       // Email Address Field
                       GeneralTextFormField(
                         controller: _emailController,
@@ -202,11 +274,12 @@ class _LoginScreenState extends State<LoginScreen> {
         onTap: () {
           if (_formKey.currentState?.validate() ?? false) {
             // Handle login logic
-            Navigator.push(
+            _login();
+            /*Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => LayoutScreen(),
-                ));
+                ));*/
           }
         },
       ),

@@ -6,10 +6,15 @@ import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
-class CustomProfileAppBar extends StatelessWidget {
+class CustomProfileAppBar extends StatefulWidget {
   final bool qrCode;
   const CustomProfileAppBar({super.key, this.qrCode = false});
 
+  @override
+  State<CustomProfileAppBar> createState() => _CustomProfileAppBarState();
+}
+
+class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,7 +37,7 @@ class CustomProfileAppBar extends StatelessWidget {
             ),
             Row(
               children: [
-                if (qrCode == true)
+                if (widget.qrCode == true)
                   GestureDetector(
                       onTap: () async {
                         return showDialog(
