@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hola_academy/features/admin/scanner/qr_code_scanner_screen.dart';
 import 'package:hola_academy/features/admin/transactions/admin_transactions_screen.dart';
 import 'package:hola_academy/features/auth/forgot_password/UI/forgot_password_screen.dart';
 import 'package:hola_academy/features/auth/login/UI/login_screen.dart';
@@ -9,6 +8,7 @@ import 'package:hola_academy/features/auth/verification/UI/verfication_screen.da
 import 'package:hola_academy/features/classes/classes_screen.dart';
 import 'package:hola_academy/features/classes/detail_class_screen.dart';
 import 'package:hola_academy/features/classes/program_levl_screen.dart';
+import 'package:hola_academy/features/home/components_coach/find_trainees_screen.dart';
 import 'package:hola_academy/features/home/home_screen.dart';
 import 'package:hola_academy/features/home/home_screen_coach.dart';
 import 'package:hola_academy/features/layout/layout_screen.dart';
@@ -121,11 +121,14 @@ class AppRouter {
       case Routes.adminTransactionsScreen:
         return MaterialPageRoute(builder: (_) => AdminTransactionsScreen());
 
+      case Routes.findTraineeScreen:
+        return MaterialPageRoute(builder: (_) => const FindTraineesScreen());
+
       //case Routes.adminQrCodeScannerScreen:
-        //return MaterialPageRoute(builder: (_) => const QRCodeScannerScreen());
+      //return MaterialPageRoute(builder: (_) => const QRCodeScannerScreen());
       case Routes.splashScreen:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
-     
+
       case Routes.logoutScreen:
         return MaterialPageRoute(builder: (_) => const LogoutScreen());
 

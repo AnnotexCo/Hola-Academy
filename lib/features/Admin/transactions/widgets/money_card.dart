@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
-import 'package:hola_academy/core/constants/image_manager.dart';
 
 class MoneyCard extends StatelessWidget {
   final String money;
