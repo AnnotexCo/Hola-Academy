@@ -32,4 +32,8 @@ class Routes {
   // Logout Routes
   static const String logoutScreen = "/logoutScreen";
 
+  //coach
+
+  static const String findTraineeScreen = "/findTraineeScreen";
+
 }

@@ -68,9 +68,15 @@ class ImageManager {
   static const String evaluateBackgroundVector =
       "assets/icons/evaluatevector1.svg";
   //Admin Home Screen
-  static const String  addBanner = "assets/images/ads-baner.png";
+  static const String addBanner = "assets/images/ads-baner.png";
 
   // Admin Trainee Screen
   static const String category = 'assets/icons/category.svg';
 
+//Coach Home Screen
+  static const String privateclass = 'assets/icons/private_class_icon.svg';
+  static const String semiprivateclass =
+      'assets/icons/semiprivate_class_icon.svg';
+  static const String kidsclass = 'assets/icons/kids_icon.svg';
+  static const String aquaclass = 'assets/icons/aqua_class_icon.svg';
 }
