@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
@@ -34,7 +35,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? selectedGender;
   final List<String> genderOptions = ['Male', 'Female'];
   String? selectedHearAboutUs;
-  final List<String> hearAboutUsOptions = ['Social media(Facebook, Instagram, etc.)', 'Friends Or Family Recommendation', 'Online Search', 'Advertisement', 'A Member Of The Academy', 'Other(Please Specify)'];
+  final List<String> hearAboutUsOptions = [
+    'Social media(Facebook, Instagram, etc.)',
+    'Friends Or Family Recommendation',
+    'Online Search',
+    'Advertisement',
+    'A Member Of The Academy',
+    'Other(Please Specify)'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -390,11 +398,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   //selectedGender != null) {
                                   // Process data
                                   //}
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => LayoutScreen(),
-                                      ));
+                                  Navigator.pushNamed(
+                                      context, Routes.layoutScreen);
                                 }),
                             _buildSignUpPrompt(),
                             SizedBox(

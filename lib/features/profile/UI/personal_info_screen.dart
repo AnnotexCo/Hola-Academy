@@ -22,6 +22,11 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
 
   final TextEditingController phoneController = TextEditingController();
 
+  final TextEditingController birthDayController = TextEditingController();
+
+  final TextEditingController parentWhatsappNumberController =
+      TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
@@ -151,6 +156,108 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                         return null;
                       },
                     ),
+                    GeneralTextFormField(
+                      label: AppString.birthDay,
+                      hint: AppString.chooseYourBirthDate,
+                      labelStyle: TextStyle(
+                        fontSize: 18.sp,
+                        color: ColorManager.blackFontColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      isFill: false,
+                      isBorder: true,
+                      //readOnly: true,
+                      suffixIcon: GeneralTextFormField.createIcon(
+                        Icons.calendar_month,
+                        color: ColorManager.textRedColor,
+                      ),
+                      controller: birthDayController,
+                      keyboardType: TextInputType.datetime,
+                      onTap: () async {
+                        // Open date picker
+                        DateTime? pickedDate = await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                              insetPadding: EdgeInsets.only(
+                                  left: 29.w, right: 29.w, top: 360.h),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.r),
+                              ),
+                              backgroundColor: ColorManager.backgroundPinkColor,
+                              child: Container(
+                                height: 241.h,
+                                decoration: BoxDecoration(
+                                  color: ColorManager.backgroundPinkColor,
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  border: Border.all(
+                                    color: ColorManager.textRedColor,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Theme(
+                                  data: ThemeData.light().copyWith(
+                                    colorScheme: ColorScheme.light(
+                                        primary: ColorManager.textRedColor),
+                                    datePickerTheme: DatePickerThemeData(
+                                        todayBorder: BorderSide(
+                                      color: ColorManager.textRedColor,
+                                      style: BorderStyle.none,
+                                      strokeAlign: BorderSide.strokeAlignInside,
+                                    )),
+                                  ),
+                                  child: CalendarDatePicker(
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(1900),
+                                    lastDate: DateTime.now(),
+                                    onDateChanged: (selectedDate) {
+                                      setState(() {
+                                        birthDayController.text =
+                                            "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
+                                      });
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a date';
+                        }
+                        return null;
+                      },
+                    ),
+                    GeneralTextFormField(
+                      hint: '01258672352',
+                      label: AppString.parentNumber,
+                      labelStyle: TextStyle(
+                        fontSize: 18.sp,
+                        color: ColorManager.blackFontColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      isFill: false,
+                      isBorder: true,
+                      suffixIcon: Icon(
+                        Icons.person,
+                        color: ColorManager.textRedColor,
+                      ),
+                      controller: parentWhatsappNumberController,
+                      keyboardType: TextInputType.phone,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your phone number';
+                        }
+                        if (!RegExp(r'^\d{10,15}$').hasMatch(value)) {
+                          return 'Enter a valid phone number (10-15 digits)';
+                        }
+                        return null;
+                      },
+                    ),
+
                     /*CustomDropDownSelection(
                       value: selectedGender,
                       hint: AppString.chooseYourGender,
@@ -175,7 +282,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                       suffixIcon: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Padding(
-                          padding: const EdgeInsets.all(3),
+                          padding: EdgeInsets.symmetric(horizontal: 0.w),
                           child: SvgPicture.asset(
                             ImageManager.gender,
                             width: 24.w,
