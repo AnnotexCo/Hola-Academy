@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/custom_app_button.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 
@@ -132,6 +133,7 @@ class _ResetPasswordState extends State<ResetPassword> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Password reset successful!")),
       );
+      Navigator.pushNamed(context, Routes.loginScreen);
     }
   }
 }

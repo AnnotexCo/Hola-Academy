@@ -34,7 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? selectedGender;
   final List<String> genderOptions = ['Male', 'Female'];
   String? selectedHearAboutUs;
-  final List<String> hearAboutUsOptions = ['Social media', 'From friend'];
+  final List<String> hearAboutUsOptions = ['Social media(Facebook, Instagram, etc.)', 'Friends Or Family Recommendation', 'Online Search', 'Advertisement', 'A Member Of The Academy', 'Other(Please Specify)'];
 
   @override
   Widget build(BuildContext context) {
