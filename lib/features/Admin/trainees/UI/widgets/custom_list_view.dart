@@ -43,6 +43,7 @@ class CustomListView extends StatelessWidget {
                     },
                     components: [
                       GeneralTextFormField(
+                        height:45.h,
                         hint: 'Charles.Leo@gmail.com',
                         label: AppString.email,
                         labelStyle: TextStyle(
@@ -59,6 +60,7 @@ class CustomListView extends StatelessWidget {
                         ),
                       ),
                       GeneralTextFormField(
+                        height:45.h,
                         hint: '01258672352',
                         label: AppString.phoneNumber,
                         labelStyle: TextStyle(
@@ -75,6 +77,7 @@ class CustomListView extends StatelessWidget {
                         ),
                       ),
                       GeneralTextFormField(
+                        height:45.h,
                         hint: 'Educational',
                         label: AppString.category,
                         labelStyle: TextStyle(
@@ -95,6 +98,7 @@ class CustomListView extends StatelessWidget {
                         ),
                       ),
                       GeneralTextFormField(
+                        height:45.h,
                         hint: 'A',
                         label: AppString.level,
                         labelStyle: TextStyle(
@@ -107,6 +111,7 @@ class CustomListView extends StatelessWidget {
                         isBorder: true,
                       ),
                       GeneralTextFormField(
+                        height:45.h,
                         hint: 'Male',
                         label: AppString.gender,
                         labelStyle: TextStyle(

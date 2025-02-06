@@ -11,6 +11,9 @@ import 'package:hola_academy/features/profile/UI/terms_screen.dart';
 import 'package:hola_academy/features/profile/UI/transactions_screen.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../Admin/transactions/admin_transactions_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -20,6 +23,22 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  // TODO: remove 
+    String? _userRole;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserRole();
+  }
+
+  Future<void> _loadUserRole() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userRole = prefs.getString('userRole'); 
+    });
+  }
+// --------------------------------------------
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return TransactionsScreen();
+                          return _userRole == 'admin' ? AdminTransactionsScreen() : TransactionsScreen();
                         },
                       ));
                     },

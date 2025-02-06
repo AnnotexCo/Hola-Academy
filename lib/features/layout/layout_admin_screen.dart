@@ -8,7 +8,9 @@ import 'package:hola_academy/features/Admin/home/UI/home_admin_screen.dart';
 import 'package:hola_academy/features/classes/classes_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
 import 'package:hola_academy/features/profile/UI/profile_screen.dart';
-import 'package:hola_academy/features/profile/UI/transactions_screen.dart';
+
+
+import '../Admin/transactions/admin_transactions_screen.dart';
 
 class LayoutAdminScreen extends StatefulWidget {
   const LayoutAdminScreen({super.key});
@@ -23,7 +25,7 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
 
   final List<Widget> _screens = [
     HomeAdminScreen(),
-    TransactionsScreen(),
+    AdminTransactionsScreen(),
     ClassesScreen(),
     NotificationsScreen(),
     ProfileScreen(),

@@ -4,10 +4,34 @@ import 'package:hola_academy/core/components/custom_app_bar.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/features/profile/UI/widgets/transaction_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class TransactionsScreen extends StatelessWidget {
-  TransactionsScreen({super.key});
-  final bool coach = true;
+class TransactionsScreen extends StatefulWidget {
+  const TransactionsScreen({super.key});
+
+  @override
+  State<TransactionsScreen> createState() => _TransactionsScreenState();
+}
+
+class _TransactionsScreenState extends State<TransactionsScreen> {
+  // final bool coach = true;
+  // ------------------------------------
+    String? _userRole;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserRole();
+  }
+
+  Future<void> _loadUserRole() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userRole = prefs.getString('userRole'); 
+    });
+  }
+
+// ---------------------------------------
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +51,8 @@ class TransactionsScreen extends StatelessWidget {
                     spacing: 30.h,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (coach)
+                      // if (coach)
+                      if (_userRole == 'coach')...[
                         Container(
                           height: 120.h,
                           width: 383.w,
@@ -70,7 +95,7 @@ class TransactionsScreen extends StatelessWidget {
                           color: ColorManager.graycolorHeadline,
                         ),
                       ),
-                    ]),
+            ],]),
               ),
               SizedBox(
                 height: 18.h,

@@ -12,6 +12,7 @@ import 'package:hola_academy/features/home/components_coach/find_trainees_screen
 import 'package:hola_academy/features/home/home_screen.dart';
 import 'package:hola_academy/features/home/home_screen_coach.dart';
 import 'package:hola_academy/features/layout/layout_admin_screen.dart';
+import 'package:hola_academy/features/layout/layout_coach.dart';
 import 'package:hola_academy/features/layout/layout_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
 import 'package:hola_academy/features/onboarding/onbording.dart';
@@ -126,6 +127,10 @@ class AppRouter {
 
       case Routes.findTraineeScreen:
         return MaterialPageRoute(builder: (_) => const FindTraineesScreen());
+
+      // coach
+      case Routes.layoutCoachScreen:
+        return MaterialPageRoute(builder: (_) => const LayoutCoachScreen());
 
       //case Routes.adminQrCodeScannerScreen:
       //return MaterialPageRoute(builder: (_) => const QRCodeScannerScreen());

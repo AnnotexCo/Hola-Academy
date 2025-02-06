@@ -5,6 +5,7 @@ import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomProfileAppBar extends StatefulWidget {
   final bool qrCode;
@@ -15,6 +16,21 @@ class CustomProfileAppBar extends StatefulWidget {
 }
 
 class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
+
+    String? _userRole;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserRole();
+  }
+
+  Future<void> _loadUserRole() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userRole = prefs.getString('userRole'); // Get role from SharedPreferences
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -37,7 +53,8 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
             ),
             Row(
               children: [
-                if (widget.qrCode == true)
+                // if (widget.qrCode == true)
+                 if (_userRole == 'trainee' || _userRole == 'coach')
                   GestureDetector(
                       onTap: () async {
                         return showDialog(

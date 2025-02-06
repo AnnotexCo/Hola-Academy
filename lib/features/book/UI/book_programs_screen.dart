@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/components/custom_app_bar.dart';
 import '../../../core/components/custom_app_button.dart';
@@ -23,6 +24,23 @@ class BookProgramScreen extends StatefulWidget {
 
 class _BookProgramScreenState extends State<BookProgramScreen> {
   bool hasHealthIssues = false;
+
+  // TODO: remove this
+    String? _userRole;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserRole();
+  }
+
+  Future<void> _loadUserRole() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userRole = prefs.getString('userRole'); // Get role from SharedPreferences
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,8 +66,10 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
                   buildPersonalDetailsSection(),
                   SizedBox(height: 32.h),
                   buildParentGuardianSection(),
-                  SizedBox(height: 32.h),
-                  PersonalInfoCard(),
+                  if (_userRole != 'preuser') ...[
+                    SizedBox(height: 32.h),
+                    PersonalInfoCard(),
+                  ],
                   SizedBox(height: 32.h),
                   buildAdditionalNotesSection(),
                   SizedBox(height: 32.h),

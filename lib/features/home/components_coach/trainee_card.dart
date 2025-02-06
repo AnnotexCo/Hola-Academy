@@ -3,11 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
-// ignore: must_be_immutable
+import '../../trainee/widgets/evaluate_dialog.dart';
+
+
 class TraineeCard extends StatelessWidget {
-  String? name;
-  String? phone;
-  TraineeCard({this.name, this.phone, super.key});
+ final String? name;
+  final String? phone;
+  const TraineeCard({this.name, this.phone, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +99,20 @@ class TraineeCard extends StatelessWidget {
                 tapTargetSize:
                     MaterialTapTargetSize.shrinkWrap, // Removes extra margin
               ),
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                          context: context,
+                          builder: (context) {
+                            return EvaluateDialog(
+                              imageUrl: ImageManager.pic,
+                              traineeName: 'Robert Fox',
+                              courseTitle: 'Basic Swimming Techniques',
+                              onCancel: () {
+                                Navigator.of(context).pop();
+                              },
+                            );
+                          });
+              },
               child: Text(
                 "Evaluate",
                 textAlign: TextAlign.center,

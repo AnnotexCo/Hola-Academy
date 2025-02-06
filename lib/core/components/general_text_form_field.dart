@@ -92,7 +92,7 @@ class GeneralTextFormField extends StatelessWidget {
 
         // Input Field
         SizedBox(
-          height: 50.h,
+          height: height ?? 70.h,
           child: TextFormField(
             controller: controller,
             keyboardType: keyboardType ?? TextInputType.text,

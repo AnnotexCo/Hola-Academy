@@ -23,75 +23,82 @@ class CustomDialog extends StatelessWidget {
       ),
       elevation: 0.0,
       backgroundColor: Colors.transparent,
-      child: Stack(
-        children: [
-          // Main Content Container
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
-            margin: EdgeInsets.only(top: 16.h),
-            decoration: BoxDecoration(
-              color: const Color(0xFFFEF5E9),
-              borderRadius: BorderRadius.circular(30.r),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Centered User Image and Title
-                if (imageUrl != null)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        radius: 30.r,
-                        backgroundImage: AssetImage(imageUrl!),
-                      ),
-                      SizedBox(width: 19.w),
-                      Text(
-                        title,
-                        style: TextStyle(
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xFFF09C1F),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-
-                SizedBox(height: 16.h),
-
-                // Components
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: components,
-                ),
-              ],
-            ),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom, // Adjust for keyboard
           ),
-
-          // Cancel Button
-          Positioned(
-            right: 9.w,
-            top: 25.h,
-            child: GestureDetector(
-              onTap: onCancel,
-              child: Container(
-                width: 32.w,
-                height: 32.h,
+          child: Stack(
+            children: [
+              // Main Content Container
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
+                margin: EdgeInsets.only(top: 16.h),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFC96852),
-                  borderRadius: BorderRadius.circular(31.04.r / 2),
+                  color: const Color(0xFFFEF5E9),
+                  borderRadius: BorderRadius.circular(30.r),
                 ),
-                child: const Icon(
-                  Icons.close,
-                  color: Colors.white,
-                  size: 18,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // Centered User Image and Title
+                    if (imageUrl != null)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: 30.r,
+                            backgroundImage: AssetImage(imageUrl!),
+                          ),
+                          SizedBox(width: 19.w),
+                          Text(
+                            title,
+                            style: TextStyle(
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFFF09C1F),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+          
+                    SizedBox(height: 16.h),
+          
+                    // Components
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: components,
+                    ),
+                  ],
                 ),
               ),
-            ),
+          
+              // Cancel Button
+              Positioned(
+                right: 9.w,
+                top: 25.h,
+                child: GestureDetector(
+                  onTap: onCancel,
+                  child: Container(
+                    width: 32.w,
+                    height: 32.h,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFC96852),
+                      borderRadius: BorderRadius.circular(31.04.r / 2),
+                    ),
+                    child: const Icon(
+                      Icons.close,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

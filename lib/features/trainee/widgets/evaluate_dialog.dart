@@ -166,7 +166,7 @@ class buildSkillsItem extends StatelessWidget {
               SizedBox(width: 21.w),
               Text(skillName,
                   style: TextStyle(
-                    fontSize: 16.sp,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
                     color: ColorManager.itemRedColor,
                   )),

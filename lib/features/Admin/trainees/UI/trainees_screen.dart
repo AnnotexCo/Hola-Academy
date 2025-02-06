@@ -4,6 +4,7 @@ import 'package:hola_academy/core/components/general_text_form_field.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
+import '../../../home/components_coach/find_trainees_screen.dart';
 import 'widgets/custom_list_view.dart';
 
 class TraineesScreen extends StatelessWidget {
@@ -44,6 +45,7 @@ class TraineesScreen extends StatelessWidget {
                         vertical: 16.h,
                       ),
                       child: GeneralTextFormField(
+                        height: 45.h,
                         hintStyle: TextStyle(
                           color: ColorManager.graycolorHeadline,
                           fontSize: 14.sp,
@@ -93,6 +95,17 @@ class TraineesScreen extends StatelessWidget {
                 ],
               ),
             ),
+               SizedBox(height: 18.h),
+             Row(
+              spacing: 40.w,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomOutlinedButton(title: "Level A"),
+                CustomOutlinedButton(title: "Educational"),
+                CustomOutlinedButton(title: "Private"),
+              ],
+            ),
+         
             SizedBox(height: 20.h),
             Expanded(
               child: CustomListView(

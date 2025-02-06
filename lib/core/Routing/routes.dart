@@ -35,7 +35,7 @@ class Routes {
   static const String logoutScreen = "/logoutScreen";
 
   //coach
-
+  static const String layoutCoachScreen = "/layoutCoachScreen";
   static const String findTraineeScreen = "/findTraineeScreen";
 
 }

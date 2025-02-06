@@ -6,10 +6,34 @@ import 'package:hola_academy/features/home/components/evaluation_card.dart';
 import 'package:hola_academy/features/home/components/list_of_programs.dart';
 import 'package:hola_academy/features/home/components/timeline_widget.dart';
 import 'package:hola_academy/features/home/components/welcome_header.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeScreen extends StatelessWidget {
+import '../../core/components/calender_widget.dart';
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  // TODO: Return to stateless widget and remove this
+    String? _userRole;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserRole();
+  }
+
+  Future<void> _loadUserRole() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userRole = prefs.getString('userRole'); 
+    });
+  }
+// ----------------------------------------------
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,24 +56,27 @@ class HomeScreen extends StatelessWidget {
                   width: double.infinity,
                   child: TimelineWidget(),
                 ),
+                if (_userRole == 'user' || _userRole == 'trainee') ...[
                 EvaluationAppointmentCard(),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Programs",
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF6C757D),
+                ],
+              // Conditional Rendering Based on Role
+                if (_userRole == 'user'|| _userRole == 'preuser') ...[
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Programs",
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF6C757D),
+                      ),
                     ),
                   ),
-                ),
-                ListOfPrograms(
-                  title: "Educational",
-                ),
-                ListOfPrograms(
-                  title: "Training",
-                )
+                  ListOfPrograms(title: "Educational"),
+                  ListOfPrograms(title: "Training"),
+                ] else if (_userRole == 'trainee') ...[
+                  CalendarWidget(),
+                ],
               ],
             ),
           ),

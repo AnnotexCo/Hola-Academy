@@ -31,7 +31,6 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       // Simulate a login process
       String role = _roleController.text;
-      String password = _passwordController.text;
 
       // Check credentials (this is just a mock check)
       if (role == 'admin') {
@@ -45,6 +44,13 @@ class _LoginScreenState extends State<LoginScreen> {
         // Save user role to SharedPreferences
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('userRole', 'user');
+
+        // Navigate to the home screen
+        Navigator.pushReplacementNamed(context, Routes.layoutScreen);
+      } else if (role == 'preuser') {
+        // Save user role to SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('userRole', 'preuser');
 
         // Navigate to the home screen
         Navigator.pushReplacementNamed(context, Routes.layoutScreen);
@@ -62,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
         await prefs.setString('userRole', 'coach');
 
         // Navigate to the home screen
-        Navigator.pushReplacementNamed(context, Routes.layoutScreen);
+        Navigator.pushReplacementNamed(context, Routes.layoutCoachScreen);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Invalid credentials')),

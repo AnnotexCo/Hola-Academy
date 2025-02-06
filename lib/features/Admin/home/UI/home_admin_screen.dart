@@ -44,6 +44,10 @@ class HomeAdminScreen extends StatelessWidget {
                 SectionHeader(
                   title: 'Coaches',
                   action: 'View All',
+                  onPressed: () {
+                    // Navigate to the new requests screen
+                    Navigator.of(context).pushNamed(Routes.traineesScreen);
+                  },
                 ),
                 SizedBox(height: 16.h),
                 const CoachesSection(),
@@ -257,42 +261,51 @@ class AdWidget extends StatelessWidget {
           Positioned(
             top: 20.h,
             //left: 16.w,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Taste the national dishes of Greek cuisine at',
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                    height: 1.2,
-                    color: ColorManager.whiteColor,
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: 16.w,
+                right: 130.w,
+                top: 1.h,
+                bottom: 64.h,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Taste the national dishes of Greek cuisine at',
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
+                      height: 1.2,
+                      color: ColorManager.whiteColor,
+                    ),
                   ),
-                ),
-                SizedBox(height: 4.h),
-                Text(
-                  'Mediterranean Delights restaurant.',
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w700,
-                    height: 1.2,
-                    color: ColorManager.whiteColor,
+                  SizedBox(height: 4.h),
+                  Text(
+                    'Mediterranean Delights restaurant.',
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w700,
+                      height: 1.2,
+                      color: ColorManager.whiteColor,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           // Button Section
           Positioned(
-            bottom: 16.h,
-            left: 16.w,
+            bottom: 11.h,
+            left: 40.w,
+
             child: ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF7AB547),
-                padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
+                backgroundColor: const Color(0xFFA1B237),
+                padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 10.h),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                  borderRadius: BorderRadius.all(Radius.circular(12.r)),
                 ),
               ),
               child: Text(

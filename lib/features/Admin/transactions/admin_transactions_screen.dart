@@ -35,7 +35,7 @@ class _AdminTransactionsScreenState extends State<AdminTransactionsScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         bottomSheet: Container(
-          height: 700.h,
+          height: 650.h,
           width: 440.w,
           decoration: BoxDecoration(
             color: ColorManager.whiteColor,
