@@ -10,6 +10,7 @@ import 'package:hola_academy/features/notifications/notifications_screen.dart';
 import 'package:hola_academy/features/profile/UI/profile_screen.dart';
 
 
+import '../Admin/scanner/qr_code_scanner_screen.dart';
 import '../Admin/transactions/admin_transactions_screen.dart';
 
 class LayoutAdminScreen extends StatefulWidget {
@@ -26,7 +27,7 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
   final List<Widget> _screens = [
     HomeAdminScreen(),
     AdminTransactionsScreen(),
-    ClassesScreen(),
+    QRCodeScannerScreen(),
     NotificationsScreen(),
     ProfileScreen(),
   ];
