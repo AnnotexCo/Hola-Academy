@@ -11,6 +11,7 @@ import 'package:hola_academy/features/classes/program_levl_screen.dart';
 import 'package:hola_academy/features/home/components_coach/find_trainees_screen.dart';
 import 'package:hola_academy/features/home/home_screen.dart';
 import 'package:hola_academy/features/home/home_screen_coach.dart';
+import 'package:hola_academy/features/layout/layout_admin_screen.dart';
 import 'package:hola_academy/features/layout/layout_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
 import 'package:hola_academy/features/onboarding/onbording.dart';
@@ -109,6 +110,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const NotificationsScreen());
 
       // Admin
+      case Routes.adminLayout:
+        return MaterialPageRoute(builder: (_) => const LayoutAdminScreen());
       case Routes.homeAdminScreen:
         return MaterialPageRoute(builder: (_) => const HomeAdminScreen());
 

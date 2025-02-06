@@ -5,7 +5,6 @@ import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/auth/register/UI/register_screen.dart';
-import 'package:hola_academy/features/layout/layout_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../forgot_password/UI/forgot_password_screen.dart';
@@ -41,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
         await prefs.setString('userRole', 'admin');
 
         // Navigate to the home screen
-        Navigator.pushReplacementNamed(context, Routes.homeAdminScreen);
+        Navigator.pushReplacementNamed(context, Routes.adminLayout);
       } else if (role == 'user') {
         // Save user role to SharedPreferences
         SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -55,8 +54,9 @@ class _LoginScreenState extends State<LoginScreen> {
         await prefs.setString('userRole', 'trainee');
 
         // Navigate to the home screen
+
         Navigator.pushReplacementNamed(context, Routes.layoutScreen);
-      }else if (role == 'coach') {
+      } else if (role == 'coach') {
         // Save user role to SharedPreferences
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('userRole', 'coach');

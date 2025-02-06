@@ -28,6 +28,8 @@ class Routes {
   static const String homeAdminScreen = "/homeAdminScreen";
   static const String adminTransactionsScreen = "/adminTransactionsScreen";  
   static const String adminQrCodeScannerScreen = "/adminQrCodeScannerScreen";
+    static const String adminLayout = "/adminLayout";
+
 
   // Logout Routes
   static const String logoutScreen = "/logoutScreen";
