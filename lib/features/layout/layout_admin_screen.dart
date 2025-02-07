@@ -7,7 +7,6 @@ import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/Admin/home/UI/home_admin_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
 import 'package:hola_academy/features/profile/UI/profile_screen.dart';
-
 import '../Admin/scanner/qr_code_scanner_screen.dart';
 import '../Admin/transactions/admin_transactions_screen.dart';
 
@@ -25,7 +24,6 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
   final List<Widget> _screens = [
     HomeAdminScreen(),
     AdminTransactionsScreen(),
-    QRCodeScannerScreen(),
     NotificationsScreen(),
     ProfileScreen(),
   ];
@@ -40,7 +38,6 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
   }
 
   void _onItemTapped(int index) {
-    if (index == 2) return; // Prevent selection for the floating button
     setState(() {
       _selectedIndex = index;
     });
@@ -75,7 +72,7 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
         label: 'Transactions',
       ),
       const BottomNavigationBarItem(
-        icon: SizedBox.shrink(), // Placeholder for Floating Button
+        icon: SizedBox.shrink(),
         label: '',
       ),
       BottomNavigationBarItem(
@@ -92,7 +89,7 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
           ImageManager.profile,
           height: 24.h,
           width: 24.w,
-          color: _selectedColor(4),
+          color: _selectedColor(4), // Adjusted for correct selection
         ),
         label: 'Profile',
       ),
@@ -110,7 +107,8 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
         backgroundColor: Colors.white,
         body: PageView(
           controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(), // Disable swipe
+          physics:
+              const NeverScrollableScrollPhysics(), // DEEEEEEE bt5aly el bta3a my3ml4 swap
           children: _screens,
         ),
         bottomNavigationBar: Stack(
@@ -127,16 +125,14 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
               unselectedItemColor: Colors.grey,
               showUnselectedLabels: true,
               type: BottomNavigationBarType.fixed,
-              currentIndex: _selectedIndex == 2
-                  ? 0
-                  : (_selectedIndex > 2 ? _selectedIndex - 1 : _selectedIndex),
+              currentIndex: _selectedIndex,
               onTap: _onItemTapped,
             ),
             Positioned(
-              bottom: 22.h, // Adjust to position correctly
-              left: MediaQuery.of(context).size.width / 2 - 30.w,
+              bottom: 22.h,
+              left: MediaQuery.of(context).size.width / 2 - 32.5.w,
               child: Container(
-                width: 65.w, // Adjust for correct size
+                width: 65.w,
                 height: 65.h,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -144,30 +140,29 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Color(0xffffffff).withValues(alpha: 0.4), // Outer glow
+                        Color(0xffffffff).withValues(alpha: 0.4),
                         Color(0xffF09C1F).withValues(alpha: 0.8),
                       ]),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xffF09C1F)
-                          .withValues(alpha: 0.6), // Soft glow effect
-                      blurRadius: 8, // Intensity of glow
+                      color: Color(0xffF09C1F).withValues(alpha: 0.6),
+                      blurRadius: 8,
                       spreadRadius: 4,
-                      offset: Offset(0, 2), // Glow spread
+                      offset: Offset(0, 2),
                     ),
                   ],
                 ),
                 child: FloatingActionButton(
                   splashColor: Colors.orangeAccent,
                   backgroundColor: Color(0xffF09C1F).withValues(alpha: 0.4),
-                  // Use gradient from parent
-                  elevation: 0, // Avoid default shadow
+                  elevation: 0,
                   shape: const CircleBorder(),
                   onPressed: () {
-                    setState(() {
-                      _selectedIndex = 2; // Navigate to "Classes"
-                    });
-                    _pageController.jumpToPage(2);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => QRCodeScannerScreen()),
+                    );
                   },
                   child: SvgPicture.asset(
                     ImageManager.scanQricon,
