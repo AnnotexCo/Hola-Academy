@@ -99,9 +99,7 @@ class GeneralTextFormField extends StatelessWidget {
             validator: validator,
             obscureText: isPassword,
             readOnly: readOnly,
-            maxLines: isPassword
-                ? 1
-                : maxLines, // Force maxLines to 1 if isPassword is true
+            maxLines: 1, // Force maxLines to 1 if isPassword is true
             onTap: onTap,
             style: textStyle ??
                 TextStyle(

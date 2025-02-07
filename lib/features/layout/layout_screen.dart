@@ -113,6 +113,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: PageView(
+                     physics: const NeverScrollableScrollPhysics(), 
+
           controller: _pageController,
           onPageChanged: (index) {
             setState(() {

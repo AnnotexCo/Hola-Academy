@@ -26,7 +26,7 @@ class FeedbackDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double rating = 0;
+    // double rating = 0;
     TextEditingController feedbackController = TextEditingController();
 
     return CustomDialog(
@@ -83,7 +83,7 @@ class FeedbackDialog extends StatelessWidget {
                       color: ColorManager.primaryOrangeColor,
                     ),
                     onRatingUpdate: (value) {
-                      rating = value;
+                     // rating = value;
                     },
                   ),
                   SizedBox(height: 25.h),

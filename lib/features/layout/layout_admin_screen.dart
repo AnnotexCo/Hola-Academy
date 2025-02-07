@@ -5,10 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/Admin/home/UI/home_admin_screen.dart';
-import 'package:hola_academy/features/classes/classes_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
 import 'package:hola_academy/features/profile/UI/profile_screen.dart';
-
 
 import '../Admin/scanner/qr_code_scanner_screen.dart';
 import '../Admin/transactions/admin_transactions_screen.dart';
@@ -146,13 +144,13 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Color(0xffffffff).withOpacity(0.4), // Outer glow
-                        Color(0xffF09C1F).withOpacity(0.8),
+                        Color(0xffffffff).withValues(alpha: 0.4), // Outer glow
+                        Color(0xffF09C1F).withValues(alpha: 0.8),
                       ]),
                   boxShadow: [
                     BoxShadow(
                       color: Color(0xffF09C1F)
-                          .withOpacity(0.6), // Soft glow effect
+                          .withValues(alpha: 0.6), // Soft glow effect
                       blurRadius: 8, // Intensity of glow
                       spreadRadius: 4,
                       offset: Offset(0, 2), // Glow spread
@@ -161,7 +159,7 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                 ),
                 child: FloatingActionButton(
                   splashColor: Colors.orangeAccent,
-                  backgroundColor: Color(0xffF09C1F).withOpacity(0.4),
+                  backgroundColor: Color(0xffF09C1F).withValues(alpha: 0.4),
                   // Use gradient from parent
                   elevation: 0, // Avoid default shadow
                   shape: const CircleBorder(),

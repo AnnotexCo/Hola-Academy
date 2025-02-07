@@ -398,7 +398,7 @@ class NewRequestsSection extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
                 decoration: BoxDecoration(
-                  color: ColorManager.primaryOrangeColor.withOpacity(0.1),
+                  color: ColorManager.primaryOrangeColor.withValues(alpha:  0.1),
                   borderRadius: BorderRadius.all(Radius.circular(12.r)),
                 ),
                 child: Text(

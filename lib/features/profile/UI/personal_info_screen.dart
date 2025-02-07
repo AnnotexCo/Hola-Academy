@@ -175,7 +175,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                       keyboardType: TextInputType.datetime,
                       onTap: () async {
                         // Open date picker
-                        DateTime? pickedDate = await showDialog(
+                      /*  DateTime? pickedDate = */ await showDialog(
                           context: context,
                           builder: (context) {
                             return Dialog(

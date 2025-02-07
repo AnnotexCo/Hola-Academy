@@ -26,9 +26,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-     
-      ),
+      appBar: AppBar(),
       body: Column(
         children: [
           Expanded(
@@ -54,7 +52,8 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
                       children: [
                         Text(
                           'Scanned Data:',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 8),
                         Text(
@@ -84,7 +83,6 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
 
   @override
   void dispose() {
-    controller?.dispose();
     super.dispose();
   }
 }

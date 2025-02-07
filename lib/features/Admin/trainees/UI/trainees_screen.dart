@@ -45,22 +45,20 @@ class TraineesScreen extends StatelessWidget {
                         vertical: 16.h,
                       ),
                       child: GeneralTextFormField(
-                        height: 45.h,
+                        height: 37.h,
                         hintStyle: TextStyle(
                           color: ColorManager.graycolorHeadline,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w400,
                         ),
-                        hint: "Ex: Trainee",
+                        hint: "Ex. Name, Mobile",
                         fillColor: ColorManager.whiteColor,
                         prefixIcon: Icon(
                           Icons.search,
                           size: 24.sp,
                         ),
                         contentPadding: EdgeInsets.symmetric(
-                          vertical: 9.h,
-                          horizontal: 12.w,
-                        ),
+                            horizontal: 12.w, vertical: -6),
                         borderRadius: 8.r,
                       ),
                     ),
@@ -95,8 +93,8 @@ class TraineesScreen extends StatelessWidget {
                 ],
               ),
             ),
-               SizedBox(height: 18.h),
-             Row(
+            SizedBox(height: 18.h),
+            Row(
               spacing: 40.w,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -105,7 +103,6 @@ class TraineesScreen extends StatelessWidget {
                 CustomOutlinedButton(title: "Private"),
               ],
             ),
-         
             SizedBox(height: 20.h),
             Expanded(
               child: CustomListView(

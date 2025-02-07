@@ -37,7 +37,7 @@ class FindTraineesScreen extends StatelessWidget {
                         vertical: 16.h,
                       ),
                       child: GeneralTextFormField(
-                        height: 45.h,
+                        height: 37.h,
                         hintStyle: TextStyle(
                           color: ColorManager.graycolorHeadline,
                           fontSize: 14.sp,
@@ -50,8 +50,7 @@ class FindTraineesScreen extends StatelessWidget {
                           size: 24.sp,
                         ),
                         contentPadding: EdgeInsets.symmetric(
-                          horizontal: 12.w,
-                        ),
+                            horizontal: 12.w, vertical: -6),
                         borderRadius: 8.r,
                       ),
                     ),

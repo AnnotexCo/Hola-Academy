@@ -115,6 +115,7 @@ class _LayoutCoachScreenState extends State<LayoutCoachScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: PageView(
+           physics: const NeverScrollableScrollPhysics(), 
           controller: _pageController,
           onPageChanged: (index) {
             setState(() {

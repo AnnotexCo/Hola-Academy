@@ -55,7 +55,7 @@ class EvaluateDialog extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: skills.length,
                     itemBuilder: (context, index) {
-                      return buildSkillsItem(
+                      return BuildSkillsItem(
                         skillName: skills[index]['name'],
                         rating: skills[index]['rating'],
                         onChanged: (value) {
@@ -74,7 +74,6 @@ class EvaluateDialog extends StatelessWidget {
                                 onSave: () {
                                   // Handle save action
                                   Navigator.of(context).pop();
-                                  print('Feedback saved!');
                                 },
                                 onCancel: () {
                                   // Handle cancel action
@@ -93,7 +92,6 @@ class EvaluateDialog extends StatelessWidget {
                                       );
                                     },
                                   );
-                                  print('Feedback canceled!');
                                 },
                               );
                             },
@@ -131,13 +129,13 @@ List<Map<String, dynamic>> skills = [
   },
 ];
 
-class buildSkillsItem extends StatelessWidget {
+class BuildSkillsItem extends StatelessWidget {
   final String skillName;
   final double rating;
   final ValueChanged<double> onChanged;
   final void Function()? onTap;
 
-  const buildSkillsItem(
+  const BuildSkillsItem(
       {super.key,
       required this.skillName,
       required this.rating,

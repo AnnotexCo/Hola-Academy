@@ -6,10 +6,10 @@ class CalendarWidget extends StatefulWidget {
   const CalendarWidget({super.key});
 
   @override
-  _CalendarWidgetState createState() => _CalendarWidgetState();
+  CalendarWidgetState createState() => CalendarWidgetState();
 }
 
-class _CalendarWidgetState extends State<CalendarWidget> {
+class CalendarWidgetState extends State<CalendarWidget> {
   final DateTime _focusedDay = DateTime(2025, 1, 1);
   DateTime? _selectedDay;
 
@@ -45,7 +45,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             borderRadius: BorderRadius.circular(10.r),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues( alpha :0.1),
                 spreadRadius: 2,
                 blurRadius: 5,
                 offset: Offset(0, 2),

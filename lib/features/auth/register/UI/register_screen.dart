@@ -9,7 +9,6 @@ import 'package:hola_academy/features/auth/register/UI/widgets/custom_button.dar
 import 'package:hola_academy/features/auth/register/UI/widgets/custom_drop_down_selection.dart';
 import 'package:hola_academy/core/components/general_text_form_field.dart';
 import 'package:hola_academy/features/auth/register/UI/widgets/terms_dialog.dart';
-import 'package:hola_academy/features/layout/layout_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -175,7 +174,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               keyboardType: TextInputType.datetime,
                               onTap: () async {
                                 // Open date picker
-                                DateTime? pickedDate = await showDialog(
+                               await showDialog(
                                   context: context,
                                   builder: (context) {
                                     return Dialog(
