@@ -38,4 +38,7 @@ class Routes {
   static const String layoutCoachScreen = "/layoutCoachScreen";
   static const String findTraineeScreen = "/findTraineeScreen";
 
+  // request payment
+  static const String requestPaymentScreen = "/requestPaymentScreen";
+
 }

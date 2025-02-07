@@ -101,6 +101,17 @@ class AppString {
   static const String terms = "Terms";
   static const String contactUs = "Contact Us";
 
+  // Request Payment
+  static const String requestPayment = "Request Payment";
+  static const String ammount = "Ammount";
+  static const String submitRequest = "Submit Request";
+  static const String enterAmmount = "Enter Ammount";
+  static const String transactionReason = "Transaction Reason";
+  static const String reason = "Reason";
+  static const String selectReason = "Select Reason";
+  static const String notes = "Notes";
+  static const String additionalNotes = "Additional notes";
+
   // Personal Info Screen
   static const String editYourinformation = "Edit Your information";
 

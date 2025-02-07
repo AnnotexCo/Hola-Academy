@@ -8,6 +8,8 @@ class CustomDropDownSelection extends StatelessWidget {
   final String? value;
   final String hint;
   final String label;
+  final Color? labelColor;
+  final Color? borderColor;
   final List<String> options;
   final Function(String?) onChanged;
 
@@ -16,7 +18,7 @@ class CustomDropDownSelection extends StatelessWidget {
     required this.hint,
     required this.label,
     required this.options,
-    required this.onChanged,});
+    required this.onChanged, this.labelColor, this.borderColor,});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class CustomDropDownSelection extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w500,
-                color: ColorManager.textRedColor,
+                color: labelColor ?? ColorManager.textRedColor,
               ),
             )),
         Center(
@@ -39,6 +41,9 @@ class CustomDropDownSelection extends StatelessWidget {
             decoration: BoxDecoration(
               color: ColorManager.backgroundPinkColor, // Light background color
               borderRadius: BorderRadius.circular(12.r), // Rounded corners
+              border: borderColor != null
+                  ? Border.all(color: borderColor!) // Apply border if provided
+                  : null,
             ),
             child: DropdownButton<String>(
               value: value, // Current selected value

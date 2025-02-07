@@ -28,6 +28,7 @@ import '../../features/analytics/UI/analytics_skills_screen.dart';
 import '../../features/auth/register/UI/register_screen.dart';
 import '../../features/book/UI/book_programs_screen.dart';
 import '../../features/not_found/not_found_screen.dart';
+import '../../features/profile/UI/request_payment_screen.dart';
 import '../../features/schedule_evaluation/UI/schedule_evaluation_screen.dart';
 import 'routes.dart';
 
@@ -81,7 +82,11 @@ class AppRouter {
       // Booked
       case Routes.bookedScreen:
         return MaterialPageRoute(builder: (_) => const BookedScreen());
-
+      
+      //  Request payment
+      case Routes.requestPaymentScreen:
+        return MaterialPageRoute(builder: (_) => const RequestPaymentScreen());
+        
       // classes
       case Routes.classesScreen:
         return MaterialPageRoute(builder: (_) => ClassesScreen());

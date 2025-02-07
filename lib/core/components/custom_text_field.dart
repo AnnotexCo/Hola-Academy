@@ -36,12 +36,12 @@ class CustomTextField extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(
             left: 8.w,
-            bottom: 8.h,
+            bottom: 5.h,
           ),
           child: Text(
             label,
             style: TextStyle(
-              fontSize: 19.sp,
+              fontSize: 17.sp,
               color: labelColor ?? ColorManager.textRedColor,
               fontWeight: FontWeight.w500,
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/custom_app_bar.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
@@ -16,7 +17,7 @@ class TransactionsScreen extends StatefulWidget {
 class _TransactionsScreenState extends State<TransactionsScreen> {
   // final bool coach = true;
   // ------------------------------------
-    String? _userRole;
+  String? _userRole;
 
   @override
   void initState() {
@@ -27,7 +28,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
   Future<void> _loadUserRole() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      _userRole = prefs.getString('userRole'); 
+      _userRole = prefs.getString('userRole');
     });
   }
 
@@ -52,7 +53,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // if (coach)
-                      if (_userRole == 'coach')...[
+                      if (_userRole == 'coach') ...[
                         Container(
                           height: 120.h,
                           width: 383.w,
@@ -76,26 +77,55 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                                       fontWeight: FontWeight.w700,
                                       color: ColorManager.textRedColor),
                                 ),
-                                Text(
-                                  '\$998,00',
-                                  style: TextStyle(
-                                      fontSize: 34.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: ColorManager.whiteColor),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '\$998,00',
+                                      style: TextStyle(
+                                        fontSize: 34.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: ColorManager.whiteColor,
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 43.w),
+                                      child: Container(
+                                        width: 43.w,
+                                        height: 39.h,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xffCB6928),
+                                          borderRadius:
+                                              BorderRadius.circular(8.r),
+                                        ),
+                                        child: IconButton(
+                                          onPressed: () {
+                                            Navigator.pushNamed(context, Routes.requestPaymentScreen);
+                                          },
+                                          icon: Icon(Icons.add,
+                                              color: Colors.white),
+                                          iconSize: 20.sp,
+                                          padding: EdgeInsets.zero,
+                                          constraints: BoxConstraints(),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
                           ),
                         ),
-                      Text(
-                        AppString.historyTransaction,
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                          color: ColorManager.graycolorHeadline,
+                        Text(
+                          AppString.historyTransaction,
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w600,
+                            color: ColorManager.graycolorHeadline,
+                          ),
                         ),
-                      ),
-            ],]),
+                      ],
+                    ]),
               ),
               SizedBox(
                 height: 18.h,
