@@ -50,7 +50,7 @@ class FindTraineesScreen extends StatelessWidget {
                           size: 24.sp,
                         ),
                         contentPadding: EdgeInsets.symmetric(
-                            horizontal: 12.w, vertical: -6),
+                            horizontal: 12.w, vertical: -4),
                         borderRadius: 8.r,
                       ),
                     ),

@@ -104,10 +104,11 @@ class GeneralTextFormField extends StatelessWidget {
             style: textStyle ??
                 TextStyle(
                   color: ColorManager.textRedColor,
-                  fontSize: 18.sp,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w600,
                 ),
             decoration: InputDecoration(
+              border: InputBorder.none,
               hintText: hint,
               iconColor: iconColor ?? ColorManager.textRedColor,
               hintStyle: hintStyle ??
