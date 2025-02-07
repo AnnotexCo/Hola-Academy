@@ -8,6 +8,7 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
   const PersonalInfoScreen({super.key});
@@ -37,6 +38,22 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
 
   final List<String> genderOptions = ['Male', 'Female'];
 
+  String? _userRole;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserRole();
+  }
+
+  Future<void> _loadUserRole() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userRole = prefs.getString('userRole');
+    });
+  }
+
+// ---------------------------------------
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,108 +173,112 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                         return null;
                       },
                     ),
-                    GeneralTextFormField(
-                      label: AppString.birthDay,
-                      hint: AppString.chooseYourBirthDate,
-                      labelStyle: TextStyle(
-                        fontSize: 18.sp,
-                        color: ColorManager.blackFontColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      isFill: false,
-                      isBorder: true,
-                      //readOnly: true,
-                      suffixIcon: GeneralTextFormField.createIcon(
-                        Icons.calendar_month,
-                        color: ColorManager.textRedColor,
-                      ),
-                      controller: birthDayController,
-                      keyboardType: TextInputType.datetime,
-                      onTap: () async {
-                        // Open date picker
-                      /*  DateTime? pickedDate = */ await showDialog(
-                          context: context,
-                          builder: (context) {
-                            return Dialog(
-                              insetPadding: EdgeInsets.only(
-                                  left: 29.w, right: 29.w, top: 360.h),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                              ),
-                              backgroundColor: ColorManager.backgroundPinkColor,
-                              child: Container(
-                                height: 241.h,
-                                decoration: BoxDecoration(
-                                  color: ColorManager.backgroundPinkColor,
+                    // if (coach)
+                    if (_userRole == 'user') ...[
+                      GeneralTextFormField(
+                        label: AppString.birthDay,
+                        hint: AppString.chooseYourBirthDate,
+                        labelStyle: TextStyle(
+                          fontSize: 18.sp,
+                          color: ColorManager.blackFontColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        isFill: false,
+                        isBorder: true,
+                        //readOnly: true,
+                        suffixIcon: GeneralTextFormField.createIcon(
+                          Icons.calendar_month,
+                          color: ColorManager.textRedColor,
+                        ),
+                        controller: birthDayController,
+                        keyboardType: TextInputType.datetime,
+                        onTap: () async {
+                          // Open date picker
+                          /*  DateTime? pickedDate = */ await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return Dialog(
+                                insetPadding: EdgeInsets.only(
+                                    left: 29.w, right: 29.w, top: 360.h),
+                                shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8.r),
-                                  border: Border.all(
-                                    color: ColorManager.textRedColor,
-                                    width: 1,
-                                  ),
                                 ),
-                                child: Theme(
-                                  data: ThemeData.light().copyWith(
-                                    colorScheme: ColorScheme.light(
-                                        primary: ColorManager.textRedColor),
-                                    datePickerTheme: DatePickerThemeData(
-                                        todayBorder: BorderSide(
+                                backgroundColor:
+                                    ColorManager.backgroundPinkColor,
+                                child: Container(
+                                  height: 241.h,
+                                  decoration: BoxDecoration(
+                                    color: ColorManager.backgroundPinkColor,
+                                    borderRadius: BorderRadius.circular(8.r),
+                                    border: Border.all(
                                       color: ColorManager.textRedColor,
-                                      style: BorderStyle.none,
-                                      strokeAlign: BorderSide.strokeAlignInside,
-                                    )),
+                                      width: 1,
+                                    ),
                                   ),
-                                  child: CalendarDatePicker(
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(1900),
-                                    lastDate: DateTime.now(),
-                                    onDateChanged: (selectedDate) {
-                                      setState(() {
-                                        birthDayController.text =
-                                            "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
-                                      });
-                                      Navigator.pop(context);
-                                    },
+                                  child: Theme(
+                                    data: ThemeData.light().copyWith(
+                                      colorScheme: ColorScheme.light(
+                                          primary: ColorManager.textRedColor),
+                                      datePickerTheme: DatePickerThemeData(
+                                          todayBorder: BorderSide(
+                                        color: ColorManager.textRedColor,
+                                        style: BorderStyle.none,
+                                        strokeAlign:
+                                            BorderSide.strokeAlignInside,
+                                      )),
+                                    ),
+                                    child: CalendarDatePicker(
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(1900),
+                                      lastDate: DateTime.now(),
+                                      onDateChanged: (selectedDate) {
+                                        setState(() {
+                                          birthDayController.text =
+                                              "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please select a date';
-                        }
-                        return null;
-                      },
-                    ),
-                    GeneralTextFormField(
-                      hint: '01258672352',
-                      label: AppString.parentNumber,
-                      labelStyle: TextStyle(
-                        fontSize: 18.sp,
-                        color: ColorManager.blackFontColor,
-                        fontWeight: FontWeight.w500,
+                              );
+                            },
+                          );
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please select a date';
+                          }
+                          return null;
+                        },
                       ),
-                      isFill: false,
-                      isBorder: true,
-                      suffixIcon: Icon(
-                        Icons.person,
-                        color: ColorManager.textRedColor,
+                      GeneralTextFormField(
+                        hint: '01258672352',
+                        label: AppString.parentNumber,
+                        labelStyle: TextStyle(
+                          fontSize: 18.sp,
+                          color: ColorManager.blackFontColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        isFill: false,
+                        isBorder: true,
+                        suffixIcon: Icon(
+                          Icons.person,
+                          color: ColorManager.textRedColor,
+                        ),
+                        controller: parentWhatsappNumberController,
+                        keyboardType: TextInputType.phone,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your phone number';
+                          }
+                          if (!RegExp(r'^\d{10,15}$').hasMatch(value)) {
+                            return 'Enter a valid phone number (10-15 digits)';
+                          }
+                          return null;
+                        },
                       ),
-                      controller: parentWhatsappNumberController,
-                      keyboardType: TextInputType.phone,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your phone number';
-                        }
-                        if (!RegExp(r'^\d{10,15}$').hasMatch(value)) {
-                          return 'Enter a valid phone number (10-15 digits)';
-                        }
-                        return null;
-                      },
-                    ),
-
+                    ],
                     /*CustomDropDownSelection(
                       value: selectedGender,
                       hint: AppString.chooseYourGender,

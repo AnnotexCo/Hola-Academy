@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
+import 'package:hola_academy/core/components/admin_clip_oval.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/features/home/components/timeline_widget.dart';
 
@@ -298,7 +299,6 @@ class AdWidget extends StatelessWidget {
           Positioned(
             bottom: 11.h,
             left: 40.w,
-
             child: ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
@@ -348,7 +348,10 @@ class NewRequestsSection extends StatelessWidget {
           ),
           SizedBox(width: 12.w),
           // Pentagon-shaped Container with Image
-          Stack(
+          AdminClipOval(
+              color: ColorManager.linearGradient1,
+              image: "assets/images/profilepic.png"),
+          /*Stack(
             alignment: Alignment.center,
             children: [
               CustomPaint(
@@ -367,6 +370,7 @@ class NewRequestsSection extends StatelessWidget {
               ),
             ],
           ),
+          */
           SizedBox(width: 12.w),
           // Name and Type
           Expanded(
@@ -398,7 +402,7 @@ class NewRequestsSection extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
                 decoration: BoxDecoration(
-                  color: ColorManager.primaryOrangeColor.withValues(alpha:  0.1),
+                  color: ColorManager.primaryOrangeColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.all(Radius.circular(12.r)),
                 ),
                 child: Text(
@@ -467,20 +471,24 @@ class CoachesSection extends StatelessWidget {
         crossAxisCount: 2,
         crossAxisSpacing: 16.w,
         mainAxisSpacing: 16.h,
-        childAspectRatio: 1.4, // Adjusted for better layout proportions
+        childAspectRatio: 1.2, // Adjusted for better layout proportions
       ),
       itemCount: 2,
       itemBuilder: (context, index) => Container(
+        width: 194.w,
+        height: 126.h,
         decoration: BoxDecoration(
-          color: const Color(0xFFFFF4E7), // Light orange background
+          color: ColorManager.lightYellow, // Light orange background
           border: Border.all(
             color: ColorManager.primaryOrangeColor, // Border color
             width: 1.w,
           ),
           borderRadius: BorderRadius.circular(12.r),
         ),
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsets.only(left: 7.w),
         child: Column(
+          spacing: 8.h,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Circle Avatar

@@ -41,9 +41,6 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
         Expanded(
           child: ListView(
             children: [
-              SizedBox(
-                height: 30.h,
-              ),
               Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: 28.5.w,
@@ -100,7 +97,8 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                                         ),
                                         child: IconButton(
                                           onPressed: () {
-                                            Navigator.pushNamed(context, Routes.requestPaymentScreen);
+                                            Navigator.pushNamed(context,
+                                                Routes.requestPaymentScreen);
                                           },
                                           icon: Icon(Icons.add,
                                               color: Colors.white),

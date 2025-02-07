@@ -19,8 +19,8 @@ class CustomListView extends StatelessWidget {
     super.key,
     required this.data,
     this.itemHeight = 74.0,
-    this.backgroundColor = const Color(0xFFFFF4F4),
-    this.borderColor = const Color(0xFFD32F2F),
+    this.backgroundColor = ColorManager.backgroundLightPink,
+    this.borderColor = ColorManager.textRedColor,
     this.profileImagePath = 'assets/images/profilepic.png',
   });
 
@@ -43,7 +43,7 @@ class CustomListView extends StatelessWidget {
                     },
                     components: [
                       GeneralTextFormField(
-                        height:45.h,
+                        height: 45.h,
                         hint: 'Charles.Leo@gmail.com',
                         label: AppString.email,
                         labelStyle: TextStyle(
@@ -60,7 +60,7 @@ class CustomListView extends StatelessWidget {
                         ),
                       ),
                       GeneralTextFormField(
-                        height:45.h,
+                        height: 45.h,
                         hint: '01258672352',
                         label: AppString.phoneNumber,
                         labelStyle: TextStyle(
@@ -77,7 +77,7 @@ class CustomListView extends StatelessWidget {
                         ),
                       ),
                       GeneralTextFormField(
-                        height:45.h,
+                        height: 45.h,
                         hint: 'Educational',
                         label: AppString.category,
                         labelStyle: TextStyle(
@@ -98,7 +98,7 @@ class CustomListView extends StatelessWidget {
                         ),
                       ),
                       GeneralTextFormField(
-                        height:45.h,
+                        height: 45.h,
                         hint: 'A',
                         label: AppString.level,
                         labelStyle: TextStyle(
@@ -111,7 +111,7 @@ class CustomListView extends StatelessWidget {
                         isBorder: true,
                       ),
                       GeneralTextFormField(
-                        height:45.h,
+                        height: 45.h,
                         hint: 'Male',
                         label: AppString.gender,
                         labelStyle: TextStyle(

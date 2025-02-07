@@ -21,33 +21,37 @@ class _RequestsScreenState extends State<RequestsScreen> {
     {
       'name': 'John Doe',
       'type': 'private',
+      'program': 'Educationl',
       'status': 'Accepted',
-      'date': '2025-01-20',
       'phone': '1234567890',
+      'gender': 'Male',
       'image': 'assets/images/profilepic.png'
     },
     {
       'name': 'Jane Smith',
       'type': 'General',
       'status': 'Pending',
-      'date': '2025-01-22',
+      'program': 'Educationl',
       'phone': '1234567890',
+      'gender': 'Male',
       'image': 'assets/images/profilepic.png'
     },
     {
       'name': 'Robert Brown',
       'type': 'Private',
       'status': 'Rejected',
-      'date': '2025-01-23',
+      'program': 'Educationl',
       'phone': '1234567890',
+      'gender': 'Male',
       'image': 'assets/images/profilepic.png'
     },
     {
       'name': 'Alice Johnson',
       'type': 'General',
       'status': 'Accepted',
-      'date': '2025-01-18',
-      'phone':'0154442284',
+      'program': 'Educationl',
+      'phone': '0154442284',
+      'gender': 'Male',
       'image': 'assets/images/profilepic.png'
     },
   ];
@@ -110,7 +114,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
                               ),
                               readOnly: true,
                             ),
-                             SizedBox(height: 10.h),
+                            SizedBox(height: 10.h),
                             GeneralTextFormField(
                               fillColor: ColorManager.whiteColor,
                               hintStyle: TextStyle(
@@ -118,10 +122,10 @@ class _RequestsScreenState extends State<RequestsScreen> {
                                 fontWeight: FontWeight.w500,
                                 color: ColorManager.textRedColor,
                               ),
-                              hint: request['phone'] ?? 'Status not available',
+                              hint: request['phone'] ?? 'phone not available',
                               readOnly: true,
                             ),
-                             SizedBox(height: 10.h),
+                            SizedBox(height: 10.h),
                             GeneralTextFormField(
                               fillColor: ColorManager.whiteColor,
                               hintStyle: TextStyle(
@@ -129,10 +133,10 @@ class _RequestsScreenState extends State<RequestsScreen> {
                                 fontWeight: FontWeight.w500,
                                 color: ColorManager.textRedColor,
                               ),
-                              hint: request['status'] ?? 'Status not available',
+                              hint: request['program'] ?? 'program not available',
                               readOnly: true,
                             ),
-                             SizedBox(height: 10.h),
+                            SizedBox(height: 10.h),
                             GeneralTextFormField(
                               fillColor: ColorManager.whiteColor,
                               hintStyle: TextStyle(
@@ -140,7 +144,18 @@ class _RequestsScreenState extends State<RequestsScreen> {
                                 fontWeight: FontWeight.w500,
                                 color: ColorManager.textRedColor,
                               ),
-                              hint: request['date'] ?? 'Date not available',
+                              hint: request['type'] ?? 'type not available',
+                              readOnly: true,
+                            ),
+                            SizedBox(height: 10.h),
+                            GeneralTextFormField(
+                              fillColor: ColorManager.whiteColor,
+                              hintStyle: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                                color: ColorManager.textRedColor,
+                              ),
+                              hint: request['gender'] ?? 'gender not available',
                               readOnly: true,
                             ),
                             Padding(
