@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
-class ProgramWidget extends StatelessWidget {
-  const ProgramWidget({super.key});
+class AvailableClassWidget extends StatelessWidget {
+  const AvailableClassWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class ProgramWidget extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.r),
             boxShadow: [
-               BoxShadow(
+              BoxShadow(
                   color: Color(0xCED2D9C9),
                   spreadRadius: 0,
                   blurRadius: 7,
@@ -39,41 +39,28 @@ class ProgramWidget extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 13.h),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                spacing: 2.h,
+                mainAxisAlignment: MainAxisAlignment.start,
+                spacing: 7.h,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Private",
+                    "Gold Medal Training Plan",
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w700,
                       color: Color(0xff2D3135),
                     ),
                   ),
-                  Row(
-                    spacing: 20.w,
-                    children: [
-                      Text(
-                        "Min Age : 3 ",
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xffBBC0C3),
-                        ),
-                      ),
-                      Text(
-                        "Max Age : 60",
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xffBBC0C3),
-                        ),
-                      ),
-                    ],
+                  Text(
+                    "Swim With the pros! ",
+                    style: TextStyle(
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xffBBC0C3),
+                    ),
                   ),
                   Text(
-                    "Suitable For: All Gender, Baby (0-2)",
+                    "2 Weeks",
                     style: TextStyle(
                       fontSize: 10.sp,
                       fontWeight: FontWeight.w400,
