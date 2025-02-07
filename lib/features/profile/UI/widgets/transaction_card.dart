@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
-class TransactionCard extends StatelessWidget {
+class TransactionCard extends StatefulWidget {
   final String title;
   final String dateTime;
   final String price;
   final String status;
 
-  TransactionCard({
+  const TransactionCard({
     super.key,
     required this.title,
     required this.dateTime,
@@ -19,78 +20,125 @@ class TransactionCard extends StatelessWidget {
   });
 
   @override
+  _TransactionCardState createState() => _TransactionCardState();
+}
+
+class _TransactionCardState extends State<TransactionCard> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 8.h),
-      child: Container(
-        //height: 55.h,
-        width: 363.w,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12.r),
-          boxShadow: [
-            BoxShadow(
-              color: ColorManager.shadowColor,
-              blurStyle: BlurStyle.inner,
-              spreadRadius: 1,
-              blurRadius: 5,
-              offset: Offset(2, 2),
-            )
-          ],
-        ),
-        child: ListTile(
-          leading: SvgPicture.asset(
-            ImageManager.confirm,
-            height: 24.h,
-            width: 24.w,
-          ),
-          title: Text(
-            title,
-            style: TextStyle(
-              color: ColorManager.graycolorHeadline,
-              fontWeight: FontWeight.w600,
-              fontSize: 14.sp,
-            ),
-          ),
-          subtitle: Text(
-            dateTime,
-            style: TextStyle(
-              color: Colors.grey[600],
-              fontSize: 10.sp,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          trailing: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '\$$price',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14.sp,
-                  color: ColorManager.graycolorHeadline,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: EdgeInsets.only(bottom: 12.h),
+      child: Stack(
+        //alignment: AlignmentDirectional.bottomCenter,
+        //crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (_isHovered && widget.status == "Canceled")
+            Padding(
+              padding: EdgeInsets.only(top: 60.h),
+              child: Container(
+                width: 363.w,
+                padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: statusColors[status]?.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(8),
+                  color: ColorManager.textRedColor,
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(12.r),
+                      bottomRight: Radius.circular(12.r)),
                 ),
-                child: Text(
-                  status,
-                  style: TextStyle(
-                    fontSize: 8.sp,
-                    color: statusColors[status] ??
-                        Colors.grey, // Default color if status is not found,
-                    fontWeight: FontWeight.w400,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 15.h),
+                  child: Text(
+                    AppString.canceledNote,
+                    style: TextStyle(
+                      fontSize: 8.sp,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
               ),
-            ],
+            ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _isHovered = !_isHovered;
+              });
+            },
+            child: Container(
+              width: 363.w,
+              height: 75.h,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12.r),
+                boxShadow: [
+                  _isHovered && widget.status == "Canceled"
+                      ? BoxShadow()
+                      : BoxShadow(
+                          color: ColorManager.shadowColor,
+                          blurStyle: BlurStyle.inner,
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: Offset(2, 2),
+                        ),
+                ],
+              ),
+              child: ListTile(
+                leading: SvgPicture.asset(
+                  ImageManager.confirm,
+                  height: 24.h,
+                  width: 24.w,
+                ),
+                title: Text(
+                  widget.title,
+                  style: TextStyle(
+                    color: ColorManager.graycolorHeadline,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.sp,
+                  ),
+                ),
+                subtitle: Text(
+                  widget.dateTime,
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                trailing: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '\$${widget.price}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14.sp,
+                        color: ColorManager.graycolorHeadline,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: statusColors[widget.status]?.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        widget.status,
+                        style: TextStyle(
+                          fontSize: 8.sp,
+                          color: statusColors[widget.status] ?? Colors.grey,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

@@ -157,6 +157,8 @@ class AppString {
   static const String viewAllTransaction = "View All Transaction";
   static const String historyTransaction = "History Transaction";
   static const String myBalance = "My Balance";
+  static const String canceledNote =
+      "Payment has been canceled because the uploaded receipt is unclear. Please upload a clearer image to proceed or contact support for assistance.";
 
   // Booked Screen
 
@@ -175,13 +177,16 @@ class AppString {
   static const String skills = "Skills";
   static const String armStrokeTechnique = "Arm Stroke Technique";
   static const String legKickCoordination = "Leg Kick Coordination";
-  static const String breathingPatternConsistency = "Breathing Pattern Consistency";
+  static const String breathingPatternConsistency =
+      "Breathing Pattern Consistency";
   static const String headPosition = "Head Positioning";
-  static const String coreStabilityWhileFloating = "Core Stability While Floating";
+  static const String coreStabilityWhileFloating =
+      "Core Stability While Floating";
   static const String save = "Save";
   static const String cancel = "Cancel";
   static const String feedback = "Add your feedback:";
-  static const String feedbackHint = "Provide feedback on the trainee’s performance";
+  static const String feedbackHint =
+      "Provide feedback on the trainee’s performance";
 
   // Logout Screen
   static const String logingOut = "Logging out";

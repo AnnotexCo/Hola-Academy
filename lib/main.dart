@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
-          initialRoute: Routes.findTraineeScreen,
+          initialRoute: Routes.profileScreen,
           onGenerateRoute: appRouter.generateRoute,
           debugShowCheckedModeBanner: false,
           title: 'Hola Academy',
