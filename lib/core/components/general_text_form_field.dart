@@ -133,6 +133,16 @@ class GeneralTextFormField extends StatelessWidget {
                       color: ColorManager.textRedColor,
                     ),
             ),
+            focusedBorder: OutlineInputBorder(
+  
+              borderRadius: BorderRadius.circular(borderRadius ?? 8.r),
+              borderSide: isBorder == false
+                  ? BorderSide.none
+                  : BorderSide(
+                      color: ColorManager.textRedColor,
+                      width: 2,
+                    ),
+            ),
             contentPadding: contentPadding ??
                 EdgeInsets.symmetric(
                   vertical: 15.h,
