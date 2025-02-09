@@ -139,7 +139,7 @@ class OnboardingState extends State<Onboarding> {
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.pushNamed(
-                                      context, Routes.layoutScreen);
+                                      context, Routes.loginScreen);
                                 },
                                 child: Text(
                                   "Skip",

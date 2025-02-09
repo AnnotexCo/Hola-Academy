@@ -136,21 +136,16 @@ class WelcomeWidget extends StatelessWidget {
             const SizedBox(width: 16),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
-                  'Welcome Back!',
-                  style: TextStyle(
-                    fontSize: 16, // Adjust size to match UI
-                    fontWeight: FontWeight.w400,
-                  ),
+                  "Welcome Back!",
+                  style:
+                      TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w300),
                 ),
-                SizedBox(height: 4),
                 Text(
-                  'John Victor',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  "Jennifer James",
+                  style:
+                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
                 ),
               ],
             ),

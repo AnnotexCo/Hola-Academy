@@ -34,61 +34,65 @@ class _AdminTransactionsScreenState extends State<AdminTransactionsScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomSheet: Container(
-          height: 650.h,
-          width: 440.w,
-          decoration: BoxDecoration(
-            color: ColorManager.whiteColor,
-            borderRadius: BorderRadius.all(
-              Radius.circular(30.r),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: ColorManager.blackColor.withValues(alpha: .1),
-                offset: Offset(0, -2),
-                blurRadius: 10,
-              ),
-            ],
-          ),
-          child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 21.w, vertical: 30.h),
-              child: Column(spacing: 25.h, children: [
-                TransactionTapBar(
-                  tabController: tabController,
+        bottomSheet: LayoutBuilder(
+          builder: (context, constraints) {
+            return Container(
+              height: constraints.maxHeight * 0.70,
+              width: 440.w,
+              decoration: BoxDecoration(
+                color: ColorManager.whiteColor,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(30.r),
                 ),
-                Expanded(
-                  child: SizedBox(
-                    //height: 500.h,
-                    child: TabBarView(
-                      controller: tabController,
-                      children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: transactions.length,
-                          itemBuilder: (context, index) => AdminTransactionCard(
-                            title: transactions[index]['title'],
-                            dateTime: transactions[index]['dateTime'],
-                            price: transactions[index]['price'],
-                            status: transactions[index]['status'],
-                            income: transactions[index]['income'],
-                          ),
-                        ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: transactions2.length,
-                          itemBuilder: (context, index) => AdminTransactionCard(
-                            title: transactions2[index]['title'],
-                            dateTime: transactions2[index]['dateTime'],
-                            price: transactions2[index]['price'],
-                            status: transactions2[index]['status'],
-                            income: transactions2[index]['income'],
-                          ),
-                        ),
-                      ],
-                    ),
+                boxShadow: [
+                  BoxShadow(
+                    color: ColorManager.blackColor.withValues(alpha: .1),
+                    offset: Offset(0, -2),
+                    blurRadius: 10,
                   ),
-                ),
-              ])),
+                ],
+              ),
+              child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 21.w, vertical: 30.h),
+                  child: Column(spacing: 25.h, children: [
+                    TransactionTapBar(
+                      tabController: tabController,
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        //height: 500.h,
+                        child: TabBarView(
+                          controller: tabController,
+                          children: [
+                            ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: transactions.length,
+                              itemBuilder: (context, index) => AdminTransactionCard(
+                                title: transactions[index]['title'],
+                                dateTime: transactions[index]['dateTime'],
+                                price: transactions[index]['price'],
+                                status: transactions[index]['status'],
+                                income: transactions[index]['income'],
+                              ),
+                            ),
+                            ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: transactions2.length,
+                              itemBuilder: (context, index) => AdminTransactionCard(
+                                title: transactions2[index]['title'],
+                                dateTime: transactions2[index]['dateTime'],
+                                price: transactions2[index]['price'],
+                                status: transactions2[index]['status'],
+                                income: transactions2[index]['income'],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ])),
+            );
+          }
         ),
         body: Container(
             decoration: BoxDecoration(

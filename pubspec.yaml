@@ -11,6 +11,7 @@ environment:
   sdk: ^3.6.0
 
 dependencies:
+  cached_network_image: ^3.4.1
   cupertino_icons: ^1.0.8
   dropdown_button2: ^2.3.9
   easy_date_timeline: ^2.0.6

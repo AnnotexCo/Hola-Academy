@@ -359,7 +359,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                   //selectedGender != null) {
                   // Process data
                   //}
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                 })
           ]),
         ),
