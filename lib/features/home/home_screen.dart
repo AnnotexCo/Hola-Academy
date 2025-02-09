@@ -6,9 +6,9 @@ import 'package:hola_academy/features/home/components/evaluation_card.dart';
 import 'package:hola_academy/features/home/components/list_of_programs.dart';
 import 'package:hola_academy/features/home/components/timeline_widget.dart';
 import 'package:hola_academy/features/home/components/welcome_header.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/components/calender_widget.dart';
+import '../../core/local_db/save_token.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,9 +28,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadUserRole() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? role = await SaveTokenDB.getRole(); 
     setState(() {
-      _userRole = prefs.getString('userRole'); 
+      _userRole = role;
     });
   }
 // ----------------------------------------------

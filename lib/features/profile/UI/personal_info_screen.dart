@@ -8,7 +8,8 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../core/local_db/save_token.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
   const PersonalInfoScreen({super.key});
@@ -47,9 +48,9 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   }
 
   Future<void> _loadUserRole() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? role = await SaveTokenDB.getRole(); 
     setState(() {
-      _userRole = prefs.getString('userRole');
+      _userRole = role;
     });
   }
 

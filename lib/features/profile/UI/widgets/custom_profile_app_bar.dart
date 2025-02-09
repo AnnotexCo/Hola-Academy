@@ -5,7 +5,8 @@ import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../core/local_db/save_token.dart';
 
 class CustomProfileAppBar extends StatefulWidget {
   final bool qrCode;
@@ -26,9 +27,9 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
   }
 
   Future<void> _loadUserRole() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? role = await SaveTokenDB.getRole(); 
     setState(() {
-      _userRole = prefs.getString('userRole'); // Get role from SharedPreferences
+      _userRole = role;
     });
   }
   @override

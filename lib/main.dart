@@ -4,7 +4,11 @@ import 'package:hola_academy/core/Routing/app_router.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 
-void main() {
+import 'core/dependency_injection/dependency.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); 
+  setUpGetIt(); 
   runApp(MyApp(appRouter: AppRouter()));
 }
 

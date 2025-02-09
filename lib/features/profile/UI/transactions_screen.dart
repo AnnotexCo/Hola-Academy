@@ -5,7 +5,8 @@ import 'package:hola_academy/core/components/custom_app_bar.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/features/profile/UI/widgets/transaction_card.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../core/local_db/save_token.dart';
 
 class TransactionsScreen extends StatefulWidget {
   const TransactionsScreen({super.key});
@@ -26,9 +27,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
   }
 
   Future<void> _loadUserRole() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? role = await SaveTokenDB.getRole(); 
     setState(() {
-      _userRole = prefs.getString('userRole');
+      _userRole = role;
     });
   }
 

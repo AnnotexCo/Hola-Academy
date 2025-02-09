@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/components/custom_app_bar.dart';
 import '../../../core/components/custom_app_button.dart';
 import '../../../core/components/general_text_form_field.dart';
 import '../../../core/components/title_widget.dart';
 import '../../../core/constants/image_manager.dart';
+import '../../../core/local_db/save_token.dart';
 import '../../not_found/not_found_screen.dart';
 import 'widgets/additional_notes_section.dart';
 import 'widgets/parent_guardian_section.dart';
@@ -35,9 +35,9 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
   }
 
   Future<void> _loadUserRole() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? role = await SaveTokenDB.getRole(); 
     setState(() {
-      _userRole = prefs.getString('userRole'); // Get role from SharedPreferences
+      _userRole = role;
     });
   }
 

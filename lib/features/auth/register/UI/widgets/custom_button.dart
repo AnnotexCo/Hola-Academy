@@ -5,12 +5,13 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
   final String text;
-  const CustomButton({super.key, required this.onTap, required this.text});
+  final bool isLoading;
+  const CustomButton({super.key, required this.onTap, required this.text, this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: isLoading ? null : onTap,
       child: Padding(
         padding: EdgeInsets.only(top: 5.h, bottom: 4.h),
         child: Container(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hola_academy/core/dependency_injection/dependency.dart';
 import 'package:hola_academy/features/admin/transactions/admin_transactions_screen.dart';
 import 'package:hola_academy/features/auth/forgot_password/UI/forgot_password_screen.dart';
 import 'package:hola_academy/features/auth/login/UI/login_screen.dart';
@@ -25,6 +27,7 @@ import '../../features/Admin/home/UI/home_admin_screen.dart';
 import '../../features/Admin/requests/UI/requests_screen.dart';
 import '../../features/Admin/trainees/UI/trainees_screen.dart';
 import '../../features/analytics/UI/analytics_skills_screen.dart';
+import '../../features/auth/login/Logic/login_cubit.dart';
 import '../../features/auth/register/UI/register_screen.dart';
 import '../../features/book/UI/book_programs_screen.dart';
 import '../../features/not_found/not_found_screen.dart';
@@ -52,7 +55,11 @@ class AppRouter {
 
       // Login Screen
       case Routes.loginScreen:
-        return MaterialPageRoute(builder: (_) => const LoginScreen());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => getIT<LoginCubit>(),
+                  child: const LoginScreen(),
+                ));
 
       // forgot password
       case Routes.forgotPassword:
@@ -82,11 +89,11 @@ class AppRouter {
       // Booked
       case Routes.bookedScreen:
         return MaterialPageRoute(builder: (_) => const BookedScreen());
-      
+
       //  Request payment
       case Routes.requestPaymentScreen:
         return MaterialPageRoute(builder: (_) => const RequestPaymentScreen());
-        
+
       // classes
       case Routes.classesScreen:
         return MaterialPageRoute(builder: (_) => ClassesScreen());

@@ -11,8 +11,9 @@ import 'package:hola_academy/features/profile/UI/terms_screen.dart';
 import 'package:hola_academy/features/profile/UI/transactions_screen.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
+
+import '../../../core/local_db/save_token.dart';
 import '../../Admin/transactions/admin_transactions_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -33,9 +34,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _loadUserRole() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? role = await SaveTokenDB.getRole(); // Fetch from local storage
     setState(() {
-      _userRole = prefs.getString('userRole'); 
+      _userRole = role;
     });
   }
 // --------------------------------------------

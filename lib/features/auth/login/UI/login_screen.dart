@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/auth/register/UI/register_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../forgot_password/UI/forgot_password_screen.dart';
 import '../../register/UI/widgets/custom_button.dart';
 
 import '../../../../core/components/general_text_form_field.dart';
+import '../Data/Model/login_model.dart';
+import '../Logic/login_cubit.dart';
 import 'widgets/social_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -24,58 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _roleController = TextEditingController();
+
   bool _isPasswordVisible = false;
-
-  Future<void> _login() async {
-    if (_formKey.currentState!.validate()) {
-      // Simulate a login process
-      String role = _roleController.text;
-
-      // Check credentials (this is just a mock check)
-      if (role == 'admin') {
-        // Save user role to SharedPreferences
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('userRole', 'admin');
-
-        // Navigate to the home screen
-        Navigator.pushReplacementNamed(context, Routes.adminLayout);
-      } else if (role == 'user') {
-        // Save user role to SharedPreferences
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('userRole', 'user');
-
-        // Navigate to the home screen
-        Navigator.pushReplacementNamed(context, Routes.layoutScreen);
-      } else if (role == 'preuser') {
-        // Save user role to SharedPreferences
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('userRole', 'preuser');
-
-        // Navigate to the home screen
-        Navigator.pushReplacementNamed(context, Routes.layoutScreen);
-      } else if (role == 'trainee') {
-        // Save user role to SharedPreferences
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('userRole', 'trainee');
-
-        // Navigate to the home screen
-
-        Navigator.pushReplacementNamed(context, Routes.layoutScreen);
-      } else if (role == 'coach') {
-        // Save user role to SharedPreferences
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('userRole', 'coach');
-
-        // Navigate to the home screen
-        Navigator.pushReplacementNamed(context, Routes.layoutCoachScreen);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Invalid credentials')),
-        );
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,90 +53,45 @@ class _LoginScreenState extends State<LoginScreen> {
               child: SingleChildScrollView(
                 child: Form(
                   key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 40.h),
-                      _buildTitle(AppString.welcomeBack),
-                      SizedBox(height: 40.h),
-                      GeneralTextFormField(
-                        controller: _roleController,
-                        label: 'Role',
-                        hint: 'Enter your role',
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.only(
-                            left: 24.w,
-                            right: 33.w,
-                            top: 9.h,
-                            bottom: 7.h,
-                          ),
-                          child: Icon(
-                            Icons.person,
-                            color: ColorManager.textRedColor,
-                            size: 24.sp,
-                          ),
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Role is required";
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 20.h),
-                      // Email Address Field
-                      GeneralTextFormField(
-                        controller: _emailController,
-                        label: AppString.emailAddress,
-                        hint: AppString.enterYourEmail,
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.only(
-                            left: 24.w,
-                            right: 33.w,
-                            top: 9.h,
-                            bottom: 7.h,
-                          ),
-                          child: Icon(
-                            Icons.email,
-                            color: ColorManager.textRedColor,
-                            size: 24.sp,
-                          ),
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Email is required";
-                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                              .hasMatch(value)) {
-                            return "Enter a valid email";
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 20.h),
-                      GeneralTextFormField(
-                        controller: _passwordController,
-                        label: AppString.password,
-                        hint: AppString.enterYourPassword,
-                        isPassword: !_isPasswordVisible,
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.only(
-                            left: 24.w,
-                            right: 33.w,
-                            top: 9.h,
-                            bottom: 7.h,
-                          ),
-                          child: Icon(
-                            Icons.lock_outline,
-                            color: ColorManager.textRedColor,
-                            size: 24.sp,
-                          ),
-                        ),
-                        suffixIcon: GestureDetector(
-                          onTap: () => setState(
-                              () => _isPasswordVisible = !_isPasswordVisible),
-                          child: Padding(
+                  child: BlocConsumer<LoginCubit, LoginState>(
+                      listener: (context, state) async {
+                    if (state is LoginSuccess) {
+                     String role = state.role.trim().toLowerCase(); 
+                      if (role == 'admin') {
+                        Navigator.pushReplacementNamed(
+                            context, Routes.adminLayout);
+                      } else if (role == 'user' ||
+                          role == 'preuser' ||
+                          role == 'trainee') {
+                        Navigator.pushReplacementNamed(
+                            context, Routes.layoutScreen);
+                      } else if (role == 'coach') {
+                        Navigator.pushReplacementNamed(
+                            context, Routes.layoutCoachScreen);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Invalid role: $role')),
+                        );
+                      }
+                    } else if (state is LoginFailure) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(state.message)),
+                      );
+                    }
+                  }, builder: (context, state) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 40.h),
+                        _buildTitle(AppString.welcomeBack),
+                        SizedBox(height: 40.h),
+
+                        // Email Address Field
+                        GeneralTextFormField(
+                          controller: _emailController,
+                          label: AppString.emailAddress,
+                          hint: AppString.enterYourEmail,
+                          prefixIcon: Padding(
                             padding: EdgeInsets.only(
                               left: 24.w,
                               right: 33.w,
@@ -192,31 +99,78 @@ class _LoginScreenState extends State<LoginScreen> {
                               bottom: 7.h,
                             ),
                             child: Icon(
-                              _isPasswordVisible
-                                  ? Icons.visibility_outlined
-                                  : Icons.visibility_off_outlined,
+                              Icons.email,
                               color: ColorManager.textRedColor,
                               size: 24.sp,
                             ),
                           ),
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Email is required";
+                            } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                                .hasMatch(value)) {
+                              return "Enter a valid email";
+                            }
+                            return null;
+                          },
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Password is required";
-                          } else if (value.length < 6) {
-                            return "Password must be at least 6 characters long";
-                          }
-                          return null;
-                        },
-                      ),
-                      _buildForgotPassword(),
-                      SizedBox(height: 15.h),
-                      _buildLoginButton(),
-                      _buildSignUpPrompt(),
-                      SizedBox(height: 15.h),
-                      _buildSocialLoginSection(),
-                    ],
-                  ),
+                        SizedBox(height: 20.h),
+                        GeneralTextFormField(
+                          controller: _passwordController,
+                          label: AppString.password,
+                          hint: AppString.enterYourPassword,
+                          isPassword: !_isPasswordVisible,
+                          prefixIcon: Padding(
+                            padding: EdgeInsets.only(
+                              left: 24.w,
+                              right: 33.w,
+                              top: 9.h,
+                              bottom: 7.h,
+                            ),
+                            child: Icon(
+                              Icons.lock_outline,
+                              color: ColorManager.textRedColor,
+                              size: 24.sp,
+                            ),
+                          ),
+                          suffixIcon: GestureDetector(
+                            onTap: () => setState(
+                                () => _isPasswordVisible = !_isPasswordVisible),
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                left: 24.w,
+                                right: 33.w,
+                                top: 9.h,
+                                bottom: 7.h,
+                              ),
+                              child: Icon(
+                                _isPasswordVisible
+                                    ? Icons.visibility_outlined
+                                    : Icons.visibility_off_outlined,
+                                color: ColorManager.textRedColor,
+                                size: 24.sp,
+                              ),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Password is required";
+                            } else if (value.length < 6) {
+                              return "Password must be at least 6 characters long";
+                            }
+                            return null;
+                          },
+                        ),
+                        _buildForgotPassword(),
+                        SizedBox(height: 15.h),
+                        _buildLoginButton(state),
+                        _buildSignUpPrompt(),
+                        SizedBox(height: 15.h),
+                        _buildSocialLoginSection(),
+                      ],
+                    );
+                  }),
                 ),
               ),
             ),
@@ -273,24 +227,26 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildLoginButton() {
-    return Center(
-      child: CustomButton(
-        text: AppString.login,
-        onTap: () {
-          if (_formKey.currentState?.validate() ?? false) {
-            // Handle login logic
-            _login();
-            /*Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => LayoutScreen(),
-                ));*/
-          }
-        },
-      ),
-    );
-  }
+Widget _buildLoginButton(LoginState state) {
+  return Center(
+    child: CustomButton(
+      text: AppString.login,
+      onTap: () {
+        if (_formKey.currentState?.validate() ?? false) {
+          context.read<LoginCubit>().doLogin(
+            LoginModel(
+              email: _emailController.text.trim(),
+              password: _passwordController.text.trim(),
+            ),
+          );
+        }
+      },
+      isLoading: state is LoginLoading, // Show loading indicator
+    ),
+  );
+}
+
+
 
   Widget _buildSignUpPrompt() {
     return Center(
