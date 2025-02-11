@@ -1,5 +1,5 @@
 import '../../../../../core/local_db/save_token.dart';
-import '../../../../../core/networking/Dio/dio_login_api.dart';
+import '../../../../../core/networking/Dio/Auth/dio_login_api.dart';
 import '../Model/login_model.dart';
 
 class LoginRepo {
