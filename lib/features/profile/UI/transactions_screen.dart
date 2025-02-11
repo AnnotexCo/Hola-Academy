@@ -51,7 +51,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // if (coach)
-                      if (_userRole == 'coach') ...[
+                      if (_userRole == AppString.coach) ...[
                         Container(
                           height: 120.h,
                           width: 383.w,

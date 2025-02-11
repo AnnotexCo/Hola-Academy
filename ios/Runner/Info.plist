@@ -41,6 +41,22 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<!-- Google Sign-In -->
+	<key>CFBundleURLTypes</key>
+	<array>
+    	<dict>
+       	   <key>CFBundleURLSchemes</key>
+     	   <array>
+        	   <string>com.googleusercontent.apps.YOUR_CLIENT_ID</string>
+           </array>
+   		 </dict>
+	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+    	<string>google</string>
+    	<string>googlechrome</string>
+	</array>
+
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

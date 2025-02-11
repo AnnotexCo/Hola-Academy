@@ -15,4 +15,9 @@ class LoginRepo {
   Future<String?> getUserRole() async {
     return await SaveTokenDB.getRole();
   }
+
+  Future<bool> doGoogleLogin({required String accessToken}) async {
+    print('Access Tooken: $accessToken');
+    return await dioLoginApi.dioGoogleLogin(accessToken: accessToken);
+  }
 }

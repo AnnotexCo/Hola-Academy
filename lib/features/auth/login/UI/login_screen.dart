@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
-import 'package:hola_academy/features/auth/register/UI/register_screen.dart';
 
 import '../../forgot_password/UI/forgot_password_screen.dart';
 import '../../register/UI/widgets/custom_button.dart';
@@ -28,6 +28,10 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool _isPasswordVisible = false;
+  Future<void> _handleGoogleSignIn() async {
+    final loginCubit = context.read<LoginCubit>();
+    await loginCubit.doGoogleLogin();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,16 +60,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: BlocConsumer<LoginCubit, LoginState>(
                       listener: (context, state) async {
                     if (state is LoginSuccess) {
-                     String role = state.role.trim().toLowerCase(); 
-                      if (role == 'admin') {
+                      String role = state.role.trim().toUpperCase();
+                      if (role == 'ADMIN') {
                         Navigator.pushReplacementNamed(
                             context, Routes.adminLayout);
-                      } else if (role == 'user' ||
-                          role == 'preuser' ||
-                          role == 'trainee') {
+                      } else if (role == 'USER' ||
+                          role == 'PREUSER' ||
+                          role == 'TRAINEE') {
                         Navigator.pushReplacementNamed(
                             context, Routes.layoutScreen);
-                      } else if (role == 'coach') {
+                      } else if (role == 'COACH') {
                         Navigator.pushReplacementNamed(
                             context, Routes.layoutCoachScreen);
                       } else {
@@ -227,37 +231,31 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-Widget _buildLoginButton(LoginState state) {
-  return Center(
-    child: CustomButton(
-      text: AppString.login,
-      onTap: () {
-        if (_formKey.currentState?.validate() ?? false) {
-          context.read<LoginCubit>().doLogin(
-            LoginModel(
-              email: _emailController.text.trim(),
-              password: _passwordController.text.trim(),
-            ),
-          );
-        }
-      },
-      isLoading: state is LoginLoading, // Show loading indicator
-    ),
-  );
-}
-
-
+  Widget _buildLoginButton(LoginState state) {
+    return Center(
+      child: CustomButton(
+        text: AppString.login,
+        onTap: () {
+          if (_formKey.currentState?.validate() ?? false) {
+            context.read<LoginCubit>().doLogin(
+                  LoginModel(
+                    email: _emailController.text.trim(),
+                    password: _passwordController.text.trim(),
+                  ),
+                );
+          }
+        },
+        isLoading: state is LoginLoading, // Show loading indicator
+      ),
+    );
+  }
 
   Widget _buildSignUpPrompt() {
     return Center(
       child: TextButton(
         onPressed: () {
           // Navigate to sign-up screen
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => RegisterScreen(),
-              ));
+          Navigator.pushNamed(context, Routes.registerScreen);
         },
         child: Text(
           AppString.dontHaveAccount,
@@ -286,9 +284,9 @@ Widget _buildLoginButton(LoginState state) {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            socialButton(ImageManager.googleLogo),
+            socialButton(ImageManager.googleLogo, _handleGoogleSignIn),
             SizedBox(width: 20.w),
-            socialButton(ImageManager.appleLogo),
+            socialButton(ImageManager.appleLogo, () {}),
           ],
         ),
       ],

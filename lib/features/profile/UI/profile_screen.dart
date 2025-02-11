@@ -24,7 +24,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  // TODO: remove 
+
     String? _userRole;
 
   @override
@@ -99,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return _userRole == 'admin' ? AdminTransactionsScreen() : TransactionsScreen();
+                          return _userRole == AppString.admin ? AdminTransactionsScreen() : TransactionsScreen();
                         },
                       ));
                     },

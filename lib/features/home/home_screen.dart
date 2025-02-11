@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/features/home/components/add_baner.dart';
 import 'package:hola_academy/features/home/components/evaluation_card.dart';
@@ -18,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // TODO: Return to stateless widget and remove this
+
     String? _userRole;
 
   @override
@@ -56,11 +57,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: double.infinity,
                   child: TimelineWidget(),
                 ),
-                if (_userRole == 'user' || _userRole == 'trainee') ...[
+                if (_userRole == AppString.user || _userRole == AppString.trainee) ...[
                 EvaluationAppointmentCard(),
                 ],
               // Conditional Rendering Based on Role
-                if (_userRole == 'user'|| _userRole == 'preuser') ...[
+                if (_userRole == AppString.user|| _userRole == AppString.preuser) ...[
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -74,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   ListOfPrograms(title: "Educational"),
                   ListOfPrograms(title: "Training"),
-                ] else if (_userRole == 'trainee') ...[
+                ] else if (_userRole == AppString.trainee) ...[
                   CalendarWidget(),
                 ],
               ],

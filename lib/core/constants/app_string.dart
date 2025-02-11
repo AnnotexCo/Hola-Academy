@@ -1,6 +1,13 @@
 class AppString {
   static const String appName = "Hola Academy";
 
+  // Roles
+  static const String trainee = "TRAINEE";
+  static const String coach = "COACH";
+  static const String admin = "ADMIN";
+  static const String preuser = "PREUSER";
+  static const String user = "USER";
+
   // Register Screen
   static const String register = "Register";
 

@@ -175,7 +175,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                       },
                     ),
                     // if (coach)
-                    if (_userRole == 'user') ...[
+                    if (_userRole == AppString.user) ...[
                       GeneralTextFormField(
                         label: AppString.birthDay,
                         hint: AppString.chooseYourBirthDate,

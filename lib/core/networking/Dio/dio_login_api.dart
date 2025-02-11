@@ -37,4 +37,29 @@ class DioLoginApi {
       throw dioError.response?.data['message'];
     }
   }
+
+ Future<bool> dioGoogleLogin({required String accessToken}) async {
+    try {
+      final response = await _dio.post(
+        '${ApiConstants.baseUrl}${ApiConstants.googleLoginApi}',
+        data: {
+          "accessToken": accessToken,
+        },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        return true;
+      }
+      return false;
+    } on DioException catch (dioError) {
+      throw dioError.response?.data['message'] ?? "Login failed";
+    }
+  }
 }
