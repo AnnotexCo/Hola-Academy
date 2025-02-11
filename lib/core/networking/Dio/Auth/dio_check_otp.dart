@@ -1,0 +1,36 @@
+import 'package:dio/dio.dart';
+import 'package:hola_academy/core/constants/api_constants.dart';
+import 'package:hola_academy/core/networking/ErrorHandler/api_error_handler.dart';
+
+class DioCheckOTP {
+  final Dio _dio;
+
+  DioCheckOTP({required Dio dio}) : _dio = dio;
+
+  Future<bool> dioCheckOTP(String email, int otp) async {
+    try {
+      final response = await _dio.post(
+        '${ApiConstants.baseUrl}${ApiConstants.resetPasswordApi}',
+        data: {
+          "email": email,
+          "otp": otp,
+        },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      final api = ApiErrorHandler.handle(error);
+
+      throw "${api.message}";
+    }
+  }
+}
