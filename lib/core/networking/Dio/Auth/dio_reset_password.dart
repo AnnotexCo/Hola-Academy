@@ -7,9 +7,9 @@ class DioResetPassword {
 
   DioResetPassword({required Dio dio}) : _dio = dio;
 
-  Future<bool> dioResetPassword(String email , String password , int otp) async {
+  Future<bool> dioResetPassword(String email, String password, int otp) async {
     try {
-      final response = await _dio.post(
+      final response = await _dio.patch(
         '${ApiConstants.baseUrl}${ApiConstants.resetPasswordApi}',
         data: {
           "email": email,

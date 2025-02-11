@@ -18,7 +18,7 @@ packages:
     source: hosted
     version: "2.11.0"
   bloc:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: bloc
       sha256: "52c10575f4445c61dd9e0cafcc6356fdd827c4c64dd7945ef3c4105f6b6ac189"
@@ -558,7 +558,7 @@ packages:
     source: hosted
     version: "0.11.1"
   meta:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: meta
       sha256: bdb68674043280c3428e9ec998512fb681678676b3c54e773629ffe74419f8c7
@@ -814,26 +814,26 @@ packages:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_calendar
-      sha256: dc21cdbd3ffea97445a8b4477648fcde65b1fd1629085fca85780ca794d61462
+      sha256: "8d045c916f7adc80484baa80d76b1df5c40c889295094ef706e10ff22b596faa"
       url: "https://pub.dev"
     source: hosted
-    version: "28.1.41"
+    version: "28.2.5"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: "324e6d370de025e5594c60fa60665efa700f34009c2b7859d05e843c357cd5c8"
+      sha256: dafeebdf8673d6dd874191bf579bc17c76b4b84e09fc0e4ae5bc7e56c0c91f4b
       url: "https://pub.dev"
     source: hosted
-    version: "28.1.41"
+    version: "28.2.5"
   syncfusion_flutter_datepicker:
     dependency: transitive
     description:
       name: syncfusion_flutter_datepicker
-      sha256: "1bfd7e819bcca8dfa3c6216972bfe32abf7b4086236f3d2c88fbfefcfe821136"
+      sha256: "882830c1d170790e08d027a4a1a70d55612ad47f81103329c6d98346296df1e1"
       url: "https://pub.dev"
     source: hosted
-    version: "28.1.41"
+    version: "28.2.5"
   synchronized:
     dependency: transitive
     description:
@@ -894,10 +894,10 @@ packages:
     dependency: transitive
     description:
       name: vector_graphics
-      sha256: "27d5fefe86fb9aace4a9f8375b56b3c292b64d8c04510df230f849850d912cb7"
+      sha256: "44cc7104ff32563122a929e4620cf3efd584194eec6d1d913eb5ba593dbcf6de"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.15"
+    version: "1.1.18"
   vector_graphics_codec:
     dependency: transitive
     description:

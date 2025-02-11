@@ -9,7 +9,7 @@ class DioChangePassword {
 
   Future<bool> dioChangePassword(String oldPassword, String newPassword) async {
     try {
-      final response = await _dio.post(
+      final response = await _dio.patch(
         '${ApiConstants.baseUrl}${ApiConstants.forgetPasswordApi}',
         data: {
           "oldPassword": oldPassword,

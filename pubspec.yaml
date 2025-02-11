@@ -11,6 +11,7 @@ environment:
   sdk: ^3.6.0
 
 dependencies:
+  bloc: ^9.0.0
   cached_network_image: ^3.4.1
   cupertino_icons: ^1.0.8
   dio: ^5.8.0+1
@@ -29,6 +30,7 @@ dependencies:
   google_sign_in: ^6.2.2
   image_picker: ^1.1.2
   jumping_dot: ^0.0.7
+  meta: ^1.15.0
   percent_indicator: ^4.2.4
   qr_code_scanner_plus: ^2.0.9+1
   scroll_snap_list: ^0.9.1
