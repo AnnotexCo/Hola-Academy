@@ -55,7 +55,7 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
             Row(
               children: [
                 // if (widget.qrCode == true)
-                 if (_userRole == 'trainee' || _userRole == 'coach')
+                 if (_userRole == AppString.trainee || _userRole == AppString.coach)
                   GestureDetector(
                       onTap: () async {
                         return showDialog(
@@ -111,7 +111,7 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
                             fontSize: 16.sp,
                             fontFamily: 'Besley',
                             fontWeight: FontWeight.w500,
-                            color: Colors.white, // Important: set a base color
+                            color: Colors.white, 
                           ),
                         ),
                       ),

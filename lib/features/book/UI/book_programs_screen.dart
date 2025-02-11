@@ -25,8 +25,7 @@ class BookProgramScreen extends StatefulWidget {
 class _BookProgramScreenState extends State<BookProgramScreen> {
   bool hasHealthIssues = false;
 
-  // TODO: remove this
-    String? _userRole;
+  String? _userRole;
 
   @override
   void initState() {
@@ -66,7 +65,7 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
                   buildPersonalDetailsSection(),
                   SizedBox(height: 32.h),
                   buildParentGuardianSection(),
-                  if (_userRole != 'preuser') ...[
+                  if (_userRole != AppString.preuser) ...[
                     SizedBox(height: 32.h),
                     PersonalInfoCard(),
                   ],

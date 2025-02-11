@@ -31,6 +31,10 @@ package="com.example.hola_academy">
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+            <!-- Google Sign-In -->
+            <meta-data
+            android:name="com.google.android.gms.auth.api.signin.v2"
+            android:value="true" />
     </application>
     
      <!-- Permissions for camera and external storage access -->
