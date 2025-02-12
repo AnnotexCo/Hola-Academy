@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
+import 'package:hola_academy/features/auth/forgot_password/Logic/cubit/forget_password_cubit.dart';
 import 'package:hola_academy/features/auth/verification/UI/verfication_screen.dart';
 
 import '../../../../core/components/custom_app_button.dart';
@@ -32,32 +34,47 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height,
-              ),
-              child: IntrinsicHeight(
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 20.h),
-                      _buildBackButton(context),
-                      SizedBox(height: 32.h),
-                      _buildTitle(),
-                      SizedBox(height: 12.h),
-                      _buildDescription(),
-                      SizedBox(height: 32.h),
-                      CustomToggleSwitch(
-                        isEmailSelected: isEmailSelected,
-                        onToggle: (value) => _onToggleSwitch(value),
-                      ),
-                      SizedBox(height: 50.h),
-                      CustomTextField(
+            child: BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
+              listener: (context, state) {
+                if (state is ForgetPasswordSuccess) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(AppString.emailSentSuccess)),
+                  );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => VerificationScreen()),
+                  );
+                } else if (state is ForgetPasswordError) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(state.errorMessage)),
+                  );
+                }
+              },
+              builder: (context, state) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 20.h),
+                    _buildBackButton(context),
+                    SizedBox(height: 32.h),
+                    _buildTitle(),
+                    SizedBox(height: 12.h),
+                    _buildDescription(),
+                    SizedBox(height: 32.h),
+                    CustomToggleSwitch(
+                      isEmailSelected: isEmailSelected,
+                      onToggle: (value) => _onToggleSwitch(value),
+                    ),
+                    SizedBox(height: 50.h),
+                    Form(
+                      key: _formKey,
+                      child: CustomTextField(
                         controller: _inputController,
                         focusNode: _inputFocusNode,
                         keyboardType: isEmailSelected
@@ -76,21 +93,20 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         ),
                         validator: (value) => _validateInput(value),
                       ),
-                      const Spacer(),
-                      Center(
-                        child: CustomAppButton(
-                          text: AppString.send,
-                          icon: Icons.send,
-                          onPressed: _onSubmit,
-                        ),
+                    ),
+                    SizedBox(height: 80.h),
+                    Center(
+                      child: CustomAppButton(
+                        text: AppString.send,
+                        icon: Icons.send,
+                        onPressed: _onSubmit,
                       ),
-                      SizedBox(height: 16.h),
-                      _buildBackToSignIn(context),
-                      SizedBox(height: 32.h),
-                    ],
-                  ),
-                ),
-              ),
+                    ),
+                    SizedBox(height: 32.h),
+                    _buildBackToSignIn(context),
+                  ],
+                );
+              },
             ),
           ),
         ),
@@ -178,15 +194,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   void _onSubmit() {
     if (_formKey.currentState?.validate() ?? false) {
-      // Proceed with the submission
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(isEmailSelected ? "Email sent!" : "SMS sent!")),
-      );
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => VerificationScreen(),
-          ));
+      context.read<ForgetPasswordCubit>().forgetpassword(_inputController.text);
     }
   }
 

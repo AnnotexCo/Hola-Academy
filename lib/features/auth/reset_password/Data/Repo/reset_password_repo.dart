@@ -5,7 +5,7 @@ class ResetPasswordRepo {
 
   ResetPasswordRepo({required this.dioResetPassword});
 
-  Future<void> resetPassword(String email, String newPassword, otp) async {
+  Future<void> resetPassword(String email, String newPassword,String otp) async {
     await dioResetPassword.dioResetPassword(email, newPassword, otp);
   }
 }

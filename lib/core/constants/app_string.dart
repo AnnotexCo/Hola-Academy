@@ -87,6 +87,7 @@ class AppString {
   static const String send = "Send";
   static const String backToSignIn = "Back to ";
   static const String signIn = "sign in";
+  static const String emailSentSuccess = "Email sent successfully";
 
   // Verfication
   static const String verification = "Verification";

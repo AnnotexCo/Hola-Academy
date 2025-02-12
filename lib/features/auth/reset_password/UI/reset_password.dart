@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/custom_app_button.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
+import 'package:hola_academy/features/auth/reset_password/Logic/cubit/reset_password_cubit.dart';
 
 import '../../../../core/components/custom_text_field.dart';
 import '../../../../core/constants/app_string.dart';
@@ -33,12 +35,21 @@ class _ResetPasswordState extends State<ResetPassword> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height,
-              ),
-              child: IntrinsicHeight(
-                child: Form(
+            child: BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
+              listener: (context, state) {
+                if (state is ResetPasswordSuccess) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Password reset successful!")),
+                  );
+                  Navigator.pushNamed(context, Routes.loginScreen);
+                } else if (state is ResetPasswordFailure) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(state.error)),
+                  );
+                }
+              },
+              builder: (context, state) {
+                return Form(
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,7 +61,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                       _buildPasswordField(),
                       SizedBox(height: 35.h),
                       _buildConfirmPasswordField(),
-                      const Spacer(),
+                      SizedBox(
+                        height: 80.h,
+                      ),
                       CustomAppButton(
                         text: AppString.reset,
                         onPressed: _onResetPassword,
@@ -59,8 +72,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                       SizedBox(height: 80.h),
                     ],
                   ),
-                ),
-              ),
+                );
+              },
             ),
           ),
         ),
@@ -129,11 +142,8 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   void _onResetPassword() {
     if (_formKey.currentState?.validate() ?? false) {
-      // Proceed with reset password logic
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Password reset successful!")),
-      );
-      Navigator.pushNamed(context, Routes.loginScreen);
+      context.read<ResetPasswordCubit>().resetPassword(
+          "trainee@gmail.com", _confirmPasswordController.text, "55551515");
     }
   }
 }

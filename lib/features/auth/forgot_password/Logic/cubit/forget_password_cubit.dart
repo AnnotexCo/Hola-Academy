@@ -8,10 +8,10 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   final ForgetPasswordRepo forgetPasswordRepo;
   ForgetPasswordCubit(this.forgetPasswordRepo) : super(ForgetPasswordInitial());
 
-  forgetpassword(String email) {
-      emit(ForgetPasswordLoading());
+  forgetpassword(String email) async {
+    emit(ForgetPasswordLoading());
     try {
-      forgetPasswordRepo.forgetPassword(email);
+      await forgetPasswordRepo.forgetPassword(email);
       emit(ForgetPasswordSuccess());
     } catch (e) {
       emit(ForgetPasswordError(errorMessage: e.toString()));

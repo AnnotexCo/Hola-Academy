@@ -7,7 +7,6 @@ import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
-import '../../forgot_password/UI/forgot_password_screen.dart';
 import '../../register/UI/widgets/custom_button.dart';
 
 import '../../../../core/components/general_text_form_field.dart';
@@ -213,12 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
       alignment: Alignment.centerRight,
       child: TextButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ForgotPasswordScreen(),
-            ),
-          );
+          Navigator.pushNamed(context, Routes.forgotPassword);
         },
         child: Text(
           AppString.forgotPassword,

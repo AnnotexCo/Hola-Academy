@@ -11,11 +11,11 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   resetPassword(
     String email,
     String newpassword,
-    int otp,
-  ) {
-      emit(ResetPasswordLoading());
+    String otp,
+  ) async {
+    emit(ResetPasswordLoading());
     try {
-      resetPasswordRepo.resetPassword(email, newpassword, otp);
+      await resetPasswordRepo.resetPassword(email, newpassword, otp);
       emit(ResetPasswordSuccess());
     } catch (e) {
       emit(ResetPasswordFailure(error: e.toString()));

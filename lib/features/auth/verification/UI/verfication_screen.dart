@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
-import 'package:hola_academy/features/auth/reset_password/UI/reset_password.dart';
+import 'package:hola_academy/features/auth/verification/Logic/cubit/check_otp_cubit.dart';
 
 import '../../../../core/components/custom_app_button.dart';
 import '../../../../core/constants/color_manager.dart';
@@ -46,13 +48,21 @@ class _VerificationScreenState extends State<VerificationScreen> {
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight:
-                  MediaQuery.of(context).size.height, // Ensure minimum height
-            ),
-            child: IntrinsicHeight(
-              child: Padding(
+          child: BlocConsumer<CheckOtpCubit, CheckOtpState>(
+            listener: (context, state) {
+              if (state is CheckOtpSuccess) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Thank you For Verification")),
+                  );
+                  Navigator.pushNamed(context, Routes.loginScreen);
+                } else if (state is CheckOtpFailure) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(state.message)),
+                  );
+                }
+            },
+            builder: (context, state) {
+              return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -63,13 +73,13 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         AppString.sentVerificationCode, '+20 *** **** ***'),
                     SizedBox(height: 48.h),
                     _customVerificationInputs(),
-                    const Spacer(),
+                    SizedBox(height: 80.h),
                     _buildTextButtons(),
                     SizedBox(height: 32.h),
                   ],
                 ),
-              ),
-            ),
+              );
+            },
           ),
         ),
       ),
@@ -162,12 +172,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
           onPressed: () {
             final code = _codeList.join();
             if (code.length == 6) {
-              // TODO: verification logic here
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ResetPassword(),
-                  ));
+              Navigator.pushNamed(context, Routes.resetPassword);
             }
           },
         ),
@@ -183,7 +188,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
             ),
             TextButton(
               onPressed: () {
-                // Add resend logic here
+                // Add .
+                // logic here
               },
               child: Text(
                 AppString.resend,

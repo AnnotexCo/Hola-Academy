@@ -4,8 +4,7 @@ class ForgetPasswordRepo {
   final DioForgetPassword dioForgetPassword;
 
   ForgetPasswordRepo({required this.dioForgetPassword});
-
-  Future<void> forgetPassword(
+  forgetPassword(
     String email,
   ) async {
     await dioForgetPassword.dioForgetPassword(email);

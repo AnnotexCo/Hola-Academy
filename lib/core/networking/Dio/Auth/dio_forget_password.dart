@@ -6,8 +6,7 @@ class DioForgetPassword {
   final Dio _dio;
 
   DioForgetPassword({required Dio dio}) : _dio = dio;
-
-  Future<bool> dioForgetPassword(String email) async {
+  dioForgetPassword(String email) async {
     try {
       final response = await _dio.post(
         '${ApiConstants.baseUrl}${ApiConstants.forgetPasswordApi}',

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hola_academy/core/dependency_injection/dependency.dart';
 import 'package:hola_academy/features/admin/transactions/admin_transactions_screen.dart';
+import 'package:hola_academy/features/auth/forgot_password/Logic/cubit/forget_password_cubit.dart';
 import 'package:hola_academy/features/auth/forgot_password/UI/forgot_password_screen.dart';
 import 'package:hola_academy/features/auth/login/UI/login_screen.dart';
 import 'package:hola_academy/features/auth/logout/logout_screen.dart';
+import 'package:hola_academy/features/auth/reset_password/Logic/cubit/reset_password_cubit.dart';
 import 'package:hola_academy/features/auth/reset_password/UI/reset_password.dart';
 import 'package:hola_academy/features/auth/verification/UI/verfication_screen.dart';
 import 'package:hola_academy/features/classes/classes_screen.dart';
@@ -63,11 +65,19 @@ class AppRouter {
 
       // forgot password
       case Routes.forgotPassword:
-        return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => getIT<ForgetPasswordCubit>(),
+                  child: const ForgotPasswordScreen(),
+                ));
 
       // reset password
       case Routes.resetPassword:
-        return MaterialPageRoute(builder: (_) => const ResetPassword());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => getIT<ResetPasswordCubit>(),
+                  child: const ResetPassword(),
+                ));
 
       // verification
       case Routes.verificationScreen:
