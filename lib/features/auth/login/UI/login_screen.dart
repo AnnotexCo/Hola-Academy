@@ -7,6 +7,7 @@ import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
+import '../../../../core/local_db/save_token.dart';
 import '../../register/UI/widgets/custom_button.dart';
 
 import '../../../../core/components/general_text_form_field.dart';
@@ -59,6 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: BlocConsumer<LoginCubit, LoginState>(
                       listener: (context, state) async {
                     if (state is LoginSuccess) {
+                      await SaveTokenDB.saveTokenAndRole(state.token, state.role); // Save session
                       String role = state.role.trim().toUpperCase();
                       if (role == 'ADMIN') {
                         Navigator.pushReplacementNamed(

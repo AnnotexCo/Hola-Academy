@@ -45,7 +45,7 @@ void didChangeDependencies() {
         builder: (context, state) {
           if (state is ProgramsLoading) {
             return  ListView.builder(
-              padding: EdgeInsets.only(top: 20.h),
+              padding: EdgeInsets.only(top: 50.h),
               itemCount: 5, 
               itemBuilder: (context, index) {
                 return Padding(
