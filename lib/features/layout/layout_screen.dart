@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
@@ -8,6 +9,8 @@ import 'package:hola_academy/features/classes/UI/classes_screen.dart';
 import 'package:hola_academy/features/home/home_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
 
+import '../../core/dependency_injection/dependency.dart';
+import '../classes/Logic/cubit/programs_cubit.dart';
 import '../profile/UI/profile_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
@@ -23,7 +26,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
   final List<Widget> _screens = [
     HomeScreen(),
-    ClassesScreen(),
+    BlocProvider(
+      create: (context) => getIT<ProgramsCubit>(),
+      child: ClassesScreen(),
+    ),
     NotificationsScreen(),
     ProfileScreen()
   ];
@@ -113,8 +119,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: PageView(
-                     physics: const NeverScrollableScrollPhysics(), 
-
+          physics: const NeverScrollableScrollPhysics(),
           controller: _pageController,
           onPageChanged: (index) {
             setState(() {

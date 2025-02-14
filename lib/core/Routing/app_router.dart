@@ -32,6 +32,7 @@ import '../../features/analytics/UI/analytics_skills_screen.dart';
 import '../../features/auth/login/Logic/login_cubit.dart';
 import '../../features/auth/register/UI/register_screen.dart';
 import '../../features/book/UI/book_programs_screen.dart';
+import '../../features/classes/Logic/cubit/programs_cubit.dart';
 import '../../features/not_found/not_found_screen.dart';
 import '../../features/profile/UI/request_payment_screen.dart';
 import '../../features/schedule_evaluation/UI/schedule_evaluation_screen.dart';
@@ -106,7 +107,11 @@ class AppRouter {
 
       // classes
       case Routes.classesScreen:
-        return MaterialPageRoute(builder: (_) => ClassesScreen());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => getIT<ProgramsCubit>(),
+                  child: ClassesScreen(),
+                ));
 
       case Routes.detailsScreen:
         return MaterialPageRoute(builder: (_) => DetailClassScreen());

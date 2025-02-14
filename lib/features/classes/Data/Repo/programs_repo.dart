@@ -2,15 +2,15 @@ import '../../../../core/networking/Dio/Program/dio_programs.dart';
 import '../Model/programs_model.dart';
 
 class ProgramsRepo {
-  final DioPrograms dioProgram;
+  final DioPrograms dioPrograms;
 
-  ProgramsRepo({required this.dioProgram});
+  ProgramsRepo({required this.dioPrograms});
 
   Future<List<ProgramsModel>> getAllPrograms() async {
-    return await dioProgram.getAllPrograms();
+    return await dioPrograms.getAllPrograms();
   }
 
   Future<ProgramsModel> getProgramById(int id) async {
-    return await dioProgram.getProgramById(id);
+    return await dioPrograms.getProgramById(id);
   }
 }

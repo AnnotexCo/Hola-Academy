@@ -13,6 +13,10 @@ import 'package:hola_academy/features/auth/reset_password/Logic/cubit/reset_pass
 import 'package:hola_academy/features/auth/verification/Data/Repo/check_otp_repo.dart';
 import 'package:hola_academy/features/auth/verification/Logic/cubit/check_otp_cubit.dart';
 
+import '../../features/classes/Data/Repo/programs_repo.dart';
+import '../../features/classes/Logic/cubit/programs_cubit.dart';
+import '../networking/Dio/Program/dio_programs.dart';
+
 final getIT = GetIt.instance; // Ensure it's instance, not calling it
 
 void setUpGetIt() {
@@ -20,15 +24,21 @@ void setUpGetIt() {
   getIT.registerLazySingleton<Dio>(() => Dio());
 
   // Dio Api's
+  // LoginDioApi
   getIT
       .registerLazySingleton<DioLoginApi>(() => DioLoginApi(dio: getIT<Dio>()));
+//  ResetPasswordDioApi
   getIT.registerLazySingleton<DioResetPassword>(
       () => DioResetPassword(dio: getIT<Dio>()));
+//  ForgetPasswordDioApi
   getIT.registerLazySingleton<DioForgetPassword>(
       () => DioForgetPassword(dio: getIT<Dio>()));
+//  CheckOtpDioApi
   getIT
       .registerLazySingleton<DioCheckOTP>(() => DioCheckOTP(dio: getIT<Dio>()));
-
+//  ProgramsDioApi
+  getIT
+      .registerLazySingleton<DioPrograms>(() => DioPrograms(dio: getIT<Dio>()));
   //Login
   getIT.registerLazySingleton<LoginRepo>(
       () => LoginRepo(dioLoginApi: getIT<DioLoginApi>()));
@@ -49,4 +59,10 @@ void setUpGetIt() {
   getIT.registerLazySingleton<CheckOtpRepo>(
       () => CheckOtpRepo(dioCheckOTP: getIT()));
   getIT.registerFactory<CheckOtpCubit>(() => CheckOtpCubit(getIT()));
+
+  //Programs
+  getIT.registerLazySingleton<ProgramsRepo>(() => ProgramsRepo(
+        dioPrograms: getIT(),
+      ));
+  getIT.registerFactory<ProgramsCubit>(() => ProgramsCubit(getIT()));
 }

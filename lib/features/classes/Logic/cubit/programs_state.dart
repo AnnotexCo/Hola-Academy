@@ -32,9 +32,9 @@ class ProgramSuccess extends ProgramsState {
 }
 
 // Error state
-class ProgramError extends ProgramsState {
+class ProgramsError extends ProgramsState {
   final String message;
-  ProgramError(this.message);
+  ProgramsError(this.message);
 
   @override
   List<Object> get props => [message];

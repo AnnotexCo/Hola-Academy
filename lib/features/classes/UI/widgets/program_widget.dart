@@ -5,11 +5,14 @@ import 'package:hola_academy/core/constants/image_manager.dart';
 import '../../Data/Model/programs_model.dart';
 
 class ProgramWidget extends StatelessWidget {
-   final ProgramsModel? program;
-  const ProgramWidget({super.key, this.program});
+   final ProgramsModel program;
+  const ProgramWidget({super.key,required this.program});
 
   @override
   Widget build(BuildContext context) {
+     final String imageUrl = ImageManager.onBoardingImage1;
+    //  final String imageUrl = '${ApiConstants.baseUrl}static-uploads/${program.image.path}';
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Container(
@@ -33,7 +36,7 @@ class ProgramWidget extends StatelessWidget {
                   topLeft: Radius.circular(12.r),
                   bottomLeft: Radius.circular(12.r)),
               child: Image.asset(
-                ImageManager.onBoardingImage2,
+                imageUrl,
                 height: double.infinity,
                 width: 110.w,
                 fit: BoxFit.cover,
@@ -47,7 +50,8 @@ class ProgramWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Private",
+                    program.name,
+                    // "Private",
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w700,
@@ -58,7 +62,7 @@ class ProgramWidget extends StatelessWidget {
                     spacing: 20.w,
                     children: [
                       Text(
-                        "Min Age : 3 ",
+                        "Min Age : ${program.minAge}",
                         style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,
@@ -66,7 +70,7 @@ class ProgramWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "Max Age : 60",
+                        "Max Age : ${program.maxAge}",
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
@@ -76,7 +80,7 @@ class ProgramWidget extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    "Suitable For: All Gender, Baby (0-2)",
+                    "Suitable For: ${program.allowedGender}",
                     style: TextStyle(
                       fontSize: 10.sp,
                       fontWeight: FontWeight.w400,
