@@ -3,12 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/custom_app_bar.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
-import 'package:hola_academy/features/classes/widgets/program_widget.dart';
-import 'package:hola_academy/features/classes/widgets/available_class_widget.dart';
-import 'package:hola_academy/features/classes/widgets/progress_class_widget.dart';
-import 'package:hola_academy/features/classes/widgets/tap_bar.dart';
+import 'package:hola_academy/features/classes/UI/widgets/program_widget.dart';
+import 'package:hola_academy/features/classes/UI/widgets/available_class_widget.dart';
+import 'package:hola_academy/features/classes/UI/widgets/progress_class_widget.dart';
+import 'package:hola_academy/features/classes/UI/widgets/tap_bar.dart';
 
-import '../../core/constants/app_string.dart';
+import '../../../core/constants/app_string.dart';
 
 class ClassesScreen extends StatefulWidget {
   const ClassesScreen({super.key});

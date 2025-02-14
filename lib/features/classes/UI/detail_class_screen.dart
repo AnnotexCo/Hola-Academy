@@ -5,7 +5,7 @@ import 'package:hola_academy/core/components/custom_app_bar.dart';
 import 'package:hola_academy/core/components/custom_colored_outline_button.dart';
 import 'package:hola_academy/features/home/components/program_card.dart';
 
-import '../../core/constants/color_manager.dart';
+import '../../../core/constants/color_manager.dart';
 
 class DetailClassScreen extends StatelessWidget {
   const DetailClassScreen({super.key});

@@ -7,4 +7,6 @@ class ApiConstants {
   static String verifyAccount = 'api/auth/verify-account';
   static String checkOTP = 'api/auth/check-otp';
   static String googleLoginApi = 'api/auth/google-login';
+  static String programsApi = 'api/programs';
+  static String programByIdApi = 'api/programs/';
 }

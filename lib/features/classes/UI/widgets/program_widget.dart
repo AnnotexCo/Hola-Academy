@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
+import '../../Data/Model/programs_model.dart';
+
 class ProgramWidget extends StatelessWidget {
-  const ProgramWidget({super.key});
+   final ProgramsModel? program;
+  const ProgramWidget({super.key, this.program});
 
   @override
   Widget build(BuildContext context) {
