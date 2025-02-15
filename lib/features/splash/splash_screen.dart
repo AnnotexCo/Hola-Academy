@@ -57,9 +57,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 6), () {
-      Navigator.of(context).pushReplacementNamed(Routes.onboarding);
-    });
     return Scaffold(
       body: Center(
         child: Column(

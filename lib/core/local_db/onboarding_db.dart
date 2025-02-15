@@ -12,6 +12,6 @@ class OnboardingStatusDB {
   /// Check if onboarding has been seen
   static Future<bool> hasSeenOnboarding() async {
     String? seen = await _storage.read(key: _onboardingKey);
-    return seen == 'true';
+    return seen?.toLowerCase() == 'true';
   }
 }

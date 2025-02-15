@@ -24,7 +24,7 @@ class ProgramsCubit extends Cubit<ProgramsState> {
     try {
       emit(ProgramsLoading());
       final program = await programRepo.getProgramById(id);
-      emit(ProgramSuccess(program));
+      emit(SingleProgramSuccess(program));
     } catch (e) {
       emit(ProgramsError(e.toString()));
     }

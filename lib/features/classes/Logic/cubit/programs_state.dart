@@ -23,9 +23,9 @@ class ProgramsSuccess extends ProgramsState {
 }
 
 // Success state - for fetching a single program
-class ProgramSuccess extends ProgramsState {
+class SingleProgramSuccess extends ProgramsState {
   final ProgramsModel program;
-  ProgramSuccess(this.program);
+  SingleProgramSuccess(this.program);
 
   @override
   List<Object> get props => [program];

@@ -32,6 +32,7 @@ import '../../features/analytics/UI/analytics_skills_screen.dart';
 import '../../features/auth/login/Logic/login_cubit.dart';
 import '../../features/auth/register/UI/register_screen.dart';
 import '../../features/book/UI/book_programs_screen.dart';
+import '../../features/classes/Data/Model/programs_model.dart';
 import '../../features/classes/Logic/cubit/programs_cubit.dart';
 import '../../features/not_found/not_found_screen.dart';
 import '../../features/profile/UI/request_payment_screen.dart';
@@ -114,10 +115,24 @@ class AppRouter {
                 ));
 
       case Routes.detailsScreen:
-        return MaterialPageRoute(builder: (_) => DetailClassScreen());
+  return MaterialPageRoute(
+    builder: (context) {
+      final int programId = settings.arguments as int; // Get ID
+      return BlocProvider(
+        create: (context) => getIT<ProgramsCubit>()..fetchProgramById(programId), 
+        child: DetailClassScreen(programId: programId), // Pass to screen
+      );
+    },
+  );
 
-      case Routes.programlevlScreen:
-        return MaterialPageRoute(builder: (_) => ProgramLevlScreen());
+
+case Routes.programlevlScreen:
+  return MaterialPageRoute(
+    builder: (context) {
+      final LevelModel level = settings.arguments as LevelModel; 
+      return ProgramLevlScreen(level: level); 
+    },
+  );
       // schedule evaluation
       case Routes.scheduleEvaluationScreen:
         return MaterialPageRoute(
