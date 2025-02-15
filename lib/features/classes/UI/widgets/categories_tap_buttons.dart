@@ -8,13 +8,11 @@ class CategoryFilterButtons extends StatefulWidget {
   final List<CategoryModel> categories;
   final Function(int) onCategorySelected;
   final int? selectedCategoryId;
-  final bool showAllButton;
 
   const CategoryFilterButtons({
     required this.categories,
     required this.onCategorySelected,
     this.selectedCategoryId,
-    this.showAllButton = false,
     super.key,
   });
 
@@ -28,53 +26,38 @@ class _CategoryFilterButtonsState extends State<CategoryFilterButtons> {
   @override
   void initState() {
     super.initState();
-    selectedCategoryId = widget.selectedCategoryId ?? -1; // Default to "All"
+    selectedCategoryId = widget.selectedCategoryId;
   }
 
   @override
   Widget build(BuildContext context) {
+    // Remove duplicate categories
+    final uniqueCategories = widget.categories.toSet().toList();
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: [
-          // Add "All" Button
-          if (widget.showAllButton)
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedCategoryId = -1;
-                });
-                widget.onCategorySelected(-1);
-              },
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.w),
-                child: buildLevelButton("All", selectedCategoryId == -1),
-              ),
+        children: uniqueCategories.map((category) {
+          bool isActive = selectedCategoryId == category.id;
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                selectedCategoryId = category.id;
+              });
+              widget.onCategorySelected(category.id);
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.w),
+              child: buildLevelButton(category.name, isActive),
             ),
-
-          // List of Categories
-          ...widget.categories.map((category) {
-            bool isActive = selectedCategoryId == category.id;
-            return GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedCategoryId = category.id;
-                });
-                widget.onCategorySelected(category.id);
-              },
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.w),
-                child: buildLevelButton(category.name, isActive),
-              ),
-            );
-          }),
-        ],
+          );
+        }).toList(),
       ),
     );
   }
 }
 
-/// Reusable Level Button
+/// Reusable Category Button
 Widget buildLevelButton(String text, bool isActive) {
   return Container(
     padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
