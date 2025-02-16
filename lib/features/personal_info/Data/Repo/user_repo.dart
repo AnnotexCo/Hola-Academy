@@ -1,0 +1,12 @@
+import 'package:hola_academy/core/networking/Dio/User/dio_user_api.dart';
+import '../Model/user_model.dart';
+
+class UserRepo {
+  final DioUserApi dioUserApi;
+
+  UserRepo({required this.dioUserApi});
+
+  Future<UserModel> getMyData() async {
+    return await dioUserApi.getMyData();
+  }
+}
