@@ -9,4 +9,9 @@ class ApiConstants {
   static String googleLoginApi = 'api/auth/google-login';
   static String programsApi = 'api/programs';
   static String programByIdApi = 'api/programs/';
+
+
+  static String signUpApi = 'api/auth/signup';
+  static String getMyDataApi = 'api/users/me';
+  static String updateMyDataApi = 'api/users/me';
 }
