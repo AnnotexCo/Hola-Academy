@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:hola_academy/features/auth/register/Data/Model/sign_up_model.dart';
+import 'package:hola_academy/features/personal_info/Data/Model/update_user_model.dart';
 import 'package:hola_academy/features/personal_info/Data/Model/user_model.dart';
 import '../../../constants/api_constants.dart';
 
@@ -17,9 +17,28 @@ class DioUserApi {
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {
-            return UserModel.fromJson(response.data['data']);
+        return UserModel.fromJson(response.data['data']);
       }
       throw Exception('Failed to load data');
+    } on DioException catch (dioError) {
+      throw dioError.response?.data['message'];
+    }
+  }
+
+  updateMyData({
+    required UpdateUserModel updateUserModel,
+  }) async {
+    try {
+      final response = await _dio.patch(
+        '${ApiConstants.baseUrl}${ApiConstants.updateMyDataApi}',
+        data: updateUserModel.toMap(),
+      );
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        return true;
+      }
+      throw Exception('Failed to update data');
     } on DioException catch (dioError) {
       throw dioError.response?.data['message'];
     }
