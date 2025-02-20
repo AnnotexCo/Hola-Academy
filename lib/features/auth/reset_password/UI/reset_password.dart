@@ -12,7 +12,9 @@ import '../../verification/UI/widgets/build_back_arrow.dart';
 import '../../verification/UI/widgets/build_verfication_message.dart';
 
 class ResetPassword extends StatefulWidget {
-  const ResetPassword({super.key});
+  final String email;
+  final String otp;
+  const ResetPassword({super.key, required this.email, required this.otp});
 
   @override
   State<ResetPassword> createState() => _ResetPasswordState();
@@ -83,6 +85,7 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   Widget _buildPasswordField() {
     return CustomTextField(
+      isPassword: !_isPasswordVisible,
       controller: _passwordController,
       label: AppString.password,
       hint: AppString.enterYourPassword,
@@ -112,6 +115,7 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   Widget _buildConfirmPasswordField() {
     return CustomTextField(
+      isPassword: !_isConfirmPasswordVisible,
       controller: _confirmPasswordController,
       label: AppString.confirmPassword,
       hint: AppString.enterYourPassword,
@@ -143,7 +147,7 @@ class _ResetPasswordState extends State<ResetPassword> {
   void _onResetPassword() {
     if (_formKey.currentState?.validate() ?? false) {
       context.read<ResetPasswordCubit>().resetPassword(
-          "trainee@gmail.com", _confirmPasswordController.text, "55551515");
+          widget.email, _confirmPasswordController.text, widget.otp);
     }
   }
 }

@@ -1,4 +1,5 @@
-import 'dart:io'; // Needed for exit(0)
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,8 +14,13 @@ void main() async {
   setUpGetIt();
 
   runApp(
-    BlocProvider(
-      create: (context) => NetworkConnectionCubit(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<NetworkConnectionCubit>(
+          create: (context) => NetworkConnectionCubit(),
+          lazy: false,
+        ),
+      ],
       child: MyApp(appRouter: AppRouter()),
     ),
   );
@@ -22,8 +28,8 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final AppRouter appRouter;
-
-  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
 
   const MyApp({super.key, required this.appRouter});
 
@@ -34,41 +40,41 @@ class MyApp extends StatelessWidget {
       minTextAdapt: false,
       splitScreenMode: true,
       builder: (context, child) {
-
-        //Handle Connection 
         return BlocListener<NetworkConnectionCubit, NetworkConnectionState>(
           listener: (context, state) {
             final navigator = MyApp.navigatorKey.currentState;
-            final overlayContext = MyApp.navigatorKey.currentContext; 
+            final overlayContext = navigator?.overlay?.context;
 
             if (state is NetworkDisconnected) {
-              // ✅ Prevent showing multiple dialogs
-              if (navigator?.canPop() == false) {
-                if (overlayContext != null) {
-                  showDialog(
-                    context: overlayContext,
-                    barrierDismissible: false,
-                    builder: (context) {
-                      return PopScope(
-                        canPop: false,
-                       onPopInvokedWithResult: (didPop, result) {
-                           exit(0); 
-                                                   },
-                        child: AlertDialog(
-                title: const Text("No Internet Connection"),
-                content: Icon(Icons.wifi_off ,size: 40,),
-                
-              ),
-            );
-                    },
-                  );
-                }
+              if (overlayContext != null) {
+                showDialog(
+                  context: overlayContext,
+                  barrierDismissible:
+                      false, // Prevents tapping outside to dismiss
+                  builder: (context) => PopScope(
+                    canPop: false, // Prevents swipe back (system back button)
+                    child: AlertDialog(
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.wifi_off, size: 40),
+                          const SizedBox(height: 10),
+                          const Text("No Internet Connection"),
+                          const SizedBox(height: 10),
+                          ElevatedButton(
+                            onPressed: () =>
+                                exit(0), // Closes the app when clicked
+                            child: const Text("Exit"),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
               }
-            }
-
-            if (state is NetworkConnected) {
+            } else if (state is NetworkConnected) {
               if (navigator?.canPop() == true) {
-                navigator?.pop(); 
+                navigator?.pop();
               }
             }
           },

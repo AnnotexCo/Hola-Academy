@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
+import 'package:hola_academy/features/auth/verification/Data/Model/reset_args.dart';
 import 'package:hola_academy/features/auth/verification/Logic/cubit/check_otp_cubit.dart';
 
 import '../../../../core/components/custom_app_button.dart';
@@ -12,7 +13,8 @@ import 'widgets/build_back_arrow.dart';
 import 'widgets/build_verfication_message.dart';
 
 class VerificationScreen extends StatefulWidget {
-  const VerificationScreen({super.key});
+  final String email;
+  const VerificationScreen({super.key, required this.email});
 
   @override
   State<VerificationScreen> createState() => _VerificationScreenState();
@@ -23,6 +25,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   final List<TextEditingController> _textControllers =
       List.generate(6, (_) => TextEditingController());
   List<String> _codeList = [];
+  String code = '';
 
   @override
   void initState() {
@@ -51,15 +54,19 @@ class _VerificationScreenState extends State<VerificationScreen> {
           child: BlocConsumer<CheckOtpCubit, CheckOtpState>(
             listener: (context, state) {
               if (state is CheckOtpSuccess) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Thank you For Verification")),
-                  );
-                  Navigator.pushNamed(context, Routes.loginScreen);
-                } else if (state is CheckOtpFailure) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(state.message)),
-                  );
-                }
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Thank you For Verification")),
+                );
+                Navigator.pushNamed(
+                  context,
+                  Routes.resetPassword,
+                  arguments: ResetPasswordArgs(email: widget.email, otp: code),
+                );
+              } else if (state is CheckOtpFailure) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(state.message)),
+                );
+              }
             },
             builder: (context, state) {
               return Padding(
@@ -170,9 +177,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
           text: AppString.send,
           icon: Icons.send,
           onPressed: () {
-            final code = _codeList.join();
+            code = _codeList.join();
             if (code.length == 6) {
-              Navigator.pushNamed(context, Routes.resetPassword);
+              context.read<CheckOtpCubit>().verifyOtp(widget.email, code);
+              print(code);
             }
           },
         ),
