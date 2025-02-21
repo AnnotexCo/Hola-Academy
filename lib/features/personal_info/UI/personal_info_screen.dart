@@ -102,6 +102,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
               }
             },
             builder: (context, state) {
+              var userDataCubit = context.read<UserDataCubit>();
               if (state is UserDataLoading) {
                 return Center(
                   child: CircularProgressIndicator(
@@ -210,7 +211,9 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                             },
                           ),
                           // if (coach)
-                          if (_userRole == AppString.preuser ||_userRole == AppString.user || _userRole == AppString.trainee) ...[
+                          if (_userRole == AppString.preuser ||
+                              _userRole == AppString.user ||
+                              _userRole == AppString.trainee) ...[
                             GeneralTextFormField(
                               label: AppString.birthDay,
                               hint: AppString.chooseYourBirthDate,
@@ -390,6 +393,9 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                             name: nameController.text,
                             phoneNumber: phoneController.text,
                             gender: selectedGender,
+                            dob: state.userModel.dob,
+                            parentName: state.userModel.parentName,
+                            parentWhatsappNumber: state.userModel.parentWhatsappNumber
                           );
                           userDataCubit.updateMyData(updateUserModel);
                         }
