@@ -7,10 +7,10 @@ class DioCheckOTP {
 
   DioCheckOTP({required Dio dio}) : _dio = dio;
 
-  Future<bool> dioCheckOTP(String email, int otp) async {
+  Future<bool> dioCheckOTP(String email, String otp) async {
     try {
       final response = await _dio.post(
-        '${ApiConstants.baseUrl}${ApiConstants.resetPasswordApi}',
+        '${ApiConstants.baseUrl}${ApiConstants.checkOTP}',
         data: {
           "email": email,
           "otp": otp,

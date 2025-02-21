@@ -5,7 +5,7 @@ class CheckOtpRepo {
 
   CheckOtpRepo({required this.dioCheckOTP});
 
-  Future<void> checkOtp(String email, otp) async {
+  Future<void> checkOtp(String email,String otp) async {
     await dioCheckOTP.dioCheckOTP(email, otp);
   }
 }

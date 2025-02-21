@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/features/auth/forgot_password/Logic/cubit/forget_password_cubit.dart';
-import 'package:hola_academy/features/auth/verification/UI/verfication_screen.dart';
 
 import '../../../../core/components/custom_app_button.dart';
 import '../../../../core/components/custom_text_field.dart';
@@ -45,11 +45,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(AppString.emailSentSuccess)),
                   );
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => VerificationScreen()),
-                  );
+                  Navigator.pushNamed(context, Routes.verificationScreen,
+                      arguments: _inputController.text);
                 } else if (state is ForgetPasswordError) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.errorMessage)),
@@ -195,6 +192,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   void _onSubmit() {
     if (_formKey.currentState?.validate() ?? false) {
       context.read<ForgetPasswordCubit>().forgetpassword(_inputController.text);
+      print(_inputController.text);
     }
   }
 

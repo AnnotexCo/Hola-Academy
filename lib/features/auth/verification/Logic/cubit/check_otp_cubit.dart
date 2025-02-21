@@ -8,7 +8,7 @@ class CheckOtpCubit extends Cubit<CheckOtpState> {
   final CheckOtpRepo checkOtpRepo;
   CheckOtpCubit(this.checkOtpRepo) : super(CheckOtpInitial());
 
-  verifyOtp(String email, int otp) async {
+  verifyOtp(String email, String otp) async {
     emit(CheckOtpLoading());
     try {
       await checkOtpRepo.checkOtp(email, otp);

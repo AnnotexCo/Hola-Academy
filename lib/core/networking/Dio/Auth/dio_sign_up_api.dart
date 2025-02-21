@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:hola_academy/features/auth/register/Data/Model/sign_up_model.dart';
-import 'package:hola_academy/features/personal_info/Data/Model/user_model.dart';
 import '../../../constants/api_constants.dart';
 
 class DioSignUpApi {

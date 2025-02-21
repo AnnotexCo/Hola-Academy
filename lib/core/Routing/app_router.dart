@@ -9,6 +9,8 @@ import 'package:hola_academy/features/auth/logout/logout_screen.dart';
 import 'package:hola_academy/features/auth/register/Logic/sign_up_cubit.dart';
 import 'package:hola_academy/features/auth/reset_password/Logic/cubit/reset_password_cubit.dart';
 import 'package:hola_academy/features/auth/reset_password/UI/reset_password.dart';
+import 'package:hola_academy/features/auth/verification/Data/Model/reset_args.dart';
+import 'package:hola_academy/features/auth/verification/Logic/cubit/check_otp_cubit.dart';
 import 'package:hola_academy/features/auth/verification/UI/verfication_screen.dart';
 import 'package:hola_academy/features/classes/UI/classes_screen.dart';
 import 'package:hola_academy/features/classes/UI/detail_class_screen.dart';
@@ -57,7 +59,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const Onboarding());
       // register screen
       case Routes.registerScreen:
-        return MaterialPageRoute(builder: (_) => BlocProvider(
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
                   create: (context) => getIT<SignUpCubit>(),
                   child: const RegisterScreen(),
                 ));
@@ -80,15 +83,29 @@ class AppRouter {
 
       // reset password
       case Routes.resetPassword:
-        return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (context) => getIT<ResetPasswordCubit>(),
-                  child: const ResetPassword(),
-                ));
+        return MaterialPageRoute(builder: (context) {
+          final args = settings.arguments as ResetPasswordArgs;
+
+          return BlocProvider(
+            create: (context) => getIT<ResetPasswordCubit>(),
+            child: ResetPassword(
+              email: args.email,
+              otp: args.otp,
+            ),
+          );
+        });
 
       // verification
       case Routes.verificationScreen:
-        return MaterialPageRoute(builder: (_) => const VerificationScreen());
+        return MaterialPageRoute(builder: (contex) {
+          final String email = settings.arguments as String; // Get phone number
+          return BlocProvider(
+            create: (context) => getIT<CheckOtpCubit>(),
+            child: VerificationScreen(
+              email: email,
+            ),
+          );
+        });
       case Routes.layoutScreen:
         return MaterialPageRoute(builder: (_) => const LayoutScreen());
       // profile
@@ -123,24 +140,24 @@ class AppRouter {
                 ));
 
       case Routes.detailsScreen:
-  return MaterialPageRoute(
-    builder: (context) {
-      final int programId = settings.arguments as int; // Get ID
-      return BlocProvider(
-        create: (context) => getIT<ProgramsCubit>()..fetchProgramById(programId), 
-        child: DetailClassScreen(programId: programId), // Pass to screen
-      );
-    },
-  );
+        return MaterialPageRoute(
+          builder: (context) {
+            final int programId = settings.arguments as int; // Get ID
+            return BlocProvider(
+              create: (context) =>
+                  getIT<ProgramsCubit>()..fetchProgramById(programId),
+              child: DetailClassScreen(programId: programId), // Pass to screen
+            );
+          },
+        );
 
-
-case Routes.programlevlScreen:
-  return MaterialPageRoute(
-    builder: (context) {
-      final LevelModel level = settings.arguments as LevelModel; 
-      return ProgramLevlScreen(level: level); 
-    },
-  );
+      case Routes.programlevlScreen:
+        return MaterialPageRoute(
+          builder: (context) {
+            final LevelModel level = settings.arguments as LevelModel;
+            return ProgramLevlScreen(level: level);
+          },
+        );
       // schedule evaluation
       case Routes.scheduleEvaluationScreen:
         return MaterialPageRoute(
