@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -144,16 +145,15 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
                       ),
                       child: _profileImage != null
                           ? Image.file(_profileImage!, fit: BoxFit.fill)
-                          : Container(),
-                      /*CachedNetworkImage(
+                          : CachedNetworkImage(
                               imageUrl:
-                                  'https://s3-alpha-sig.figma.com/img/e915/f882/38ac6007aa5be950081f8f386a727a10?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=hiBut43BEiezw7m5NASleNYmzS9ziNOyQwj14kS9CtjVkZGITJghYIRAldrTH1OyxwSXz22e8fgTtrRG3WJw71uOrpLM9-Wt9-6ock3dQLpCTqCCCXpDC~y6HSo1Ss9K1e7iWdCpdqA-omyk0LiafqJ4jQs4Ra~lEqnSX0bKrZM5x9t37F74rQPXbXdZG1B~yngERKh-1EKQOz97k3bid33Wa~HXvGu~PdrbC5Ac6-yR8KTc4CiHImZm2fcTlJIuXIPaCd115nsVC4NG8oeZNJUzC0i1us7Sb5A3ifygBZTgYqJwUeA9bXpxbVV5PSlxO2G8RrEcGcg-ElwdC6HJdA__',
+                              'https://s3-alpha-sig.figma.com/img/e915/f882/38ac6007aa5be950081f8f386a727a10?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Q9BtXogUsptewnW5pzvUxAJhaZZL8L25nCXMAXJxwpV0U72ijLse3Ncfq17zOkB4CWgfB5xwF5DvUdNNZ0g-rjQNennZH6CyayjaPHlsXt9quNE5Bav4UzepsBmLj0uzAJdCfxVdDnq2uc-UGqusrRtInO0bhp0tqvYS0i7pOTvunrWTn8ybztyNpYRHp~KQGKDk81ry1ERjlfiiTUtS1rokmAnxuppCCp83Sul8fWqv4fhI3eXrrDmKF2H4X2ibezHjUaHnsmoIxJyAENzeqttNgNkXpMlYIfvWUyPmOIDGkVoHCwgBxzk257tQ~igP6hxop1-KflmKffK6q1liUw__',
                               placeholder: (context, url) =>
                                   CircularProgressIndicator(),
                               errorWidget: (context, url, error) =>
                                   Icon(Icons.error),
                               fit: BoxFit.fill,
-                            ),*/
+                            ),
                     ),
                   ),
                 ),
