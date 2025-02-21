@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:hola_academy/features/home/components_coach/trainee_card.dart';
+import 'package:hola_academy/features/home/UI/components_coach/trainee_card.dart';
 
 
 class ListofTrainee extends StatelessWidget {

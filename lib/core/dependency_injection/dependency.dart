@@ -4,6 +4,7 @@ import 'package:hola_academy/core/networking/Dio/Auth/dio_check_otp.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_forget_password.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_reset_password.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_sign_up_api.dart';
+import 'package:hola_academy/core/networking/Dio/Home/dio_banner_api.dart';
 import 'package:hola_academy/core/networking/Dio/User/dio_user_api.dart';
 import 'package:hola_academy/features/auth/forgot_password/Data/Repo/forget_password_repo.dart';
 import 'package:hola_academy/features/auth/forgot_password/Logic/cubit/forget_password_cubit.dart';
@@ -21,6 +22,8 @@ import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
 
 import '../../features/classes/Data/Repo/programs_repo.dart';
 import '../../features/classes/Logic/cubit/programs_cubit.dart';
+import '../../features/home/Data/Repo/banner_repo.dart';
+import '../../features/home/Logic/banner_logic/banner_cubit.dart';
 import '../networking/Dio/Program/dio_programs.dart';
 
 final getIT = GetIt.instance; // Ensure it's instance, not calling it
@@ -53,6 +56,10 @@ void setUpGetIt() {
 //  ProgramsDioApi
   getIT
       .registerLazySingleton<DioPrograms>(() => DioPrograms(dio: getIT<Dio>()));
+
+//  BannerDioApi
+  getIT
+      .registerLazySingleton<DioBannerApi>(() => DioBannerApi(dio: getIT<Dio>()));
   //Login
   getIT.registerLazySingleton<LoginRepo>(
       () => LoginRepo(dioLoginApi: getIT<DioLoginApi>()));
@@ -86,5 +93,9 @@ void setUpGetIt() {
 
    getIT.registerLazySingleton<UserRepo>(() => UserRepo(dioUserApi: getIT<DioUserApi>()));
    getIT.registerFactory<UserDataCubit>(() => UserDataCubit(getIT<UserRepo>()));
+
+  //Banner
+  getIT.registerLazySingleton<BannerRepo>(() => BannerRepo(dioBanners: getIT<DioBannerApi>()));
+  getIT.registerFactory<BannersCubit>(() => BannersCubit(getIT<BannerRepo>()));
 
 }

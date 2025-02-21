@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/calender_widget.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
-import 'package:hola_academy/features/home/components/add_baner.dart';
+import 'package:hola_academy/features/home/UI/components/add_baner.dart';
 
-import 'package:hola_academy/features/home/components/timeline_widget.dart';
-import 'package:hola_academy/features/home/components/welcome_header.dart';
-import 'package:hola_academy/features/home/components_coach/classes_dialog.dart';
-import 'package:hola_academy/features/home/components_coach/evaluate_card.dart';
-import 'package:hola_academy/features/home/components_coach/session_card.dart';
+import 'package:hola_academy/features/home/UI/components/timeline_widget.dart';
+import 'package:hola_academy/features/home/UI/components/welcome_header.dart';
+import 'package:hola_academy/features/home/UI/components_coach/classes_dialog.dart';
+import 'package:hola_academy/features/home/UI/components_coach/evaluate_card.dart';
+import 'package:hola_academy/features/home/UI/components_coach/session_card.dart';
 import 'package:hola_academy/features/trainee/widgets/evaluate_dialog.dart';
+
+import '../../../core/dependency_injection/dependency.dart';
+import '../Logic/banner_logic/banner_cubit.dart';
 
 class HomeScreenCoach extends StatelessWidget {
   const HomeScreenCoach({super.key});
@@ -47,7 +51,11 @@ class HomeScreenCoach extends StatelessWidget {
                             );
                           });
                     },
-                    child: AddBaner()),
+                    child: BlocProvider(
+                  create: (context) => getIT<BannersCubit>()
+                  ..fetchAllBanners(),
+                  child: AddBaner(),
+                ),),
                 SizedBox(
                   height: 80.h,
                   width: double.infinity,

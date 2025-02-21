@@ -12,4 +12,8 @@ class ApiConstants {
   static String signUpApi = 'api/auth/signup';
   static String getMyDataApi = 'api/users/me';
   static String updateMyDataApi = 'api/users/me';
+
+  static String imagesURLApi = 'http://109.176.197.232:3100/static-uploads/';
+
+  static String bannersApi = 'api/banners';
 }

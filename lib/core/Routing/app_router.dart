@@ -15,9 +15,9 @@ import 'package:hola_academy/features/auth/verification/UI/verfication_screen.da
 import 'package:hola_academy/features/classes/UI/classes_screen.dart';
 import 'package:hola_academy/features/classes/UI/detail_class_screen.dart';
 import 'package:hola_academy/features/classes/UI/program_levl_screen.dart';
-import 'package:hola_academy/features/home/components_coach/find_trainees_screen.dart';
-import 'package:hola_academy/features/home/home_screen.dart';
-import 'package:hola_academy/features/home/home_screen_coach.dart';
+import 'package:hola_academy/features/home/UI/components_coach/find_trainees_screen.dart';
+import 'package:hola_academy/features/home/UI/home_screen.dart';
+import 'package:hola_academy/features/home/UI/home_screen_coach.dart';
 import 'package:hola_academy/features/layout/layout_admin_screen.dart';
 import 'package:hola_academy/features/layout/layout_coach.dart';
 import 'package:hola_academy/features/layout/layout_screen.dart';

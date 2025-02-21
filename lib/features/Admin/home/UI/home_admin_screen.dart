@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/admin_clip_oval.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
-import 'package:hola_academy/features/home/components/timeline_widget.dart';
+import 'package:hola_academy/features/home/UI/components/timeline_widget.dart';
 
 import '../../../../core/constants/image_manager.dart';
 

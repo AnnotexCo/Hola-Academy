@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hola_academy/features/home/components/profile_pic_widget.dart';
+import 'package:hola_academy/features/home/UI/components/profile_pic_widget.dart';
 
 class WelcomeHeader extends StatelessWidget {
   const WelcomeHeader({super.key});

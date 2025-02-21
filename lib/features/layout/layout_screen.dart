@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/classes/UI/classes_screen.dart';
-import 'package:hola_academy/features/home/home_screen.dart';
+import 'package:hola_academy/features/home/UI/home_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
 import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
 

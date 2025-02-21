@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hola_academy/features/home/components/program_card.dart';
+import 'package:hola_academy/features/home/UI/components/program_card.dart';
 
 class ListOfPrograms extends StatelessWidget {
   final String title;

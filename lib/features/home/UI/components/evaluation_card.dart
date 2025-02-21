@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 
-import '../../../core/Routing/routes.dart';
+import '../../../../core/Routing/routes.dart';
 
 class EvaluationAppointmentCard extends StatelessWidget {
   final VoidCallback? onScheduleCheck;

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
-import 'package:hola_academy/features/home/components/add_baner.dart';
-import 'package:hola_academy/features/home/components/evaluation_card.dart';
-import 'package:hola_academy/features/home/components/list_of_programs.dart';
-import 'package:hola_academy/features/home/components/timeline_widget.dart';
-import 'package:hola_academy/features/home/components/welcome_header.dart';
+import 'package:hola_academy/core/dependency_injection/dependency.dart';
+import 'package:hola_academy/features/home/Logic/banner_logic/banner_cubit.dart';
+import 'package:hola_academy/features/home/UI/components/add_baner.dart';
+import 'package:hola_academy/features/home/UI/components/evaluation_card.dart';
+import 'package:hola_academy/features/home/UI/components/list_of_programs.dart';
+import 'package:hola_academy/features/home/UI/components/timeline_widget.dart';
+import 'package:hola_academy/features/home/UI/components/welcome_header.dart';
 
-import '../../core/components/calender_widget.dart';
-import '../../core/local_db/save_token.dart';
+import '../../../core/components/calender_widget.dart';
+import '../../../core/local_db/save_token.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,8 +22,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-    String? _userRole;
+  String? _userRole;
 
   @override
   void initState() {
@@ -29,11 +31,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadUserRole() async {
-    String? role = await SaveTokenDB.getRole(); 
+    String? role = await SaveTokenDB.getRole();
     setState(() {
       _userRole = role;
     });
   }
+
 // ----------------------------------------------
   @override
   Widget build(BuildContext context) {
@@ -51,17 +54,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 13.h,
                 ),
                 Align(alignment: Alignment.centerLeft, child: WelcomeHeader()),
-                AddBaner(),
+                BlocProvider(
+                  create: (context) => getIT<BannersCubit>()
+                  ..fetchAllBanners(),
+                  child: AddBaner(),
+                ),
                 SizedBox(
                   height: 80.h,
                   width: double.infinity,
                   child: TimelineWidget(),
                 ),
-                if (_userRole == AppString.user || _userRole == AppString.trainee) ...[
-                EvaluationAppointmentCard(),
+                if (_userRole == AppString.user ||
+                    _userRole == AppString.trainee) ...[
+                  EvaluationAppointmentCard(),
                 ],
-              // Conditional Rendering Based on Role
-                if (_userRole == AppString.user|| _userRole == AppString.preuser) ...[
+                // Conditional Rendering Based on Role
+                if (_userRole == AppString.user ||
+                    _userRole == AppString.preuser) ...[
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(

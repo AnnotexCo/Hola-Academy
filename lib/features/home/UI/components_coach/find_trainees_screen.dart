@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/components/general_text_form_field.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
-import 'package:hola_academy/features/home/components_coach/listof_trainee.dart';
+import 'package:hola_academy/features/home/UI/components_coach/listof_trainee.dart';
 
 class FindTraineesScreen extends StatelessWidget {
   const FindTraineesScreen({super.key});

@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/custom_app_bar.dart';
 import 'package:hola_academy/core/components/custom_colored_outline_button.dart';
-import 'package:hola_academy/features/home/components/program_card.dart';
+import 'package:hola_academy/features/home/UI/components/program_card.dart';
 import 'package:hola_academy/features/not_found/not_found_screen.dart';
 
 import '../../../core/constants/color_manager.dart';

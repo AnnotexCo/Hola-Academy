@@ -4,7 +4,7 @@ import 'package:hola_academy/core/components/general_text_form_field.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
-import '../../../home/components_coach/find_trainees_screen.dart';
+import '../../../home/UI/components_coach/find_trainees_screen.dart';
 import 'widgets/custom_list_view.dart';
 
 class TraineesScreen extends StatelessWidget {
