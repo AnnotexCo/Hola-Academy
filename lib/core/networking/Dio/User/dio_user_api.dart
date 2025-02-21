@@ -12,12 +12,10 @@ class DioUserApi {
     try {
       final response = await _dio.get(
         '${ApiConstants.baseUrl}${ApiConstants.getMyDataApi}',
-        data: {
-          "accessToken": accessToken,
-        },
         options: Options(
           headers: {
             'Content-Type': 'application/json',
+            "Authorization": 'Bearer $accessToken',
           },
         ),
       );

@@ -17,7 +17,7 @@ class LoginCubit extends Cubit<LoginState> {
       if (isSuccess) {
         String? token = await SaveTokenDB.getToken();
         String? role = await SaveTokenDB.getRole();
-
+        print(token);
         if (token != null && role != null) {
           emit(LoginSuccess(role: role, token: token));
         } else {
