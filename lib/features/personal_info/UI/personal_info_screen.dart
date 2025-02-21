@@ -7,6 +7,7 @@ import 'package:hola_academy/core/components/general_text_form_field.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
+import 'package:hola_academy/features/personal_info/Data/Model/update_user_model.dart';
 import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
@@ -48,7 +49,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
     super.initState();
     _loadUserRole();
     context.read<UserDataCubit>().getMyData();
-    //BlocProvider.of<UserDataCubit>(context).getMyData();
   }
 
   Future<void> _loadUserRole() async {
@@ -102,6 +102,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
               }
             },
             builder: (context, state) {
+              var userDataCubit = context.read<UserDataCubit>();
               if (state is UserDataLoading) {
                 return Center(
                   child: CircularProgressIndicator(
@@ -153,7 +154,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                             },
                           ),
                           GeneralTextFormField(
-                            hint: 'Jennifer.James@gmail.com',
+                            hint: 'example@gmail.com',
                             label: AppString.emailAddress,
                             labelStyle: TextStyle(
                               fontSize: 18.sp,
@@ -162,6 +163,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                             ),
                             isFill: false,
                             isBorder: true,
+                            readOnly: true,
                             suffixIcon: Icon(
                               Icons.email,
                               color: ColorManager.textRedColor,
@@ -190,6 +192,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                             ),
                             isFill: false,
                             isBorder: true,
+                            readOnly: true,
                             suffixIcon: GestureDetector(
                               onTap: () => setState(() =>
                                   _isPasswordVisible = !_isPasswordVisible),
@@ -204,25 +207,13 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                             controller: passwordController,
                             keyboardType: TextInputType.text,
                             validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Password cannot be empty';
-                              } else if (value.length < 8) {
-                                return 'Password must be at least 8 characters long';
-                              } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
-                                return 'Password must include at least one uppercase letter';
-                              } else if (!RegExp(r'[a-z]').hasMatch(value)) {
-                                return 'Password must include at least one lowercase letter';
-                              } else if (!RegExp(r'[0-9]').hasMatch(value)) {
-                                return 'Password must include at least one number';
-                              } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]')
-                                  .hasMatch(value)) {
-                                return 'Password must include at least one special character';
-                              }
                               return null;
                             },
                           ),
                           // if (coach)
-                          if (_userRole == AppString.user) ...[
+                          if (_userRole == AppString.preuser ||
+                              _userRole == AppString.user ||
+                              _userRole == AppString.trainee) ...[
                             GeneralTextFormField(
                               label: AppString.birthDay,
                               hint: AppString.chooseYourBirthDate,
@@ -306,7 +297,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                               },
                             ),
                             GeneralTextFormField(
-                              hint: '01258672352',
+                              hint: '+201258672352',
                               label: AppString.parentNumber,
                               labelStyle: TextStyle(
                                 fontSize: 18.sp,
@@ -322,12 +313,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                               controller: parentWhatsappNumberController,
                               keyboardType: TextInputType.phone,
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your phone number';
-                                }
-                                if (!RegExp(r'^\d{10,15}$').hasMatch(value)) {
-                                  return 'Enter a valid phone number (10-15 digits)';
-                                }
                                 return null;
                               },
                             ),
@@ -381,12 +366,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                             controller: phoneController,
                             keyboardType: TextInputType.phone,
                             validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your phone number';
-                              }
-                              if (!RegExp(r'^\d{10,15}$').hasMatch(value)) {
-                                return 'Enter a valid phone number (10-15 digits)';
-                              }
                               return null;
                             },
                           ),
@@ -408,10 +387,18 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                       height: 43.h,
                       width: 216.w,
                       onTap: () {
-                        //if (_formKey.currentState!.validate() &&
-                        //selectedGender != null) {
-                        // Process data
-                        //}
+                        if (_formKey.currentState!.validate() &&
+                            selectedGender != null) {
+                          UpdateUserModel updateUserModel = UpdateUserModel(
+                            name: nameController.text,
+                            phoneNumber: phoneController.text,
+                            gender: selectedGender,
+                            dob: state.userModel.dob,
+                            parentName: state.userModel.parentName,
+                            parentWhatsappNumber: state.userModel.parentWhatsappNumber
+                          );
+                          userDataCubit.updateMyData(updateUserModel);
+                        }
                         // Navigator.pop(context);
                       })
                 ]);

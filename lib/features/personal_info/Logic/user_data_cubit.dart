@@ -26,6 +26,7 @@ class UserDataCubit extends Cubit<UserDataState> {
           await userRepo.updateMyData(updateUserModel: updateUserModel);
       if (isUpdated) {
         emit(UpdateUserDataSuccess());
+        getMyData();
       } else {
         emit(UserDataFailure(message: 'Failed to update user data'));
       }
