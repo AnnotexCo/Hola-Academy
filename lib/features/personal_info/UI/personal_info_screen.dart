@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hola_academy/core/components/custom_colored_outline_button.dart';
@@ -6,6 +7,7 @@ import 'package:hola_academy/core/components/general_text_form_field.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
+import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
 
@@ -45,10 +47,12 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   void initState() {
     super.initState();
     _loadUserRole();
+    context.read<UserDataCubit>().getMyData();
+    //BlocProvider.of<UserDataCubit>(context).getMyData();
   }
 
   Future<void> _loadUserRole() async {
-    String? role = await SaveTokenDB.getRole(); 
+    String? role = await SaveTokenDB.getRole();
     setState(() {
       _userRole = role;
     });
@@ -64,223 +68,270 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
           padding: EdgeInsets.symmetric(
             vertical: 18.w,
           ),
-          child: Column(children: [
-            Stack(alignment: Alignment.topCenter, children: [
-              CustomProfileBackgroung(),
-              CustomProfileAppBar(qrCode: true),
-            ]),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 27.w),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  spacing: 8.h,
-                  children: [
-                    GeneralTextFormField(
-                      hint: 'Jennifer James',
-                      label: AppString.fullName,
-                      labelStyle: TextStyle(
-                        fontSize: 18.sp,
-                        color: ColorManager.blackFontColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      isFill: false,
-                      isBorder: true,
-                      suffixIcon: Icon(
-                        Icons.person,
-                        color: ColorManager.textRedColor,
-                      ),
-                      controller: nameController,
-                      keyboardType: TextInputType.name,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your first name';
-                        }
-                        if (value.length < 2) {
-                          return 'First name must be at least 2 characters';
-                        }
-                        if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
-                          return 'First name can only contain letters';
-                        }
-                        return null;
-                      },
-                    ),
-                    GeneralTextFormField(
-                      hint: 'Jennifer.James@gmail.com',
-                      label: AppString.emailAddress,
-                      labelStyle: TextStyle(
-                        fontSize: 18.sp,
-                        color: ColorManager.blackFontColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      isFill: false,
-                      isBorder: true,
-                      suffixIcon: Icon(
-                        Icons.email,
-                        color: ColorManager.textRedColor,
-                      ),
-                      controller: emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email address';
-                        }
-                        if (!RegExp(
-                                r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-                            .hasMatch(value)) {
-                          return 'Enter a valid email address';
-                        }
-                        return null;
-                      },
-                    ),
-                    GeneralTextFormField(
-                      hint: '*****************',
-                      label: AppString.password,
-                      labelStyle: TextStyle(
-                        fontSize: 18.sp,
-                        color: ColorManager.blackFontColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      isFill: false,
-                      isBorder: true,
-                      suffixIcon: GestureDetector(
-                        onTap: () => setState(
-                            () => _isPasswordVisible = !_isPasswordVisible),
-                        child: Icon(
-                          _isPasswordVisible
-                              ? Icons.visibility_outlined
-                              : Icons.visibility_off_outlined,
-                          color: ColorManager.textRedColor,
-                        ),
-                      ),
-                      isPassword: !_isPasswordVisible,
-                      controller: passwordController,
-                      keyboardType: TextInputType.text,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Password cannot be empty';
-                        } else if (value.length < 8) {
-                          return 'Password must be at least 8 characters long';
-                        } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
-                          return 'Password must include at least one uppercase letter';
-                        } else if (!RegExp(r'[a-z]').hasMatch(value)) {
-                          return 'Password must include at least one lowercase letter';
-                        } else if (!RegExp(r'[0-9]').hasMatch(value)) {
-                          return 'Password must include at least one number';
-                        } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]')
-                            .hasMatch(value)) {
-                          return 'Password must include at least one special character';
-                        }
-                        return null;
-                      },
-                    ),
-                    // if (coach)
-                    if (_userRole == AppString.user) ...[
-                      GeneralTextFormField(
-                        label: AppString.birthDay,
-                        hint: AppString.chooseYourBirthDate,
-                        labelStyle: TextStyle(
-                          fontSize: 18.sp,
-                          color: ColorManager.blackFontColor,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        isFill: false,
-                        isBorder: true,
-                        //readOnly: true,
-                        suffixIcon: GeneralTextFormField.createIcon(
-                          Icons.calendar_month,
-                          color: ColorManager.textRedColor,
-                        ),
-                        controller: birthDayController,
-                        keyboardType: TextInputType.datetime,
-                        onTap: () async {
-                          // Open date picker
-                          /*  DateTime? pickedDate = */ await showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Dialog(
-                                insetPadding: EdgeInsets.only(
-                                    left: 29.w, right: 29.w, top: 360.h),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.r),
-                                ),
-                                backgroundColor:
-                                    ColorManager.backgroundPinkColor,
-                                child: Container(
-                                  height: 241.h,
-                                  decoration: BoxDecoration(
-                                    color: ColorManager.backgroundPinkColor,
-                                    borderRadius: BorderRadius.circular(8.r),
-                                    border: Border.all(
-                                      color: ColorManager.textRedColor,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: Theme(
-                                    data: ThemeData.light().copyWith(
-                                      colorScheme: ColorScheme.light(
-                                          primary: ColorManager.textRedColor),
-                                      datePickerTheme: DatePickerThemeData(
-                                          todayBorder: BorderSide(
-                                        color: ColorManager.textRedColor,
-                                        style: BorderStyle.none,
-                                        strokeAlign:
-                                            BorderSide.strokeAlignInside,
-                                      )),
-                                    ),
-                                    child: CalendarDatePicker(
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(1900),
-                                      lastDate: DateTime.now(),
-                                      onDateChanged: (selectedDate) {
-                                        setState(() {
-                                          birthDayController.text =
-                                              "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
-                                        });
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              );
+          child: BlocConsumer<UserDataCubit, UserDataState>(
+            listener: (context, state) {
+              if (state is UpdateUserDataSuccess) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('User data updated successfully'),
+                    backgroundColor: ColorManager.textRedColor,
+                  ),
+                );
+              } else if (state is UserDataFailure) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.message),
+                    backgroundColor: ColorManager.errorRedColor,
+                  ),
+                );
+              } else if (state is UpdateUserDataFailure) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.message),
+                    backgroundColor: ColorManager.errorRedColor,
+                  ),
+                );
+              } else if (state is UserDataSuccess) {
+                nameController.text = state.userModel.name;
+                emailController.text = state.userModel.email;
+                phoneController.text = state.userModel.phoneNumber;
+                birthDayController.text = state.userModel.dob;
+                parentWhatsappNumberController.text =
+                    state.userModel.parentWhatsappNumber ?? '';
+              }
+            },
+            builder: (context, state) {
+              UserDataCubit userDataCubit = context.read<UserDataCubit>();
+              //userDataCubit.getMyData();
+              if (state is UserDataLoading) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: ColorManager.textRedColor,
+                  ),
+                );
+              } else if (state is UserDataSuccess) {
+                return Column(children: [
+                  Stack(alignment: Alignment.topCenter, children: [
+                    CustomProfileBackgroung(),
+                    CustomProfileAppBar(qrCode: true),
+                  ]),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 27.w),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        spacing: 8.h,
+                        children: [
+                          GeneralTextFormField(
+                            hint: 'Jennifer James',
+                            label: AppString.fullName,
+                            labelStyle: TextStyle(
+                              fontSize: 18.sp,
+                              color: ColorManager.blackFontColor,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            isFill: false,
+                            isBorder: true,
+                            suffixIcon: Icon(
+                              Icons.person,
+                              color: ColorManager.textRedColor,
+                            ),
+                            controller: nameController,
+                            keyboardType: TextInputType.name,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your first name';
+                              }
+                              if (value.length < 2) {
+                                return 'First name must be at least 2 characters';
+                              }
+                              if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
+                                return 'First name can only contain letters';
+                              }
+                              return null;
                             },
-                          );
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please select a date';
-                          }
-                          return null;
-                        },
-                      ),
-                      GeneralTextFormField(
-                        hint: '01258672352',
-                        label: AppString.parentNumber,
-                        labelStyle: TextStyle(
-                          fontSize: 18.sp,
-                          color: ColorManager.blackFontColor,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        isFill: false,
-                        isBorder: true,
-                        suffixIcon: Icon(
-                          Icons.person,
-                          color: ColorManager.textRedColor,
-                        ),
-                        controller: parentWhatsappNumberController,
-                        keyboardType: TextInputType.phone,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your phone number';
-                          }
-                          if (!RegExp(r'^\d{10,15}$').hasMatch(value)) {
-                            return 'Enter a valid phone number (10-15 digits)';
-                          }
-                          return null;
-                        },
-                      ),
-                    ],
-                    /*CustomDropDownSelection(
+                          ),
+                          GeneralTextFormField(
+                            hint: 'Jennifer.James@gmail.com',
+                            label: AppString.emailAddress,
+                            labelStyle: TextStyle(
+                              fontSize: 18.sp,
+                              color: ColorManager.blackFontColor,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            isFill: false,
+                            isBorder: true,
+                            suffixIcon: Icon(
+                              Icons.email,
+                              color: ColorManager.textRedColor,
+                            ),
+                            controller: emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your email address';
+                              }
+                              if (!RegExp(
+                                      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+                                  .hasMatch(value)) {
+                                return 'Enter a valid email address';
+                              }
+                              return null;
+                            },
+                          ),
+                          GeneralTextFormField(
+                            hint: '*****************',
+                            label: AppString.password,
+                            labelStyle: TextStyle(
+                              fontSize: 18.sp,
+                              color: ColorManager.blackFontColor,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            isFill: false,
+                            isBorder: true,
+                            suffixIcon: GestureDetector(
+                              onTap: () => setState(() =>
+                                  _isPasswordVisible = !_isPasswordVisible),
+                              child: Icon(
+                                _isPasswordVisible
+                                    ? Icons.visibility_outlined
+                                    : Icons.visibility_off_outlined,
+                                color: ColorManager.textRedColor,
+                              ),
+                            ),
+                            isPassword: !_isPasswordVisible,
+                            controller: passwordController,
+                            keyboardType: TextInputType.text,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Password cannot be empty';
+                              } else if (value.length < 8) {
+                                return 'Password must be at least 8 characters long';
+                              } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
+                                return 'Password must include at least one uppercase letter';
+                              } else if (!RegExp(r'[a-z]').hasMatch(value)) {
+                                return 'Password must include at least one lowercase letter';
+                              } else if (!RegExp(r'[0-9]').hasMatch(value)) {
+                                return 'Password must include at least one number';
+                              } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]')
+                                  .hasMatch(value)) {
+                                return 'Password must include at least one special character';
+                              }
+                              return null;
+                            },
+                          ),
+                          // if (coach)
+                          if (_userRole == AppString.user) ...[
+                            GeneralTextFormField(
+                              label: AppString.birthDay,
+                              hint: AppString.chooseYourBirthDate,
+                              labelStyle: TextStyle(
+                                fontSize: 18.sp,
+                                color: ColorManager.blackFontColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              isFill: false,
+                              isBorder: true,
+                              //readOnly: true,
+                              suffixIcon: GeneralTextFormField.createIcon(
+                                Icons.calendar_month,
+                                color: ColorManager.textRedColor,
+                              ),
+                              controller: birthDayController,
+                              keyboardType: TextInputType.datetime,
+                              onTap: () async {
+                                // Open date picker
+                                /*  DateTime? pickedDate = */ await showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Dialog(
+                                      insetPadding: EdgeInsets.only(
+                                          left: 29.w, right: 29.w, top: 360.h),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.r),
+                                      ),
+                                      backgroundColor:
+                                          ColorManager.backgroundPinkColor,
+                                      child: Container(
+                                        height: 241.h,
+                                        decoration: BoxDecoration(
+                                          color:
+                                              ColorManager.backgroundPinkColor,
+                                          borderRadius:
+                                              BorderRadius.circular(8.r),
+                                          border: Border.all(
+                                            color: ColorManager.textRedColor,
+                                            width: 1,
+                                          ),
+                                        ),
+                                        child: Theme(
+                                          data: ThemeData.light().copyWith(
+                                            colorScheme: ColorScheme.light(
+                                                primary:
+                                                    ColorManager.textRedColor),
+                                            datePickerTheme:
+                                                DatePickerThemeData(
+                                                    todayBorder: BorderSide(
+                                              color: ColorManager.textRedColor,
+                                              style: BorderStyle.none,
+                                              strokeAlign:
+                                                  BorderSide.strokeAlignInside,
+                                            )),
+                                          ),
+                                          child: CalendarDatePicker(
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime(1900),
+                                            lastDate: DateTime.now(),
+                                            onDateChanged: (selectedDate) {
+                                              setState(() {
+                                                birthDayController.text =
+                                                    "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
+                                              });
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please select a date';
+                                }
+                                return null;
+                              },
+                            ),
+                            GeneralTextFormField(
+                              hint: '01258672352',
+                              label: AppString.parentNumber,
+                              labelStyle: TextStyle(
+                                fontSize: 18.sp,
+                                color: ColorManager.blackFontColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              isFill: false,
+                              isBorder: true,
+                              suffixIcon: Icon(
+                                Icons.person,
+                                color: ColorManager.textRedColor,
+                              ),
+                              controller: parentWhatsappNumberController,
+                              keyboardType: TextInputType.phone,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your phone number';
+                                }
+                                if (!RegExp(r'^\d{10,15}$').hasMatch(value)) {
+                                  return 'Enter a valid phone number (10-15 digits)';
+                                }
+                                return null;
+                              },
+                            ),
+                          ],
+                          /*CustomDropDownSelection(
                       value: selectedGender,
                       hint: AppString.chooseYourGender,
                       label: AppString.gender,
@@ -291,78 +342,85 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                         });
                       },
                     ),*/
-                    GeneralTextFormField(
-                      hint: 'Female',
-                      label: AppString.gender,
-                      labelStyle: TextStyle(
-                        fontSize: 18.sp,
-                        color: ColorManager.blackFontColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      isFill: false,
-                      isBorder: true,
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 0.w),
-                          child: SvgPicture.asset(
-                            ImageManager.gender,
-                            width: 24.w,
+                          GeneralTextFormField(
+                            hint: 'Female',
+                            label: AppString.gender,
+                            labelStyle: TextStyle(
+                              fontSize: 18.sp,
+                              color: ColorManager.blackFontColor,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            isFill: false,
+                            isBorder: true,
+                            suffixIcon: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 0.w),
+                                child: SvgPicture.asset(
+                                  ImageManager.gender,
+                                  width: 24.w,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                          GeneralTextFormField(
+                            hint: '01258672352',
+                            label: AppString.phoneNumber,
+                            labelStyle: TextStyle(
+                              fontSize: 18.sp,
+                              color: ColorManager.blackFontColor,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            isFill: false,
+                            isBorder: true,
+                            suffixIcon: Icon(
+                              Icons.person,
+                              color: ColorManager.textRedColor,
+                            ),
+                            controller: phoneController,
+                            keyboardType: TextInputType.phone,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your phone number';
+                              }
+                              if (!RegExp(r'^\d{10,15}$').hasMatch(value)) {
+                                return 'Enter a valid phone number (10-15 digits)';
+                              }
+                              return null;
+                            },
+                          ),
+                        ],
                       ),
                     ),
-                    GeneralTextFormField(
-                      hint: '01258672352',
-                      label: AppString.phoneNumber,
-                      labelStyle: TextStyle(
-                        fontSize: 18.sp,
-                        color: ColorManager.blackFontColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      isFill: false,
-                      isBorder: true,
-                      suffixIcon: Icon(
-                        Icons.person,
-                        color: ColorManager.textRedColor,
-                      ),
-                      controller: phoneController,
-                      keyboardType: TextInputType.phone,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your phone number';
-                        }
-                        if (!RegExp(r'^\d{10,15}$').hasMatch(value)) {
-                          return 'Enter a valid phone number (10-15 digits)';
-                        }
-                        return null;
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            CustomColoredOutlineButton(
-                title: AppString.editYourinformation,
-                style: TextStyle(
-                    decoration: TextDecoration.none,
-                    color: ColorManager.textRedColor,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600),
-                radius: 30.r,
-                height: 43.h,
-                width: 216.w,
-                onTap: () {
-                  //if (_formKey.currentState!.validate() &&
-                  //selectedGender != null) {
-                  // Process data
-                  //}
-                  // Navigator.pop(context);
-                })
-          ]),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  CustomColoredOutlineButton(
+                      title: AppString.editYourinformation,
+                      style: TextStyle(
+                          decoration: TextDecoration.none,
+                          color: ColorManager.textRedColor,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600),
+                      radius: 30.r,
+                      height: 43.h,
+                      width: 216.w,
+                      onTap: () {
+                        //if (_formKey.currentState!.validate() &&
+                        //selectedGender != null) {
+                        // Process data
+                        //}
+                        // Navigator.pop(context);
+                      })
+                ]);
+              } else {
+                return Center(
+                  child: Text('Failed to load user data'),
+                );
+              }
+            },
+          ),
         ),
       )),
     );

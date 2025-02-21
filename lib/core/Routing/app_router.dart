@@ -21,9 +21,10 @@ import 'package:hola_academy/features/layout/layout_coach.dart';
 import 'package:hola_academy/features/layout/layout_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
 import 'package:hola_academy/features/onboarding/onbording.dart';
+import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
+import 'package:hola_academy/features/personal_info/UI/personal_info_screen.dart';
 import 'package:hola_academy/features/profile/UI/booked_screen.dart';
 import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
-import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
 import 'package:hola_academy/features/profile/UI/profile_screen.dart';
 import 'package:hola_academy/features/splash/splash_screen.dart';
 import '../../features/Admin/home/UI/home_admin_screen.dart';
@@ -96,7 +97,10 @@ class AppRouter {
 
       // personal info
       case Routes.personalInfoScreen:
-        return MaterialPageRoute(builder: (_) => const PersonalInfoScreen());
+        return MaterialPageRoute(builder: (_) => BlocProvider(
+                  create: (context) => getIT<UserDataCubit>(),
+                  child: PersonalInfoScreen(),
+                ));
 
       // contact us
       case Routes.contactUsScreen:

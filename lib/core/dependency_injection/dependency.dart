@@ -5,6 +5,7 @@ import 'package:hola_academy/core/networking/Dio/Auth/dio_check_otp.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_forget_password.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_reset_password.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_sign_up_api.dart';
+import 'package:hola_academy/core/networking/Dio/User/dio_user_api.dart';
 import 'package:hola_academy/features/auth/forgot_password/Data/Repo/forget_password_repo.dart';
 import 'package:hola_academy/features/auth/forgot_password/Logic/cubit/forget_password_cubit.dart';
 import 'package:hola_academy/features/auth/login/Data/Repo/login_repo.dart';
@@ -16,6 +17,8 @@ import 'package:hola_academy/features/auth/reset_password/Data/Repo/reset_passwo
 import 'package:hola_academy/features/auth/reset_password/Logic/cubit/reset_password_cubit.dart';
 import 'package:hola_academy/features/auth/verification/Data/Repo/check_otp_repo.dart';
 import 'package:hola_academy/features/auth/verification/Logic/cubit/check_otp_cubit.dart';
+import 'package:hola_academy/features/personal_info/Data/Repo/user_repo.dart';
+import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
 
 import '../../features/classes/Data/Repo/programs_repo.dart';
 import '../../features/classes/Logic/cubit/programs_cubit.dart';
@@ -77,4 +80,12 @@ void setUpGetIt() {
         dioPrograms: getIT(),
       ));
   getIT.registerFactory<ProgramsCubit>(() => ProgramsCubit(getIT()));
+
+  //Personal Info
+  getIT.registerLazySingleton<DioUserApi>(
+      () => DioUserApi(dio: getIT<Dio>()));
+
+   getIT.registerLazySingleton<UserRepo>(() => UserRepo(dioUserApi: getIT<DioUserApi>()));
+   getIT.registerFactory<UserDataCubit>(() => UserDataCubit(getIT<UserRepo>()));
+
 }

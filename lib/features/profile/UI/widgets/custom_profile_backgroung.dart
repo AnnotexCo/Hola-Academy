@@ -144,7 +144,8 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
                       ),
                       child: _profileImage != null
                           ? Image.file(_profileImage!, fit: BoxFit.fill)
-                          : CachedNetworkImage(
+                          : Container(),
+                          /*CachedNetworkImage(
                               imageUrl:
                                   'https://s3-alpha-sig.figma.com/img/e915/f882/38ac6007aa5be950081f8f386a727a10?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=hiBut43BEiezw7m5NASleNYmzS9ziNOyQwj14kS9CtjVkZGITJghYIRAldrTH1OyxwSXz22e8fgTtrRG3WJw71uOrpLM9-Wt9-6ock3dQLpCTqCCCXpDC~y6HSo1Ss9K1e7iWdCpdqA-omyk0LiafqJ4jQs4Ra~lEqnSX0bKrZM5x9t37F74rQPXbXdZG1B~yngERKh-1EKQOz97k3bid33Wa~HXvGu~PdrbC5Ac6-yR8KTc4CiHImZm2fcTlJIuXIPaCd115nsVC4NG8oeZNJUzC0i1us7Sb5A3ifygBZTgYqJwUeA9bXpxbVV5PSlxO2G8RrEcGcg-ElwdC6HJdA__',
                               placeholder: (context, url) =>
@@ -152,7 +153,7 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
                               errorWidget: (context, url, error) =>
                                   Icon(Icons.error),
                               fit: BoxFit.fill,
-                            ),
+                            ),*/
                     ),
                   ),
                 ),

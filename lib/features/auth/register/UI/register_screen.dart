@@ -433,7 +433,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           selectedGender != null) {
                                         SignUpModel signUpModel = SignUpModel(
                                           name: nameController.text,
-                                          parentName: 'Alaa',
+                                          parentName: '',
                                           phoneNumber: phoneController.text,
                                           parentWhatsappNumber:
                                               parentPhoneController.text,

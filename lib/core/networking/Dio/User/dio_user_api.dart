@@ -8,16 +8,25 @@ class DioUserApi {
 
   DioUserApi({required Dio dio}) : _dio = dio;
 
-  Future<UserModel> getMyData() async {
+  Future<UserModel> getMyData({required String accessToken}) async {
     try {
       final response = await _dio.get(
         '${ApiConstants.baseUrl}${ApiConstants.getMyDataApi}',
+        data: {
+          "accessToken": accessToken,
+        },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
       );
 
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {
         return UserModel.fromJson(response.data['data']);
+        print(response.data['data']);
       }
       throw Exception('Failed to load data');
     } on DioException catch (dioError) {

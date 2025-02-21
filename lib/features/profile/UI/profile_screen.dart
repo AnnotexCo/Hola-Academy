@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
+import 'package:hola_academy/core/dependency_injection/dependency.dart';
+import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
+import 'package:hola_academy/features/personal_info/UI/personal_info_screen.dart';
 import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
-import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
 import 'package:hola_academy/features/profile/UI/terms_screen.dart';
 import 'package:hola_academy/features/profile/UI/transactions_screen.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
-
 
 import '../../../core/local_db/save_token.dart';
 import '../../Admin/transactions/admin_transactions_screen.dart';
@@ -24,8 +26,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
-    String? _userRole;
+  String? _userRole;
 
   @override
   void initState() {
@@ -39,6 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _userRole = role;
     });
   }
+
 // --------------------------------------------
   @override
   Widget build(BuildContext context) {
@@ -81,7 +83,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return PersonalInfoScreen();
+                          return BlocProvider(
+                            create: (context) => getIT<UserDataCubit>(),
+                            child: PersonalInfoScreen(),
+                          );
                         },
                       ));
                     },
@@ -90,7 +95,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     icon: ImageManager.analysis,
                     text: AppString.analytics,
                     onTap: () {
-                      Navigator.pushNamed(context, Routes.analyticsSkillsScreen);
+                      Navigator.pushNamed(
+                          context, Routes.analyticsSkillsScreen);
                     },
                   ),
                   _buildMenuItem(
@@ -99,7 +105,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return _userRole == AppString.admin ? AdminTransactionsScreen() : TransactionsScreen();
+                          return _userRole == AppString.admin
+                              ? AdminTransactionsScreen()
+                              : TransactionsScreen();
                         },
                       ));
                     },

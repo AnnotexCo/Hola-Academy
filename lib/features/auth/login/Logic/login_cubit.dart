@@ -16,10 +16,10 @@ class LoginCubit extends Cubit<LoginState> {
       bool isSuccess = await loginRepo.doLogin(loginModel: loginModel);
       if (isSuccess) {
         String? token = await SaveTokenDB.getToken();
-        String? role = await SaveTokenDB.getRole(); 
+        String? role = await SaveTokenDB.getRole();
 
         if (token != null && role != null) {
-          emit(LoginSuccess(role: role,token: token));  
+          emit(LoginSuccess(role: role, token: token));
         } else {
           emit(LoginFailure(message: "Token or Role not found"));
         }
@@ -31,7 +31,7 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
- Future<void> doGoogleLogin() async {
+  Future<void> doGoogleLogin() async {
     emit(LoginLoading());
 
     try {
@@ -64,7 +64,8 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginFailure(message: e.toString()));
     }
   }
- Future<void> logout() async {
+
+  Future<void> logout() async {
     await SaveTokenDB.deleteTokenAndRole(); // Clear both token & role
     emit(LoginInitial());
   }

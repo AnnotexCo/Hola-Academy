@@ -7,8 +7,8 @@ class UserRepo {
 
   UserRepo({required this.dioUserApi});
 
-  Future<UserModel> getMyData() async {
-    return await dioUserApi.getMyData();
+  Future<UserModel> getMyData({required String accessToken}) async {
+    return await dioUserApi.getMyData(accessToken: accessToken);
   }
   Future<bool> updateMyData({
     required UpdateUserModel updateUserModel,

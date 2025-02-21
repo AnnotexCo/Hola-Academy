@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:hola_academy/core/constants/api_constants.dart';
 import 'package:hola_academy/core/networking/ErrorHandler/api_error_handler.dart';
-
 import '../../../../features/classes/Data/Model/programs_model.dart';
 
 class DioPrograms {

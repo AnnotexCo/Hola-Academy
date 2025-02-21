@@ -1,6 +1,6 @@
 class ApiConstants {
-  static String baseUrl =
-      'https://hola-academy-backend-production.up.railway.app/';
+  static String baseUrl ='http://109.176.197.232:3100/';
+      //'https://hola-academy-backend-production.up.railway.app/';
   static String loginApi = 'api/auth/login';
   static String forgetPasswordApi = 'api/auth/forget-password';
   static String resetPasswordApi = 'api/auth/reset-password';
