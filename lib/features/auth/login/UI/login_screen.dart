@@ -62,16 +62,25 @@ class _LoginScreenState extends State<LoginScreen> {
                           state.token, state.role); // Save session
                       String role = state.role.trim().toUpperCase();
                       if (role == 'ADMIN') {
-                        Navigator.pushReplacementNamed(
-                            context, Routes.adminLayout);
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          Routes.adminLayout,
+                          (route) => false,
+                        );
                       } else if (role == 'USER' ||
                           role == 'PREUSER' ||
                           role == 'TRAINEE') {
-                        Navigator.pushReplacementNamed(
-                            context, Routes.layoutScreen);
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          Routes.layoutScreen,
+                          (route) => false,
+                        );
                       } else if (role == 'COACH') {
-                        Navigator.pushReplacementNamed(
-                            context, Routes.layoutCoachScreen);
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          Routes.layoutCoachScreen,
+                          (route) => false,
+                        );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Invalid role: $role')),
