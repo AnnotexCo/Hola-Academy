@@ -5,14 +5,12 @@ import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
-import 'package:hola_academy/features/auth/login/UI/login_screen.dart';
 import 'package:hola_academy/features/auth/register/Data/Model/sign_up_model.dart';
 import 'package:hola_academy/features/auth/register/Logic/sign_up_cubit.dart';
 import 'package:hola_academy/features/auth/register/UI/widgets/custom_button.dart';
 import 'package:hola_academy/features/auth/register/UI/widgets/custom_drop_down_selection.dart';
 import 'package:hola_academy/core/components/general_text_form_field.dart';
 import 'package:hola_academy/features/auth/register/UI/widgets/terms_dialog.dart';
-import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -87,11 +85,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             if (state is SignUpSuccess) {
                               Navigator.pushReplacementNamed(
                                   context, Routes.loginScreen);
-                            }
-                            if (state is SignUpLoading) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('Loading...'),
+                                  content: Text('Sign up successful!'),
+                                ),
+                              );
+                            }
+                            if (state is SignUpLoading) {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) {
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  });
+                            }
+
+                            if (state is SignUpFailure) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(state.message),
                                 ),
                               );
                             }
@@ -434,9 +446,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         SignUpModel signUpModel = SignUpModel(
                                           name: nameController.text,
                                           parentName: '',
-                                          phoneNumber: phoneController.text,
+                                          phoneNumber:
+                                              "+20${phoneController.text}",
                                           parentWhatsappNumber:
-                                              parentPhoneController.text,
+                                              "+20${parentPhoneController.text}",
                                           email: emailController.text,
                                           dob: birthDayController.text,
                                           gender: selectedGender,

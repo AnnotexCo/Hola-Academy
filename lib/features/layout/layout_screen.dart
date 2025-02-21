@@ -8,6 +8,7 @@ import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/classes/UI/classes_screen.dart';
 import 'package:hola_academy/features/home/home_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
+import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
 
 import '../../core/dependency_injection/dependency.dart';
 import '../classes/Logic/cubit/programs_cubit.dart';
@@ -31,7 +32,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
       child: ClassesScreen(),
     ),
     NotificationsScreen(),
-    ProfileScreen()
+    BlocProvider(
+      create: (context) => getIT<UserDataCubit>(),
+      child: ProfileScreen(),
+    ),
   ];
 
   @override

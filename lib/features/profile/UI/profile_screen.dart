@@ -32,6 +32,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     _loadUserRole();
+    context.read<UserDataCubit>().getMyData();
   }
 
   Future<void> _loadUserRole() async {
@@ -53,7 +54,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: SingleChildScrollView(
           child: Column(spacing: 56.h, children: [
             Stack(alignment: Alignment.topCenter, children: [
-              CustomProfileBackgroung(),
+              BlocBuilder<UserDataCubit, UserDataState>(
+                builder: (context, state) {
+                  String name = " ";
+
+                  if (state is UserDataSuccess) {
+                    name = state.userModel.name.isNotEmpty
+                        ? state.userModel.name
+                        : "No Name";
+                  }
+
+                  return CustomProfileBackgroung(name: name);
+                },
+              ),
               CustomProfileAppBar(qrCode: true),
             ]),
             Container(

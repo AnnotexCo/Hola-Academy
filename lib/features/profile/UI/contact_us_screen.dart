@@ -20,7 +20,7 @@ class ContactUsScreen extends StatelessWidget {
           ),
           child: Column(children: [
             Stack(alignment: Alignment.topCenter, children: [
-              CustomProfileBackgroung(),
+              CustomProfileBackgroung(name: "John Doe",),
               CustomProfileAppBar(qrCode: true),
             ]),
             SizedBox(

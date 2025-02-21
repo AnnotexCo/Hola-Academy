@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
-import 'package:hola_academy/core/constants/api_constants.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_check_otp.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_forget_password.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_reset_password.dart';
