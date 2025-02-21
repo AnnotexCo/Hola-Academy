@@ -38,9 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // Background Image
           _buildBackground(),
-          // White Container
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -60,7 +58,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: BlocConsumer<LoginCubit, LoginState>(
                       listener: (context, state) async {
                     if (state is LoginSuccess) {
-                      await SaveTokenDB.saveTokenAndRole(state.token, state.role); // Save session
+                      await SaveTokenDB.saveTokenAndRole(
+                          state.token, state.role); // Save session
                       String role = state.role.trim().toUpperCase();
                       if (role == 'ADMIN') {
                         Navigator.pushReplacementNamed(
@@ -82,6 +81,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(state.message)),
                       );
+                    } else if (state is LoginLoading) {
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return Center(child: CircularProgressIndicator());
+                          });
                     }
                   }, builder: (context, state) {
                     return Column(

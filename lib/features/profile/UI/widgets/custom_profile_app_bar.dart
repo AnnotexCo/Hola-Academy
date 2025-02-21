@@ -17,8 +17,7 @@ class CustomProfileAppBar extends StatefulWidget {
 }
 
 class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
-
-    String? _userRole;
+  String? _userRole;
 
   @override
   void initState() {
@@ -27,11 +26,12 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
   }
 
   Future<void> _loadUserRole() async {
-    String? role = await SaveTokenDB.getRole(); 
+    String? role = await SaveTokenDB.getRole();
     setState(() {
       _userRole = role;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -55,7 +55,8 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
             Row(
               children: [
                 // if (widget.qrCode == true)
-                 if (_userRole == AppString.trainee || _userRole == AppString.coach)
+                if (_userRole == AppString.trainee ||
+                    _userRole == AppString.coach)
                   GestureDetector(
                       onTap: () async {
                         return showDialog(
@@ -91,6 +92,7 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
                 GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(context, Routes.logoutScreen);
+                    logout();
                   },
                   child: Row(
                     children: [
@@ -111,7 +113,7 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
                             fontSize: 16.sp,
                             fontFamily: 'Besley',
                             fontWeight: FontWeight.w500,
-                            color: Colors.white, 
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -123,4 +125,8 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
           ]),
     );
   }
+}
+
+Future<void> logout() async {
+  await SaveTokenDB.deleteTokenAndRole(); // Clear both token & role
 }

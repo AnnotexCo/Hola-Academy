@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hola_academy/features/auth/register/Data/Model/sign_up_model.dart';
 import 'package:hola_academy/features/auth/register/Data/Repo/sign_up_repo.dart';
