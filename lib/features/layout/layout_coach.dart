@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
+import 'package:hola_academy/core/dependency_injection/dependency.dart';
 
 
 import 'package:hola_academy/features/home/home_screen_coach.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
+import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
 import 'package:hola_academy/features/schedule_evaluation/UI/schedule_evaluation_screen.dart';
 
 import '../profile/UI/profile_screen.dart';
@@ -27,7 +30,10 @@ class _LayoutCoachScreenState extends State<LayoutCoachScreen> {
     HomeScreenCoach(),
     ScheduleEvaluationScreen(),
     NotificationsScreen(),
-    ProfileScreen()
+      BlocProvider(
+      create: (context) => getIT<UserDataCubit>(),
+      child: ProfileScreen(),
+    ),
   ];
 
   @override

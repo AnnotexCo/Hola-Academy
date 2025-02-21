@@ -98,11 +98,10 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 birthDayController.text = state.userModel.dob;
                 parentWhatsappNumberController.text =
                     state.userModel.parentWhatsappNumber ?? '';
+                selectedGender = state.userModel.gender;
               }
             },
             builder: (context, state) {
-              UserDataCubit userDataCubit = context.read<UserDataCubit>();
-              //userDataCubit.getMyData();
               if (state is UserDataLoading) {
                 return Center(
                   child: CircularProgressIndicator(
@@ -112,7 +111,9 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
               } else if (state is UserDataSuccess) {
                 return Column(children: [
                   Stack(alignment: Alignment.topCenter, children: [
-                    CustomProfileBackgroung(),
+                    CustomProfileBackgroung(
+                      name: nameController.text,
+                    ),
                     CustomProfileAppBar(qrCode: true),
                   ]),
                   Padding(
@@ -123,7 +124,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                         spacing: 8.h,
                         children: [
                           GeneralTextFormField(
-                            hint: 'Jennifer James',
+                            hint: nameController.text,
                             label: AppString.fullName,
                             labelStyle: TextStyle(
                               fontSize: 18.sp,
@@ -343,7 +344,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                       },
                     ),*/
                           GeneralTextFormField(
-                            hint: 'Female',
+                            hint: selectedGender!,
                             label: AppString.gender,
                             labelStyle: TextStyle(
                               fontSize: 18.sp,

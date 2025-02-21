@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:hola_academy/core/networking/ErrorHandler/api_error_handler.dart';
 import 'package:hola_academy/features/auth/register/Data/Model/sign_up_model.dart';
 import '../../../constants/api_constants.dart';
 
@@ -24,8 +25,10 @@ class DioSignUpApi {
         return true;
       }
       throw Exception('Failed to sign up');
-    } on DioException catch (dioError) {
-      throw dioError.response?.data['message'];
+    } catch (error) {
+      final api = ApiErrorHandler.handle(error);
+
+      throw "${api.message}";
     }
   }
 }

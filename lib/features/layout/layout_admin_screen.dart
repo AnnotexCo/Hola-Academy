@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
+import 'package:hola_academy/core/dependency_injection/dependency.dart';
 import 'package:hola_academy/features/Admin/home/UI/home_admin_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
+import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
 import 'package:hola_academy/features/profile/UI/profile_screen.dart';
 
 import '../Admin/scanner/qr_code_scanner_screen.dart';
@@ -26,7 +29,10 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
     AdminTransactionsScreen(),
     QRCodeScannerScreen(),
     NotificationsScreen(),
-    ProfileScreen(),
+    BlocProvider(
+      create: (context) => getIT<UserDataCubit>(),
+      child: ProfileScreen(),
+    ),
   ];
 
   @override

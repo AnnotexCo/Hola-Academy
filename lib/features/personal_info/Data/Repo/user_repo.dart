@@ -7,14 +7,13 @@ class UserRepo {
 
   UserRepo({required this.dioUserApi});
 
-  Future<UserModel> getMyData({required String accessToken}) async {
-    return await dioUserApi.getMyData(accessToken: accessToken);
+  Future<UserModel> getMyData() async {
+    return await dioUserApi.getMyData();
   }
+
   Future<bool> updateMyData({
     required UpdateUserModel updateUserModel,
   }) async {
-    return await dioUserApi.updateMyData(
-      updateUserModel: updateUserModel,
-    );
+    return await dioUserApi.updateMyData(updateUserModel: updateUserModel);
   }
 }
