@@ -28,109 +28,34 @@ class DetailClassScreen extends StatelessWidget {
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 18.h,
                 children: [
                   CustomAppBar(
                     title: program.name,
-                    // title: "Private",
                     widget: CustomColoredOutlineButton(
-                        radius: 25,
-                        title: 'Book Now',
-                        style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w300,
-                            color: ColorManager.primaryOrangeColor),
-                        height: 30.h,
-                        width: 86.w,
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, Routes.bookProgramsScreen);
-                        }),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0.w),
-                    child: Column(
-                      children: [
-                        Text.rich(TextSpan(children: [
-                          TextSpan(text: '''Lessons: 12\n         
-      '''),
-                          TextSpan(text: "General Description: \n"),
-                          TextSpan(
-                            style: TextStyle(fontSize: 14.sp),
-                            text: program.description,
-                          ),
-                          // "The Private Program is designed to offer personalized training, focusing on achieving peak performance and preparing participants for high-level competition. It is structured into four progressive levels (A, B, C, D), where participants advance to the next level based on their progress and achievements. Each level builds on the previous one, gradually increasing intensity and refining skills.\n"),
-                          //                   TextSpan(text: '''
-
-                          // How the Program Works:\n'''),
-                          //                   TextSpan(style: TextStyle(fontSize: 14.sp), text: '''
-                          // The training plan spans 12 weeks, with each session lasting between 30 to 60 minutes.
-                          // Participants will follow a combination of swimming and dryland workouts, with each session designed to improve endurance, technique, and mental readiness.
-                          // As participants progress through the levels, the intensity of the workouts increases to match their development, ensuring continuous improvement.
-                          // Each level focuses on mastering different aspects of swimming, and once a participant completes a level, they will move on to the next one for continued growth and performance enhancement.
-                          // Note: For detailed explanations of each level (A, B, C, D), please refer to the dedicated page.
-                          // Age Range: Suitable for ages 3 to 60. \nGender: The program can be tailored for males, females, or all participants, depending on trainee's needs.
-                          //                         ''')
-                        ])),
-                        Padding(
-                          padding: EdgeInsets.zero,
-                          child: SizedBox(
-                            height: 300.h,
-                            width: double.infinity,
-                            child: SingleChildScrollView(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                spacing: 18.h,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Programs Levels",
-                                      style: TextStyle(
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: Color(0xff9DA3A8),
-                                      )),
-                                  SizedBox(
-                                    height: 240.h,
-                                    width: double.infinity,
-                                    child: ListView.builder(
-                                        padding: EdgeInsets.zero,
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: program.levels?.length ?? 0,
-                                        itemBuilder: (context, index) {
-                                          return Padding(
-                                            padding:
-                                                EdgeInsets.only(right: 18.w),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                Navigator.pushNamed(
-                                                  context,
-                                                  Routes.programlevlScreen,
-                                                  arguments:
-                                                      program.levels?[index],
-                                                );
-                                              },
-                                              child: ProgramCard(
-                                                backgroundColor:
-                                                    Color(0xffF7E9E9),
-                                                text: program
-                                                        .levels?[index].name ??
-                                                    "Level A",
-                                                height: 240.h,
-                                                width: 196.w,
-                                                color: Color(0xffAD2525),
-                                              ),
-                                            ),
-                                          );
-                                        }),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                      radius: 25,
+                      title: 'Book Now',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w300,
+                        color: ColorManager.primaryOrangeColor,
+                      ),
+                      height: 30.h,
+                      width: 86.w,
+                      onTap: () {
+                        Navigator.pushNamed(context, Routes.bookProgramsScreen);
+                      },
                     ),
-                  )
+                  ),
+                  SizedBox(height: 16.h),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: _buildProgramDetails(program),
+                  ),
+                  SizedBox(height: 50.h),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: _buildProgramLevels(program),
+                  ),
                 ],
               ),
             );
@@ -141,6 +66,93 @@ class DetailClassScreen extends StatelessWidget {
           }
         },
       ),
+    );
+  }
+
+  Widget _buildProgramDetails(program) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: 'Lessons: 12\n\n',
+                style: _boldStyle(),
+              ),
+              TextSpan(
+                text: "General Description:\n\n",
+                style: _boldStyle(),
+              ),
+              TextSpan(
+                text: program.description,
+                style: _normalStyle(),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProgramLevels(program) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Programs Levels",
+          style: TextStyle(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w600,
+            color: Color(0xff6C757D),
+          ),
+        ),
+        SizedBox(height: 10.h),
+        SizedBox(
+          height: 240.h,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: program.levels?.length ?? 0,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.only(right: 18.w),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      Routes.programlevlScreen,
+                      arguments: program.levels?[index],
+                    );
+                  },
+                  child: ProgramCard(
+                    backgroundColor: Color(0xffF7E9E9),
+                    text: program.levels?[index].name ?? "Level A",
+                    height: 240.h,
+                    width: 196.w,
+                    color: Color(0xffAD2525),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  TextStyle _boldStyle() {
+    return TextStyle(
+      fontSize: 16.sp,
+      fontWeight: FontWeight.w600,
+      color: Color(0xFF3C4146),
+    );
+  }
+
+  TextStyle _normalStyle() {
+    return TextStyle(
+      fontSize: 14.sp,
+      fontWeight: FontWeight.w400,
+      color: Color(0xFF626A72),
     );
   }
 }

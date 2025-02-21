@@ -11,6 +11,7 @@ import 'package:hola_academy/features/personal_info/Data/Model/update_user_model
 import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
+import 'package:intl/intl.dart';
 
 import '../../../core/local_db/save_token.dart';
 
@@ -95,7 +96,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 nameController.text = state.userModel.name;
                 emailController.text = state.userModel.email;
                 phoneController.text = state.userModel.phoneNumber;
-                birthDayController.text = state.userModel.dob;
+                birthDayController.text = formatDate(state.userModel.dob);
                 parentWhatsappNumberController.text =
                     state.userModel.parentWhatsappNumber ?? '';
                 selectedGender = state.userModel.gender;
@@ -390,13 +391,13 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                         if (_formKey.currentState!.validate() &&
                             selectedGender != null) {
                           UpdateUserModel updateUserModel = UpdateUserModel(
-                            name: nameController.text,
-                            phoneNumber: phoneController.text,
-                            gender: selectedGender,
-                            dob: state.userModel.dob,
-                            parentName: state.userModel.parentName,
-                            parentWhatsappNumber: state.userModel.parentWhatsappNumber
-                          );
+                              name: nameController.text,
+                              phoneNumber: phoneController.text,
+                              gender: selectedGender,
+                              dob: state.userModel.dob,
+                              parentName: state.userModel.parentName,
+                              parentWhatsappNumber:
+                                  state.userModel.parentWhatsappNumber);
                           userDataCubit.updateMyData(updateUserModel);
                         }
                         // Navigator.pop(context);
@@ -457,4 +458,9 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
       ),
     );
   }
+}
+
+String formatDate(String dateString) {
+  DateTime dateTime = DateTime.parse(dateString);
+  return DateFormat('dd-MM-yyyy').format(dateTime); // Change format as needed
 }

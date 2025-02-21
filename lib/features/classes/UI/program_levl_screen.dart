@@ -20,7 +20,6 @@ class ProgramLevlScreen extends StatelessWidget {
           children: [
             CustomAppBar(
               title: level.name,
-              // title: "Level A",
             ),
             ProgramLevlDetailWidget(
               level: level,
