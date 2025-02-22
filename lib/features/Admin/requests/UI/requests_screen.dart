@@ -4,14 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/not_found/not_found_screen.dart';
+import 'package:hola_academy/features/profile/Data/Model/user_model.dart';
+import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 
 import '../../../../core/components/custom_app_bar.dart';
 import '../../../../core/components/custom_dialog.dart';
 import '../../../../core/components/general_text_form_field.dart';
 import '../../../../core/components/options_buttons.dart';
 import '../../../../core/constants/color_manager.dart';
-import '../../../personal_info/Data/Model/user_model.dart';
-import '../../../personal_info/Logic/user_data_cubit.dart';
 import '../Data/Model/requests_model.dart';
 import '../Logic/requests_cubit.dart';
 import '../Logic/requests_state.dart';
@@ -249,7 +249,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
                     width: 36.w,
                     height: 36.h,
                     child: CachedNetworkImage(
-                      imageUrl: loggedInUser?.profileImageId.toString() ?? 'assets/images/default_profile.png',
+                      imageUrl: loggedInUser?.profileImage.toString() ?? 'assets/images/default_profile.png',
                       fit: BoxFit.cover,
                       placeholder: (context, url) => Center(child: CircularProgressIndicator()),
                       errorWidget: (context, url, error) => Icon(Icons.error, size: 36.w, color: ColorManager.redMagmaColor,),

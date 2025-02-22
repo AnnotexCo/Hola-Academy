@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-
 import '../Data/Model/requests_model.dart';
 
 abstract class RequestsState extends Equatable{

@@ -8,9 +8,8 @@ import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/core/dependency_injection/dependency.dart';
 import 'package:hola_academy/features/Admin/home/UI/home_admin_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
-import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
-import 'package:hola_academy/features/profile/UI/profile_screen.dart';
-
+import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
+import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
 import '../Admin/scanner/qr_code_scanner_screen.dart';
 import '../Admin/transactions/admin_transactions_screen.dart';
 
@@ -31,7 +30,7 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
     NotificationsScreen(),
     BlocProvider(
       create: (context) => getIT<UserDataCubit>(),
-      child: ProfileScreen(),
+      child: PersonalInfoScreen(),
     ),
   ];
 

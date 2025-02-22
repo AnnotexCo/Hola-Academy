@@ -13,6 +13,7 @@ class AppString {
 
   static const String fullName = "Full Name";
   static const String firstName = "First name";
+  static const String parentName = "Parent name";
 
   static const String phoneNumber = "Phone Number";
   static const String yourPhone = "Your phone";

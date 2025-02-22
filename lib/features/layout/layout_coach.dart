@@ -10,7 +10,7 @@ import 'package:hola_academy/core/dependency_injection/dependency.dart';
 
 import 'package:hola_academy/features/home/UI/home_screen_coach.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
-import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
+import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'package:hola_academy/features/schedule_evaluation/UI/schedule_evaluation_screen.dart';
 
 import '../profile/UI/profile_screen.dart';

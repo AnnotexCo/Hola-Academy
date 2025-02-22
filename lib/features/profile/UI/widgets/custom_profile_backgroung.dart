@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hola_academy/core/local_db/save_token.dart';
+import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,8 +10,9 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
 class CustomProfileBackgroung extends StatefulWidget {
-  final String name;
-  const CustomProfileBackgroung({super.key, required this.name});
+  File? profileImage;
+  bool isEdit = false;
+  CustomProfileBackgroung({super.key, this.profileImage, this.isEdit = false});
 
   @override
   State<CustomProfileBackgroung> createState() =>
@@ -16,8 +20,8 @@ class CustomProfileBackgroung extends StatefulWidget {
 }
 
 class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
-  File? _profileImage;
-
+  String? name;
+  String? imageUrl;
   // Function to pick image from gallery
   Future<void> _pickImageFromGallery() async {
     final ImagePicker picker = ImagePicker();
@@ -26,7 +30,8 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
 
     if (pickedFile != null) {
       setState(() {
-        _profileImage = File(pickedFile.path);
+        widget.profileImage = File(pickedFile.path);
+        BlocProvider.of<UserDataCubit>(context).profileImage = widget.profileImage;
       });
     }
   }
@@ -39,7 +44,8 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
 
     if (pickedFile != null) {
       setState(() {
-        _profileImage = File(pickedFile.path);
+        widget.profileImage = File(pickedFile.path);
+        BlocProvider.of<UserDataCubit>(context).profileImage = widget.profileImage;
       });
     }
   }
@@ -105,9 +111,20 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
     // Pre-cache images to avoid flashing
     precacheImage(AssetImage(ImageManager.profileFrame), context);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    name = await SaveTokenDB.getName();
+    imageUrl = await SaveTokenDB.getImagePath();
+    setState(() {}); // Update UI after fetching data
   }
 
   @override
@@ -143,11 +160,11 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                       ),
-                      child: _profileImage != null
-                          ? Image.file(_profileImage!, fit: BoxFit.fill)
+                      child: widget.profileImage != null
+                          ? Image.file(widget.profileImage!, fit: BoxFit.fill)
                           : CachedNetworkImage(
                               imageUrl:
-                              'https://s3-alpha-sig.figma.com/img/e915/f882/38ac6007aa5be950081f8f386a727a10?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Q9BtXogUsptewnW5pzvUxAJhaZZL8L25nCXMAXJxwpV0U72ijLse3Ncfq17zOkB4CWgfB5xwF5DvUdNNZ0g-rjQNennZH6CyayjaPHlsXt9quNE5Bav4UzepsBmLj0uzAJdCfxVdDnq2uc-UGqusrRtInO0bhp0tqvYS0i7pOTvunrWTn8ybztyNpYRHp~KQGKDk81ry1ERjlfiiTUtS1rokmAnxuppCCp83Sul8fWqv4fhI3eXrrDmKF2H4X2ibezHjUaHnsmoIxJyAENzeqttNgNkXpMlYIfvWUyPmOIDGkVoHCwgBxzk257tQ~igP6hxop1-KflmKffK6q1liUw__',
+                                  imageUrl ?? widget.profileImage.toString(),
                               placeholder: (context, url) =>
                                   CircularProgressIndicator(),
                               errorWidget: (context, url, error) =>
@@ -158,27 +175,28 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
                   ),
                 ),
                 // Edit icon
-                Positioned(
-                  right: 0,
-                  top: 0,
-                  child: GestureDetector(
-                    onTap: _showPhotoSourcePicker,
-                    child: CircleAvatar(
-                      radius: 18,
-                      backgroundColor: ColorManager.backgroundPinkColor,
-                      child: Icon(
-                        Icons.edit,
-                        color: ColorManager.textRedColor,
-                        size: 20,
+                if (widget.isEdit)
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: GestureDetector(
+                      onTap: _showPhotoSourcePicker,
+                      child: CircleAvatar(
+                        radius: 18,
+                        backgroundColor: ColorManager.backgroundPinkColor,
+                        child: Icon(
+                          Icons.edit,
+                          color: ColorManager.textRedColor,
+                          size: 20,
+                        ),
                       ),
                     ),
                   ),
-                ),
               ],
             ),
             SizedBox(height: 12),
             Text(
-              widget.name,
+              name ?? 'No Name',
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w500,

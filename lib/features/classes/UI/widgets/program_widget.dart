@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/constants/api_constants.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
+import '../../../../core/constants/color_manager.dart';
 import '../../Data/Model/programs_model.dart';
 
 class ProgramWidget extends StatelessWidget {
@@ -10,8 +13,9 @@ class ProgramWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String imageUrl = ImageManager.onBoardingImage1;
-    //final String imageUrl = '${ApiConstants.imagesURLApi}${program.image.path}';
+    //final String imageUrl = ImageManager.onBoardingImage1;
+    final String imageUrl = '${ApiConstants.imagesURLApi}${program.image.path}';
+    print(program.image.path);
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -35,11 +39,18 @@ class ProgramWidget extends StatelessWidget {
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(12.r),
                   bottomLeft: Radius.circular(12.r)),
-              child: Image.asset(
-                imageUrl,
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
                 height: double.infinity,
                 width: 110.w,
                 fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => Icon(
+                  Icons.error,
+                  size: 36.w,
+                  color: ColorManager.redMagmaColor,
+                ),
               ),
             ),
             Padding(

@@ -7,8 +7,8 @@ import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/core/dependency_injection/dependency.dart';
-import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
-import 'package:hola_academy/features/personal_info/UI/personal_info_screen.dart';
+import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
+import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
 import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
 import 'package:hola_academy/features/profile/UI/terms_screen.dart';
 import 'package:hola_academy/features/profile/UI/transactions_screen.dart';
@@ -64,7 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         : "No Name";
                   }
 
-                  return CustomProfileBackgroung(name: name);
+                  return CustomProfileBackgroung();
                 },
               ),
               CustomProfileAppBar(qrCode: true),

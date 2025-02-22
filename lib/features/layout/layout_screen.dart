@@ -9,7 +9,7 @@ import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.
 import 'package:hola_academy/features/classes/UI/classes_screen.dart';
 import 'package:hola_academy/features/home/UI/home_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
-import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
+import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 
 import '../../core/dependency_injection/dependency.dart';
 import '../classes/Logic/programms/programs_cubit.dart';

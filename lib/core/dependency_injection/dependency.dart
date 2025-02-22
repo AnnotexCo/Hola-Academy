@@ -23,9 +23,8 @@ import 'package:hola_academy/features/auth/verification/Data/Repo/check_otp_repo
 import 'package:hola_academy/features/auth/verification/Logic/cubit/check_otp_cubit.dart';
 import 'package:hola_academy/features/classes/Data/Repo/categories_repo.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
-import 'package:hola_academy/features/personal_info/Data/Repo/user_repo.dart';
-import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
-
+import 'package:hola_academy/features/profile/Data/Repo/user_repo.dart';
+import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import '../../features/classes/Data/Repo/programs_repo.dart';
 import '../../features/classes/Logic/programms/programs_cubit.dart';
 import '../../features/home/Data/Repo/banner_repo.dart';

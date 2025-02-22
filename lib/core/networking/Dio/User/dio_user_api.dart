@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:hola_academy/core/local_db/save_token.dart';
 import 'package:hola_academy/core/networking/ErrorHandler/api_error_handler.dart';
-import 'package:hola_academy/features/personal_info/Data/Model/update_user_model.dart';
-import 'package:hola_academy/features/personal_info/Data/Model/user_model.dart';
+import 'package:hola_academy/features/profile/Data/Model/update_user_model.dart';
+import 'package:hola_academy/features/profile/Data/Model/user_model.dart';
 import '../../../constants/api_constants.dart';
 
 class DioUserApi {

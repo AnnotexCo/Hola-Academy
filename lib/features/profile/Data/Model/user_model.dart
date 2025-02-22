@@ -6,7 +6,7 @@ class UserModel {
   final String name;
   final String parentName;
   final String? parentWhatsappNumber;
-  final num? profileImageId;
+  final ImageModel? profileImage;
   final String role;
   final String phoneNumber;
   final String reachResource;
@@ -31,7 +31,7 @@ class UserModel {
     required this.name,
     required this.parentName,
     this.parentWhatsappNumber,
-    this.profileImageId,
+    this.profileImage,
     required this.role,
     required this.phoneNumber,
     required this.reachResource,
@@ -63,7 +63,7 @@ class UserModel {
       qrCode: json['qrCode'],
       parentName: json['parentName'],
       parentWhatsappNumber: json['parentWhatsappNumber'],
-      profileImageId: json['profileImageId'],
+      profileImage: ImageModel.fromJson(json['ProfileImage']),
       salaryType: json['salaryType'],
       salary: json['salary'],
       address: json['address'],
@@ -76,32 +76,6 @@ class UserModel {
       userType: json['userType'],
     );
   }
-
-  Map<String, dynamic> toMap() => {
-        'email': email,
-        'id': id,
-        'name': name,
-        'role': role,
-        'dob': dob,
-        'gender': gender,
-        'phoneNumber': phoneNumber,
-        'parentName': parentName,
-        'parentWhatsappNumber': parentWhatsappNumber,
-        'profileImageId': profileImageId,
-        'reachResource': reachResource,
-        'balance': balance,
-        'salaryType': salaryType,
-        'salary': salary,
-        'address': address,
-        'healthStatus': healthStatus,
-        'nationality': nationality,
-        'parentNationality': parentNationality,
-        'parentAddress': parentAddress,
-        'qrCode': qrCode,
-        'lastSalaryDate': lastSalaryDate,
-        '_count': count,
-        'userType': userType,
-      };
 }
 
 class Count {
@@ -122,6 +96,36 @@ class Count {
         'LevelTrainee': levelTrainee,
       };
 }
+
+
+class ImageModel {
+  final int id;
+  final String name;
+  final String path;
+  final String type;
+  final int size;
+
+  ImageModel({
+    required this.id,
+    required this.name,
+    required this.path,
+    required this.type,
+    required this.size,
+  });
+
+  factory ImageModel.fromJson(Map<String, dynamic> json) {
+    return ImageModel(
+      id: json['id'],
+      name: json['name'],
+      path: json['path'],
+      type: json['type'],
+      size: json['size'],
+    );
+  }
+}
+
+
+
 /*
 {
   "message": "Request successful",

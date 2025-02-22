@@ -1,5 +1,6 @@
 import 'package:hola_academy/core/networking/Dio/Requests/dio_requests_api.dart';
-import 'package:hola_academy/features/Admin/requests/Data/Model/requests_model.dart';
+
+import '../Model/requests_model.dart';
 
 class RequestsRepo {
   final DioRequestsApi dioRequestsApi;
