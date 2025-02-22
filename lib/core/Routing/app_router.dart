@@ -30,6 +30,7 @@ import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
 import 'package:hola_academy/features/profile/UI/profile_screen.dart';
 import 'package:hola_academy/features/splash/splash_screen.dart';
 import '../../features/Admin/home/UI/home_admin_screen.dart';
+import '../../features/Admin/requests/Logic/requests_cubit.dart';
 import '../../features/Admin/requests/UI/requests_screen.dart';
 import '../../features/Admin/trainees/UI/trainees_screen.dart';
 import '../../features/analytics/UI/analytics_skills_screen.dart';
@@ -189,7 +190,15 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const HomeAdminScreen());
 
       case Routes.requestsScreen:
-        return MaterialPageRoute(builder: (_) => RequestsScreen());
+  return MaterialPageRoute(
+    builder: (_) => MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIT<RequestsCubit>()),
+        BlocProvider(create: (context) => getIT<UserDataCubit>()),
+      ],
+      child: RequestsScreen(),
+    ),
+  );
 
       case Routes.traineesScreen:
         return MaterialPageRoute(builder: (_) => const TraineesScreen());

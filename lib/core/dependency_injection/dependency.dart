@@ -5,7 +5,10 @@ import 'package:hola_academy/core/networking/Dio/Auth/dio_forget_password.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_reset_password.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_sign_up_api.dart';
 import 'package:hola_academy/core/networking/Dio/Home/dio_banner_api.dart';
+import 'package:hola_academy/core/networking/Dio/Requests/dio_requests_api.dart';
 import 'package:hola_academy/core/networking/Dio/User/dio_user_api.dart';
+import 'package:hola_academy/features/Admin/requests/Data/Repo/requests_repo.dart';
+import 'package:hola_academy/features/Admin/requests/Logic/requests_cubit.dart';
 import 'package:hola_academy/features/auth/forgot_password/Data/Repo/forget_password_repo.dart';
 import 'package:hola_academy/features/auth/forgot_password/Logic/cubit/forget_password_cubit.dart';
 import 'package:hola_academy/features/auth/login/Data/Repo/login_repo.dart';
@@ -58,8 +61,12 @@ void setUpGetIt() {
       .registerLazySingleton<DioPrograms>(() => DioPrograms(dio: getIT<Dio>()));
 
 //  BannerDioApi
-  getIT
-      .registerLazySingleton<DioBannerApi>(() => DioBannerApi(dio: getIT<Dio>()));
+  getIT.registerLazySingleton<DioBannerApi>(
+      () => DioBannerApi(dio: getIT<Dio>()));
+
+// RequestsDioApi
+  getIT.registerLazySingleton<DioRequestsApi>(()=>DioRequestsApi(dio: getIT<Dio>()));
+
   //Login
   getIT.registerLazySingleton<LoginRepo>(
       () => LoginRepo(dioLoginApi: getIT<DioLoginApi>()));
@@ -88,14 +95,19 @@ void setUpGetIt() {
   getIT.registerFactory<ProgramsCubit>(() => ProgramsCubit(getIT()));
 
   //Personal Info
-  getIT.registerLazySingleton<DioUserApi>(
-      () => DioUserApi(dio: getIT<Dio>()));
+  getIT.registerLazySingleton<DioUserApi>(() => DioUserApi(dio: getIT<Dio>()));
 
-   getIT.registerLazySingleton<UserRepo>(() => UserRepo(dioUserApi: getIT<DioUserApi>()));
-   getIT.registerFactory<UserDataCubit>(() => UserDataCubit(getIT<UserRepo>()));
+  getIT.registerLazySingleton<UserRepo>(
+      () => UserRepo(dioUserApi: getIT<DioUserApi>()));
+  getIT.registerFactory<UserDataCubit>(() => UserDataCubit(getIT<UserRepo>()));
 
   //Banner
-  getIT.registerLazySingleton<BannerRepo>(() => BannerRepo(dioBanners: getIT<DioBannerApi>()));
+  getIT.registerLazySingleton<BannerRepo>(
+      () => BannerRepo(dioBanners: getIT<DioBannerApi>()));
   getIT.registerFactory<BannersCubit>(() => BannersCubit(getIT<BannerRepo>()));
 
+  // Requests
+   getIT.registerLazySingleton<RequestsRepo>(
+      () => RequestsRepo(dioRequestsApi: getIT<DioRequestsApi>()));
+  getIT.registerFactory<RequestsCubit>(() => RequestsCubit(getIT<RequestsRepo>()));
 }

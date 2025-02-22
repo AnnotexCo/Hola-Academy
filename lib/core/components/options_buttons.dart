@@ -49,17 +49,20 @@ class OptionSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: options
-          .map(
-            (option) => buildOptionButton(
-              option,
-              activeOption == option, // Determine if the button is active
-              () => onOptionSelected(option), // Pass selected option to callback
-            ),
-          )
-          .toList(),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: options
+            .map(
+              (option) => buildOptionButton(
+                option,
+                activeOption == option, // Determine if the button is active
+                () => onOptionSelected(option), // Pass selected option to callback
+              ),
+            )
+            .toList(),
+      ),
     );
   }
 }

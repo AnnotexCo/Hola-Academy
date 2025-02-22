@@ -16,4 +16,6 @@ class ApiConstants {
   static String imagesURLApi = 'http://109.176.197.232:3100/static-uploads/';
 
   static String bannersApi = 'api/banners';
+
+  static String requestsApi = 'api/requests/';
 }
