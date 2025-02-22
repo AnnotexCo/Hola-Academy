@@ -4,15 +4,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/custom_app_bar.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
-import 'package:hola_academy/features/classes/Data/Model/programs_model.dart';
-import 'package:hola_academy/features/classes/Logic/cubit/programs_state.dart';
+import 'package:hola_academy/features/classes/Data/Model/category_model.dart';
+import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/categories/categories_state.dart';
+import 'package:hola_academy/features/classes/Logic/programms/programs_state.dart';
 import 'package:hola_academy/features/classes/UI/widgets/program_widget.dart';
 import 'package:hola_academy/features/classes/UI/widgets/available_class_widget.dart';
 import 'package:hola_academy/features/classes/UI/widgets/progress_class_widget.dart';
 import 'package:hola_academy/features/not_found/not_found_screen.dart';
 
 import '../../../core/constants/app_string.dart';
-import '../Logic/cubit/programs_cubit.dart';
+import '../Logic/programms/programs_cubit.dart';
 import 'Loading/programs_loading_screen.dart';
 import 'widgets/categories_tap_buttons.dart';
 
@@ -27,6 +29,13 @@ class ClassesScreenState extends State<ClassesScreen> {
   String selectedTab = "All Programs"; // Default selection
   int? selectedCategoryId;
   bool _isFetched = false;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<CategoriesCubit>().fetchAllCategories();
+  }
+
   void _onMenuSelected(String value) {
     setState(() {
       selectedTab = value;
@@ -109,22 +118,32 @@ class ClassesScreenState extends State<ClassesScreen> {
             if (selectedTab == "All Programs")
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-                child: CategoryFilterButtons(
-                  categories: allPrograms
-                      .map((p) => p.category)
-                      .fold<Map<int, CategoryModel>>({}, (map, category) {
-                        map[category.id] =
-                            category; // Ensure uniqueness by category ID
-                        return map;
-                      })
-                      .values
-                      .toList(),
-                  onCategorySelected: (categoryId) {
-                    setState(() {
-                      selectedCategoryId = categoryId;
-                    });
+                child: BlocConsumer<CategoriesCubit, CategoriesState>(
+                  listener: (context, state) {
+                    if (state is CategoriesSuccess) {
+                    } else if (state is CategoriesError) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.message),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
                   },
-                  selectedCategoryId: selectedCategoryId,
+                  builder: (context, state) {
+                    List<CategoryModel> categories = [];
+                    return CategoryFilterButtons(
+                      categories: state is CategoriesSuccess
+                          ? state.categories.cast<CategoryModel>()
+                          : categories,
+                      onCategorySelected: (categoryId) {
+                        setState(() {
+                          selectedCategoryId = categoryId;
+                        });
+                      },
+                      selectedCategoryId: selectedCategoryId,
+                    );
+                  },
                 ),
               ),
           Expanded(

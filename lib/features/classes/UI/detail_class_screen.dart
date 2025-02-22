@@ -8,8 +8,8 @@ import 'package:hola_academy/features/home/UI/components/program_card.dart';
 import 'package:hola_academy/features/not_found/not_found_screen.dart';
 
 import '../../../core/constants/color_manager.dart';
-import '../Logic/cubit/programs_cubit.dart';
-import '../Logic/cubit/programs_state.dart';
+import '../Logic/programms/programs_cubit.dart';
+import '../Logic/programms/programs_state.dart';
 import 'Loading/details_classes_loading_screen.dart';
 
 class DetailClassScreen extends StatelessWidget {

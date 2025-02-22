@@ -18,4 +18,7 @@ class ApiConstants {
   static String bannersApi = 'api/banners';
 
   static String requestsApi = 'api/requests/';
+
+  static String categoriesApi = 'api/categories';
+  static String categoryByIdApi = 'api/categories/';
 }

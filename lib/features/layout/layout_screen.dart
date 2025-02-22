@@ -5,13 +5,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
+import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
 import 'package:hola_academy/features/classes/UI/classes_screen.dart';
 import 'package:hola_academy/features/home/UI/home_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
 import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
 
 import '../../core/dependency_injection/dependency.dart';
-import '../classes/Logic/cubit/programs_cubit.dart';
+import '../classes/Logic/programms/programs_cubit.dart';
 import '../profile/UI/profile_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
@@ -27,10 +28,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
   final List<Widget> _screens = [
     HomeScreen(),
-    BlocProvider(
-      create: (context) => getIT<ProgramsCubit>(),
-      child: ClassesScreen(),
-    ),
+    MultiBlocProvider(providers: [
+      BlocProvider(create: (context) => getIT<ProgramsCubit>()),
+      BlocProvider(create: (context) => getIT<CategoriesCubit>()),
+    ], child: ClassesScreen()),
     NotificationsScreen(),
     BlocProvider(
       create: (context) => getIT<UserDataCubit>(),

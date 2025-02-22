@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hola_academy/core/dependency_injection/dependency.dart';
-import 'package:hola_academy/features/admin/transactions/admin_transactions_screen.dart';
+import 'package:hola_academy/features/Admin/transactions/admin_transactions_screen.dart';
 import 'package:hola_academy/features/auth/forgot_password/Logic/cubit/forget_password_cubit.dart';
 import 'package:hola_academy/features/auth/forgot_password/UI/forgot_password_screen.dart';
 import 'package:hola_academy/features/auth/login/UI/login_screen.dart';
@@ -12,6 +12,7 @@ import 'package:hola_academy/features/auth/reset_password/UI/reset_password.dart
 import 'package:hola_academy/features/auth/verification/Data/Model/reset_args.dart';
 import 'package:hola_academy/features/auth/verification/Logic/cubit/check_otp_cubit.dart';
 import 'package:hola_academy/features/auth/verification/UI/verfication_screen.dart';
+import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
 import 'package:hola_academy/features/classes/UI/classes_screen.dart';
 import 'package:hola_academy/features/classes/UI/detail_class_screen.dart';
 import 'package:hola_academy/features/classes/UI/program_levl_screen.dart';
@@ -38,7 +39,7 @@ import '../../features/auth/login/Logic/login_cubit.dart';
 import '../../features/auth/register/UI/register_screen.dart';
 import '../../features/book/UI/book_programs_screen.dart';
 import '../../features/classes/Data/Model/programs_model.dart';
-import '../../features/classes/Logic/cubit/programs_cubit.dart';
+import '../../features/classes/Logic/programms/programs_cubit.dart';
 import '../../features/not_found/not_found_screen.dart';
 import '../../features/profile/UI/request_payment_screen.dart';
 import '../../features/schedule_evaluation/UI/schedule_evaluation_screen.dart';
@@ -140,11 +141,14 @@ class AppRouter {
       // classes
       case Routes.classesScreen:
         return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (context) => getIT<ProgramsCubit>(),
-                  child: ClassesScreen(),
-                ));
-
+            builder: (_) => MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (context) => getIT<ProgramsCubit>()),
+                BlocProvider(create: (context) => getIT<CategoriesCubit>()),
+              ],
+               child: ClassesScreen())           
+        );
+        
       case Routes.detailsScreen:
         return MaterialPageRoute(
           builder: (context) {

@@ -5,13 +5,13 @@ import 'package:hola_academy/core/constants/image_manager.dart';
 import '../../Data/Model/programs_model.dart';
 
 class ProgramWidget extends StatelessWidget {
-   final ProgramsModel program;
-  const ProgramWidget({super.key,required this.program});
+  final ProgramsModel program;
+  const ProgramWidget({super.key, required this.program});
 
   @override
   Widget build(BuildContext context) {
-     final String imageUrl = ImageManager.onBoardingImage1;
-    //  final String imageUrl = '${ApiConstants.baseUrl}static-uploads/${program.image.path}';
+    final String imageUrl = ImageManager.onBoardingImage1;
+    //final String imageUrl = '${ApiConstants.imagesURLApi}${program.image.path}';
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -19,7 +19,7 @@ class ProgramWidget extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.r),
             boxShadow: [
-               BoxShadow(
+              BoxShadow(
                   color: Color(0xCED2D9C9),
                   spreadRadius: 0,
                   blurRadius: 7,

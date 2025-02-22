@@ -4,6 +4,7 @@ import 'package:hola_academy/core/networking/Dio/Auth/dio_check_otp.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_forget_password.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_reset_password.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_sign_up_api.dart';
+import 'package:hola_academy/core/networking/Dio/Category/dio_categoriess.dart';
 import 'package:hola_academy/core/networking/Dio/Home/dio_banner_api.dart';
 import 'package:hola_academy/core/networking/Dio/Requests/dio_requests_api.dart';
 import 'package:hola_academy/core/networking/Dio/User/dio_user_api.dart';
@@ -20,11 +21,13 @@ import 'package:hola_academy/features/auth/reset_password/Data/Repo/reset_passwo
 import 'package:hola_academy/features/auth/reset_password/Logic/cubit/reset_password_cubit.dart';
 import 'package:hola_academy/features/auth/verification/Data/Repo/check_otp_repo.dart';
 import 'package:hola_academy/features/auth/verification/Logic/cubit/check_otp_cubit.dart';
+import 'package:hola_academy/features/classes/Data/Repo/categories_repo.dart';
+import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
 import 'package:hola_academy/features/personal_info/Data/Repo/user_repo.dart';
 import 'package:hola_academy/features/personal_info/Logic/user_data_cubit.dart';
 
 import '../../features/classes/Data/Repo/programs_repo.dart';
-import '../../features/classes/Logic/cubit/programs_cubit.dart';
+import '../../features/classes/Logic/programms/programs_cubit.dart';
 import '../../features/home/Data/Repo/banner_repo.dart';
 import '../../features/home/Logic/banner_logic/banner_cubit.dart';
 import '../networking/Dio/Program/dio_programs.dart';
@@ -60,6 +63,10 @@ void setUpGetIt() {
   getIT
       .registerLazySingleton<DioPrograms>(() => DioPrograms(dio: getIT<Dio>()));
 
+//  CategoriesDioApi
+  getIT
+      .registerLazySingleton<DioCategoriess>(() => DioCategoriess(dio: getIT<Dio>()));
+
 //  BannerDioApi
   getIT.registerLazySingleton<DioBannerApi>(
       () => DioBannerApi(dio: getIT<Dio>()));
@@ -93,6 +100,12 @@ void setUpGetIt() {
         dioPrograms: getIT(),
       ));
   getIT.registerFactory<ProgramsCubit>(() => ProgramsCubit(getIT()));
+
+//Categoris
+  getIT.registerLazySingleton<CategoriesRepo>(() => CategoriesRepo(
+        dioCategoriess: getIT(),
+      ));
+  getIT.registerFactory<CategoriesCubit>(() => CategoriesCubit(getIT()));
 
   //Personal Info
   getIT.registerLazySingleton<DioUserApi>(() => DioUserApi(dio: getIT<Dio>()));

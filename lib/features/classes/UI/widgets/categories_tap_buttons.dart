@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/features/classes/Data/Model/category_model.dart';
 
 import '../../../../core/constants/color_manager.dart';
-import '../../Data/Model/programs_model.dart';
 
 class CategoryFilterButtons extends StatefulWidget {
   final List<CategoryModel> categories;
@@ -42,12 +42,12 @@ class _CategoryFilterButtonsState extends State<CategoryFilterButtons> {
           return GestureDetector(
             onTap: () {
               setState(() {
-                selectedCategoryId = category.id;
+                selectedCategoryId = category.id.toInt();
               });
-              widget.onCategorySelected(category.id);
+              widget.onCategorySelected(category.id.toInt());
             },
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5.w),
+              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
               child: buildLevelButton(category.name, isActive),
             ),
           );

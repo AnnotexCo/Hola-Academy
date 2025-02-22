@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
-import 'package:hola_academy/features/admin/transactions/widgets/admin_transaction_card.dart';
-import 'package:hola_academy/features/admin/transactions/widgets/money_card.dart';
-import 'package:hola_academy/features/admin/transactions/widgets/transaction_tap_bar.dart';
+import 'package:hola_academy/features/Admin/transactions/widgets/admin_transaction_card.dart';
+import 'package:hola_academy/features/Admin/transactions/widgets/money_card.dart';
+import 'package:hola_academy/features/Admin/transactions/widgets/transaction_tap_bar.dart';
 
 class AdminTransactionsScreen extends StatefulWidget {
   const AdminTransactionsScreen({super.key});
