@@ -7,6 +7,7 @@ import 'package:hola_academy/core/networking/Dio/Auth/dio_sign_up_api.dart';
 import 'package:hola_academy/core/networking/Dio/Category/dio_categoriess.dart';
 import 'package:hola_academy/core/networking/Dio/Home/dio_banner_api.dart';
 import 'package:hola_academy/core/networking/Dio/Requests/dio_requests_api.dart';
+import 'package:hola_academy/core/networking/Dio/Transaction/dio_transcations.dart';
 import 'package:hola_academy/core/networking/Dio/User/dio_user_api.dart';
 import 'package:hola_academy/features/Admin/requests/Data/Repo/requests_repo.dart';
 import 'package:hola_academy/features/Admin/requests/Logic/requests_cubit.dart';
@@ -23,8 +24,10 @@ import 'package:hola_academy/features/auth/verification/Data/Repo/check_otp_repo
 import 'package:hola_academy/features/auth/verification/Logic/cubit/check_otp_cubit.dart';
 import 'package:hola_academy/features/classes/Data/Repo/categories_repo.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
+import 'package:hola_academy/features/profile/Data/Repo/transaction_repo.dart';
 import 'package:hola_academy/features/profile/Data/Repo/user_repo.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
+import 'package:hola_academy/features/profile/Logic/transactions/trans_cubit.dart';
 import '../../features/classes/Data/Repo/programs_repo.dart';
 import '../../features/classes/Logic/programms/programs_cubit.dart';
 import '../../features/home/Data/Repo/banner_repo.dart';
@@ -72,6 +75,9 @@ void setUpGetIt() {
 
 // RequestsDioApi
   getIT.registerLazySingleton<DioRequestsApi>(()=>DioRequestsApi(dio: getIT<Dio>()));
+
+// TransactionsDioApi
+  getIT.registerLazySingleton<DioTranscations>(()=>DioTranscations(dio: getIT<Dio>()));
 
   //Login
   getIT.registerLazySingleton<LoginRepo>(
@@ -122,4 +128,9 @@ void setUpGetIt() {
    getIT.registerLazySingleton<RequestsRepo>(
       () => RequestsRepo(dioRequestsApi: getIT<DioRequestsApi>()));
   getIT.registerFactory<RequestsCubit>(() => RequestsCubit(getIT<RequestsRepo>()));
+
+  // Transactions
+  getIT.registerLazySingleton<TransactionRepo>(
+      () => TransactionRepo(dioTranscations: getIT<DioTranscations>()));
+  getIT.registerFactory<TransCubit>(() => TransCubit(getIT<TransactionRepo>()));
 }

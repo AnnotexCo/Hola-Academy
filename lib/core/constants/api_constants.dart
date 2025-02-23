@@ -21,4 +21,7 @@ class ApiConstants {
 
   static String categoriesApi = 'api/categories';
   static String categoryByIdApi = 'api/categories/';
+
+
+  static String transactionsApi = 'api/transaction';
 }
