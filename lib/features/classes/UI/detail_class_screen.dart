@@ -42,7 +42,7 @@ class DetailClassScreen extends StatelessWidget {
                       height: 30.h,
                       width: 86.w,
                       onTap: () {
-                        Navigator.pushNamed(context, Routes.bookProgramsScreen);
+                        Navigator.pushNamed(context, Routes.bookProgramsScreen, arguments: programId);
                       },
                     ),
                   ),

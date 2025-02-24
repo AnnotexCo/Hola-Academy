@@ -12,24 +12,24 @@ class CategoriesCubit extends Cubit<CategoriesState> {
   void fetchAllCategories() async {
     try {
       print('fetching categories');
-      emit(CategoriesLoading());
+     if (!isClosed) emit(CategoriesLoading());
       final categories = await categoriesRepo.getAllCategories();
       print('categories fetched');
       print(categories);
-      emit(CategoriesSuccess(categories));
+      if (!isClosed) emit(CategoriesSuccess(categories));
     } catch (e) {
-      emit(CategoriesError(e.toString()));
+      if (!isClosed) emit(CategoriesError(e.toString()));
     }
   }
 
   // Fetch a category by ID
   void fetchCategoryById(int id) async {
     try {
-      emit(CategoriesLoading());
+      if (!isClosed) emit(CategoriesLoading());
       final category = await categoriesRepo.getCategoryById(id);
-      emit(SingleCategorySuccess(category));
+      if (!isClosed) emit(SingleCategorySuccess(category));
     } catch (e) {
-      emit(CategoriesError(e.toString()));
+      if (!isClosed) emit(CategoriesError(e.toString()));
     }
   }
 }

@@ -11,22 +11,22 @@ class ProgramsCubit extends Cubit<ProgramsState> {
   // Fetch all programs
   void fetchAllPrograms() async {
     try {
-      emit(ProgramsLoading());
+    if (!isClosed) emit(ProgramsLoading());
       final programs = await programRepo.getAllPrograms();
-      emit(ProgramsSuccess(programs));
+      if (!isClosed) emit(ProgramsSuccess(programs));
     } catch (e) {
-      emit(ProgramsError(e.toString()));
+      if (!isClosed) emit(ProgramsError(e.toString()));
     }
   }
 
   // Fetch a program by ID
   void fetchProgramById(int id) async {
     try {
-      emit(ProgramsLoading());
+      if (!isClosed) emit(ProgramsLoading());
       final program = await programRepo.getProgramById(id);
-      emit(SingleProgramSuccess(program));
+      if (!isClosed) emit(SingleProgramSuccess(program));
     } catch (e) {
-      emit(ProgramsError(e.toString()));
+      if (!isClosed) emit(ProgramsError(e.toString()));
     }
   }
 }

@@ -175,7 +175,17 @@ class AppRouter {
 
       // book programs
       case Routes.bookProgramsScreen:
-        return MaterialPageRoute(builder: (_) => const BookProgramScreen());
+        return MaterialPageRoute(
+            builder: (_) {
+              final int programId = settings.arguments as int;
+              return MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (context) => getIT<RequestsCubit>()),
+                BlocProvider(create: (context) => getIT<UserDataCubit>()),
+              ],
+              child: BookProgramScreen(programId: programId),
+            );
+            });
 
       // analytics
       case Routes.analyticsSkillsScreen:
