@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/not_found/not_found_screen.dart';
 import 'package:hola_academy/features/profile/Data/Model/user_model.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
