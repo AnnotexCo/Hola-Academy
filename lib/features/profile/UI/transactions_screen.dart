@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/custom_app_bar.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
+import 'package:hola_academy/features/profile/Data/Model/transactions_model.dart';
+import 'package:hola_academy/features/profile/Logic/transactions/trans_cubit.dart';
 import 'package:hola_academy/features/profile/UI/widgets/transaction_card.dart';
 
 import '../../../core/local_db/save_token.dart';
@@ -23,11 +26,12 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
   @override
   void initState() {
     super.initState();
+    context.read<TransCubit>().getTransactions();
     _loadUserRole();
   }
 
   Future<void> _loadUserRole() async {
-    String? role = await SaveTokenDB.getRole(); 
+    String? role = await SaveTokenDB.getRole();
     setState(() {
       _userRole = role;
     });
@@ -39,120 +43,148 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
     return Scaffold(
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         CustomAppBar(title: AppString.viewAllTransaction),
-        Expanded(
-          child: ListView(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 28.5.w,
+        BlocConsumer<TransCubit, TransState>(
+          listener: (context, state) {
+            // TODO: implement listener
+            if (state is TransactionsFailure) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.error),
+                  backgroundColor: Colors.red,
                 ),
-                child: Column(
-                    spacing: 30.h,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // if (coach)
-                      if (_userRole == AppString.coach) ...[
-                        Container(
-                          height: 120.h,
-                          width: 383.w,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(colors: [
-                              ColorManager.linearGradient1,
-                              ColorManager.linearGradient2
-                            ]),
-                            borderRadius: BorderRadius.circular(20.r),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 35.w, top: 24.h),
-                            child: Column(
-                              spacing: 8.h,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  AppString.myBalance,
-                                  style: TextStyle(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: ColorManager.textRedColor),
-                                ),
-                                Row(
+              );
+            }
+            if (state is TransactionsSuccess) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Transactions loaded successfully'),
+                  backgroundColor: Colors.green,
+                ),
+              );
+              print('Transactions: ${state.transactions}');
+            }
+          },
+          builder: (context, state) {
+            return Expanded(
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 28.5.w,
+                    ),
+                    child: Column(
+                        spacing: 30.h,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // if (coach)
+                          if (_userRole == AppString.coach) ...[
+                            Container(
+                              height: 120.h,
+                              width: 383.w,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(colors: [
+                                  ColorManager.linearGradient1,
+                                  ColorManager.linearGradient2
+                                ]),
+                                borderRadius: BorderRadius.circular(20.r),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 35.w, top: 24.h),
+                                child: Column(
+                                  spacing: 8.h,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '\$998,00',
+                                      AppString.myBalance,
                                       style: TextStyle(
-                                        fontSize: 34.sp,
-                                        fontWeight: FontWeight.w500,
-                                        color: ColorManager.whiteColor,
-                                      ),
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w700,
+                                          color: ColorManager.textRedColor),
                                     ),
-                                    Spacer(),
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 43.w),
-                                      child: Container(
-                                        width: 43.w,
-                                        height: 39.h,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xffCB6928),
-                                          borderRadius:
-                                              BorderRadius.circular(8.r),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          '\$${state is TransactionsSuccess ? state.transactions.incomeStatistics.sum.finalAmount : "0.00"}',
+                                          style: TextStyle(
+                                            fontSize: 34.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: ColorManager.whiteColor,
+                                          ),
                                         ),
-                                        child: IconButton(
-                                          onPressed: () {
-                                            Navigator.pushNamed(context,
-                                                Routes.requestPaymentScreen);
-                                          },
-                                          icon: Icon(Icons.add,
-                                              color: Colors.white),
-                                          iconSize: 20.sp,
-                                          padding: EdgeInsets.zero,
-                                          constraints: BoxConstraints(),
+                                        Spacer(),
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 43.w),
+                                          child: Container(
+                                            width: 43.w,
+                                            height: 39.h,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xffCB6928),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.r),
+                                            ),
+                                            child: IconButton(
+                                              onPressed: () {
+                                                Navigator.pushNamed(
+                                                    context,
+                                                    Routes
+                                                        .requestPaymentScreen);
+                                              },
+                                              icon: Icon(Icons.add,
+                                                  color: Colors.white),
+                                              iconSize: 20.sp,
+                                              padding: EdgeInsets.zero,
+                                              constraints: BoxConstraints(),
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                        Text(
-                          AppString.historyTransaction,
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w600,
-                            color: ColorManager.graycolorHeadline,
-                          ),
-                        ),
-                      ],
-                    ]),
+                            Text(
+                              AppString.historyTransaction,
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w600,
+                                color: ColorManager.graycolorHeadline,
+                              ),
+                            ),
+                          ],
+                        ]),
+                  ),
+                  SizedBox(
+                    height: 18.h,
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.symmetric(horizontal: 38.w),
+                    itemCount: state is TransactionsSuccess?context.read<TransCubit>().transactions?.transactions.length:0,
+                    itemBuilder: (context, index) {
+                      List<Transactions> transactions =
+                      state is TransactionsSuccess?
+                          context.read<TransCubit>().transactions?.transactions??[]:[];
+                      return TransactionCard(
+                        title: transactions[index].type??'',
+                        dateTime: transactions[index].updatedAt??'',
+                        price: transactions[index].finalAmount.toString(),
+                        status: transactions[index].status??'',
+                      );
+                    },
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 18.h,
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 38.w),
-                itemCount: transactions.length,
-                itemBuilder: (context, index) {
-                  final transaction = transactions[index];
-                  return TransactionCard(
-                    title: transaction['title'],
-                    dateTime: transaction['dateTime'],
-                    price: transaction['price'],
-                    status: transaction['status'],
-                  );
-                },
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ]),
     );
   }
 
   // Sample transaction data
-  final List<Map<String, dynamic>> transactions = [
+  final List<Map<String, dynamic>> transactions1 = [
     {
       'title': 'Swimming Basics',
       'dateTime': '01 Jan 2025, 10:00 AM',

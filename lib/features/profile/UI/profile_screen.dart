@@ -8,6 +8,7 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/core/dependency_injection/dependency.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
+import 'package:hola_academy/features/profile/Logic/transactions/trans_cubit.dart';
 import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
 import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
 import 'package:hola_academy/features/profile/UI/terms_screen.dart';
@@ -118,9 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return _userRole == AppString.admin
-                              ? AdminTransactionsScreen()
-                              : TransactionsScreen();
+                          return BlocProvider(create: (context) => getIT<TransCubit>(), child: TransactionsScreen());
                         },
                       ));
                     },

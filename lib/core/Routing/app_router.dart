@@ -30,6 +30,7 @@ import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
 import 'package:hola_academy/features/profile/UI/booked_screen.dart';
 import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
 import 'package:hola_academy/features/profile/UI/profile_screen.dart';
+import 'package:hola_academy/features/profile/UI/transactions_screen.dart';
 import 'package:hola_academy/features/splash/splash_screen.dart';
 import '../../features/Admin/home/UI/home_admin_screen.dart';
 import '../../features/Admin/requests/Logic/requests_cubit.dart';
@@ -126,6 +127,15 @@ class AppRouter {
                   create: (context) => getIT<UserDataCubit>(),
                   child: PersonalInfoScreen(),
                 ));
+
+      // transactions
+      case Routes.transactionScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => getIT<TransCubit>(),
+                  child: const TransactionsScreen(),
+                ));
+
 
       // contact us
       case Routes.contactUsScreen:

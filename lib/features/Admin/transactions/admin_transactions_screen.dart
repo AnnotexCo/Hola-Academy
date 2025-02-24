@@ -7,6 +7,7 @@ import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/Admin/transactions/widgets/admin_transaction_card.dart';
 import 'package:hola_academy/features/Admin/transactions/widgets/money_card.dart';
 import 'package:hola_academy/features/Admin/transactions/widgets/transaction_tap_bar.dart';
+import 'package:hola_academy/features/profile/Data/Model/transactions_model.dart';
 import 'package:hola_academy/features/profile/Logic/transactions/trans_cubit.dart';
 
 class AdminTransactionsScreen extends StatefulWidget {
@@ -24,6 +25,7 @@ class _AdminTransactionsScreenState extends State<AdminTransactionsScreen>
   void initState() {
     super.initState();
     context.read<TransCubit>().getTransactions();
+    context.read<TransCubit>().getTransactionsByFilter(isIncome: true);
     //BlocProvider.of<TransCubit>(context).getTransactions();
     tabController = TabController(length: 2, vsync: this);
   }
@@ -38,63 +40,95 @@ class _AdminTransactionsScreenState extends State<AdminTransactionsScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         bottomSheet: LayoutBuilder(builder: (context, constraints) {
-          return Container(
-            height: constraints.maxHeight * 0.70,
-            width: 440.w,
-            decoration: BoxDecoration(
-              color: ColorManager.whiteColor,
-              borderRadius: BorderRadius.all(
-                Radius.circular(30.r),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: ColorManager.blackColor.withValues(alpha: .1),
-                  offset: Offset(0, -2),
-                  blurRadius: 10,
-                ),
-              ],
-            ),
-            child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 21.w, vertical: 30.h),
-                child: Column(spacing: 25.h, children: [
-                  TransactionTapBar(
-                    tabController: tabController,
+          return BlocConsumer<TransCubit, TransState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              return Container(
+                height: constraints.maxHeight * 0.70,
+                width: 440.w,
+                decoration: BoxDecoration(
+                  color: ColorManager.whiteColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.r),
+                    topRight: Radius.circular(30.r),
                   ),
-                  Expanded(
-                    child: SizedBox(
-                      //height: 500.h,
-                      child: TabBarView(
-                        controller: tabController,
-                        children: [
-                          ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: transactions1.length,
-                            itemBuilder: (context, index) =>
-                                AdminTransactionCard(
-                              title: transactions1[index]['title'],
-                              dateTime: transactions1[index]['dateTime'],
-                              price: transactions1[index]['price'],
-                              status: transactions1[index]['status'],
-                              income: transactions1[index]['income'],
-                            ),
-                          ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: transactions2.length,
-                            itemBuilder: (context, index) =>
-                                AdminTransactionCard(
-                              title: transactions2[index]['title'],
-                              dateTime: transactions2[index]['dateTime'],
-                              price: transactions2[index]['price'],
-                              status: transactions2[index]['status'],
-                              income: transactions2[index]['income'],
-                            ),
-                          ),
-                        ],
-                      ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: ColorManager.blackColor.withValues(alpha: .1),
+                      offset: Offset(0, -2),
+                      blurRadius: 10,
                     ),
-                  ),
-                ])),
+                  ],
+                ),
+                child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 21.w, vertical: 30.h),
+                    child: Column(spacing: 25.h, children: [
+                      TransactionTapBar(
+                        tabController: tabController,
+                        onTap: (p0) {
+                          tabController.index == 0
+                              ? context
+                                  .read<TransCubit>()
+                                  .getTransactionsByFilter(isIncome: true)
+                              : context
+                                  .read<TransCubit>()
+                                  .getTransactionsByFilter(isIncome: false);
+                        },
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          //height: 500.h,
+                          child: TabBarView(
+                            controller: tabController,
+                            children: [
+                              ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: state is IncomeTransactionsSuccess
+                                      ? state.transactions.transactions.length
+                                      : 0,
+                                  itemBuilder: (context, index) {
+                                    List<Transactions> transactions =
+                                        state is IncomeTransactionsSuccess
+                                            ? state.transactions.transactions
+                                            : [];
+                                    return AdminTransactionCard(
+                                      title: transactions[index].type??'',
+                                      dateTime: transactions[index].updatedAt??'',
+                                      price: transactions[index]
+                                          .finalAmount
+                                          .toString(),
+                                      status: transactions[index].status??'',
+                                      income: true,
+                                    );
+                                  }),
+                              ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: state is ExpenseTransactionsSuccess
+                                      ? state.transactions.transactions.length
+                                      : 0,
+                                  itemBuilder: (context, index) {
+                                    List<Transactions> transactions =
+                                        state is ExpenseTransactionsSuccess
+                                            ? state.transactions.transactions
+                                            : [];
+                                    return AdminTransactionCard(
+                                      title: transactions[index].type??'',
+                                      dateTime: transactions[index].updatedAt??'',
+                                      price: transactions[index]
+                                          .finalAmount
+                                          .toString(),
+                                      status: transactions[index].status??'',
+                                      income: false,
+                                    );
+                                  }),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ])),
+              );
+            },
           );
         }),
         body: BlocConsumer<TransCubit, TransState>(
@@ -102,11 +136,6 @@ class _AdminTransactionsScreenState extends State<AdminTransactionsScreen>
             if (state is TransactionsFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.error)),
-              );
-            }
-            if (state is TransactionsSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Transactions loaded successfully')),
               );
             }
           },
@@ -133,18 +162,25 @@ class _AdminTransactionsScreenState extends State<AdminTransactionsScreen>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         MoneyCard(
-                            money: state is TransactionsSuccess
-                                ? state.transactions.incomeStatistics.sum.amount
-                                    .toString()
-                                : '0.00',
+                            money: context
+                                    .read<TransCubit>()
+                                    .transactions
+                                    ?.incomeStatistics
+                                    .sum
+                                    .finalAmount
+                                    .toString() ??
+                                '0.00',
                             title: AppString.moneyIn,
                             icon: ImageManager.confirm),
                         MoneyCard(
-                            money: state is TransactionsSuccess
-                                ? state
-                                    .transactions.expenseStatistics.sum.amount
-                                    .toString()
-                                : '0.00',
+                            money: context
+                                    .read<TransCubit>()
+                                    .transactions
+                                    ?.expenseStatistics
+                                    .sum
+                                    .finalAmount
+                                    .toString() ??
+                                '0.00',
                             title: AppString.moneyOut,
                             icon: ImageManager.expenses),
                       ]),

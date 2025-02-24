@@ -95,8 +95,8 @@ class AdminTransactionCard extends StatelessWidget {
 
   // Map for statuses and their colors
   final Map<String, Color> statusColors = {
-    'Pending': Colors.orange,
-    'Confirmed': Colors.green,
-    'Canceled': Colors.red,
+    ' PENDING': Colors.orange,
+    'COMPLETED': Colors.green,
+    'CANCELLED': Colors.red,
   };
 }

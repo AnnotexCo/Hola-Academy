@@ -1,5 +1,5 @@
 class TransactionsModel {
-  final int count;
+  final num count;
   final List<Transactions> transactions;
   final Statistics statistics;
   final Statistics incomeStatistics;
@@ -23,35 +23,35 @@ class TransactionsModel {
 }
 
 class Transactions {
-  final int id;
-  final int amount;
-  final int finalAmount;
-  final int fee;
-  final String type;
-  final String casee;
-  final String status;
-  final String userCase;
-  final int levelId;
-  final int userId;
-  final String tag;
-  final String description;
-  final String createdAt;
-  final String updatedAt;
+  final num? id;
+  final num? amount;
+  final num? finalAmount;
+  final num? fee;
+  final String? type;
+  final String? casee;
+  final String? status;
+  final String? userCase;
+  final num? levelId;
+  final num? userId;
+  final String? tag;
+  final String? description;
+  final String? createdAt;
+  final String? updatedAt;
   Transactions({
-    required this.id,
-    required this.amount,
-    required this.finalAmount,
-    required this.fee,
-    required this.type,
-    required this.casee,
-    required this.status,
-    required this.userCase,
-    required this.levelId,
-    required this.userId,
-    required this.tag,
-    required this.description,
-    required this.createdAt,
-    required this.updatedAt,
+    this.id,
+    this.amount,
+    this.finalAmount,
+    this.fee,
+    this.type,
+    this.casee,
+    this.status,
+    this.userCase,
+    this.levelId,
+    this.userId,
+    this.tag,
+    this.description,
+    this.createdAt,
+    this.updatedAt,
   });
   
   factory Transactions.fromJson(Map<String, dynamic> json){
@@ -76,13 +76,13 @@ class Transactions {
 
 
 class Sum {
-  final int amount;
-  final int finalAmount;
-  final int fee;
+  final num? amount;
+  final num? finalAmount;
+  final num? fee;
   Sum({
-    required this.amount,
-    required this.finalAmount,
-    required this.fee,
+    this.amount,
+    this.finalAmount,
+    this.fee,
   });
   factory
   Sum.fromJson(Map<String, dynamic> json){
@@ -101,6 +101,6 @@ class Statistics {
   
   factory Statistics.fromJson(Map<String, dynamic> json){
     return Statistics(
-      sum: Sum.fromJson(json['sum']),
+      sum: Sum.fromJson(json['_sum']),
     );}  
 }

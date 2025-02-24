@@ -163,8 +163,8 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
                       child: widget.profileImage != null
                           ? Image.file(widget.profileImage!, fit: BoxFit.fill)
                           : CachedNetworkImage(
-                              imageUrl:
-                                  imageUrl ?? widget.profileImage.toString(),
+                              imageUrl:'https://s3-alpha-sig.figma.com/img/fd3d/4c48/a8b689cbbfb343fe22651fcb4dc1c2e0?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=tCNEsYxHOJniI5O7WcxTU27VdNZrPcgL~t~5TNQ5yKrsi1We703o81CmsG8uvS4HFVsfQ7Y9kV41rEXIbfijH3RO55nQiUdCkLa09XqCa2vstQ6nx6MNkqTiz~QyPcyyX9jy6a~UVj9rDI6-gu5ygfDsETEyJqkZMFEcZwcKhf8nMRRgG5cYTm9nnKEMZlqFJBBJZ2JfePJvfjv0EdEcRwakKoHjQz4~pvtI8k-t7uSjH38mVbUPUaZW6UpRmaDDdShg~1UypM6~HkNDtl7PVmEq0dSVNYDaa~6WVqecFfIV09AL0bZM3bbFNXD9UwEyttOHLWdnxH7AbI3h-c2N5g__',
+                                  //imageUrl ?? widget.profileImage.toString(),
                               placeholder: (context, url) =>
                                   CircularProgressIndicator(),
                               errorWidget: (context, url, error) =>

@@ -34,7 +34,7 @@ class _TransactionCardState extends State<TransactionCard> {
         //alignment: AlignmentDirectional.bottomCenter,
         //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (_isHovered && widget.status == "Canceled")
+          if (_isHovered && widget.status == "CANCELLED")
             Padding(
               padding: EdgeInsets.only(top: 60.h),
               child: Container(
@@ -72,7 +72,7 @@ class _TransactionCardState extends State<TransactionCard> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12.r),
                 boxShadow: [
-                  _isHovered && widget.status == "Canceled"
+                  _isHovered && widget.status == "CANCELLED"
                       ? BoxShadow()
                       : BoxShadow(
                           color: ColorManager.shadowColor,
@@ -145,8 +145,8 @@ class _TransactionCardState extends State<TransactionCard> {
 
   // Map for statuses and their colors
   final Map<String, Color> statusColors = {
-    'Pending': Colors.orange,
-    'Confirmed': Colors.green,
-    'Canceled': Colors.red,
+    'PENDING': Colors.orange,
+    'COMPLETED': Colors.green,
+    'CANCELED': Colors.red,
   };
 }

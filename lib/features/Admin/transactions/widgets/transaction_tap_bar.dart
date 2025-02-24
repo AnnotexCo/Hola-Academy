@@ -5,7 +5,8 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 
 class TransactionTapBar extends StatelessWidget {
   final TabController tabController;
-  const TransactionTapBar({super.key, required this.tabController});
+  void Function(int)? onTap;
+  TransactionTapBar({super.key, required this.tabController, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,7 @@ class TransactionTapBar extends StatelessWidget {
             splashBorderRadius: BorderRadius.circular(26.r),
             unselectedLabelColor: ColorManager.primaryOrangeColor,
             controller: tabController,
+            onTap: onTap,
             tabs: const [
               Tab(text: AppString.moneyIn),
               Tab(text: AppString.moneyOut),

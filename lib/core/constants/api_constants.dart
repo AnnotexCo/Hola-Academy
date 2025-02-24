@@ -27,4 +27,5 @@ class ApiConstants {
   static String myclassesApi = 'api/classes/me';
 
   static String transactionsApi = 'api/transaction';
+  static String transactionsAskForMoney = 'api/transaction/me/ask-for-money';
 }

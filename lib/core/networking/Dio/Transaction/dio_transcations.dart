@@ -21,8 +21,6 @@ class DioTranscations {
           },
         ),
       );
-      print('responseeeeeeeeeeeeeeeeeeeeeeee${response.data}');
-
       if (response.statusCode == 200) {
         TransactionsModel transactionsModel =
             TransactionsModel.fromJson(response.data['data']);
@@ -30,7 +28,62 @@ class DioTranscations {
       }
       throw Exception("Failed to load transcations");
     } catch (error) {
-      throw ApiErrorHandler.handle(error);
+      if (error is DioException && error.response != null) {}
+      //throw error.toString();
+      final errorMessage = ApiErrorHandler.handle(error);
+      throw errorMessage;
+    }
+  }
+
+  Future<TransactionsModel> getAllTranscationsByFilter(
+      {required bool isIncome}) async {
+    String param = isIncome ? "INCOME" : "EXPENSE";
+    String? token = await SaveTokenDB.getToken();
+    try {
+      final response = await _dio.get(
+        "${ApiConstants.baseUrl}${ApiConstants.transactionsApi}?case=$param",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        TransactionsModel transactionsModel =
+            TransactionsModel.fromJson(response.data['data']);
+        return transactionsModel;
+      }
+      throw Exception("Failed to load transcations");
+    } catch (error) {
+      if (error is DioException && error.response != null) {}
+      throw error.toString();
+    }
+  }
+
+  /// Ask for refund
+  Future<TransactionsModel> askForRefund({required num amount, required String description, required String type}) async {
+    String? token = await SaveTokenDB.getToken();
+    try {
+      final response = await _dio.post(
+        "${ApiConstants.baseUrl}${ApiConstants.transactionsAskForMoney}",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+          
+        ),
+      );
+      if (response.statusCode == 200) {
+        TransactionsModel transactionsModel =
+            TransactionsModel.fromJson(response.data['data']);
+        return transactionsModel;
+      }
+      throw Exception("Failed to load transcations");
+    } catch (error) {
+      if (error is DioException && error.response != null) {}
+      //throw error.toString();
+      final errorMessage = ApiErrorHandler.handle(error);
+      throw errorMessage;
     }
   }
 }
