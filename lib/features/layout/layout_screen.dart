@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/classes/cubit/classes_cubit.dart';
 import 'package:hola_academy/features/classes/UI/classes_screen.dart';
 import 'package:hola_academy/features/home/UI/home_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
@@ -31,6 +32,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
     MultiBlocProvider(providers: [
       BlocProvider(create: (context) => getIT<ProgramsCubit>()),
       BlocProvider(create: (context) => getIT<CategoriesCubit>()),
+      BlocProvider(create: (context) => getIT<ClassesCubit>()),
     ], child: ClassesScreen()),
     NotificationsScreen(),
     BlocProvider(

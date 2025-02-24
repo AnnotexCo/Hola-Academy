@@ -1,12 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:hola_academy/core/constants/api_constants.dart';
-import 'package:hola_academy/core/networking/ErrorHandler/api_error_handler.dart';
 import 'package:hola_academy/features/classes/Data/Model/classs_model.dart';
 
-class DioCategoriess {
+class DioClasses {
   final Dio _dio;
 
-  DioCategoriess({required Dio dio}) : _dio = dio;
+  DioClasses({required Dio dio}) : _dio = dio;
 
   Future<List<ClasssModel>> getAllClasses() async {
     try {
@@ -19,7 +18,8 @@ class DioCategoriess {
       }
       throw Exception("Failed to load classes");
     } catch (error) {
-      throw ApiErrorHandler.handle(error);
+      print(error);
+      rethrow;
     }
   }
 
@@ -33,7 +33,7 @@ class DioCategoriess {
       }
       throw Exception("Failed to load Class");
     } catch (error) {
-      throw ApiErrorHandler.handle(error);
+      rethrow;
     }
   }
 }

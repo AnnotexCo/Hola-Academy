@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/api_constants.dart';
-import 'package:hola_academy/core/constants/image_manager.dart';
 
 import '../../../../core/constants/color_manager.dart';
 import '../../Data/Model/programs_model.dart';

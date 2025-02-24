@@ -5,6 +5,7 @@ import 'package:hola_academy/core/networking/Dio/Auth/dio_forget_password.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_reset_password.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_sign_up_api.dart';
 import 'package:hola_academy/core/networking/Dio/Category/dio_categoriess.dart';
+import 'package:hola_academy/core/networking/Dio/Classes/dio_classes.dart';
 import 'package:hola_academy/core/networking/Dio/Home/dio_banner_api.dart';
 import 'package:hola_academy/core/networking/Dio/Requests/dio_requests_api.dart';
 import 'package:hola_academy/core/networking/Dio/Transaction/dio_transcations.dart';
@@ -23,7 +24,9 @@ import 'package:hola_academy/features/auth/reset_password/Logic/cubit/reset_pass
 import 'package:hola_academy/features/auth/verification/Data/Repo/check_otp_repo.dart';
 import 'package:hola_academy/features/auth/verification/Logic/cubit/check_otp_cubit.dart';
 import 'package:hola_academy/features/classes/Data/Repo/categories_repo.dart';
+import 'package:hola_academy/features/classes/Data/Repo/classes_repo.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/classes/cubit/classes_cubit.dart';
 import 'package:hola_academy/features/profile/Data/Repo/transaction_repo.dart';
 import 'package:hola_academy/features/profile/Data/Repo/user_repo.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
@@ -66,18 +69,23 @@ void setUpGetIt() {
       .registerLazySingleton<DioPrograms>(() => DioPrograms(dio: getIT<Dio>()));
 
 //  CategoriesDioApi
-  getIT
-      .registerLazySingleton<DioCategoriess>(() => DioCategoriess(dio: getIT<Dio>()));
+  getIT.registerLazySingleton<DioCategoriess>(
+      () => DioCategoriess(dio: getIT<Dio>()));
 
 //  BannerDioApi
   getIT.registerLazySingleton<DioBannerApi>(
       () => DioBannerApi(dio: getIT<Dio>()));
 
 // RequestsDioApi
-  getIT.registerLazySingleton<DioRequestsApi>(()=>DioRequestsApi(dio: getIT<Dio>()));
+  getIT.registerLazySingleton<DioRequestsApi>(
+      () => DioRequestsApi(dio: getIT<Dio>()));
 
 // TransactionsDioApi
-  getIT.registerLazySingleton<DioTranscations>(()=>DioTranscations(dio: getIT<Dio>()));
+  getIT.registerLazySingleton<DioTranscations>(
+      () => DioTranscations(dio: getIT<Dio>()));
+
+  //Class APi
+  getIT.registerLazySingleton<DioClasses>(() => DioClasses(dio: getIT<Dio>()));
 
   //Login
   getIT.registerLazySingleton<LoginRepo>(
@@ -112,6 +120,13 @@ void setUpGetIt() {
       ));
   getIT.registerFactory<CategoriesCubit>(() => CategoriesCubit(getIT()));
 
+//Classes
+
+  getIT.registerLazySingleton<ClassesRepo>(() => ClassesRepo(
+        getIT(),
+      ));
+  getIT.registerFactory<ClassesCubit>(() => ClassesCubit(getIT()));
+
   //Personal Info
   getIT.registerLazySingleton<DioUserApi>(() => DioUserApi(dio: getIT<Dio>()));
 
@@ -125,9 +140,10 @@ void setUpGetIt() {
   getIT.registerFactory<BannersCubit>(() => BannersCubit(getIT<BannerRepo>()));
 
   // Requests
-   getIT.registerLazySingleton<RequestsRepo>(
+  getIT.registerLazySingleton<RequestsRepo>(
       () => RequestsRepo(dioRequestsApi: getIT<DioRequestsApi>()));
-  getIT.registerFactory<RequestsCubit>(() => RequestsCubit(getIT<RequestsRepo>()));
+  getIT.registerFactory<RequestsCubit>(
+      () => RequestsCubit(getIT<RequestsRepo>()));
 
   // Transactions
   getIT.registerLazySingleton<TransactionRepo>(

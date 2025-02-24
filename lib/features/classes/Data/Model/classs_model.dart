@@ -1,7 +1,7 @@
 class ClasssModel {
   final String name;
   final String description;
-  final String maxCapacity;
+  final int maxCapacity;
   final int programId;
   final int coachId;
   final int categoryId;
@@ -23,7 +23,7 @@ class ClasssModel {
     return ClasssModel(
       name: map['name'] as String,
       description: map['description'] as String,
-      maxCapacity: map['maxCapacity'] as String,
+      maxCapacity: map['maxCapacity'] as int,
       programId: map['programId'] as int,
       coachId: map['coachId'] as int,
       categoryId: map['categoryId'] as int,

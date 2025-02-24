@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
 class AvailableClassWidget extends StatelessWidget {
-  const AvailableClassWidget({super.key});
+  final String name;
+  final String description;
+  const AvailableClassWidget({super.key, required this.name, required this.description});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class AvailableClassWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Gold Medal Training Plan",
+                    name,
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w700,
@@ -52,7 +54,7 @@ class AvailableClassWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Swim With the pros! ",
+                    description,
                     style: TextStyle(
                       fontSize: 10.sp,
                       fontWeight: FontWeight.w400,
