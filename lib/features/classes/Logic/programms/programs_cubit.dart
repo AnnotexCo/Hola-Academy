@@ -20,7 +20,7 @@ class ProgramsCubit extends Cubit<ProgramsState> {
       _allPrograms = await programRepo.getAllPrograms();
       emit(ProgramsSuccess(_allPrograms));
     } catch (e) {
-      emit(ProgramsError(e.toString()));
+      if (!isClosed) emit(ProgramsError(e.toString()));
     }
   }
 
@@ -38,9 +38,9 @@ class ProgramsCubit extends Cubit<ProgramsState> {
   void fetchProgramById(int id) async {
     try {
       final program = await programRepo.getProgramById(id);
-      emit(SingleProgramSuccess(program));
+      if (!isClosed) emit(SingleProgramSuccess(program));
     } catch (e) {
-      emit(ProgramsError(e.toString()));
+      if (!isClosed) emit(ProgramsError(e.toString()));
     }
   }
 }

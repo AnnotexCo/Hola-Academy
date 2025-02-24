@@ -33,3 +33,7 @@ class RequestsError extends RequestsState{
   @override
   List<Object?> get props => [message];
 }
+
+class BookRequestSuccess extends RequestsState{
+
+}

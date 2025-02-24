@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:hola_academy/core/networking/Dio/Requests/dio_requests_api.dart';
 
+import '../../../../book/Data/Model/booking_program_model.dart';
 import '../Model/requests_model.dart';
 
 class RequestsRepo {
@@ -13,5 +16,12 @@ class RequestsRepo {
 
   Future<RequestsModel> fetchRequestById(int id) async {
     return await dioRequestsApi.fetchRequestById(id);
+  }
+
+  Future<void> bookProgram(BookingProgramModel bookingProgramModel, {File? imageFile}) async {
+    await dioRequestsApi.bookProgram(
+      bookingProgramModel.toJson(), 
+      imageFile,
+    );
   }
 }

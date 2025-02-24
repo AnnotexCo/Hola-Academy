@@ -7,12 +7,13 @@ import 'package:hola_academy/core/Routing/app_router.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/networking/networkconnection/cubit/network_connection_cubit.dart';
+import 'core/bloc_observer/bloc_observer.dart';
 import 'core/dependency_injection/dependency.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setUpGetIt();
-
+  Bloc.observer = MyBlocObserver();
   runApp(
     MultiBlocProvider(
       providers: [
@@ -21,6 +22,7 @@ void main() async {
           lazy: false,
         ),
       ],
+      
       child: MyApp(appRouter: AppRouter()),
     ),
   );

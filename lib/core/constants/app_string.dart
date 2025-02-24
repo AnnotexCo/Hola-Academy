@@ -199,4 +199,6 @@ class AppString {
 
   // Logout Screen
   static const String logingOut = "Logging out";
+
+  static const String done = "Done";
 }

@@ -4,9 +4,16 @@ import 'package:hola_academy/core/components/custom_colored_outline_button.dart'
 import 'package:hola_academy/core/constants/image_manager.dart';
 
 import '../../../../core/constants/color_manager.dart';
+import '../../../profile/Data/Model/user_model.dart';
 
 class PersonalInfoCard extends StatelessWidget {
-  const PersonalInfoCard({super.key});
+  final UserModel? userData;
+  final VoidCallback? onEditPressed;
+  const PersonalInfoCard({
+    super.key,
+    required this.userData,
+    this.onEditPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +45,19 @@ class PersonalInfoCard extends StatelessWidget {
                 // Profile Image
                 ClipRRect(
                   borderRadius: BorderRadius.circular(50.0.r),
-                  child: Image.asset(
-                    ImageManager.pic,
-                    width: 80.0.w,
-                    height: 80.0.h,
-                    fit: BoxFit.cover,
-                  ),
+                  child: userData?.profileImage != null
+                      ? Image.network(
+                          userData!.profileImage!.path,
+                          width: 80.0.w,
+                          height: 80.0.h,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          ImageManager.pic,
+                          width: 80.0.w,
+                          height: 80.0.h,
+                          fit: BoxFit.cover,
+                        ),
                 ),
                 SizedBox(width: 40.0.w),
 
@@ -52,14 +66,14 @@ class PersonalInfoCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildInfoRow(Icons.person, 'Mr. Alex Hayden'),
+                      _buildInfoRow(Icons.person, userData?.name ?? 'N/A'),
                       SizedBox(height: 8.0.h),
                       _buildInfoRow(
-                          Icons.location_on, 'Anna Nagar, Puducherry'),
+                          Icons.location_on, userData?.address ?? 'Address not provided',),
                       SizedBox(height: 8.0.h),
-                      _buildInfoRow(Icons.email, 'Alex.Hayden@gmail.com'),
+                      _buildInfoRow(Icons.email, userData?.email ?? 'N/A'),
                       SizedBox(height: 8.0.h),
-                      _buildInfoRow(Icons.phone, '01258672352'),
+                      _buildInfoRow(Icons.phone,  userData?.phoneNumber ?? 'Phone not provided',),
                     ],
                   ),
                 ),
@@ -79,7 +93,7 @@ class PersonalInfoCard extends StatelessWidget {
                 height: 21.h,
                 width: 60.w,
                 backgroundColor: Colors.transparent,
-                onTap: () {},
+                onTap: onEditPressed,
               ),
             ),
           ],
