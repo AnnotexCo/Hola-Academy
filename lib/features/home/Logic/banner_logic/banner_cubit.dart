@@ -10,22 +10,22 @@ class BannersCubit extends Cubit<BannerState> {
   // fetch all banners
   void fetchAllBanners() async {
     try {
-      emit(BannerLoading());
+      if (!isClosed) emit(BannerLoading());
       final banners = await bannerRepo.getAllBanners();
-      emit(AllBannersSuccess(banners));
+      if (!isClosed) emit(AllBannersSuccess(banners));
     } catch (e) {
-      emit(BannerError(e.toString()));
+      if (!isClosed) emit(BannerError(e.toString()));
     }
   }
 
   // fetch single banner by id
   void fetchBannerById(int id) async {
     try {
-      emit(BannerLoading());
+      if (!isClosed) emit(BannerLoading());
       final banner = await bannerRepo.getBannerById(id);
-      emit(SingleBannerSuccess(banner));
+      if (!isClosed) emit(SingleBannerSuccess(banner));
     } catch (e) {
-      emit(BannerError(e.toString()));
+      if (!isClosed) emit(BannerError(e.toString()));
     }
   }
 }

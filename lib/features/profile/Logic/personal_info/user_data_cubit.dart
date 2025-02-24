@@ -41,30 +41,30 @@ class UserDataCubit extends Cubit<UserDataState> {
 
   Future<void> getMyData() async {
     try {
-      emit(UserDataLoading());
+     if (!isClosed) emit(UserDataLoading());
       final user = await userRepo.getMyData();
       print(user.name);
       print(user.profileImage?.path);
       await SaveTokenDB.saveNameAndImage(user.name, user.profileImage?.path??'');
-      emit(UserDataSuccess(userModel: user));
+     if (!isClosed) emit(UserDataSuccess(userModel: user));
     } catch (e) {
-      emit(UserDataFailure(message: e.toString()));
+      if (!isClosed) emit(UserDataFailure(message: e.toString()));
     }
   }
 
   Future<void> updateMyData(UpdateUserModel updateUserModel) async {
     try {
-      emit(UpdateUserDataLoading());
+     if (!isClosed) emit(UpdateUserDataLoading());
       final isUpdated =
           await userRepo.updateMyData(updateUserModel: updateUserModel);
       if (isUpdated) {
-        emit(UpdateUserDataSuccess());
+        if (!isClosed) emit(UpdateUserDataSuccess());
         getMyData();
       } else {
-        emit(UserDataFailure(message: 'Failed to update user data'));
+      if (!isClosed)  emit(UserDataFailure(message: 'Failed to update user data'));
       }
     } catch (e) {
-      emit(UpdateUserDataFailure(message: e.toString()));
+    if (!isClosed)  emit(UpdateUserDataFailure(message: e.toString()));
     }
   }
 }

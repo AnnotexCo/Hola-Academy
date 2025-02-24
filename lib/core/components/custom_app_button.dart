@@ -6,7 +6,7 @@ import '../constants/color_manager.dart';
 class CustomAppButton extends StatelessWidget {
   final String text;
   final IconData? icon;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const CustomAppButton({
     super.key,
