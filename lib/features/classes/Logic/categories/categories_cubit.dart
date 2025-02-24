@@ -4,9 +4,11 @@ import 'categories_state.dart';
 
 class CategoriesCubit extends Cubit<CategoriesState> {
   final CategoriesRepo categoriesRepo;
-  
 
-  CategoriesCubit(this.categoriesRepo) : super(CategoriesInitial());
+  CategoriesCubit(this.categoriesRepo) : super(CategoriesInitial()) {
+    fetchAllCategories();
+    print("Get All Categories");
+  }
 
   // Fetch all categories
   void fetchAllCategories() async {

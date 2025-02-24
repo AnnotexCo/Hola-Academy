@@ -9,6 +9,7 @@ import 'package:hola_academy/core/dependency_injection/dependency.dart';
 import 'package:hola_academy/features/Admin/home/UI/home_admin_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
+import 'package:hola_academy/features/profile/Logic/transactions/trans_cubit.dart';
 import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
 import '../Admin/scanner/qr_code_scanner_screen.dart';
 import '../Admin/transactions/admin_transactions_screen.dart';
@@ -22,10 +23,13 @@ class LayoutAdminScreen extends StatefulWidget {
 
 class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
   int _selectedIndex = 0;
+  final PageController _pageController = PageController();
 
   final List<Widget> _screens = [
     HomeAdminScreen(),
-    AdminTransactionsScreen(),
+    BlocProvider(
+        create: (context) => getIT<TransCubit>(),
+        child: AdminTransactionsScreen()),
     QRCodeScannerScreen(),
     NotificationsScreen(),
     BlocProvider(
@@ -48,57 +52,13 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
     setState(() {
       _selectedIndex = index;
     });
+    _pageController.jumpToPage(index);
   }
 
   Color _selectedColor(int index) {
     return _selectedIndex == index
         ? ColorManager.primaryOrangeColor
         : const Color(0xff6D6D6D);
-  }
-
-  List<BottomNavigationBarItem> _navBarItems() {
-    return [
-      BottomNavigationBarItem(
-        icon: SvgPicture.asset(
-          ImageManager.home,
-          height: 24.h,
-          width: 24.w,
-          color: _selectedColor(0),
-        ),
-        label: 'Home',
-      ),
-      BottomNavigationBarItem(
-        icon: SvgPicture.asset(
-          ImageManager.transactionIcon,
-          height: 24.h,
-          width: 24.w,
-          color: _selectedColor(1),
-        ),
-        label: 'Transactions',
-      ),
-      const BottomNavigationBarItem(
-        icon: SizedBox.shrink(), // Placeholder for Floating Button
-        label: '',
-      ),
-      BottomNavigationBarItem(
-        icon: SvgPicture.asset(
-          ImageManager.notification,
-          height: 24.h,
-          width: 24.w,
-          color: _selectedColor(3),
-        ),
-        label: 'Notifications',
-      ),
-      BottomNavigationBarItem(
-        icon: SvgPicture.asset(
-          ImageManager.profile,
-          height: 24.h,
-          width: 24.w,
-          color: _selectedColor(4),
-        ),
-        label: 'Profile',
-      ),
-    ];
   }
 
   @override
@@ -110,8 +70,9 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
       ),
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: IndexedStack(
-          index: _selectedIndex,
+        body: PageView(
+          controller: _pageController,
+          physics: const NeverScrollableScrollPhysics(),
           children: _screens,
         ),
         bottomNavigationBar: Stack(
@@ -123,7 +84,48 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                   TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400),
               unselectedLabelStyle:
                   TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400),
-              items: _navBarItems(),
+              items: [
+                BottomNavigationBarItem(
+                  icon: SvgPicture.asset(
+                    ImageManager.home,
+                    height: 24.h,
+                    width: 24.w,
+                    color: _selectedColor(0),
+                  ),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: SvgPicture.asset(
+                    ImageManager.transactionIcon,
+                    height: 24.h,
+                    width: 24.w,
+                    color: _selectedColor(1),
+                  ),
+                  label: 'Transactions',
+                ),
+                const BottomNavigationBarItem(
+                  icon: SizedBox.shrink(), // Placeholder for Floating Button
+                  label: '',
+                ),
+                BottomNavigationBarItem(
+                  icon: SvgPicture.asset(
+                    ImageManager.notification,
+                    height: 24.h,
+                    width: 24.w,
+                    color: _selectedColor(3),
+                  ),
+                  label: 'Notifications',
+                ),
+                BottomNavigationBarItem(
+                  icon: SvgPicture.asset(
+                    ImageManager.profile,
+                    height: 24.h,
+                    width: 24.w,
+                    color: _selectedColor(4),
+                  ),
+                  label: 'Profile',
+                ),
+              ],
               selectedItemColor: ColorManager.primaryOrangeColor,
               unselectedItemColor: Colors.grey,
               showUnselectedLabels: true,
@@ -143,29 +145,28 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Color(0xffffffff).withValues(alpha: 0.4), // Outer glow
+                        Color(0xffffffff).withValues(alpha: 0.4),
                         Color(0xffF09C1F).withValues(alpha: 0.8),
                       ]),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xffF09C1F)
-                          .withValues(alpha: 0.6), // Soft glow effect
-                      blurRadius: 8, // Intensity of glow
+                      color: Color(0xffF09C1F).withValues(alpha: 0.6),
+                      blurRadius: 8,
                       spreadRadius: 4,
-                      offset: Offset(0, 2), // Glow spread
+                      offset: Offset(0, 2),
                     ),
                   ],
                 ),
                 child: FloatingActionButton(
                   splashColor: Colors.orangeAccent,
-                  backgroundColor: Color(0xffF09C1F).withValues(alpha: 0.4),
-                  // Use gradient from parent
-                  elevation: 0, // Avoid default shadow
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
                   shape: const CircleBorder(),
                   onPressed: () {
                     setState(() {
-                      _selectedIndex = 2; // Navigate to "Classes"
+                      _selectedIndex = 2;
                     });
+                    _pageController.jumpToPage(2);
                   },
                   child: SvgPicture.asset(
                     ImageManager.scanQricon,
@@ -180,5 +181,11 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 }

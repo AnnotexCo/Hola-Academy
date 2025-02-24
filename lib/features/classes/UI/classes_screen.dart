@@ -3,20 +3,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/custom_app_bar.dart';
+import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/features/classes/Data/Model/category_model.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_state.dart';
+import 'package:hola_academy/features/classes/Logic/classes/cubit/classes_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/programms/programs_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/programms/programs_state.dart';
-import 'package:hola_academy/features/classes/UI/widgets/program_widget.dart';
 import 'package:hola_academy/features/classes/UI/widgets/available_class_widget.dart';
 import 'package:hola_academy/features/classes/UI/widgets/progress_class_widget.dart';
-import 'package:hola_academy/features/not_found/not_found_screen.dart';
+import 'package:hola_academy/features/classes/UI/widgets/program_widget.dart';
+import 'package:hola_academy/features/classes/UI/widgets/categories_tap_buttons.dart';
 
-import '../../../core/constants/app_string.dart';
-import '../Logic/programms/programs_cubit.dart';
-import 'Loading/programs_loading_screen.dart';
-import 'widgets/categories_tap_buttons.dart';
+enum ClassesTab { allPrograms, available, myClasses }
 
 class ClassesScreen extends StatefulWidget {
   const ClassesScreen({super.key});
@@ -26,55 +26,65 @@ class ClassesScreen extends StatefulWidget {
 }
 
 class ClassesScreenState extends State<ClassesScreen> {
-  String selectedTab = "All Programs"; // Default selection
+  ClassesTab selectedTab = ClassesTab.allPrograms;
   int? selectedCategoryId;
-  bool _isFetched = false;
-
-  @override
-  void initState() {
-    super.initState();
-    context.read<CategoriesCubit>().fetchAllCategories();
-  }
 
   void _onMenuSelected(String value) {
     setState(() {
-      selectedTab = value;
+      selectedTab = ClassesTab.values.firstWhere(
+        (e) => e.toString().split('.').last == value,
+        orElse: () => ClassesTab.allPrograms,
+      );
       selectedCategoryId = null;
     });
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_isFetched) {
-      context.read<ProgramsCubit>().fetchAllPrograms();
-      _isFetched = true;
-    }
+  Widget build(BuildContext context) {
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<ProgramsCubit, ProgramsState>(
+          listener: (context, state) {
+            if (state is ProgramsError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.message)),
+              );
+            }
+          },
+        ),
+        BlocListener<ClassesCubit, ClassesState>(
+          listener: (context, state) {
+            if (state is ClassesError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.error)),
+              );
+            }
+          },
+        ),
+      ],
+      child: BlocBuilder<ProgramsCubit, ProgramsState>(
+        builder: (context, programsState) {
+          return BlocBuilder<ClassesCubit, ClassesState>(
+            builder: (context, classesState) {
+              return _buildUI(programsState, classesState);
+            },
+          );
+        },
+      ),
+    );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final programsCubit = context.watch<ProgramsCubit>();
-    final allPrograms = programsCubit.state is ProgramsSuccess
-        ? (programsCubit.state as ProgramsSuccess).programs
-        : [];
+  Widget _buildUI(ProgramsState programsState, ClassesState classesState) {
+    final allPrograms =
+        programsState is ProgramsSuccess ? programsState.programs : [];
+    final availableClasses =
+        classesState is ClassesLoaded ? classesState.classes : [];
 
-    List filteredPrograms = [];
-    if (selectedTab == "All Programs") {
-      filteredPrograms = selectedCategoryId == null
-          ? allPrograms
-          : allPrograms
-              .where((p) => p.category.id == selectedCategoryId)
-              .toList();
-    } else if (selectedTab == "My Classes") {
-      filteredPrograms = [];
-    } else if (selectedTab == "Available") {
-      filteredPrograms = [];
-    }
+    List filteredPrograms = _getFilteredPrograms(allPrograms, availableClasses);
+
     return Scaffold(
       backgroundColor: ColorManager.backgroundColor,
       body: Column(
-        spacing: 15.h,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomAppBar(
@@ -88,161 +98,141 @@ class ClassesScreenState extends State<ClassesScreen> {
               offset: Offset(-15, 40.h),
               onSelected: _onMenuSelected,
               itemBuilder: (context) => [
-                _buildMenuItem("My Classes"),
-                _buildMenuItem("Available"),
-                _buildMenuItem("All Programs"),
+                _buildMenuItem(ClassesTab.allPrograms.name, "All Programs"),
+                _buildMenuItem(ClassesTab.available.name, "Available"),
+                _buildMenuItem(ClassesTab.myClasses.name, "My Classes"),
               ],
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 32.w),
-            child: Text(
-              selectedTab == "My Classes"
-                  ? "Active"
-                  : selectedTab == "Available"
-                      ? "Available Classes"
-                      : "All Programs",
-              style: TextStyle(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w600,
-                color: ColorManager.graycolorHeadline,
-              ),
-            ),
-          ),
-          if (selectedTab == "All Programs")
-            // Padding(
-            //   padding: EdgeInsets.only(left: 32.w),
-            //   child: TapBar(),
-            // ),
-            /// ✅ Level Selector (Categories)
-            if (selectedTab == "All Programs")
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-                child: BlocConsumer<CategoriesCubit, CategoriesState>(
-                  listener: (context, state) {
-                    if (state is CategoriesSuccess) {
-                    } else if (state is CategoriesError) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(state.message),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                    }
-                  },
-                  builder: (context, state) {
-                    List<CategoryModel> categories = [];
-                    return CategoryFilterButtons(
-                      categories: state is CategoriesSuccess
-                          ? state.categories.cast<CategoryModel>()
-                          : categories,
-                      onCategorySelected: (categoryId) {
-                        setState(() {
-                          selectedCategoryId = categoryId;
-                        });
-                      },
-                      selectedCategoryId: selectedCategoryId,
-                    );
-                  },
-                ),
-              ),
-          Expanded(
-            child: filteredPrograms.isEmpty && selectedTab == "All Programs"
-                ? _buildProgramsState()
-                : ListView.builder(
-                    padding: EdgeInsets.only(top: 5),
-                    itemCount: filteredPrograms.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsets.only(bottom: 18.0.h),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              Routes.detailsScreen,
-                              arguments: filteredPrograms[index].id,
-                            );
-                          },
-                          child: selectedTab == "My Classes"
-                              ? ProgressClassWidget()
-                              : selectedTab == "Available"
-                                  ? AvailableClassWidget()
-                                  : ProgramWidget(
-                                      program: filteredPrograms[index]),
-                        ),
-                      );
-                    },
-                  ),
-          ),
-          selectedTab == "My Classes"
-              ? Padding(
-                  padding: EdgeInsets.only(left: 32.w),
-                  child: Text(
-                    "Completed",
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w600,
-                      color: ColorManager.graycolorHeadline,
-                    ),
-                  ),
-                )
-              : SizedBox(),
-          selectedTab == "My Classes"
-              ? Expanded(
-                  child: ListView.builder(
-                    padding: EdgeInsets.only(top: 2),
-                    itemCount: filteredPrograms.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsets.only(bottom: 18.0.h),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, Routes.detailsScreen);
-                          },
-                          child: selectedTab == "My Classes"
-                              ? ProgressClassWidget()
-                              : selectedTab == "Available"
-                                  ? AvailableClassWidget()
-                                  : ProgramWidget(
-                                      program: filteredPrograms[index]),
-                        ),
-                      );
-                    },
-                  ),
-                )
-              : SizedBox()
+          SizedBox(height: 12.h),
+          _buildTabTitle(),
+          if (selectedTab == ClassesTab.allPrograms) _buildCategoryFilter(),
+          _buildProgramsList(filteredPrograms),
+          if (selectedTab == ClassesTab.myClasses)
+            _buildCompletedClasses(filteredPrograms),
         ],
       ),
     );
   }
 
-  Widget _buildProgramsState() {
-    return BlocBuilder<ProgramsCubit, ProgramsState>(
-      builder: (context, state) {
-        if (state is ProgramsLoading) {
-          return ListView.builder(
-            padding: EdgeInsets.only(top: 50.h),
-            itemCount: 6,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: EdgeInsets.only(bottom: 18.0.h),
-                child: ProgramShimmerWidget(),
-              );
-            },
-          );
-        } else if (state is ProgramsError) {
-          return Center(child: NotFoundScreen(title: state.message));
-        } else {
-          return const Center(
-              child: NotFoundScreen(title: 'Program not found'));
-        }
-      },
+  List _getFilteredPrograms(List allPrograms, List availableClasses) {
+    switch (selectedTab) {
+      case ClassesTab.allPrograms:
+        return selectedCategoryId == null
+            ? allPrograms
+            : allPrograms
+                .where((p) => p.category.id == selectedCategoryId)
+                .toList();
+      case ClassesTab.available:
+        return availableClasses;
+      case ClassesTab.myClasses:
+        return [];
+    }
+  }
+
+  Widget _buildTabTitle() {
+    final titles = {
+      ClassesTab.myClasses: "Active",
+      ClassesTab.available: "Available Classes",
+      ClassesTab.allPrograms: "All Programs",
+    };
+    return Padding(
+      padding: EdgeInsets.only(left: 32.w),
+      child: Text(
+        titles[selectedTab]!,
+        style: TextStyle(
+          fontSize: 18.sp,
+          fontWeight: FontWeight.w600,
+          color: ColorManager.graycolorHeadline,
+        ),
+      ),
     );
   }
 
-  PopupMenuItem<String> _buildMenuItem(String value) {
-    bool isSelected = selectedTab == value;
+  Widget _buildCategoryFilter() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+      child: BlocBuilder<CategoriesCubit, CategoriesState>(
+        builder: (context, state) {
+          List<CategoryModel> categories =
+              state is CategoriesSuccess ? state.categories : [];
+          return CategoryFilterButtons(
+            categories: categories,
+            onCategorySelected: (categoryId) {
+              setState(() {
+                selectedCategoryId = categoryId;
+              });
+            },
+            selectedCategoryId: selectedCategoryId,
+          );
+        },
+      ),
+    );
+  }
 
+  Widget _buildProgramsList(List filteredPrograms) {
+    return Expanded(
+      child: ListView.builder(
+        padding: EdgeInsets.only(top: 5),
+        itemCount: filteredPrograms.length,
+        itemBuilder: (context, index) => Padding(
+          padding: EdgeInsets.only(bottom: 18.0.h),
+          child: GestureDetector(
+            onTap: () => Navigator.pushNamed(context, Routes.detailsScreen,
+                arguments: filteredPrograms[index].id),
+            child: _buildClassItem(filteredPrograms[index]),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildClassItem(dynamic program) {
+    switch (selectedTab) {
+      case ClassesTab.myClasses:
+        return ProgressClassWidget();
+      case ClassesTab.available:
+        return AvailableClassWidget(
+            name: program.name, description: program.description);
+      default:
+        return ProgramWidget(program: program);
+    }
+  }
+
+  Widget _buildCompletedClasses(List filteredPrograms) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(left: 32.w),
+          child: Text(
+            "Completed",
+            style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w600,
+              color: ColorManager.graycolorHeadline,
+            ),
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            padding: EdgeInsets.only(top: 2),
+            itemCount: filteredPrograms.length,
+            itemBuilder: (context, index) => Padding(
+              padding: EdgeInsets.only(bottom: 18.0.h),
+              child: GestureDetector(
+                onTap: () => Navigator.pushNamed(context, Routes.detailsScreen),
+                child: ProgressClassWidget(),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  PopupMenuItem<String> _buildMenuItem(String value, String name) {
+    bool isSelected = selectedTab.name == value;
     return PopupMenuItem(
       height: 10.h,
       value: value,
@@ -254,7 +244,7 @@ class ClassesScreenState extends State<ClassesScreen> {
           borderRadius: BorderRadius.circular(8.r),
         ),
         child: Text(
-          value,
+          name,
           style: TextStyle(
             color: isSelected ? Colors.white : ColorManager.blackColor,
             fontSize: 12.sp,
