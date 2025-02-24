@@ -25,6 +25,7 @@ import 'package:hola_academy/features/layout/layout_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
 import 'package:hola_academy/features/onboarding/onbording.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
+import 'package:hola_academy/features/profile/Logic/transactions/trans_cubit.dart';
 import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
 import 'package:hola_academy/features/profile/UI/booked_screen.dart';
 import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
@@ -141,14 +142,11 @@ class AppRouter {
       // classes
       case Routes.classesScreen:
         return MaterialPageRoute(
-            builder: (_) => MultiBlocProvider(
-              providers: [
-                BlocProvider(create: (context) => getIT<ProgramsCubit>()),
-                BlocProvider(create: (context) => getIT<CategoriesCubit>()),
-              ],
-               child: ClassesScreen())           
-        );
-        
+            builder: (_) => MultiBlocProvider(providers: [
+                  BlocProvider(create: (context) => getIT<ProgramsCubit>()),
+                  BlocProvider(create: (context) => getIT<CategoriesCubit>()),
+                ], child: ClassesScreen()));
+
       case Routes.detailsScreen:
         return MaterialPageRoute(
           builder: (context) {
@@ -194,21 +192,24 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const HomeAdminScreen());
 
       case Routes.requestsScreen:
-  return MaterialPageRoute(
-    builder: (_) => MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => getIT<RequestsCubit>()),
-        BlocProvider(create: (context) => getIT<UserDataCubit>()),
-      ],
-      child: RequestsScreen(),
-    ),
-  );
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (context) => getIT<RequestsCubit>()),
+              BlocProvider(create: (context) => getIT<UserDataCubit>()),
+            ],
+            child: RequestsScreen(),
+          ),
+        );
 
       case Routes.traineesScreen:
         return MaterialPageRoute(builder: (_) => const TraineesScreen());
 
       case Routes.adminTransactionsScreen:
-        return MaterialPageRoute(builder: (_) => AdminTransactionsScreen());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (context) => getIT<TransCubit>(),
+                child: AdminTransactionsScreen()));
 
       case Routes.findTraineeScreen:
         return MaterialPageRoute(builder: (_) => const FindTraineesScreen());

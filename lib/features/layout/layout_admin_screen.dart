@@ -9,6 +9,7 @@ import 'package:hola_academy/core/dependency_injection/dependency.dart';
 import 'package:hola_academy/features/Admin/home/UI/home_admin_screen.dart';
 import 'package:hola_academy/features/notifications/notifications_screen.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
+import 'package:hola_academy/features/profile/Logic/transactions/trans_cubit.dart';
 import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
 import '../Admin/scanner/qr_code_scanner_screen.dart';
 import '../Admin/transactions/admin_transactions_screen.dart';
@@ -25,7 +26,9 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
 
   final List<Widget> _screens = [
     HomeAdminScreen(),
-    AdminTransactionsScreen(),
+    BlocProvider(
+        create: (context) => getIT<TransCubit>(),
+        child: AdminTransactionsScreen()),
     QRCodeScannerScreen(),
     NotificationsScreen(),
     BlocProvider(
@@ -110,9 +113,13 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
       ),
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: IndexedStack(
-          index: _selectedIndex,
-          children: _screens,
+        body: Stack(
+          children: List.generate(_screens.length, (index) {
+            return Offstage(
+              offstage: _selectedIndex != index,
+              child: _screens[index],
+            );
+          }),
         ),
         bottomNavigationBar: Stack(
           clipBehavior: Clip.none,
