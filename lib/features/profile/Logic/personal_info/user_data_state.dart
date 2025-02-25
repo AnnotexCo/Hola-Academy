@@ -24,3 +24,8 @@ class UpdateUserDataFailure extends UserDataState {
   final String message;
   UpdateUserDataFailure({required this.message});
 }
+
+class PickImageSuccess extends UserDataState {
+  final File profileImage;
+  PickImageSuccess({required this.profileImage});
+}

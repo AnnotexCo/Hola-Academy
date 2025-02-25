@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
+
 class UpdateUserModel {
   final String? name;
   final String? parentName;
@@ -15,13 +17,23 @@ class UpdateUserModel {
     return UpdateUserModel(
       name: json['name'],
       parentName: json['parentName'],
-      picture: json['picture'],
+      picture:null,
     );
   }
 
-  Map<String, dynamic> toMap() => {
-        'name': name,
-        'parentName': parentName,
-        'picture': picture,
-      };
+  Future<FormData> toFormData() async {
+    Map<String, dynamic> data = {
+      'name': name,
+      'parentName': parentName,
+    };
+
+    if (picture != null) {
+      data['picture'] = await MultipartFile.fromFile(
+        picture!.path,
+        filename: picture!.path.split('/').last,
+      );
+    }
+
+    return FormData.fromMap(data);
+  }
 }

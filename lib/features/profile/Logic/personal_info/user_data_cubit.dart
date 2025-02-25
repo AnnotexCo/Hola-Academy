@@ -15,14 +15,18 @@ class UserDataCubit extends Cubit<UserDataState> {
 
   File? profileImage;
 
-   // Function to pick image from gallery
+  // Function to pick image from gallery
   Future<void> pickImageFromGallery() async {
-    final ImagePicker picker = ImagePicker();
+    final ImagePicker picker = ImagePicker(); 
     final XFile? pickedFile =
         await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-        profileImage = File(pickedFile.path);
+      profileImage = File(pickedFile.path);
+      emit(PickImageSuccess(profileImage: profileImage!));
+      //getMyData();
+      print(
+          'Picked file path: $profileImage'); // Print the picked file path (pickedFile.path);
     }
   }
 
@@ -33,7 +37,9 @@ class UserDataCubit extends Cubit<UserDataState> {
         await picker.pickImage(source: ImageSource.camera);
 
     if (pickedFile != null) {
-        profileImage = File(pickedFile.path);
+      profileImage = File(pickedFile.path);
+      //emit(PickImageSuccess(profileImage: profileImage!));
+      //getMyData();
     }
   }
 
@@ -41,12 +47,13 @@ class UserDataCubit extends Cubit<UserDataState> {
 
   Future<void> getMyData() async {
     try {
-     if (!isClosed) emit(UserDataLoading());
+      if (!isClosed) emit(UserDataLoading());
       final user = await userRepo.getMyData();
       print(user.name);
       print(user.profileImage?.path);
-      await SaveTokenDB.saveNameAndImage(user.name, user.profileImage?.path??'');
-     if (!isClosed) emit(UserDataSuccess(userModel: user));
+      await SaveTokenDB.saveNameAndImage(
+          user.name, user.profileImage?.path ?? '');
+      if (!isClosed) emit(UserDataSuccess(userModel: user));
     } catch (e) {
       if (!isClosed) emit(UserDataFailure(message: e.toString()));
     }
@@ -54,17 +61,21 @@ class UserDataCubit extends Cubit<UserDataState> {
 
   Future<void> updateMyData(UpdateUserModel updateUserModel) async {
     try {
-     if (!isClosed) emit(UpdateUserDataLoading());
+      print('profileImage: $profileImage');
+      if (!isClosed) emit(UpdateUserDataLoading());
       final isUpdated =
           await userRepo.updateMyData(updateUserModel: updateUserModel);
       if (isUpdated) {
         if (!isClosed) emit(UpdateUserDataSuccess());
+        print(
+            'Updated picture path: ${updateUserModel.picture}'); // Print the updated picture path (updateUserModel.picture);
         getMyData();
       } else {
-      if (!isClosed)  emit(UserDataFailure(message: 'Failed to update user data'));
+        if (!isClosed)
+          emit(UserDataFailure(message: 'Failed to update user data'));
       }
     } catch (e) {
-    if (!isClosed)  emit(UpdateUserDataFailure(message: e.toString()));
+      if (!isClosed) emit(UpdateUserDataFailure(message: e.toString()));
     }
   }
 }

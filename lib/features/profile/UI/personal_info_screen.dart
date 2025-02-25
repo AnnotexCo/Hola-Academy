@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +9,7 @@ import 'package:hola_academy/core/components/general_text_form_field.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
+import 'package:hola_academy/core/dependency_injection/dependency.dart';
 import 'package:hola_academy/features/not_found/not_found_screen.dart';
 import 'package:hola_academy/features/profile/Data/Model/update_user_model.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
@@ -70,65 +73,44 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
         padding: EdgeInsets.symmetric(
           vertical: 18.h,
         ),
-        child: BlocConsumer<UserDataCubit, UserDataState>(
-          listener: (context, state) {
-            if (state is UpdateUserDataSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('User data updated successfully'),
-                  backgroundColor: ColorManager.textRedColor,
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height,
+              minWidth: MediaQuery.of(context).size.width,
+            ),
+            child: IntrinsicHeight(
+              child: Column(children: [
+                BlocProvider(
+                  create: (context) => getIT<UserDataCubit>()..getMyData(),
+                  child: Stack(alignment: Alignment.topCenter, children: [
+                    CustomProfileBackgroung(
+                      isEdit: true,
+                    ),
+                    CustomProfileAppBar(qrCode: true),
+                  ]),
                 ),
-              );
-            } else if (state is UserDataFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: ColorManager.errorRedColor,
-                ),
-              );
-            } else if (state is UpdateUserDataFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: ColorManager.errorRedColor,
-                ),
-              );
-            } else if (state is UserDataSuccess) {
-              nameController.text = state.userModel.name;
-              parentNameController.text = state.userModel.parentName;
-              emailController.text = state.userModel.email;
-              phoneController.text = state.userModel.phoneNumber;
-              birthDayController.text = formatDate(state.userModel.dob);
-              parentWhatsappNumberController.text =
-                  state.userModel.parentWhatsappNumber ?? '';
-              selectedGender = state.userModel.gender;
-            }
-          },
-          builder: (context, state) {
-            var userDataCubit = context.read<UserDataCubit>();
-            if (state is UserDataLoading) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: ColorManager.textRedColor,
-                ),
-              );
-            } else if (state is UserDataSuccess) {
-              return SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: MediaQuery.of(context).size.height,
-                    minWidth: MediaQuery.of(context).size.width,
-                  ),
-                  child: IntrinsicHeight(
-                    child: Column(children: [
-                      Stack(alignment: Alignment.topCenter, children: [
-                        CustomProfileBackgroung(
-                            isEdit: true,
-                            profileImage:
-                                context.read<UserDataCubit>().profileImage),
-                        CustomProfileAppBar(qrCode: true),
-                      ]),
-                      Padding(
+                BlocConsumer<UserDataCubit, UserDataState>(
+                  listener: (context, state) {
+                    if (state is UserDataSuccess) {
+                      nameController.text = state.userModel.name;
+                      parentNameController.text = state.userModel.parentName;
+                      phoneController.text = state.userModel.phoneNumber;
+                      birthDayController.text = state.userModel.dob;
+                      parentWhatsappNumberController.text =
+                          state.userModel.parentWhatsappNumber.toString();
+                      emailController.text = state.userModel.email;
+                      selectedGender = state.userModel.gender;
+                    }
+                    if (state is PickImageSuccess) {
+                      context.read<UserDataCubit>().profileImage = state.profileImage;
+                    }
+                  },
+                  builder: (context, state) {
+                    UserDataCubit userDataCubit =
+                        context.read<UserDataCubit>();
+                    if (state is UserDataSuccess) {
+                      return Padding(
                         padding: EdgeInsets.symmetric(horizontal: 27.w),
                         child: Form(
                           key: _formKey,
@@ -247,60 +229,60 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                     // Open date picker
                                     /*  DateTime? pickedDate = */
                                     /* await showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return Dialog(
-                                              insetPadding: EdgeInsets.only(
-                                                  left: 29.w, right: 29.w, top: 360.h),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(8.r),
-                                              ),
-                                              backgroundColor:
-                                                  ColorManager.backgroundPinkColor,
-                                              child: Container(
-                                                height: 241.h,
-                                                decoration: BoxDecoration(
-                                                  color:
-                                                      ColorManager.backgroundPinkColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(8.r),
-                                                  border: Border.all(
-                                                    color: ColorManager.textRedColor,
-                                                    width: 1,
-                                                  ),
-                                                ),
-                                                child: Theme(
-                                                  data: ThemeData.light().copyWith(
-                                                    colorScheme: ColorScheme.light(
-                                                        primary:
-                                                            ColorManager.textRedColor),
-                                                    datePickerTheme:
-                                                        DatePickerThemeData(
-                                                            todayBorder: BorderSide(
-                                                      color: ColorManager.textRedColor,
-                                                      style: BorderStyle.none,
-                                                      strokeAlign:
-                                                          BorderSide.strokeAlignInside,
-                                                    )),
-                                                  ),
-                                                  child: CalendarDatePicker(
-                                                    initialDate: DateTime.now(),
-                                                    firstDate: DateTime(1900),
-                                                    lastDate: DateTime.now(),
-                                                    onDateChanged: (selectedDate) {
-                                                      setState(() {
-                                                        birthDayController.text =
-                                                            "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
-                                                      });
-                                                      Navigator.pop(context);
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        );*/
+                                                                context: context,
+                                                                builder: (context) {
+                                                                  return Dialog(
+                                                                    insetPadding: EdgeInsets.only(
+                                                                        left: 29.w, right: 29.w, top: 360.h),
+                                                                    shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(8.r),
+                                                                    ),
+                                                                    backgroundColor:
+                                                                        ColorManager.backgroundPinkColor,
+                                                                    child: Container(
+                                                                      height: 241.h,
+                                                                      decoration: BoxDecoration(
+                                                                        color:
+                                                                            ColorManager.backgroundPinkColor,
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8.r),
+                                                                        border: Border.all(
+                                                                          color: ColorManager.textRedColor,
+                                                                          width: 1,
+                                                                        ),
+                                                                      ),
+                                                                      child: Theme(
+                                                                        data: ThemeData.light().copyWith(
+                                                                          colorScheme: ColorScheme.light(
+                                                                              primary:
+                                                                                  ColorManager.textRedColor),
+                                                                          datePickerTheme:
+                                                                              DatePickerThemeData(
+                                                                                  todayBorder: BorderSide(
+                                                                            color: ColorManager.textRedColor,
+                                                                            style: BorderStyle.none,
+                                                                            strokeAlign:
+                                                                                BorderSide.strokeAlignInside,
+                                                                          )),
+                                                                        ),
+                                                                        child: CalendarDatePicker(
+                                                                          initialDate: DateTime.now(),
+                                                                          firstDate: DateTime(1900),
+                                                                          lastDate: DateTime.now(),
+                                                                          onDateChanged: (selectedDate) {
+                                                                            setState(() {
+                                                                              birthDayController.text =
+                                                                                  "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
+                                                                            });
+                                                                            Navigator.pop(context);
+                                                                          },
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              );*/
                                   },
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -331,16 +313,16 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                 ),
                               ],
                               /*CustomDropDownSelection(
-                              value: selectedGender,
-                              hint: AppString.chooseYourGender,
-                              label: AppString.gender,
-                              options: genderOptions,
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  selectedGender = newValue; // Update the selected value
-                                });
-                              },
-                            ),*/
+                                                    value: selectedGender,
+                                                    hint: AppString.chooseYourGender,
+                                                    label: AppString.gender,
+                                                    options: genderOptions,
+                                                    onChanged: (String? newValue) {
+                                                      setState(() {
+                                                        selectedGender = newValue; // Update the selected value
+                                                      });
+                                                    },
+                                                  ),*/
                               GeneralTextFormField(
                                 hint: selectedGender!,
                                 label: AppString.gender,
@@ -383,50 +365,69 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   return null;
                                 },
                               ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              CustomColoredOutlineButton(
+                                  title: AppString.editYourinformation,
+                                  style: TextStyle(
+                                      decoration: TextDecoration.none,
+                                      color: ColorManager.textRedColor,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600),
+                                  radius: 30.r,
+                                  height: 43.h,
+                                  width: 216.w,
+                                  onTap: () {
+                                    if (context
+                                            .read<UserDataCubit>()
+                                            .profileImage !=
+                                        null) {
+                                      print('Image');
+                                    } else {
+                                      print('No image');
+                                    }
+                                    if (nameController.text !=
+                                            userDataCubit.userModel?.name ||
+                                        parentNameController.text !=
+                                            userDataCubit
+                                                .userModel?.parentName ||
+                                        context
+                                                .read<UserDataCubit>()
+                                                .profileImage !=
+                                            null) {
+                                      var pic = context
+                                          .read<UserDataCubit>()
+                                          .profileImage;
+                                      print(pic);
+                                      UpdateUserModel updateUserModel =
+                                          UpdateUserModel(
+                                        name: nameController.text,
+                                        parentName: parentNameController.text,
+                                        picture: context
+                                            .read<UserDataCubit>()
+                                            .profileImage,
+                                      );
+                                      userDataCubit
+                                          .updateMyData(updateUserModel);
+                                    }
+                                    // Navigator.pop(context);
+                                  })
                             ],
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      CustomColoredOutlineButton(
-                          title: AppString.editYourinformation,
-                          style: TextStyle(
-                              decoration: TextDecoration.none,
-                              color: ColorManager.textRedColor,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600),
-                          radius: 30.r,
-                          height: 43.h,
-                          width: 216.w,
-                          onTap: () {
-                            if (nameController.text != state.userModel.name ||
-                                parentNameController.text !=
-                                    state.userModel.parentName ||
-                                context.read<UserDataCubit>().profileImage !=
-                                    null) {
-                                      print(context.read<UserDataCubit>().profileImage);
-                              UpdateUserModel updateUserModel = UpdateUserModel(
-                                name: nameController.text,
-                                parentName: parentNameController.text,
-                                picture:
-                                    context.read<UserDataCubit>().profileImage,
-                              );
-                              userDataCubit.updateMyData(updateUserModel);
-                            }
-                            // Navigator.pop(context);
-                          })
-                    ]),
-                  ),
+                      );
+                    } else if (state is UserDataLoading || state is UpdateUserDataLoading) {
+                    return Center(child: CircularProgressIndicator(color: ColorManager.textRedColor,));
+                    } else
+                      return NotFoundScreen(
+                        title: 'data not found',
+                      );
+                  },
                 ),
-              );
-            } else {
-              return NotFoundScreen(
-                title: 'User data not found',
-              );
-            }
-          },
+              ]),
+            ),
+          ),
         ),
       )),
     );

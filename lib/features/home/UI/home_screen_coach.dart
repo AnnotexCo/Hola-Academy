@@ -12,6 +12,7 @@ import 'package:hola_academy/features/home/UI/components/welcome_header.dart';
 import 'package:hola_academy/features/home/UI/components_coach/classes_dialog.dart';
 import 'package:hola_academy/features/home/UI/components_coach/evaluate_card.dart';
 import 'package:hola_academy/features/home/UI/components_coach/session_card.dart';
+import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'package:hola_academy/features/trainee/widgets/evaluate_dialog.dart';
 
 import '../../../core/dependency_injection/dependency.dart';
@@ -35,27 +36,32 @@ class HomeScreenCoach extends StatelessWidget {
                 SizedBox(
                   height: 13.h,
                 ),
-                Align(alignment: Alignment.centerLeft, child: WelcomeHeader()),
+                BlocProvider(
+                  create: (context) => getIT<UserDataCubit>()..getMyData(),
+                  child: Align(
+                      alignment: Alignment.centerLeft, child: WelcomeHeader()),
+                ),
                 GestureDetector(
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return EvaluateDialog(
-                              imageUrl: ImageManager.pic,
-                              traineeName: 'Robert Fox',
-                              courseTitle: 'Basic Swimming Techniques',
-                              onCancel: () {
-                                Navigator.of(context).pop();
-                              },
-                            );
-                          });
-                    },
-                    child: BlocProvider(
-                  create: (context) => getIT<BannersCubit>()
-                  ..fetchAllBanners(),
-                  child: AddBaner(),
-                ),),
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return EvaluateDialog(
+                            imageUrl: ImageManager.pic,
+                            traineeName: 'Robert Fox',
+                            courseTitle: 'Basic Swimming Techniques',
+                            onCancel: () {
+                              Navigator.of(context).pop();
+                            },
+                          );
+                        });
+                  },
+                  child: BlocProvider(
+                    create: (context) =>
+                        getIT<BannersCubit>()..fetchAllBanners(),
+                    child: AddBaner(),
+                  ),
+                ),
                 SizedBox(
                   height: 80.h,
                   width: double.infinity,

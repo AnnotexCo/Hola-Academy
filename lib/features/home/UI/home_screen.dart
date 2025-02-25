@@ -10,6 +10,7 @@ import 'package:hola_academy/features/home/UI/components/evaluation_card.dart';
 import 'package:hola_academy/features/home/UI/components/list_of_programs.dart';
 import 'package:hola_academy/features/home/UI/components/timeline_widget.dart';
 import 'package:hola_academy/features/home/UI/components/welcome_header.dart';
+import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 
 import '../../../core/components/calender_widget.dart';
 import '../../../core/local_db/save_token.dart';
@@ -53,10 +54,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 13.h,
                 ),
-                Align(alignment: Alignment.centerLeft, child: WelcomeHeader()),
                 BlocProvider(
-                  create: (context) => getIT<BannersCubit>()
-                  ..fetchAllBanners(),
+                  create: (context) => getIT<UserDataCubit>()..getMyData(),
+                  child: Align(
+                      alignment: Alignment.centerLeft, child: WelcomeHeader()),
+                ),
+                BlocProvider(
+                  create: (context) => getIT<BannersCubit>()..fetchAllBanners(),
                   child: AddBaner(),
                 ),
                 SizedBox(

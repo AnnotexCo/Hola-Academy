@@ -136,10 +136,12 @@ class AppRouter {
                   child: const TransactionsScreen(),
                 ));
 
-
       // contact us
       case Routes.contactUsScreen:
-        return MaterialPageRoute(builder: (_) => ContactUsScreen());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (context) => getIT<UserDataCubit>(),
+                child: ContactUsScreen()));
 
       // Booked
       case Routes.bookedScreen:
@@ -183,17 +185,16 @@ class AppRouter {
 
       // book programs
       case Routes.bookProgramsScreen:
-        return MaterialPageRoute(
-            builder: (_) {
-              final int programId = settings.arguments as int;
-              return MultiBlocProvider(
-              providers: [
-                BlocProvider(create: (context) => getIT<RequestsCubit>()),
-                BlocProvider(create: (context) => getIT<UserDataCubit>()),
-              ],
-              child: BookProgramScreen(programId: programId),
-            );
-            });
+        return MaterialPageRoute(builder: (_) {
+          final int programId = settings.arguments as int;
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (context) => getIT<RequestsCubit>()),
+              BlocProvider(create: (context) => getIT<UserDataCubit>()),
+            ],
+            child: BookProgramScreen(programId: programId),
+          );
+        });
 
       // analytics
       case Routes.analyticsSkillsScreen:

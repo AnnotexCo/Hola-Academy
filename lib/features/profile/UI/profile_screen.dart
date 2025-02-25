@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,7 +35,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     _loadUserRole();
-    context.read<UserDataCubit>().getMyData();
   }
 
   Future<void> _loadUserRole() async {
@@ -53,112 +54,119 @@ class _ProfileScreenState extends State<ProfileScreen> {
           top: 0.h,
         ),
         child: SingleChildScrollView(
-          child: Column(spacing: 56.h, children: [
-            Stack(alignment: Alignment.topCenter, children: [
-              BlocBuilder<UserDataCubit, UserDataState>(
-                builder: (context, state) {
-                  String name = " ";
-
-                  if (state is UserDataSuccess) {
-                    name = state.userModel.name.isNotEmpty
-                        ? state.userModel.name
-                        : "No Name";
-                  }
-
-                  return CustomProfileBackgroung();
-                },
-              ),
-              CustomProfileAppBar(qrCode: true),
-            ]),
-            Container(
-              height: 420.h,
-              width: 385.w,
-              decoration: BoxDecoration(
-                color: ColorManager.whiteColor,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(12.r),
+          child: BlocBuilder<UserDataCubit, UserDataState>(
+            builder: (context, state) {
+              String name = " ";
+              String pic = '';
+              if (state is UserDataSuccess) {
+                name = state.userModel.name.isNotEmpty
+                    ? state.userModel.name
+                    : "No Name";
+                pic = state.userModel.profileImage?.path ?? '';
+              }
+              return Column(spacing: 56.h, children: [
+                BlocProvider(
+                  create: (context) => getIT<UserDataCubit>()..getMyData(),
+                  child: Stack(alignment: Alignment.topCenter, children: [
+                    CustomProfileBackgroung(),
+                    CustomProfileAppBar(qrCode: true),
+                  ]),
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: ColorManager.shadowColor,
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: Offset(1, 2),
-                  )
-                ],
-              ),
-              child: ListView(
-                shrinkWrap: true, // Adjusts to content size
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-                  _buildMenuItem(
-                    icon: ImageManager.personalInformation,
-                    text: AppString.personalInformation,
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return BlocProvider(
-                            create: (context) => getIT<UserDataCubit>(),
-                            child: PersonalInfoScreen(),
-                          );
+                Container(
+                  height: 420.h,
+                  width: 385.w,
+                  decoration: BoxDecoration(
+                    color: ColorManager.whiteColor,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(12.r),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: ColorManager.shadowColor,
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(1, 2),
+                      )
+                    ],
+                  ),
+                  child: ListView(
+                    shrinkWrap: true, // Adjusts to content size
+                    physics: NeverScrollableScrollPhysics(),
+                    children: [
+                      _buildMenuItem(
+                        icon: ImageManager.personalInformation,
+                        text: AppString.personalInformation,
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return BlocProvider(
+                                create: (context) => getIT<UserDataCubit>(),
+                                child: PersonalInfoScreen(),
+                              );
+                            },
+                          ));
                         },
-                      ));
-                    },
-                  ),
-                  _buildMenuItem(
-                    icon: ImageManager.analysis,
-                    text: AppString.analytics,
-                    onTap: () {
-                      Navigator.pushNamed(
-                          context, Routes.analyticsSkillsScreen);
-                    },
-                  ),
-                  _buildMenuItem(
-                    icon: ImageManager.transaction,
-                    text: AppString.transaction,
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return BlocProvider(create: (context) => getIT<TransCubit>(), child: TransactionsScreen());
+                      ),
+                      _buildMenuItem(
+                        icon: ImageManager.analysis,
+                        text: AppString.analytics,
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, Routes.analyticsSkillsScreen);
                         },
-                      ));
-                    },
-                  ),
-                  _buildMenuItem(
-                    icon: ImageManager.booking,
-                    text: AppString.booked,
-                    onTap: () {
-                      Navigator.pushNamed(context, Routes.bookedScreen);
-                    },
-                  ),
-                  _buildMenuItem(
-                    icon: ImageManager.terms,
-                    text: AppString.terms,
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return TermsScreen();
+                      ),
+                      _buildMenuItem(
+                        icon: ImageManager.transaction,
+                        text: AppString.transaction,
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return BlocProvider(
+                                  create: (context) => getIT<TransCubit>(),
+                                  child: TransactionsScreen());
+                            },
+                          ));
                         },
-                      ));
-                    },
-                  ),
-                  _buildMenuItem(
-                    icon: ImageManager.sms,
-                    text: AppString.contactUs,
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return ContactUsScreen();
+                      ),
+                      _buildMenuItem(
+                        icon: ImageManager.booking,
+                        text: AppString.booked,
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.bookedScreen);
                         },
-                      ));
-                    },
-                    last: true,
+                      ),
+                      _buildMenuItem(
+                        icon: ImageManager.terms,
+                        text: AppString.terms,
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return TermsScreen();
+                            },
+                          ));
+                        },
+                      ),
+                      _buildMenuItem(
+                        icon: ImageManager.sms,
+                        text: AppString.contactUs,
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return BlocProvider(
+                                  create: (context) => getIT<UserDataCubit>(),
+                                  child: ContactUsScreen());
+                            },
+                          ));
+                        },
+                        last: true,
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            SizedBox(height: 1.h)
-          ]),
+                ),
+                SizedBox(height: 1.h)
+              ]);
+            },
+          ),
         ),
       )),
     );

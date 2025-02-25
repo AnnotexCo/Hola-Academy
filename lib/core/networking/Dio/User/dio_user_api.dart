@@ -4,6 +4,8 @@ import 'package:hola_academy/core/networking/ErrorHandler/api_error_handler.dart
 import 'package:hola_academy/features/profile/Data/Model/update_user_model.dart';
 import 'package:hola_academy/features/profile/Data/Model/user_model.dart';
 import '../../../constants/api_constants.dart';
+import 'package:http_parser/http_parser.dart';
+
 
 class DioUserApi {
   final Dio _dio;
@@ -41,12 +43,27 @@ class DioUserApi {
     String? token = await SaveTokenDB.getToken();
 
     try {
+    final Map<String, dynamic> formDataMap = {
+      'name': updateUserModel.name,
+      'parentName': updateUserModel.parentName,
+    };
+
+    // ✅ Add picture only if it's provided
+    if (updateUserModel.picture != null) {
+      formDataMap['picture'] = await MultipartFile.fromFile(
+        updateUserModel.picture!.path,
+        filename: updateUserModel.picture!.path.split('/').last,
+        contentType: MediaType('image', 'jpeg'), // Adjust if needed (e.g., 'image/png')
+      );
+    }
+    FormData formData = FormData.fromMap(formDataMap);
+
       final response = await _dio.patch(
         '${ApiConstants.baseUrl}${ApiConstants.updateMyDataApi}',
-        data: updateUserModel.toMap(),
+        data: formData,
         options: Options(
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
             'Authorization': 'Bearer $token',
           },
         ),
@@ -60,7 +77,6 @@ class DioUserApi {
       throw Exception('Failed to update data');
     } catch (error) {
       final api = ApiErrorHandler.handle(error);
-
       throw "${api.message}";
     }
   }
