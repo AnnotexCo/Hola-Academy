@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/components/custom_colored_outline_button.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
+import '../../../../core/constants/api_constants.dart';
 import '../../../../core/constants/color_manager.dart';
 import '../../../profile/Data/Model/user_model.dart';
 
@@ -45,19 +47,7 @@ class PersonalInfoCard extends StatelessWidget {
                 // Profile Image
                 ClipRRect(
                   borderRadius: BorderRadius.circular(50.0.r),
-                  child: userData?.profileImage != null
-                      ? Image.network(
-                          userData!.profileImage!.path,
-                          width: 80.0.w,
-                          height: 80.0.h,
-                          fit: BoxFit.cover,
-                        )
-                      : Image.asset(
-                          ImageManager.pic,
-                          width: 80.0.w,
-                          height: 80.0.h,
-                          fit: BoxFit.cover,
-                        ),
+                  child: _buildProfileImage(userData?.profileImage?.path),
                 ),
                 SizedBox(width: 40.0.w),
 
@@ -101,6 +91,44 @@ class PersonalInfoCard extends StatelessWidget {
       ),
     );
   }
+
+   Widget _buildProfileImage(String? imagePath) {
+    if (imagePath == null || imagePath.isEmpty) {
+      return Image.asset(
+        ImageManager.pic, // Default profile image
+        width: 80.0.w,
+        height: 80.0.h,
+        fit: BoxFit.cover,
+      );
+    }
+
+    final String imageUrl = '${ApiConstants.imagesURLApi}$imagePath';
+    print("Profile Image URL: $imageUrl"); // Debugging print
+
+    return CachedNetworkImage(
+      imageUrl: imageUrl,
+      cacheKey: imageUrl, //  Ensures correct caching
+      width: 80.0.w,
+      height: 80.0.h,
+      fit: BoxFit.cover,
+      memCacheHeight: 160, //  Limit memory cache size
+      memCacheWidth: 160,
+      maxWidthDiskCache: 200, //  Reduce disk cache size
+      maxHeightDiskCache: 200,
+      fadeInDuration: Duration(milliseconds: 300), //  Smooth transition
+      placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+      errorWidget: (context, url, error) {
+        print("Error loading image: $error"); // Debugging print
+        return Image.asset(
+          ImageManager.pic, // Fallback image on error
+          width: 80.0.w,
+          height: 80.0.h,
+          fit: BoxFit.cover,
+        );
+      },
+    );
+  }
+
 
   // Widget for building each row of user info with an icon
   Widget _buildInfoRow(IconData icon, String text) {
