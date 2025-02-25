@@ -10,7 +10,16 @@ class TransactionRepo {
     return await dioTranscations.getAllTranscations();
   }
 
-  Future<TransactionsModel> getTransactionsByFilter({required bool isIncome}) async {
+  Future<TransactionsModel> getTransactionsByFilter(
+      {required bool isIncome}) async {
     return await dioTranscations.getAllTranscationsByFilter(isIncome: isIncome);
+  }
+
+  Future<void> askForRefund(
+      {required num amount,
+      required String description,
+      required String type}) async {
+    return await dioTranscations.askForRefund(
+        amount: amount, description: description, type: type);
   }
 }

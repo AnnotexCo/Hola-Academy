@@ -131,7 +131,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                 label: AppString.firstName,
                                 labelStyle: TextStyle(
                                   fontSize: 18.sp,
-                                  color: ColorManager.blackFontColor,
+                                  color: const Color.fromARGB(255, 52, 52, 52),
                                   fontWeight: FontWeight.w500,
                                 ),
                                 isFill: false,

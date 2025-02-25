@@ -5,6 +5,8 @@ import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/calender_widget.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
+import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/categories/categories_state.dart';
 import 'package:hola_academy/features/home/UI/components/add_baner.dart';
 
 import 'package:hola_academy/features/home/UI/components/timeline_widget.dart';
@@ -85,63 +87,72 @@ class HomeScreenCoach extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                             color: Color(0xff6C757D),
                           )),
-                      SizedBox(
-                        height: 245.h,
-                        width: double.infinity,
-                        child: ListView(
-                          padding: EdgeInsets.zero,
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (_) {
-                                    return ClassesDialog(
-                                      title: "Educational",
-                                      onCancel: () => Navigator.pop(context),
-                                      options: [
-                                        {
-                                          "title": "Private",
-                                          "icon": ImageManager.privateclass
-                                        },
-                                        {
-                                          "title": "SemiPrivate",
-                                          "icon": ImageManager.semiprivateclass
-                                        },
-                                        {
-                                          "title": "Aqua",
-                                          "icon": ImageManager.aquaclass
-                                        },
-                                        {
-                                          "title": "Kids",
-                                          "icon": ImageManager.kidsclass
-                                        },
-                                      ],
-                                      onOptionSelected: (selected) {
-                                        if (selected == "Private") {
-                                          showPrivateLevelsDialog(context);
-                                        }
+                      BlocProvider(
+                        create: (context) =>
+                            getIT<CategoriesCubit>()..fetchAllCategories(),
+                        child: BlocBuilder<CategoriesCubit, CategoriesState>(
+                          builder: (context, state) {
+                            if (state is CategoriesSuccess) {
+                              return SizedBox(
+                                height: 245.h,
+                                width: double.infinity,
+                                child: ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: state.categories.length,
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (_) {
+                                            return ClassesDialog(
+                                              title: "Educational",
+                                              onCancel: () =>
+                                                  Navigator.pop(context),
+                                              options: [
+                                                {
+                                                  "title": "Private",
+                                                  "icon":
+                                                      ImageManager.privateclass
+                                                },
+                                                {
+                                                  "title": "SemiPrivate",
+                                                  "icon": ImageManager
+                                                      .semiprivateclass
+                                                },
+                                                {
+                                                  "title": "Aqua",
+                                                  "icon": ImageManager.aquaclass
+                                                },
+                                                {
+                                                  "title": "Kids",
+                                                  "icon": ImageManager.kidsclass
+                                                },
+                                              ],
+                                              onOptionSelected: (selected) {
+                                                if (selected == "Private") {
+                                                  showPrivateLevelsDialog(
+                                                      context);
+                                                }
+                                              },
+                                            );
+                                          },
+                                        );
                                       },
+                                      child: EvaluateCard(
+                                        backgroundImage: state.categories[index]
+                                            .image.path, //ImageManager.pic,
+                                        title: state.categories[index].name,
+                                      ),
                                     );
                                   },
-                                );
-                              },
-                              child: EvaluateCard(
-                                backgroundColor: Color(0xffF5BD69),
-                                title: "Educational",
-                                vectorColor: Color(0xffBD5151),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 18.w,
-                            ),
-                            EvaluateCard(
-                              backgroundColor: Color(0xffBD5151),
-                              title: "Training",
-                              vectorColor: ColorManager.whiteColor,
-                            ),
-                          ],
+                                  //SizedBox(width: 18.w,),
+                                ),
+                              );
+                            }
+                            return Container();
+                          },
                         ),
                       ),
                     ],

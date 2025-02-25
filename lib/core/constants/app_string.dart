@@ -114,7 +114,9 @@ class AppString {
   static const String requestPayment = "Request Payment";
   static const String ammount = "Ammount";
   static const String submitRequest = "Submit Request";
-  static const String enterAmmount = "Enter Ammount";
+  static const String enterMoneyAmmount = "Enter ammount Of Money To Ask";
+  static const String enterHoursAmmount = "Enter Ammount Of Hours To Pay";
+
   static const String transactionReason = "Transaction Reason";
   static const String reason = "Reason";
   static const String selectReason = "Select Reason";

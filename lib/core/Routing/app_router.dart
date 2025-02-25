@@ -149,7 +149,7 @@ class AppRouter {
 
       //  Request payment
       case Routes.requestPaymentScreen:
-        return MaterialPageRoute(builder: (_) => const RequestPaymentScreen());
+        return MaterialPageRoute(builder: (_) => BlocProvider(create: (context) => getIT<TransCubit>(), child: RequestPaymentScreen()));
 
       // classes
       case Routes.classesScreen:

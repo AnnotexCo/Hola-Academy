@@ -39,4 +39,15 @@ class TransCubit extends Cubit<TransState> {
       emit(TransactionsFailure(error: e.toString()));
     }
   }
+
+  Future<void> askForRefund({required num amount, required String description, required String type}) async {
+    emit(TransactionsLoading());
+    try {
+      await transactionRepo.askForRefund(
+          amount: amount, description: description, type: type);
+      emit(RefundSuccess());
+    } catch (e) {
+      emit(TransactionsFailure(error: e.toString()));
+    }
+  }
 }
