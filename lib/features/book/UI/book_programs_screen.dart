@@ -66,26 +66,26 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
   // }
 
   void _handleBookProgram() {
-    // if (_bookingData == null) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(
-    //       content: Text('Please save your changes before booking.'),
-    //       backgroundColor: Colors.red,
-    //     ),
-    //   );
-    //   return;
-    // }
-    final bookingData = BookingProgramModel(
-      programId: widget.programId,
-      note: noteController.text.trim(),
-      address: _userData?.address ?? 'Egypt',
-      healthStatus: _userData?.healthStatus ?? 'Good',
-      nationality: _userData?.nationality ?? 'Egypt',
-      parentAddress: _userData?.parentAddress ?? 'Egypt',
-      parentName: _userData?.parentName ?? 'Father',
-      parentNationality: _userData?.parentNationality ?? 'Egypt',
-      phoneNumber: _userData?.phoneNumber ?? '+201234567847',
-    );
+    if (_bookingData == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please save your changes before booking.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+    // final bookingData = BookingProgramModel(
+    //   programId: widget.programId,
+    //   note: noteController.text.trim(),
+    //   address: _userData?.address ?? 'Egypt',
+    //   healthStatus: _userData?.healthStatus ?? 'Good',
+    //   nationality: _userData?.nationality ?? 'Egypt',
+    //   parentAddress: _userData?.parentAddress ?? 'Egypt',
+    //   parentName: _userData?.parentName ?? 'Father',
+    //   parentNationality: _userData?.parentNationality ?? 'Egypt',
+    //   phoneNumber: _userData?.phoneNumber ?? '+201234567847',
+    // );
     
     if (noteController.text.isEmpty || noteController.text.length <= 6) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -96,29 +96,29 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
       );
       return;
     } // Validate the stored phone number
-    // String phoneNumber = _bookingData!.phoneNumber?.trim() ?? "";
+    String phoneNumber = _bookingData!.phoneNumber?.trim() ?? "";
 
-    // if (!RegExp(r'^\+\d{10,15}$').hasMatch(phoneNumber)) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(
-    //       content: Text('Invalid phone number format. Use +20XXXXXXXXXX'),
-    //       backgroundColor: Colors.red,
-    //     ),
-    //   );
-    //   return;
-    // }
+    if (!RegExp(r'^\+\d{10,15}$').hasMatch(phoneNumber)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Invalid phone number format. Use +20XXXXXXXXXX'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
 
     // Update the note in the saved booking data
-    // final updatedBookingData = _bookingData.copyWith(
-    //   // image: _paymentImage??'',
-    //   note: noteController.text,
+    final updatedBookingData = _bookingData?.copyWith(
+      // image: _paymentImage??'',
+      note: noteController.text,
 
-    // );
+    );
 
-      print("📤 Booking Data: $bookingData");
+      print("📤 Booking Data: $updatedBookingData");
     print("📸 Payment Image: ${_paymentImage ?? 'No Image'}");
 
-    context.read<RequestsCubit>().bookProgram(bookingData, imageFile: _paymentImage);
+    context.read<RequestsCubit>().bookProgram(updatedBookingData!, imageFile: _paymentImage);
   }
 
   void _toggleEditing() {
