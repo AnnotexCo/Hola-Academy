@@ -70,6 +70,7 @@ class UserDataCubit extends Cubit<UserDataState> {
         print(
             'Updated picture path: ${updateUserModel.picture}'); // Print the updated picture path (updateUserModel.picture);
         getMyData();
+        profileImage = null;
       } else {
         if (!isClosed)
           emit(UserDataFailure(message: 'Failed to update user data'));

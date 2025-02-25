@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/api_constants.dart';
+import 'package:hola_academy/core/constants/color_manager.dart';
 
 class ProfilePicWidget extends StatelessWidget {
   final double? width;
@@ -18,14 +19,13 @@ class ProfilePicWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50.r),
       ),
-      child: pic.isEmpty
-          ? Container()
-          : CircleAvatar(
-              backgroundImage: NetworkImage(
-                ApiConstants.imagesURLApi + pic,
-                //fit: BoxFit.contain,
-              ),
-            ),
+      child: CircleAvatar(
+        backgroundColor: ColorManager.lightYellow,
+        backgroundImage: NetworkImage(
+          ApiConstants.imagesURLApi + pic,
+          //fit: BoxFit.contain,
+        ),
+      ),
     );
   }
 }

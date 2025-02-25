@@ -12,6 +12,7 @@ import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/core/dependency_injection/dependency.dart';
 import 'package:hola_academy/features/not_found/not_found_screen.dart';
 import 'package:hola_academy/features/profile/Data/Model/update_user_model.dart';
+import 'package:hola_academy/features/profile/Data/Model/user_model.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
@@ -49,6 +50,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   final List<String> genderOptions = ['Male', 'Female'];
 
   String? _userRole;
+  UserModel? userModel;
 
   @override
   void initState() {
@@ -80,37 +82,44 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
               minWidth: MediaQuery.of(context).size.width,
             ),
             child: IntrinsicHeight(
-              child: Column(children: [
-                BlocProvider(
-                  create: (context) => getIT<UserDataCubit>()..getMyData(),
-                  child: Stack(alignment: Alignment.topCenter, children: [
-                    CustomProfileBackgroung(
-                      isEdit: true,
-                    ),
-                    CustomProfileAppBar(qrCode: true),
-                  ]),
-                ),
-                BlocConsumer<UserDataCubit, UserDataState>(
-                  listener: (context, state) {
-                    if (state is UserDataSuccess) {
-                      nameController.text = state.userModel.name;
-                      parentNameController.text = state.userModel.parentName;
-                      phoneController.text = state.userModel.phoneNumber;
-                      birthDayController.text = state.userModel.dob;
-                      parentWhatsappNumberController.text =
-                          state.userModel.parentWhatsappNumber.toString();
-                      emailController.text = state.userModel.email;
-                      selectedGender = state.userModel.gender;
-                    }
-                    if (state is PickImageSuccess) {
-                      context.read<UserDataCubit>().profileImage = state.profileImage;
-                    }
-                  },
-                  builder: (context, state) {
-                    UserDataCubit userDataCubit =
-                        context.read<UserDataCubit>();
-                    if (state is UserDataSuccess) {
-                      return Padding(
+              child: BlocConsumer<UserDataCubit, UserDataState>(
+                listener: (context, state) {
+                  if (state is UserDataSuccess) {
+                    nameController.text = state.userModel.name;
+                    parentNameController.text = state.userModel.parentName;
+                    phoneController.text = state.userModel.phoneNumber;
+                    birthDayController.text = state.userModel.dob;
+                    parentWhatsappNumberController.text =
+                        state.userModel.parentWhatsappNumber.toString();
+                    emailController.text = state.userModel.email;
+                    selectedGender = state.userModel.gender;
+                    userModel = state.userModel;
+                  }
+                  if (state is PickImageSuccess) {
+                    context.read<UserDataCubit>().profileImage =
+                        state.profileImage;
+                  }
+                },
+                builder: (context, state) {
+                  UserDataCubit userDataCubit = context.read<UserDataCubit>();
+                  if (state is UserDataLoading ||
+                      state is UpdateUserDataLoading) {
+                    return Center(
+                        child: CircularProgressIndicator(
+                      color: ColorManager.textRedColor,
+                    ));
+                  } else if (state is UserDataFailure ||
+                      state is UpdateUserDataFailure) {
+                    return NotFoundScreen();
+                  } else {
+                    return Column(children: [
+                      Stack(alignment: Alignment.topCenter, children: [
+                        CustomProfileBackgroung(
+                          isEdit: true,
+                        ),
+                        CustomProfileAppBar(qrCode: true),
+                      ]),
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 27.w),
                         child: Form(
                           key: _formKey,
@@ -229,60 +238,60 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                     // Open date picker
                                     /*  DateTime? pickedDate = */
                                     /* await showDialog(
-                                                                context: context,
-                                                                builder: (context) {
-                                                                  return Dialog(
-                                                                    insetPadding: EdgeInsets.only(
-                                                                        left: 29.w, right: 29.w, top: 360.h),
-                                                                    shape: RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(8.r),
-                                                                    ),
-                                                                    backgroundColor:
-                                                                        ColorManager.backgroundPinkColor,
-                                                                    child: Container(
-                                                                      height: 241.h,
-                                                                      decoration: BoxDecoration(
-                                                                        color:
-                                                                            ColorManager.backgroundPinkColor,
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(8.r),
-                                                                        border: Border.all(
-                                                                          color: ColorManager.textRedColor,
-                                                                          width: 1,
-                                                                        ),
-                                                                      ),
-                                                                      child: Theme(
-                                                                        data: ThemeData.light().copyWith(
-                                                                          colorScheme: ColorScheme.light(
-                                                                              primary:
-                                                                                  ColorManager.textRedColor),
-                                                                          datePickerTheme:
-                                                                              DatePickerThemeData(
-                                                                                  todayBorder: BorderSide(
-                                                                            color: ColorManager.textRedColor,
-                                                                            style: BorderStyle.none,
-                                                                            strokeAlign:
-                                                                                BorderSide.strokeAlignInside,
-                                                                          )),
-                                                                        ),
-                                                                        child: CalendarDatePicker(
-                                                                          initialDate: DateTime.now(),
-                                                                          firstDate: DateTime(1900),
-                                                                          lastDate: DateTime.now(),
-                                                                          onDateChanged: (selectedDate) {
-                                                                            setState(() {
-                                                                              birthDayController.text =
-                                                                                  "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
-                                                                            });
-                                                                            Navigator.pop(context);
-                                                                          },
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  );
-                                                                },
-                                                              );*/
+                                                                              context: context,
+                                                                              builder: (context) {
+                                                                                return Dialog(
+                                                                                  insetPadding: EdgeInsets.only(
+                                                                                      left: 29.w, right: 29.w, top: 360.h),
+                                                                                  shape: RoundedRectangleBorder(
+                                                                                    borderRadius:
+                                                                                        BorderRadius.circular(8.r),
+                                                                                  ),
+                                                                                  backgroundColor:
+                                                                                      ColorManager.backgroundPinkColor,
+                                                                                  child: Container(
+                                                                                    height: 241.h,
+                                                                                    decoration: BoxDecoration(
+                                                                                      color:
+                                                                                          ColorManager.backgroundPinkColor,
+                                                                                      borderRadius:
+                                                                                          BorderRadius.circular(8.r),
+                                                                                      border: Border.all(
+                                                                                        color: ColorManager.textRedColor,
+                                                                                        width: 1,
+                                                                                      ),
+                                                                                    ),
+                                                                                    child: Theme(
+                                                                                      data: ThemeData.light().copyWith(
+                                                                                        colorScheme: ColorScheme.light(
+                                                                                            primary:
+                                                                                                ColorManager.textRedColor),
+                                                                                        datePickerTheme:
+                                                                                            DatePickerThemeData(
+                                                                                                todayBorder: BorderSide(
+                                                                                          color: ColorManager.textRedColor,
+                                                                                          style: BorderStyle.none,
+                                                                                          strokeAlign:
+                                                                                              BorderSide.strokeAlignInside,
+                                                                                        )),
+                                                                                      ),
+                                                                                      child: CalendarDatePicker(
+                                                                                        initialDate: DateTime.now(),
+                                                                                        firstDate: DateTime(1900),
+                                                                                        lastDate: DateTime.now(),
+                                                                                        onDateChanged: (selectedDate) {
+                                                                                          setState(() {
+                                                                                            birthDayController.text =
+                                                                                                "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
+                                                                                          });
+                                                                                          Navigator.pop(context);
+                                                                                        },
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                            );*/
                                   },
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -313,16 +322,16 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                 ),
                               ],
                               /*CustomDropDownSelection(
-                                                    value: selectedGender,
-                                                    hint: AppString.chooseYourGender,
-                                                    label: AppString.gender,
-                                                    options: genderOptions,
-                                                    onChanged: (String? newValue) {
-                                                      setState(() {
-                                                        selectedGender = newValue; // Update the selected value
-                                                      });
-                                                    },
-                                                  ),*/
+                                                                  value: selectedGender,
+                                                                  hint: AppString.chooseYourGender,
+                                                                  label: AppString.gender,
+                                                                  options: genderOptions,
+                                                                  onChanged: (String? newValue) {
+                                                                    setState(() {
+                                                                      selectedGender = newValue; // Update the selected value
+                                                                    });
+                                                                  },
+                                                                ),*/
                               GeneralTextFormField(
                                 hint: selectedGender!,
                                 label: AppString.gender,
@@ -379,34 +388,19 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   height: 43.h,
                                   width: 216.w,
                                   onTap: () {
-                                    if (context
-                                            .read<UserDataCubit>()
-                                            .profileImage !=
-                                        null) {
-                                      print('Image');
-                                    } else {
-                                      print('No image');
-                                    }
+                                    var pic = context
+                                        .read<UserDataCubit>()
+                                        .profileImage;
                                     if (nameController.text !=
-                                            userDataCubit.userModel?.name ||
+                                            userModel?.name ||
                                         parentNameController.text !=
-                                            userDataCubit
-                                                .userModel?.parentName ||
-                                        context
-                                                .read<UserDataCubit>()
-                                                .profileImage !=
-                                            null) {
-                                      var pic = context
-                                          .read<UserDataCubit>()
-                                          .profileImage;
-                                      print(pic);
+                                            userModel?.parentName ||
+                                        pic != null) {
                                       UpdateUserModel updateUserModel =
                                           UpdateUserModel(
                                         name: nameController.text,
                                         parentName: parentNameController.text,
-                                        picture: context
-                                            .read<UserDataCubit>()
-                                            .profileImage,
+                                        picture: pic,
                                       );
                                       userDataCubit
                                           .updateMyData(updateUserModel);
@@ -416,16 +410,11 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                             ],
                           ),
                         ),
-                      );
-                    } else if (state is UserDataLoading || state is UpdateUserDataLoading) {
-                    return Center(child: CircularProgressIndicator(color: ColorManager.textRedColor,));
-                    } else
-                      return NotFoundScreen(
-                        title: 'data not found',
-                      );
-                  },
-                ),
-              ]),
+                      )
+                    ]);
+                  }
+                },
+              ),
             ),
           ),
         ),
