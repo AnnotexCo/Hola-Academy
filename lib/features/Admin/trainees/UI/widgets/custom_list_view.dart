@@ -5,11 +5,13 @@ import 'package:hola_academy/core/components/custom_dialog.dart';
 import 'package:hola_academy/core/components/general_text_form_field.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
+import 'package:hola_academy/features/profile/Data/Model/trainee_model.dart';
+import 'package:hola_academy/features/profile/Data/Model/user_model.dart';
 
 import '../../../../../core/constants/color_manager.dart';
 
 class CustomListView extends StatelessWidget {
-  final List<Map<String, String>> data; // List of trainee data
+  final List<Users> data; // List of trainee data
   final double itemHeight;
   final Color backgroundColor;
   final Color borderColor;
@@ -36,7 +38,7 @@ class CustomListView extends StatelessWidget {
               context: context,
               builder: (context) {
                 return CustomDialog(
-                    title: trainee['name'] ?? '',
+                    title: trainee.name,
                     imageUrl: profileImagePath,
                     onCancel: () {
                       Navigator.of(context).pop();
@@ -44,7 +46,7 @@ class CustomListView extends StatelessWidget {
                     components: [
                       GeneralTextFormField(
                         height: 45.h,
-                        hint: 'Charles.Leo@gmail.com',
+                        hint: trainee.email,
                         label: AppString.email,
                         labelStyle: TextStyle(
                           fontSize: 18.sp,
@@ -52,6 +54,7 @@ class CustomListView extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                         ),
                         isFill: true,
+                        readOnly: true,
                         fillColor: ColorManager.whiteColor,
                         isBorder: true,
                         suffixIcon: Icon(
@@ -61,7 +64,7 @@ class CustomListView extends StatelessWidget {
                       ),
                       GeneralTextFormField(
                         height: 45.h,
-                        hint: '01258672352',
+                        hint: trainee.phoneNumber,
                         label: AppString.phoneNumber,
                         labelStyle: TextStyle(
                           fontSize: 18.sp,
@@ -69,6 +72,7 @@ class CustomListView extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                         ),
                         isFill: true,
+                        readOnly: true,
                         fillColor: ColorManager.whiteColor,
                         isBorder: true,
                         suffixIcon: Icon(
@@ -176,7 +180,7 @@ class CustomListView extends StatelessWidget {
                             ),
                             children: [
                               TextSpan(
-                                text: trainee['name'] ?? '',
+                                text: trainee.name,
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
@@ -198,7 +202,7 @@ class CustomListView extends StatelessWidget {
                             ),
                             children: [
                               TextSpan(
-                                text: trainee['phone'] ?? '',
+                                text: trainee.phoneNumber,
                                 style: TextStyle(
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w400,

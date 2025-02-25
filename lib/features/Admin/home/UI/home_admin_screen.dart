@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/admin_clip_oval.dart';
+import 'package:hola_academy/core/constants/api_constants.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
+import 'package:hola_academy/core/dependency_injection/dependency.dart';
 import 'package:hola_academy/features/home/UI/components/timeline_widget.dart';
+import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 
 import '../../../../core/constants/image_manager.dart';
 
@@ -21,7 +25,10 @@ class HomeAdminScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const WelcomeWidget(),
+                BlocProvider(
+                  create: (context) => getIT<UserDataCubit>()..getMyData(),
+                  child: const WelcomeWidget(),
+                ),
                 SizedBox(height: 16.h),
                 const AdWidget(),
                 SizedBox(height: 16.h),
@@ -47,7 +54,7 @@ class HomeAdminScreen extends StatelessWidget {
                   action: 'View All',
                   onPressed: () {
                     // Navigate to the new requests screen
-                    Navigator.of(context).pushNamed(Routes.traineesScreen);
+                    Navigator.of(context).pushNamed(Routes.traineesScreen, arguments: 'COACH');
                   },
                 ),
                 SizedBox(height: 16.h),
@@ -58,7 +65,7 @@ class HomeAdminScreen extends StatelessWidget {
                   action: 'View All',
                   onPressed: () {
                     // Navigate to the new requests screen
-                    Navigator.of(context).pushNamed(Routes.traineesScreen);
+                    Navigator.of(context).pushNamed(Routes.traineesScreen, arguments: 'TRAINEE');
                   },
                 ),
                 SizedBox(height: 16.h),
@@ -121,85 +128,95 @@ class WelcomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // Left Section: Profile Avatar and Text
-        Row(
+    return BlocBuilder<UserDataCubit, UserDataState>(
+      builder: (context, state) {
+        String name = " ";
+        String pic = '';
+        if (state is UserDataSuccess) {
+          name = state.userModel.name;
+          pic = state.userModel.profileImage?.path ?? '';
+        }
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CircleAvatar(
-              radius: 30, // Adjust size to match UI
-              backgroundImage: AssetImage(
-                'assets/images/profilepic.png', // Replace with actual image URL
-              ),
-            ),
-            const SizedBox(width: 16),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            // Left Section: Profile Avatar and Text
+            Row(
               children: [
-                Text(
-                  "Welcome Back!",
-                  style:
-                      TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w300),
+                CircleAvatar(
+                  radius: 30, // Adjust size to match UI
+                  backgroundImage: NetworkImage(
+                    ApiConstants.imagesURLApi + pic,
+                  ),
                 ),
-                Text(
-                  "Jennifer James",
-                  style:
-                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
+                const SizedBox(width: 16),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Welcome Back!",
+                      style: TextStyle(
+                          fontSize: 14.sp, fontWeight: FontWeight.w300),
+                    ),
+                    Text(
+                      name,
+                      style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+            // Right Section: Circular Statistics with Curved Bar
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                // Semi-circular Orange Bar
+                CustomPaint(
+                  size: const Size(
+                      100, 100), // Match the size of the circular container
+                  painter: CurvedBarPainter(),
+                ),
+
+                // Circular Statistics Container
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: const Color(
+                        0xFFFFF4E2), // Light background for the circle
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'No. Of Trainees : 50',
+                        style: TextStyle(
+                          fontSize: 8,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xFFF09C1F), // Orange text
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'No. Of Coaches : 10',
+                        style: TextStyle(
+                          fontSize: 8,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xFFF09C1F), // Orange text
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
           ],
-        ),
-
-        // Right Section: Circular Statistics with Curved Bar
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            // Semi-circular Orange Bar
-            CustomPaint(
-              size: const Size(
-                  100, 100), // Match the size of the circular container
-              painter: CurvedBarPainter(),
-            ),
-
-            // Circular Statistics Container
-            Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color:
-                    const Color(0xFFFFF4E2), // Light background for the circle
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    'No. Of Trainees : 50',
-                    style: TextStyle(
-                      fontSize: 8,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFFF09C1F), // Orange text
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'No. Of Coaches : 10',
-                    style: TextStyle(
-                      fontSize: 8,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFFF09C1F), // Orange text
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
+        );
+      },
     );
   }
 }
