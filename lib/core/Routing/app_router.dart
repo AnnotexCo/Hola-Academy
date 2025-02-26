@@ -214,11 +214,8 @@ class AppRouter {
 
       case Routes.requestsScreen:
         return MaterialPageRoute(
-          builder: (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (context) => getIT<RequestsCubit>()),
-              BlocProvider(create: (context) => getIT<UserDataCubit>()),
-            ],
+          builder: (_) => BlocProvider(
+            create: (context) => getIT<RequestsCubit>(),
             child: RequestsScreen(),
           ),
         );

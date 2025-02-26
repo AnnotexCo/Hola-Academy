@@ -1,71 +1,71 @@
 class CategoryModel {
-  late num id;
-  late String name;
-  late num imageId;
-  late String description;
-  late bool isDeleted;
-  late num parentCategoryId;
-  late String createdAt;
-  late String updatedAt;
-  late Image image;
+  final int id;
+  final String name;
+  final String description;
+  final bool isDeleted;
+  final int parentCategoryId;
+  final String createdAt;
+  final String updatedAt;
+  final ImageModel? image; // Nullable to prevent crashes
+
   CategoryModel({
     required this.id,
     required this.name,
-    required this.imageId,
     required this.description,
     required this.isDeleted,
     required this.parentCategoryId,
     required this.createdAt,
     required this.updatedAt,
-    required this.image,
+    this.image, // Nullable
   });
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(
       id: json['id'],
       name: json['name'],
-      imageId: json['imageId'],
       description: json['description'],
       isDeleted: json['isDeleted'],
       parentCategoryId: json['parentCategoryId'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
-      image: Image.fromJson(json['Image']),
+      image: json['Image'] != null ? ImageModel.fromJson(json['Image']) : null,
     );
   }
 }
 
-class Image {
-  late num id;
-  late String name;
-  late String path;
-  late String type;
-  late num size;
-  late bool isDeleted;
-  late String createdAt;
-  late String updatedAt;
 
-  Image({
+class ImageModel {
+  final int id;
+  final String name;
+  final String path;
+  final String type;
+  final int? size; // Nullable size
+  final bool isDeleted;
+  final String createdAt;
+  final String updatedAt;
+
+  ImageModel({
     required this.id,
     required this.name,
     required this.path,
     required this.type,
-    required this.size,
+    this.size, // Nullable
     required this.isDeleted,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  factory Image.fromJson(Map<String, dynamic> json) {
-    return Image(
+  factory ImageModel.fromJson(Map<String, dynamic> json) {
+    return ImageModel(
       id: json['id'],
       name: json['name'],
       path: json['path'],
       type: json['type'],
-      size: json['size'],
+      size: json['size'], // Nullable
       isDeleted: json['isDeleted'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
     );
   }
 }
+

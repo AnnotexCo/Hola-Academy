@@ -29,7 +29,7 @@ class ProgramsCubit extends Cubit<ProgramsState> {
     if (_allPrograms.isNotEmpty) {
       final filtered = categoryId == null
           ? _allPrograms
-          : _allPrograms.where((p) => p.category.id == categoryId).toList();
+          : _allPrograms.where((p) => p.category?.id == categoryId).toList();
       emit(ProgramsSuccess(filtered));
     }
   }

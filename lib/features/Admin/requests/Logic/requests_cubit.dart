@@ -16,6 +16,7 @@ class RequestsCubit extends Cubit<RequestsState> {
     try {
       if (!isClosed) emit(RequestsLoading());
       final requestsList = await requestsRepo.fetchAllRequests();
+      print('Requestsss: $requestsList');
       if (!isClosed) emit(AllRequestsSuccess(requestsList));
     } catch (error) {
       if (!isClosed) emit(RequestsError(error.toString()));
