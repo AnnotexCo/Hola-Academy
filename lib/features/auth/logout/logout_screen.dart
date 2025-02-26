@@ -44,11 +44,11 @@ class AnimatedGradientCircularProgressIndicator extends StatefulWidget {
   const AnimatedGradientCircularProgressIndicator({super.key});
 
   @override
-  _AnimatedGradientCircularProgressIndicatorState createState() =>
-      _AnimatedGradientCircularProgressIndicatorState();
+  AnimatedGradientCircularProgressIndicatorState createState() =>
+      AnimatedGradientCircularProgressIndicatorState();
 }
 
-class _AnimatedGradientCircularProgressIndicatorState
+class AnimatedGradientCircularProgressIndicatorState
     extends State<AnimatedGradientCircularProgressIndicator>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;

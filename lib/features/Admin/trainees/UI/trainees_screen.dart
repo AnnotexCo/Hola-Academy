@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +8,7 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/not_found/not_found_screen.dart';
 import 'package:hola_academy/features/profile/Data/Model/trainee_model.dart';
-import 'package:hola_academy/features/profile/Data/Model/user_model.dart';
+
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'widgets/custom_list_view.dart';
 

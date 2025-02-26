@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +7,6 @@ import 'package:hola_academy/core/components/general_text_form_field.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
-import 'package:hola_academy/core/dependency_injection/dependency.dart';
 import 'package:hola_academy/features/not_found/not_found_screen.dart';
 import 'package:hola_academy/features/profile/Data/Model/update_user_model.dart';
 import 'package:hola_academy/features/profile/Data/Model/user_model.dart';
@@ -43,7 +40,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
 
   final TextEditingController passwordController = TextEditingController();
 
-  final bool _isPasswordVisible = false;
+  // final bool _isPasswordVisible = false;
 
   String? selectedGender;
 

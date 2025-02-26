@@ -1,32 +1,34 @@
+import 'category_model.dart';
+
 class ProgramsModel {
   final int id;
   final int categoryId;
   final String name;
   final String description;
-  final int imageId;
   final String allowedGender;
   final int minAge;
   final int maxAge;
   final String createdAt;
   final String updatedAt;
-  final ImageModel image;
-  final CategoryModel category;
+  final ImageModel? image;
+  final CategoryModel? category;
   final List<LevelModel>? levels;
+  final int? imageId; // If you still need the imageId separately
 
   ProgramsModel({
     required this.id,
     required this.categoryId,
     required this.name,
     required this.description,
-    required this.imageId,
     required this.allowedGender,
     required this.minAge,
     required this.maxAge,
     required this.createdAt,
     required this.updatedAt,
-    required this.image,
-    required this.category,
+    this.image,
+    this.category,
     this.levels,
+    this.imageId,
   });
 
   factory ProgramsModel.fromJson(Map<String, dynamic> json) {
@@ -35,18 +37,19 @@ class ProgramsModel {
       categoryId: json['categoryId'],
       name: json['name'],
       description: json['description'],
-      imageId: json['imageId'],
       allowedGender: json['allowedGender'],
       minAge: json['minAge'],
       maxAge: json['maxAge'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
-      image: ImageModel.fromJson(json['Image']),
-      category: CategoryModel.fromJson(json['Category']),
+      image: json['Image'] != null ? ImageModel.fromJson(json['Image']) : null,
+      category:
+          json['Category'] != null ? CategoryModel.fromJson(json['Category']) : null,
       levels: json['Level'] != null
           ? List<LevelModel>.from(
-              json['Level'].map((x) => LevelModel.fromJson(x)))
-          : [],
+              (json['Level'] as List).map((x) => LevelModel.fromJson(x)))
+          : null,
+      imageId: json['imageId'], // Optional if still needed
     );
   }
 }
@@ -77,28 +80,8 @@ class ImageModel {
   }
 }
 
-class CategoryModel {
-  final int id;
-  final String name;
-  final int imageId;
-  final String description;
 
-  CategoryModel({
-    required this.id,
-    required this.name,
-    required this.imageId,
-    required this.description,
-  });
 
-  factory CategoryModel.fromJson(Map<String, dynamic> json) {
-    return CategoryModel(
-      id: json['id'],
-      name: json['name'],
-      imageId: json['imageId'],
-      description: json['description'],
-    );
-  }
-}
 
 class LevelModel {
   final int id;
@@ -129,7 +112,7 @@ class LevelModel {
       order: json['order'],
       name: json['name'],
       description: json['description'],
-      clarification: json['clarification'],
+      clarification: json['clarification'] ?? "", // Handle null safely
       programId: json['programId'],
       imageId: json['imageId'],
       lessonNumber: json['lessonNumber'],

@@ -1,18 +1,14 @@
-import 'dart:io';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hola_academy/core/constants/api_constants.dart';
-import 'package:hola_academy/core/local_db/save_token.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
 class CustomProfileBackgroung extends StatefulWidget {
-  bool isEdit = false;
-  CustomProfileBackgroung({
+  final bool isEdit;
+  const CustomProfileBackgroung({
     super.key,
     this.isEdit = false,
   });

@@ -177,11 +177,7 @@ class ClassesScreenState extends State<ClassesScreen> {
         itemCount: filteredPrograms.length,
         itemBuilder: (context, index) => Padding(
           padding: EdgeInsets.only(bottom: 18.0.h),
-          child: GestureDetector(
-            onTap: () => Navigator.pushNamed(context, Routes.detailsScreen,
-                arguments: filteredPrograms[index].id),
-            child: _buildClassItem(filteredPrograms[index]),
-          ),
+          child: _buildClassItem(filteredPrograms[index]),
         ),
       ),
     );
@@ -195,7 +191,10 @@ class ClassesScreenState extends State<ClassesScreen> {
         return AvailableClassWidget(
             name: program.name, description: program.description);
       default:
-        return ProgramWidget(program: program);
+        return GestureDetector(
+          onTap: ()=> Navigator.pushNamed(context, Routes.detailsScreen,
+                arguments: program.id),
+          child: ProgramWidget(program: program));
     }
   }
 
@@ -220,10 +219,7 @@ class ClassesScreenState extends State<ClassesScreen> {
             itemCount: filteredPrograms.length,
             itemBuilder: (context, index) => Padding(
               padding: EdgeInsets.only(bottom: 18.0.h),
-              child: GestureDetector(
-                onTap: () => Navigator.pushNamed(context, Routes.detailsScreen),
-                child: ProgressClassWidget(),
-              ),
+              child: ProgressClassWidget(),
             ),
           ),
         ),

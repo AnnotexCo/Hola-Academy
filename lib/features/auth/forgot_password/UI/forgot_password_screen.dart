@@ -192,7 +192,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   void _onSubmit() {
     if (_formKey.currentState?.validate() ?? false) {
       context.read<ForgetPasswordCubit>().forgetpassword(_inputController.text);
-      print(_inputController.text);
+      // print(_inputController.text);
     }
   }
 

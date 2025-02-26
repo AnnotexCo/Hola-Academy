@@ -47,7 +47,7 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
     });
   }
 
-  Future<void> _loadUserData(BuildContext context) async {
+  Future<void> _loadUserData(context) async {
     final role = await SaveTokenDB.getRole();
     await context.read<UserDataCubit>().getMyData();
     setState(() {
@@ -115,8 +115,8 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
 
     );
 
-      print("📤 Booking Data: $updatedBookingData");
-    print("📸 Payment Image: ${_paymentImage ?? 'No Image'}");
+    //   print("📤 Booking Data: $updatedBookingData");
+    // print("📸 Payment Image: ${_paymentImage ?? 'No Image'}");
 
     context.read<RequestsCubit>().bookProgram(updatedBookingData!, imageFile: _paymentImage);
   }
@@ -166,7 +166,7 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
             listener: (context, state) {
               if (state is UserDataSuccess) {
                 setState(() => _userData = state.userModel);
-                print('Userrrrr Data: $_userData');
+                // print('Userrrrr Data: $_userData');
               }
               
               if (state is UserDataFailure) {

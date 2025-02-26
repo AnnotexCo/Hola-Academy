@@ -35,6 +35,9 @@ import '../../features/classes/Data/Repo/programs_repo.dart';
 import '../../features/classes/Logic/programms/programs_cubit.dart';
 import '../../features/home/Data/Repo/banner_repo.dart';
 import '../../features/home/Logic/banner_logic/banner_cubit.dart';
+import '../../features/notifications/Data/Repo/notification_repo.dart';
+import '../../features/notifications/Logic/notifications_cubit.dart';
+import '../networking/Dio/Notifications/dio_notifications_api.dart';
 import '../networking/Dio/Program/dio_programs.dart';
 
 final getIT = GetIt.instance; // Ensure it's instance, not calling it
@@ -83,6 +86,10 @@ void setUpGetIt() {
 // TransactionsDioApi
   getIT.registerLazySingleton<DioTranscations>(
       () => DioTranscations(dio: getIT<Dio>()));
+
+  // Notifications API
+  getIT.registerLazySingleton<DioNotificationsApi>(
+      () => DioNotificationsApi(dio: getIT<Dio>()));
 
   //Class APi
   getIT.registerLazySingleton<DioClasses>(() => DioClasses(dio: getIT<Dio>()));
@@ -149,4 +156,12 @@ void setUpGetIt() {
   getIT.registerLazySingleton<TransactionRepo>(
       () => TransactionRepo(dioTranscations: getIT<DioTranscations>()));
   getIT.registerFactory<TransCubit>(() => TransCubit(getIT<TransactionRepo>()));
+
+  // Notifications
+    getIT.registerLazySingleton<NotificationsRepo>(
+      () => NotificationsRepo(dioNotificationsApi: getIT<DioNotificationsApi>()));
+
+      getIT.registerFactory<NotificationsCubit>(
+      () => NotificationsCubit(getIT<NotificationsRepo>()));
+
 }

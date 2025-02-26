@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,7 +17,6 @@ import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
 
 import '../../../core/local_db/save_token.dart';
-import '../../Admin/transactions/admin_transactions_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -29,7 +26,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  String? _userRole;
+  String? userRole;
 
   @override
   void initState() {
@@ -40,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> _loadUserRole() async {
     String? role = await SaveTokenDB.getRole(); // Fetch from local storage
     setState(() {
-      _userRole = role;
+      userRole = role;
     });
   }
 
@@ -56,13 +53,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: SingleChildScrollView(
           child: BlocBuilder<UserDataCubit, UserDataState>(
             builder: (context, state) {
-              String name = " ";
-              String pic = '';
               if (state is UserDataSuccess) {
-                name = state.userModel.name.isNotEmpty
-                    ? state.userModel.name
-                    : "No Name";
-                pic = state.userModel.profileImage?.path ?? '';
               }
               return Column(spacing: 56.h, children: [
                 BlocProvider(

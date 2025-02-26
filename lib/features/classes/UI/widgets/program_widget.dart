@@ -13,8 +13,8 @@ class ProgramWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //final String imageUrl = ImageManager.onBoardingImage1;
-    final String imageUrl = '${ApiConstants.imagesURLApi}${program.image.path}';
-    print(program.image.path);
+    final String imageUrl = '${ApiConstants.imagesURLApi}${program.image?.path}';
+    print(program.image?.path);
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),

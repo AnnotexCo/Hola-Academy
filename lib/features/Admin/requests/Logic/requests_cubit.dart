@@ -38,14 +38,14 @@ class RequestsCubit extends Cubit<RequestsState> {
     try {
       if (!isClosed) emit(RequestsLoading());
 
-      print("📤 Sending Booking Data: ${bookingProgramModel.toJson()}"); // Debugging log
-      if (imageFile != null) print("📸 Image File: ${imageFile.path}"); // Debugging log
+      // print("📤 Sending Booking Data: ${bookingProgramModel.toJson()}"); // Debugging log
+      // if (imageFile != null) print("📸 Image File: ${imageFile.path}"); // Debugging log
 
       await requestsRepo.bookProgram(bookingProgramModel, imageFile: imageFile); // ✅ Fixed call
 
       if (!isClosed) emit(BookRequestSuccess());
     } catch (error) {
-      print("❌ Booking Error: $error");
+      // print("❌ Booking Error: $error");
 
       if (error is DioException) {
         final response = error.response?.data;

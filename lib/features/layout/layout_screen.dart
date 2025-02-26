@@ -9,11 +9,12 @@ import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.
 import 'package:hola_academy/features/classes/Logic/classes/cubit/classes_cubit.dart';
 import 'package:hola_academy/features/classes/UI/classes_screen.dart';
 import 'package:hola_academy/features/home/UI/home_screen.dart';
-import 'package:hola_academy/features/notifications/notifications_screen.dart';
+import 'package:hola_academy/features/notifications/UI/notifications_screen.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 
 import '../../core/dependency_injection/dependency.dart';
 import '../classes/Logic/programms/programs_cubit.dart';
+import '../notifications/Logic/notifications_cubit.dart';
 import '../profile/UI/profile_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
@@ -34,7 +35,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
       BlocProvider(create: (context) => getIT<CategoriesCubit>()),
       BlocProvider(create: (context) => getIT<ClassesCubit>()),
     ], child: ClassesScreen()),
-    NotificationsScreen(),
+    BlocProvider(
+      create: (context) => getIT<NotificationsCubit>(),
+      child: NotificationsScreen(),
+    ),
     BlocProvider(
       create: (context) => getIT<UserDataCubit>(),
       child: ProfileScreen(),

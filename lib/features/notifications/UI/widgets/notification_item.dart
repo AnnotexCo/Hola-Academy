@@ -2,24 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 
-// ignore: must_be_immutable
 class NotificationItem extends StatefulWidget {
+  final int id;
   final String title;
   final String message;
-
   final String time;
   final IconData icon;
   final Color iconColor;
-  bool? isSelected;
+  final bool isSelected;
+  final Function(bool) onSelected;
 
-  NotificationItem({
+  const NotificationItem({
     super.key,
+    required this.id,
     required this.title,
     required this.message,
     required this.time,
     required this.icon,
     required this.iconColor,
-    this.isSelected = false,
+    required this.isSelected,
+    required this.onSelected,
   });
 
   @override
@@ -27,6 +29,14 @@ class NotificationItem extends StatefulWidget {
 }
 
 class _NotificationItemState extends State<NotificationItem> {
+  late bool isSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    isSelected = widget.isSelected;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -39,10 +49,11 @@ class _NotificationItemState extends State<NotificationItem> {
           child: Checkbox(
             activeColor: ColorManager.primaryOrangeColor,
             checkColor: Colors.white,
-            value: widget.isSelected,
+            value: isSelected,
             onChanged: (value) {
               setState(() {
-                widget.isSelected = !widget.isSelected!;
+                isSelected = value!;
+                widget.onSelected(value);
               });
             },
             shape: RoundedRectangleBorder(
@@ -85,7 +96,6 @@ class _NotificationItemState extends State<NotificationItem> {
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
-                          color: Colors.black87,
                         ),
                       ),
                       Text(

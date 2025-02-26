@@ -9,7 +9,6 @@ class ProgramsCubit extends Cubit<ProgramsState> {
 
   ProgramsCubit(this.programRepo) : super(ProgramsInitial()) {
     fetchAllPrograms();
-        print("Get All Prgorams");
 
   }
 
@@ -29,7 +28,7 @@ class ProgramsCubit extends Cubit<ProgramsState> {
     if (_allPrograms.isNotEmpty) {
       final filtered = categoryId == null
           ? _allPrograms
-          : _allPrograms.where((p) => p.category.id == categoryId).toList();
+          : _allPrograms.where((p) => p.category?.id == categoryId).toList();
       emit(ProgramsSuccess(filtered));
     }
   }

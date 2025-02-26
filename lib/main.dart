@@ -9,11 +9,14 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/networking/networkconnection/cubit/network_connection_cubit.dart';
 import 'core/bloc_observer/bloc_observer.dart';
 import 'core/dependency_injection/dependency.dart';
+import 'core/local_notification_service/local_notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setUpGetIt();
   Bloc.observer = MyBlocObserver();
+  // initialize notification
+  await LocalNotificationService().initNotification();
   runApp(
     MultiBlocProvider(
       providers: [

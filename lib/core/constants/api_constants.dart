@@ -29,4 +29,9 @@ class ApiConstants {
 
   static String transactionsApi = 'api/transaction';
   static String transactionsAskForMoney = 'api/transaction/me/ask-for-money';
+
+  // Notifications
+  static const String notificationsApi = 'api/notifications/my-notifications';
+  static const String notificationUdateStatusApi = 'api/notifications/status/';
+  static const String notificationsByIdApi = 'api/notifications/';
 }

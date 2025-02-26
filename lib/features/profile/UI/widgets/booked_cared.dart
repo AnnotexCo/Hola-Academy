@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
+
 import 'package:hola_academy/core/constants/color_manager.dart';
 
 class BookedCard extends StatelessWidget {
@@ -23,10 +26,8 @@ class BookedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 398.w,
-      height: 93.h,
-      //margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      //padding: const EdgeInsets.all(12),
+      width: double.infinity,
+      height: 100.h,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12.r),
@@ -41,22 +42,33 @@ class BookedCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Course Image
+          // Image with shimmer effect
           ClipRRect(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(12.r),
               bottomLeft: Radius.circular(12.r),
             ),
-            child: Image.asset(
-              imageUrl,
-              height: 130.h,
-              width: 93.w,
+            child: CachedNetworkImage(
+              imageUrl: imageUrl,
+              height: 100.h,
+              width: 90.w,
               fit: BoxFit.cover,
+              placeholder: (context, url) => Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  height: 100.h,
+                  width: 90.w,
+                  color: Colors.white,
+                ),
+              ),
+              errorWidget: (context, url, error) => const Icon(Icons.error, color: Colors.red),
             ),
           ),
 
-          SizedBox(width: 22.w),
+          SizedBox(width: 16.w),
 
+          // Text Information
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -64,62 +76,56 @@ class BookedCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                  ),
+                  style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 9.h),
+                SizedBox(height: 8.h),
                 Text(
-                  "Min Age: $minAge   Max Age: $maxAge",
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey,
-                  ),
+                  "Age: $minAge - $maxAge",
+                  style: TextStyle(fontSize: 12.sp, color: Colors.grey),
                 ),
-                SizedBox(height: 7.h),
                 Text(
                   "Suitable For: $suitableFor",
-                  style: const TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey,
-                  ),
+                  style: TextStyle(fontSize: 12.sp, color: Colors.grey),
                 ),
               ],
             ),
           ),
 
-          const SizedBox(width: 8),
-
-          // Status Tag
-          Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 6.h, right: 13.w),
-                child: Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 3.5.h, horizontal: 12.5.w),
-                  decoration: BoxDecoration(
-                    color: ColorManager.lightOrange,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    status,
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      color: ColorManager.whiteColor,
-                    ),
-                  ),
+          // Status Label
+          Padding(
+            padding: EdgeInsets.only(right: 10.w),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+              decoration: BoxDecoration(
+                color: _getStatusColor(status).withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              child: Text(
+                status.toUpperCase(),
+                style: TextStyle(
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.bold,
+                  color: _getStatusColor(status),
                 ),
               ),
-            ],
+            ),
           ),
         ],
       ),
     );
+  }
+
+  // Get color based on status
+  Color _getStatusColor(String status) {
+    switch (status.toUpperCase()) {
+      case 'PENDING':
+        return Colors.orange;
+      case 'ACCEPTED':
+        return Colors.green;
+      case 'REJECTED':
+        return Colors.red;
+      default:
+        return Colors.blueGrey;
+    }
   }
 }

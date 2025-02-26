@@ -2,18 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
-import 'package:hola_academy/core/components/admin_clip_oval.dart';
-import 'package:hola_academy/core/constants/api_constants.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
-import 'package:hola_academy/core/dependency_injection/dependency.dart';
+import 'package:hola_academy/features/Admin/requests/Logic/requests_cubit.dart';
 import 'package:hola_academy/features/home/UI/components/timeline_widget.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 
-import '../../../../core/constants/image_manager.dart';
+import '../../../../core/dependency_injection/dependency.dart';
+import '../../../home/Logic/banner_logic/banner_cubit.dart';
+import '../../../home/UI/components/add_baner.dart';
+import 'widgets/new_requests_section.dart';
+import 'widgets/section_header.dart';
+import 'widgets/welcome_widget.dart';
 
-class HomeAdminScreen extends StatelessWidget {
+class HomeAdminScreen extends StatefulWidget {
   const HomeAdminScreen({super.key});
 
+  @override
+  State<HomeAdminScreen> createState() => _HomeAdminScreenState();
+}
+
+class _HomeAdminScreenState extends State<HomeAdminScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,10 +35,13 @@ class HomeAdminScreen extends StatelessWidget {
               children: [
                 BlocProvider(
                   create: (context) => getIT<UserDataCubit>()..getMyData(),
-                  child: const WelcomeWidget(),
+                  child: WelcomeWidget(),
                 ),
                 SizedBox(height: 16.h),
-                const AdWidget(),
+                BlocProvider(
+                  create: (context) => getIT<BannersCubit>()..fetchAllBanners(),
+                  child: AddBaner(),
+                ),
                 SizedBox(height: 16.h),
                 SizedBox(
                   height: 80.h,
@@ -39,7 +50,7 @@ class HomeAdminScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 24.h),
                 SectionHeader(
-                  title: 'New Requests (3)',
+                  title: 'New Requests',
                   action: 'View All',
                   onPressed: () {
                     // Navigate to the new requests screen
@@ -47,7 +58,11 @@ class HomeAdminScreen extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 16.h),
-                const NewRequestsSection(),
+                BlocProvider(
+                  create: (context) =>
+                      getIT<RequestsCubit>()..fetchAllRequests(),
+                  child: NewRequestsSection(),
+                ),
                 SizedBox(height: 24.h),
                 SectionHeader(
                   title: 'Coaches',
@@ -79,368 +94,8 @@ class HomeAdminScreen extends StatelessWidget {
   }
 }
 
-class SectionHeader extends StatelessWidget {
-  final String title;
-  final String? action;
-  final Color? color;
-  final void Function()? onPressed;
 
-  const SectionHeader({
-    super.key,
-    required this.title,
-    this.action,
-    this.color,
-    this.onPressed,
-  });
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 20.sp,
-            fontWeight: FontWeight.w600,
-            color: color ?? ColorManager.darkRedColor,
-          ),
-        ),
-        if (action != null && action!.isNotEmpty)
-          TextButton(
-            onPressed: onPressed,
-            child: Text(
-              action!,
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w400,
-                color: color ?? ColorManager.textRedColor,
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-class WelcomeWidget extends StatelessWidget {
-  const WelcomeWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<UserDataCubit, UserDataState>(
-      builder: (context, state) {
-        String name = " ";
-        String pic = '';
-        if (state is UserDataSuccess) {
-          name = state.userModel.name;
-          pic = state.userModel.profileImage?.path ?? '';
-        }
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Left Section: Profile Avatar and Text
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 30, // Adjust size to match UI
-                  backgroundImage: NetworkImage(
-                    ApiConstants.imagesURLApi + pic,
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Welcome Back!",
-                      style: TextStyle(
-                          fontSize: 14.sp, fontWeight: FontWeight.w300),
-                    ),
-                    Text(
-                      name,
-                      style: TextStyle(
-                          fontSize: 16.sp, fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-
-            // Right Section: Circular Statistics with Curved Bar
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                // Semi-circular Orange Bar
-                CustomPaint(
-                  size: const Size(
-                      100, 100), // Match the size of the circular container
-                  painter: CurvedBarPainter(),
-                ),
-
-                // Circular Statistics Container
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: const Color(
-                        0xFFFFF4E2), // Light background for the circle
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'No. Of Trainees : 50',
-                        style: TextStyle(
-                          fontSize: 8,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFFF09C1F), // Orange text
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        'No. Of Coaches : 10',
-                        style: TextStyle(
-                          fontSize: 8,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFFF09C1F), // Orange text
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-// Custom Painter for the Orange Curved Bar
-class CurvedBarPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()
-      ..color = ColorManager.primaryOrangeColor
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 6; // Adjust the thickness of the bar
-
-    final Rect rect = Rect.fromCircle(
-      center: Offset(size.width / 2, size.height / 2),
-      radius: size.width / 2,
-    );
-
-    // Draw the semi-circle (adjust the sweep angle for better positioning)
-    canvas.drawArc(
-      rect,
-      3.14, // Start angle (180 degrees)
-      3.14, // Sweep angle (180 degrees)
-      false,
-      paint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
-  }
-}
-
-class AdWidget extends StatelessWidget {
-  const AdWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity, // Full width of the parent
-      height: 128.h, // Adaptive height
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(20.r), // Scaled border radius
-        ),
-        image: DecorationImage(
-          image: AssetImage(ImageManager.addBanner),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Stack(
-        children: [
-          // Text Section
-          Positioned(
-            top: 20.h,
-            //left: 16.w,
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: 16.w,
-                right: 130.w,
-                top: 1.h,
-                bottom: 64.h,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Taste the national dishes of Greek cuisine at',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      height: 1.2,
-                      color: ColorManager.whiteColor,
-                    ),
-                  ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    'Mediterranean Delights restaurant.',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w700,
-                      height: 1.2,
-                      color: ColorManager.whiteColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          // Button Section
-          Positioned(
-            bottom: 11.h,
-            left: 40.w,
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFA1B237),
-                padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 10.h),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12.r)),
-                ),
-              ),
-              child: Text(
-                'View Menu',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w400,
-                  color: ColorManager.whiteColor,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class NewRequestsSection extends StatelessWidget {
-  const NewRequestsSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: 3,
-      separatorBuilder: (_, __) => SizedBox(height: 16.h),
-      itemBuilder: (context, index) => Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // Left Dot
-          Container(
-            width: 12.w,
-            height: 12.h,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: ColorManager.primaryOrangeColor,
-            ),
-          ),
-          SizedBox(width: 12.w),
-          // Pentagon-shaped Container with Image
-          AdminClipOval(
-              color: ColorManager.linearGradient1,
-              image: "assets/images/profilepic.png"),
-          /*Stack(
-            alignment: Alignment.center,
-            children: [
-              CustomPaint(
-                size: Size(56.w, 56.h),
-                painter: PentagonPainter(const Color(0xFFFEF5E9)),
-              ),
-              ClipOval(
-                child: SizedBox(
-                  width: 36.w,
-                  height: 36.h,
-                  child: Image.asset(
-                    "assets/images/profilepic.png",
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          */
-          SizedBox(width: 12.w),
-          // Name and Type
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Jumi Ulum',
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(height: 4.h),
-                Text(
-                  'Private',
-                  style: TextStyle(
-                    fontSize: 10.sp,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // Status and Date
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
-                decoration: BoxDecoration(
-                  color: ColorManager.primaryOrangeColor.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.all(Radius.circular(12.r)),
-                ),
-                child: Text(
-                  'Pending',
-                  style: TextStyle(
-                    fontSize: 10.sp,
-                    fontWeight: FontWeight.w400,
-                    color: ColorManager.primaryOrangeColor,
-                  ),
-                ),
-              ),
-              SizedBox(height: 4.h),
-              Text(
-                '02 Jan 2025, 02:00 PM',
-                style: TextStyle(
-                  fontSize: 10.sp,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 // Custom Painter for Pentagon Shape
 class PentagonPainter extends CustomPainter {

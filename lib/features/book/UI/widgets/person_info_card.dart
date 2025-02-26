@@ -103,7 +103,7 @@ class PersonalInfoCard extends StatelessWidget {
     }
 
     final String imageUrl = '${ApiConstants.imagesURLApi}$imagePath';
-    print("Profile Image URL: $imageUrl"); // Debugging print
+    // print("Profile Image URL: $imageUrl"); // Debugging print
 
     return CachedNetworkImage(
       imageUrl: imageUrl,
@@ -118,7 +118,7 @@ class PersonalInfoCard extends StatelessWidget {
       fadeInDuration: Duration(milliseconds: 300), //  Smooth transition
       placeholder: (context, url) => Center(child: CircularProgressIndicator()),
       errorWidget: (context, url, error) {
-        print("Error loading image: $error"); // Debugging print
+        // print("Error loading image: $error"); // Debugging print
         return Image.asset(
           ImageManager.pic, // Fallback image on error
           width: 80.0.w,
