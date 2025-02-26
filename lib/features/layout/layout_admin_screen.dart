@@ -7,12 +7,13 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/core/dependency_injection/dependency.dart';
 import 'package:hola_academy/features/Admin/home/UI/home_admin_screen.dart';
-import 'package:hola_academy/features/notifications/notifications_screen.dart';
+import 'package:hola_academy/features/notifications/UI/notifications_screen.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'package:hola_academy/features/profile/Logic/transactions/trans_cubit.dart';
 import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
 import '../Admin/scanner/qr_code_scanner_screen.dart';
 import '../Admin/transactions/admin_transactions_screen.dart';
+import '../notifications/Logic/notifications_cubit.dart';
 
 class LayoutAdminScreen extends StatefulWidget {
   const LayoutAdminScreen({super.key});
@@ -31,7 +32,10 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
         create: (context) => getIT<TransCubit>(),
         child: AdminTransactionsScreen()),
     QRCodeScannerScreen(),
-    NotificationsScreen(),
+     BlocProvider(
+      create: (context) => getIT<NotificationsCubit>(),
+      child: NotificationsScreen(),
+    ),
     BlocProvider(
       create: (context) => getIT<UserDataCubit>(),
       child: PersonalInfoScreen(),

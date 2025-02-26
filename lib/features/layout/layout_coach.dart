@@ -9,10 +9,11 @@ import 'package:hola_academy/core/dependency_injection/dependency.dart';
 
 
 import 'package:hola_academy/features/home/UI/home_screen_coach.dart';
-import 'package:hola_academy/features/notifications/notifications_screen.dart';
+import 'package:hola_academy/features/notifications/UI/notifications_screen.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'package:hola_academy/features/schedule_evaluation/UI/schedule_evaluation_screen.dart';
 
+import '../notifications/Logic/notifications_cubit.dart';
 import '../profile/UI/profile_screen.dart';
 
 class LayoutCoachScreen extends StatefulWidget {
@@ -29,7 +30,10 @@ class _LayoutCoachScreenState extends State<LayoutCoachScreen> {
   final List<Widget> _screens = [
     HomeScreenCoach(),
     ScheduleEvaluationScreen(),
-    NotificationsScreen(),
+     BlocProvider(
+      create: (context) => getIT<NotificationsCubit>(),
+      child: NotificationsScreen(),
+    ),
       BlocProvider(
       create: (context) => getIT<UserDataCubit>(),
       child: ProfileScreen(),

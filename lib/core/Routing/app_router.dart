@@ -22,7 +22,7 @@ import 'package:hola_academy/features/home/UI/home_screen_coach.dart';
 import 'package:hola_academy/features/layout/layout_admin_screen.dart';
 import 'package:hola_academy/features/layout/layout_coach.dart';
 import 'package:hola_academy/features/layout/layout_screen.dart';
-import 'package:hola_academy/features/notifications/notifications_screen.dart';
+import 'package:hola_academy/features/notifications/UI/notifications_screen.dart';
 import 'package:hola_academy/features/onboarding/onbording.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'package:hola_academy/features/profile/Logic/transactions/trans_cubit.dart';
@@ -43,6 +43,7 @@ import '../../features/book/UI/book_programs_screen.dart';
 import '../../features/classes/Data/Model/programs_model.dart';
 import '../../features/classes/Logic/programms/programs_cubit.dart';
 import '../../features/not_found/not_found_screen.dart';
+import '../../features/notifications/Logic/notifications_cubit.dart';
 import '../../features/profile/UI/request_payment_screen.dart';
 import '../../features/schedule_evaluation/UI/schedule_evaluation_screen.dart';
 import 'routes.dart';
@@ -147,7 +148,8 @@ class AppRouter {
       case Routes.bookedScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (context) => getIT<RequestsCubit>()..fetchAllRequests(),
+                  create: (context) =>
+                      getIT<RequestsCubit>()..fetchAllRequests(),
                   child: BookedScreen(),
                 ));
 
@@ -211,7 +213,11 @@ class AppRouter {
       case Routes.notFoundScreen:
         return MaterialPageRoute(builder: (_) => const NotFoundScreen());
       case Routes.notificationsScreen:
-        return MaterialPageRoute(builder: (_) => const NotificationsScreen());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => getIT<NotificationsCubit>(),
+                  child: NotificationsScreen(),
+                ));
 
       // Admin
       case Routes.adminLayout:
@@ -230,7 +236,8 @@ class AppRouter {
       case Routes.traineesScreen:
         return MaterialPageRoute(builder: (_) {
           final String role = settings.arguments as String;
-          return BlocProvider(create: (context) => getIT<UserDataCubit>(),
+          return BlocProvider(
+              create: (context) => getIT<UserDataCubit>(),
               child: TraineesScreen(role: role));
         });
 
