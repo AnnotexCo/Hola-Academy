@@ -90,4 +90,13 @@ class UserDataCubit extends Cubit<UserDataState> {
       if (!isClosed) emit(FetchAllUsersFailure(message: e.toString()));
     }
   }
+  Future<void> fetchUsersByRole({String? role}) async {
+    try {
+      if (!isClosed) emit(UserDataLoading());
+      final users = await userRepo.fetchAllUsers(role: role);
+      if (!isClosed) emit(FetchAllUsersSuccess(users: users));
+    } catch (e) {
+      if (!isClosed) emit(FetchAllUsersFailure(message: e.toString()));
+    }
+  }
 }

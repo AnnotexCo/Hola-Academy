@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/components/general_text_form_field.dart';
+import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
+import 'package:hola_academy/features/not_found/not_found_screen.dart';
 import 'package:hola_academy/features/profile/Data/Model/trainee_model.dart';
 import 'package:hola_academy/features/profile/Data/Model/user_model.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
@@ -25,7 +27,8 @@ class _TraineesScreenState extends State<TraineesScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<UserDataCubit>().fetchAllUsers();
+    //context.read<UserDataCubit>().fetchUsersByRole(role: widget.role);
+    ();
   }
 
   @override
@@ -108,9 +111,15 @@ class _TraineesScreenState extends State<TraineesScreen> {
             SizedBox(height: 20.h),
             BlocBuilder<UserDataCubit, UserDataState>(
               builder: (context, state) {
-                List<Users> users;
+                List<User> users;
                 if (state is FetchAllUsersSuccess) {
                   users = state.users.data.users;
+                  if (users.isEmpty) {
+                    return Center(
+                        child: NotFoundScreen(
+                      title: widget.role == AppString.trainee ? 'No Trainees Found' : 'No COACH Found',
+                    ));
+                  }
                   return Expanded(
                     child: CustomListView(
                       data: users,
@@ -120,11 +129,15 @@ class _TraineesScreenState extends State<TraineesScreen> {
                   return Center(
                     child: Text(state.message),
                   );
+                } else if (state is UserDataLoading) {
+                  return Center(
+                      child: CircularProgressIndicator(
+                    color: ColorManager.textRedColor,
+                  ));
                 }
-                return Center(
-                    child: CircularProgressIndicator(
-                  color: ColorManager.textRedColor,
-                ));
+                return NotFoundScreen(
+                  title: 'No Trainees Found',
+                );
               },
             ),
           ],

@@ -18,7 +18,7 @@ class UserRepo {
     return await dioUserApi.updateMyData(updateUserModel: updateUserModel);
   }
 
-  Future<AllUsersModel> fetchAllUsers() async {
-    return await dioUserApi.fetchAllUsers();
+  Future<AllUsersModel> fetchAllUsers({String? role}) async {
+    return await dioUserApi.fetchAllUsers(role: role);
   }
 }

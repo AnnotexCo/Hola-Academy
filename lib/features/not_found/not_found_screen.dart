@@ -11,35 +11,32 @@ class NotFoundScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 250.h),
-              Opacity(
-                opacity: 1.0,
-                child: SvgPicture.asset(
-                  svgPath ?? defaultSvgPath,
-                  width: 384.w,
-                  height: 343.h,
-                ),
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: 100.h),
+            Opacity(
+              opacity: 1.0,
+              child: SvgPicture.asset(
+                svgPath ?? defaultSvgPath,
+                width: 384.w,
+                height: 343.h,
               ),
-              SizedBox(height: 8.h),
-              Text(
-                title ?? '',
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w600,
-                  color: ColorManager.textRedColor,
-                ),
+            ),
+            SizedBox(height: 8.h),
+            Text(
+              title ?? '',
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w600,
+                color: ColorManager.textRedColor,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

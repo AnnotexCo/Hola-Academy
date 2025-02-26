@@ -5,6 +5,7 @@ import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/custom_app_bar.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
+import 'package:hola_academy/features/not_found/not_found_screen.dart';
 import 'package:hola_academy/features/profile/Data/Model/transactions_model.dart';
 import 'package:hola_academy/features/profile/Logic/transactions/trans_cubit.dart';
 import 'package:hola_academy/features/profile/UI/widgets/transaction_card.dart';
@@ -58,7 +59,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('Transactions loaded successfully'),
-                  backgroundColor: Colors.green,
+                  backgroundColor: ColorManager.textRedColor,
                 ),
               );
               print('Transactions: ${state.transactions}');
@@ -157,24 +158,46 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                   SizedBox(
                     height: 18.h,
                   ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.symmetric(horizontal: 38.w),
-                    itemCount: state is TransactionsSuccess?context.read<TransCubit>().transactions?.transactions.length:0,
-                    itemBuilder: (context, index) {
-                      List<Transactions> transactions =
-                      state is TransactionsSuccess?
-                          context.read<TransCubit>().transactions?.transactions??[]:[];
-                      return TransactionCard(
-                        title: transactions[index].type??'',
-                        dateTime: transactions[index].updatedAt??'',
-                        price: transactions[index].finalAmount.toString(),
-                        status: transactions[index].status??'',
-                        userCase: transactions[index].userCase??'',
-                      );
-                    },
-                  ),
+                  context.read<TransCubit>().transactions == null ||
+                          context
+                              .read<TransCubit>()
+                              .transactions!
+                              .transactions
+                              .isEmpty
+                      ? Center(
+                          child: NotFoundScreen(
+                            title: 'No Transaction',
+                          ),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.symmetric(horizontal: 38.w),
+                          itemCount: state is TransactionsSuccess
+                              ? context
+                                  .read<TransCubit>()
+                                  .transactions
+                                  ?.transactions
+                                  .length
+                              : 0,
+                          itemBuilder: (context, index) {
+                            List<Transactions> transactions =
+                                state is TransactionsSuccess
+                                    ? context
+                                            .read<TransCubit>()
+                                            .transactions
+                                            ?.transactions ??
+                                        []
+                                    : [];
+                            return TransactionCard(
+                              title: transactions[index].type ?? '',
+                              dateTime: transactions[index].updatedAt ?? '',
+                              price: transactions[index].finalAmount.toString(),
+                              status: transactions[index].status ?? '',
+                              userCase: transactions[index].userCase ?? '',
+                            );
+                          },
+                        ),
                 ],
               ),
             );

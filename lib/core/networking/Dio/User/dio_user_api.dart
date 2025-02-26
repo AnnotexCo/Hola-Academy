@@ -82,11 +82,13 @@ class DioUserApi {
     }
   }
 
-  Future<AllUsersModel> fetchAllUsers() async {
+  Future<AllUsersModel> fetchAllUsers({String? role}) async {
     String? token = await SaveTokenDB.getToken();
     try {
       final response = await _dio.get(
-        '${ApiConstants.baseUrl}${ApiConstants.fetchAllUsersApi}',
+        role != null
+            ? '${ApiConstants.baseUrl}${ApiConstants.fetchAllUsersApi}?role=$role'
+            : '${ApiConstants.baseUrl}${ApiConstants.fetchAllUsersApi}',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -97,7 +99,7 @@ class DioUserApi {
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {
-        return (response.data);
+        return AllUsersModel.fromJson(response.data);
       }
       throw Exception('Failed to load data');
     } on DioException catch (dioError) {
