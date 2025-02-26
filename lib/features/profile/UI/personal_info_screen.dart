@@ -210,13 +210,33 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   return null;
                                 },
                               ),
+                              GeneralTextFormField(
+                                hint: '01258672352',
+                                label: AppString.phoneNumber,
+                                labelStyle: TextStyle(
+                                  fontSize: 18.sp,
+                                  color: ColorManager.blackFontColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                isFill: false,
+                                isBorder: true,
+                                suffixIcon: Icon(
+                                  Icons.person,
+                                  color: ColorManager.textRedColor,
+                                ),
+                                controller: phoneController,
+                                keyboardType: TextInputType.phone,
+                                validator: (value) {
+                                  return null;
+                                },
+                              ),
                               // if (coach)
                               if (_userRole == AppString.preuser ||
                                   _userRole == AppString.user ||
                                   _userRole == AppString.trainee) ...[
                                 GeneralTextFormField(
-                                  label: AppString.birthDay,
-                                  hint: AppString.chooseYourBirthDate,
+                                  hint: '+201258672352',
+                                  label: AppString.parentNumber,
                                   labelStyle: TextStyle(
                                     fontSize: 18.sp,
                                     color: ColorManager.blackFontColor,
@@ -224,17 +244,38 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   ),
                                   isFill: false,
                                   isBorder: true,
-                                  //readOnly: true,
-                                  suffixIcon: GeneralTextFormField.createIcon(
-                                    Icons.calendar_month,
+                                  suffixIcon: Icon(
+                                    Icons.person,
                                     color: ColorManager.textRedColor,
                                   ),
-                                  controller: birthDayController,
-                                  keyboardType: TextInputType.datetime,
-                                  onTap: () async {
-                                    // Open date picker
-                                    /*  DateTime? pickedDate = */
-                                    /* await showDialog(
+                                  controller: parentWhatsappNumberController,
+                                  keyboardType: TextInputType.phone,
+                                  validator: (value) {
+                                    return null;
+                                  },
+                                ),
+                              ],
+                              GeneralTextFormField(
+                                label: AppString.birthDay,
+                                hint: AppString.chooseYourBirthDate,
+                                labelStyle: TextStyle(
+                                  fontSize: 18.sp,
+                                  color: ColorManager.blackFontColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                isFill: false,
+                                isBorder: true,
+                                readOnly: true,
+                                suffixIcon: GeneralTextFormField.createIcon(
+                                  Icons.calendar_month,
+                                  color: ColorManager.textRedColor,
+                                ),
+                                controller: birthDayController,
+                                keyboardType: TextInputType.datetime,
+                                onTap: () async {
+                                  // Open date picker
+                                  /*  DateTime? pickedDate = */
+                                  /* await showDialog(
                                                                               context: context,
                                                                               builder: (context) {
                                                                                 return Dialog(
@@ -289,35 +330,15 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                                                                 );
                                                                               },
                                                                             );*/
-                                  },
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please select a date';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                GeneralTextFormField(
-                                  hint: '+201258672352',
-                                  label: AppString.parentNumber,
-                                  labelStyle: TextStyle(
-                                    fontSize: 18.sp,
-                                    color: ColorManager.blackFontColor,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  isFill: false,
-                                  isBorder: true,
-                                  suffixIcon: Icon(
-                                    Icons.person,
-                                    color: ColorManager.textRedColor,
-                                  ),
-                                  controller: parentWhatsappNumberController,
-                                  keyboardType: TextInputType.phone,
-                                  validator: (value) {
-                                    return null;
-                                  },
-                                ),
-                              ],
+                                },
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please select a date';
+                                  }
+                                  return null;
+                                },
+                              ),
+
                               /*CustomDropDownSelection(
                                                                   value: selectedGender,
                                                                   hint: AppString.chooseYourGender,
@@ -339,6 +360,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                 ),
                                 isFill: false,
                                 isBorder: true,
+                                readOnly: true,
                                 suffixIcon: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Padding(
@@ -350,26 +372,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                     ),
                                   ),
                                 ),
-                              ),
-                              GeneralTextFormField(
-                                hint: '01258672352',
-                                label: AppString.phoneNumber,
-                                labelStyle: TextStyle(
-                                  fontSize: 18.sp,
-                                  color: ColorManager.blackFontColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                isFill: false,
-                                isBorder: true,
-                                suffixIcon: Icon(
-                                  Icons.person,
-                                  color: ColorManager.textRedColor,
-                                ),
-                                controller: phoneController,
-                                keyboardType: TextInputType.phone,
-                                validator: (value) {
-                                  return null;
-                                },
                               ),
                               SizedBox(
                                 height: 20.h,
