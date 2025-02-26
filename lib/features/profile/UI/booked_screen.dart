@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:hola_academy/core/components/custom_app_bar.dart';
+import 'package:hola_academy/core/constants/api_constants.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
-import 'package:hola_academy/core/constants/image_manager.dart';
-import 'package:hola_academy/features/profile/UI/widgets/booked_cared.dart';
+import 'package:hola_academy/features/not_found/not_found_screen.dart';
+import 'package:hola_academy/features/profile/UI/loading/booked-shimmer.dart';
+
+import '../../Admin/requests/Logic/requests_cubit.dart';
+import '../../Admin/requests/Logic/requests_state.dart';
+import 'widgets/booked_cared.dart';
 
 class BookedScreen extends StatelessWidget {
   const BookedScreen({super.key});
@@ -13,29 +20,45 @@ class BookedScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          CustomAppBar(
-            title: AppString.booked,
-          ),
+          CustomAppBar(title: AppString.booked),
           Expanded(
-            child: ListView.builder(
-              itemCount: 5, // Number of booked courses
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.only(
-                    bottom: 34.h,
-                    left: 20.w,
-                    right: 20.w,
-                  ),
-                  child: BookedCard(
-                    imageUrl: ImageManager
-                        .programImage, // Replace with your image URL
-                    title: "Private",
-                    minAge: "3",
-                    maxAge: "60",
-                    suitableFor: "All Gender, Baby (0-2)",
-                    status: "Booked",
-                  ),
-                );
+            child: BlocBuilder<RequestsCubit, RequestsState>(
+              builder: (context, state) {
+                if (state is RequestsLoading) {
+                  return bookedShimmerEffect();
+                } else if (state is RequestsError) {
+                  return NotFoundScreen(title:state.message);
+                } else if (state is AllRequestsSuccess) {
+                  final requests = state.requestsList;
+
+                  if (requests.isEmpty) {
+                    return NotFoundScreen(title:'No bookings found.');
+                  }
+
+                  return ListView.builder(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                    itemCount: requests.length,
+                    itemBuilder: (context, index) {
+                      final request = requests[index];
+
+                      return Padding(
+                        padding: EdgeInsets.only(bottom: 16.h),
+                        child: BookedCard(
+                          imageUrl:
+                              '${ApiConstants.imagesURLApi}${request.file?.path}',
+                          title: request.program?.name ?? "Unknown Program",
+                          minAge: request.program?.minAge.toString() ?? "N/A",
+                          maxAge: request.program?.maxAge.toString() ?? "N/A",
+                          suitableFor: request.program?.allowedGender ?? "All",
+                          status: request.status,
+                        ),
+                      );
+                    },
+                  );
+                } else {
+                  return NotFoundScreen(title: 'No data available.');
+                }
               },
             ),
           ),

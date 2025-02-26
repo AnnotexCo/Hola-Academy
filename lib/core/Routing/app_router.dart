@@ -145,7 +145,11 @@ class AppRouter {
 
       // Booked
       case Routes.bookedScreen:
-        return MaterialPageRoute(builder: (_) => const BookedScreen());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => getIT<RequestsCubit>()..fetchAllRequests(),
+                  child: BookedScreen(),
+                ));
 
       //  Request payment
       case Routes.requestPaymentScreen:
