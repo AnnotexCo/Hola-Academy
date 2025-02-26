@@ -29,3 +29,13 @@ class PickImageSuccess extends UserDataState {
   final File profileImage;
   PickImageSuccess({required this.profileImage});
 }
+
+class FetchAllUsersSuccess extends UserDataState {
+  final AllUsersModel users;
+  FetchAllUsersSuccess({required this.users});
+}
+
+class FetchAllUsersFailure extends UserDataState {
+  final String message;
+  FetchAllUsersFailure({required this.message});
+}

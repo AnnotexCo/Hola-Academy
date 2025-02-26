@@ -10,6 +10,7 @@ class TransactionCard extends StatefulWidget {
   final String dateTime;
   final String price;
   final String status;
+  final String userCase;
 
   const TransactionCard({
     super.key,
@@ -17,6 +18,7 @@ class TransactionCard extends StatefulWidget {
     required this.dateTime,
     required this.price,
     required this.status,
+    required this.userCase,
   });
 
   @override
@@ -85,7 +87,8 @@ class _TransactionCardState extends State<TransactionCard> {
               ),
               child: ListTile(
                 leading: SvgPicture.asset(
-                  ImageManager.confirm,
+                  widget.userCase == "INCOME"?
+                  ImageManager.confirm: ImageManager.expenses,
                   height: 24.h,
                   width: 24.w,
                 ),

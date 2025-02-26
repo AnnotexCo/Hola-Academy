@@ -153,7 +153,10 @@ class AppRouter {
 
       //  Request payment
       case Routes.requestPaymentScreen:
-        return MaterialPageRoute(builder: (_) => const RequestPaymentScreen());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (context) => getIT<TransCubit>(),
+                child: RequestPaymentScreen()));
 
       // classes
       case Routes.classesScreen:
@@ -225,7 +228,11 @@ class AppRouter {
         );
 
       case Routes.traineesScreen:
-        return MaterialPageRoute(builder: (_) => const TraineesScreen());
+        return MaterialPageRoute(builder: (_) {
+          final String role = settings.arguments as String;
+          return BlocProvider(create: (context) => getIT<UserDataCubit>(),
+              child: TraineesScreen(role: role));
+        });
 
       case Routes.adminTransactionsScreen:
         return MaterialPageRoute(

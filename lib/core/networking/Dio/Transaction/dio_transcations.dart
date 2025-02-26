@@ -61,7 +61,10 @@ class DioTranscations {
   }
 
   /// Ask for refund
-  Future<TransactionsModel> askForRefund({required num amount, required String description, required String type}) async {
+  Future<dynamic> askForRefund(
+      {required num amount,
+      required String description,
+      required String type}) async {
     String? token = await SaveTokenDB.getToken();
     try {
       final response = await _dio.post(
@@ -69,21 +72,23 @@ class DioTranscations {
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
           },
-          
         ),
       );
+      print(response.data['message']);
+      print(response.data['error']);
       if (response.statusCode == 200) {
-        TransactionsModel transactionsModel =
-            TransactionsModel.fromJson(response.data['data']);
-        return transactionsModel;
+        return response.data;
       }
+      print('response.data*******************${response.data}');
       throw Exception("Failed to load transcations");
     } catch (error) {
       if (error is DioException && error.response != null) {}
-      //throw error.toString();
-      final errorMessage = ApiErrorHandler.handle(error);
-      throw errorMessage;
+      print(error);
+      throw error.toString();
+      //final errorMessage = ApiErrorHandler.handle(error);
+      //throw errorMessage;
     }
   }
 }

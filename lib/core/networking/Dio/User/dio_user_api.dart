@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:hola_academy/core/local_db/save_token.dart';
 import 'package:hola_academy/core/networking/ErrorHandler/api_error_handler.dart';
+import 'package:hola_academy/features/profile/Data/Model/trainee_model.dart';
 import 'package:hola_academy/features/profile/Data/Model/update_user_model.dart';
 import 'package:hola_academy/features/profile/Data/Model/user_model.dart';
 import '../../../constants/api_constants.dart';
 import 'package:http_parser/http_parser.dart';
-
 
 class DioUserApi {
   final Dio _dio;
@@ -44,20 +44,21 @@ class DioUserApi {
     String? token = await SaveTokenDB.getToken();
 
     try {
-    final Map<String, dynamic> formDataMap = {
-      'name': updateUserModel.name,
-      'parentName': updateUserModel.parentName,
-    };
+      final Map<String, dynamic> formDataMap = {
+        'name': updateUserModel.name,
+        'parentName': updateUserModel.parentName,
+      };
 
-    // ✅ Add picture only if it's provided
-    if (updateUserModel.picture != null) {
-      formDataMap['picture'] = await MultipartFile.fromFile(
-        updateUserModel.picture!.path,
-        filename: updateUserModel.picture!.path.split('/').last,
-        contentType: MediaType('image', 'jpeg'), // Adjust if needed (e.g., 'image/png')
-      );
-    }
-    FormData formData = FormData.fromMap(formDataMap);
+      // ✅ Add picture only if it's provided
+      if (updateUserModel.picture != null) {
+        formDataMap['picture'] = await MultipartFile.fromFile(
+          updateUserModel.picture!.path,
+          filename: updateUserModel.picture!.path.split('/').last,
+          contentType: MediaType(
+              'image', 'jpeg'), // Adjust if needed (e.g., 'image/png')
+        );
+      }
+      FormData formData = FormData.fromMap(formDataMap);
 
       final response = await _dio.patch(
         '${ApiConstants.baseUrl}${ApiConstants.updateMyDataApi}',
@@ -79,6 +80,30 @@ class DioUserApi {
     } catch (error) {
       final api = ApiErrorHandler.handle(error);
       throw "${api.message}";
+    }
+  }
+
+  Future<AllUsersModel> fetchAllUsers() async {
+    String? token = await SaveTokenDB.getToken();
+    try {
+      final response = await _dio.get(
+        '${ApiConstants.baseUrl}${ApiConstants.fetchAllUsersApi}',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      print('response.data: ${response.data}'); // Print the response.data);
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        return (response.data);
+      }
+      throw Exception('Failed to load data');
+    } on DioException catch (dioError) {
+      print(dioError.response?.data['message']);
+      throw dioError.response?.data['message'] ?? 'Unknown error occurred';
     }
   }
 }

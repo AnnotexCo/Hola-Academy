@@ -1,23 +1,35 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/components/general_text_form_field.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
-
-import '../../../home/UI/components_coach/find_trainees_screen.dart';
+import 'package:hola_academy/features/profile/Data/Model/trainee_model.dart';
+import 'package:hola_academy/features/profile/Data/Model/user_model.dart';
+import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'widgets/custom_list_view.dart';
 
-class TraineesScreen extends StatelessWidget {
-  const TraineesScreen({super.key});
+class TraineesScreen extends StatefulWidget {
+  String role;
+  TraineesScreen({super.key, required this.role});
+
+  @override
+  State<TraineesScreen> createState() => _TraineesScreenState();
+}
+
+class _TraineesScreenState extends State<TraineesScreen> {
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<UserDataCubit>().fetchAllUsers();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final traineesData = [
-      {'name': 'Robert Fox', 'phone': '01228569715'},
-      {'name': 'Jane Doe', 'phone': '01234567890'},
-      {'name': 'John Smith', 'phone': '01111222333'},
-    ];
-
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -93,21 +105,27 @@ class TraineesScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 18.h),
-            Row(
-              spacing: 40.w,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomOutlinedButton(title: "Level A"),
-                CustomOutlinedButton(title: "Educational"),
-                CustomOutlinedButton(title: "Private"),
-              ],
-            ),
             SizedBox(height: 20.h),
-            Expanded(
-              child: CustomListView(
-                data: traineesData,
-              ),
+            BlocBuilder<UserDataCubit, UserDataState>(
+              builder: (context, state) {
+                List<Users> users;
+                if (state is FetchAllUsersSuccess) {
+                  users = state.users.data.users;
+                  return Expanded(
+                    child: CustomListView(
+                      data: users,
+                    ),
+                  );
+                } else if (state is FetchAllUsersFailure) {
+                  return Center(
+                    child: Text(state.message),
+                  );
+                }
+                return Center(
+                    child: CircularProgressIndicator(
+                  color: ColorManager.textRedColor,
+                ));
+              },
             ),
           ],
         ),

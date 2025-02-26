@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/features/Admin/requests/Logic/requests_cubit.dart';
 import 'package:hola_academy/features/home/UI/components/timeline_widget.dart';
+import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 
 import '../../../../core/dependency_injection/dependency.dart';
 import '../../../home/Logic/banner_logic/banner_cubit.dart';
@@ -69,7 +71,7 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
                   action: 'View All',
                   onPressed: () {
                     // Navigate to the new requests screen
-                    Navigator.of(context).pushNamed(Routes.traineesScreen);
+                    Navigator.of(context).pushNamed(Routes.traineesScreen, arguments: 'COACH');
                   },
                 ),
                 SizedBox(height: 16.h),
@@ -80,7 +82,7 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
                   action: 'View All',
                   onPressed: () {
                     // Navigate to the new requests screen
-                    Navigator.of(context).pushNamed(Routes.traineesScreen);
+                    Navigator.of(context).pushNamed(Routes.traineesScreen, arguments: 'TRAINEE');
                   },
                 ),
                 SizedBox(height: 16.h),
