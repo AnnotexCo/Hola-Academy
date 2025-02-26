@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hola_academy/core/local_db/save_token.dart';
+import 'package:hola_academy/features/profile/Data/Model/trainee_model.dart';
 import 'package:hola_academy/features/profile/Data/Model/update_user_model.dart';
 import 'package:hola_academy/features/profile/Data/Model/user_model.dart';
 import 'package:hola_academy/features/profile/Data/Repo/user_repo.dart';
@@ -17,7 +18,7 @@ class UserDataCubit extends Cubit<UserDataState> {
 
   // Function to pick image from gallery
   Future<void> pickImageFromGallery() async {
-    final ImagePicker picker = ImagePicker(); 
+    final ImagePicker picker = ImagePicker();
     final XFile? pickedFile =
         await picker.pickImage(source: ImageSource.gallery);
 
@@ -77,6 +78,16 @@ class UserDataCubit extends Cubit<UserDataState> {
       }
     } catch (e) {
       if (!isClosed) emit(UpdateUserDataFailure(message: e.toString()));
+    }
+  }
+
+  Future<void> fetchAllUsers() async {
+    try {
+      if (!isClosed) emit(UserDataLoading());
+      final users = await userRepo.fetchAllUsers();
+      if (!isClosed) emit(FetchAllUsersSuccess(users: users));
+    } catch (e) {
+      if (!isClosed) emit(FetchAllUsersFailure(message: e.toString()));
     }
   }
 }

@@ -171,6 +171,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                         dateTime: transactions[index].updatedAt??'',
                         price: transactions[index].finalAmount.toString(),
                         status: transactions[index].status??'',
+                        userCase: transactions[index].userCase??'',
                       );
                     },
                   ),

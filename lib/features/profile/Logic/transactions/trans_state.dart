@@ -24,3 +24,5 @@ class TransactionsFailure extends TransState {
   final String error;
   TransactionsFailure({required this.error});
 }
+
+class RefundSuccess extends TransState {}

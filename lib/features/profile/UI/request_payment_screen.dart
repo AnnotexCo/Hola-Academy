@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:hola_academy/features/profile/Logic/transactions/trans_cubit.dart';
 import '../../../core/components/custom_app_bar.dart';
 import '../../../core/components/custom_app_button.dart';
 import '../../../core/components/custom_text_field.dart';
@@ -21,10 +22,11 @@ class _RequestPaymentScreenState extends State<RequestPaymentScreen> {
   final TextEditingController _notesController = TextEditingController();
   String? selectedReason;
   List<String> reasonOptions = [
-    'Reason 1',
-    'Reason 2',
-    'Reason 3',
+    'SALARY',
+    'WITHDRAW',
   ];
+  //Amount is the amount of money to ask for in case of WITHDRAW, and the amount of hours to pay in case of SALARY
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,16 +41,23 @@ class _RequestPaymentScreenState extends State<RequestPaymentScreen> {
               padding: EdgeInsets.symmetric(horizontal: 27.w, vertical: 27.h),
               child: Form(
                 key: _formKey,
-                child: Column(
-                  children: [
-                    _buildAmmountField(),
-                    SizedBox(height: 24.h),
-                    _buildTransactionReasonField(),
-                    SizedBox(height: 24.h),
-                    _buildNotesField(),
-                    SizedBox(height: 50.h),
-                    _buildSubmitButton(),
-                  ],
+                child: BlocConsumer<TransCubit, TransState>(
+                  listener: (context, state) {
+                    // TODO: implement listener
+                  },
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        _buildAmmountField(),
+                        SizedBox(height: 24.h),
+                        _buildTransactionReasonField(),
+                        SizedBox(height: 24.h),
+                        _buildNotesField(),
+                        SizedBox(height: 50.h),
+                        _buildSubmitButton(),
+                      ],
+                    );
+                  },
                 ),
               ),
             ),
@@ -64,7 +73,9 @@ class _RequestPaymentScreenState extends State<RequestPaymentScreen> {
       controller: _ammountController,
       label: AppString.ammount,
       labelColor: ColorManager.blackFontColor,
-      hint: AppString.enterAmmount,
+      hint: selectedReason == 'WITHDRAW'
+          ? AppString.enterMoneyAmmount
+          : AppString.enterHoursAmmount,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return "Ammount is required";
@@ -109,8 +120,12 @@ class _RequestPaymentScreenState extends State<RequestPaymentScreen> {
     return CustomAppButton(
       text: AppString.submitRequest,
       onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          
+        if (_formKey.currentState!.validate() && selectedReason != null) {
+          context.read<TransCubit>().askForRefund(
+                amount: _ammountController.text.isEmpty ? 0 : int.parse(_ammountController.text),
+                type: selectedReason!,
+                description: _notesController.text,
+              );
         }
       },
     );
