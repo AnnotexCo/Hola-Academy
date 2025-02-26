@@ -6,7 +6,6 @@ import 'package:hola_academy/core/components/general_text_form_field.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/profile/Data/Model/trainee_model.dart';
-import 'package:hola_academy/features/profile/Data/Model/user_model.dart';
 
 import '../../../../../core/constants/color_manager.dart';
 

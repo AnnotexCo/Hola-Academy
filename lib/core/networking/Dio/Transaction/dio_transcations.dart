@@ -76,12 +76,12 @@ class DioTranscations {
           },
         ),
       );
-      print(response.data['message']);
-      print(response.data['error']);
+      // print(response.data['message']);
+      // print(response.data['error']);
       if (response.statusCode == 200) {
         return response.data;
       }
-      print('response.data*******************${response.data}');
+      // print('response.data*******************${response.data}');
       throw Exception("Failed to load transcations");
     } catch (error) {
       if (error is DioException && error.response != null) {}

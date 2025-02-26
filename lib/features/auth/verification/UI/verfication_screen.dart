@@ -180,7 +180,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
             code = _codeList.join();
             if (code.length == 6) {
               context.read<CheckOtpCubit>().verifyOtp(widget.email, code);
-              print(code);
+              // print(code);
             }
           },
         ),

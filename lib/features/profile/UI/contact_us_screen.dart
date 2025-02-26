@@ -10,7 +10,7 @@ import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgrou
 import 'package:hola_academy/features/profile/UI/widgets/social_media_card.dart';
 
 class ContactUsScreen extends StatefulWidget {
-  ContactUsScreen({super.key});
+  const ContactUsScreen({super.key});
 
   @override
   State<ContactUsScreen> createState() => _ContactUsScreenState();

@@ -142,7 +142,7 @@ class HomeScreenCoach extends StatelessWidget {
                                       },
                                       child: EvaluateCard(
                                         backgroundImage: state.categories[index]
-                                            .image.path, //ImageManager.pic,
+                                            .image!.path, //ImageManager.pic,
                                         title: state.categories[index].name,
                                       ),
                                     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
@@ -11,7 +10,6 @@ import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubi
 import '../../../../core/dependency_injection/dependency.dart';
 import '../../../home/Logic/banner_logic/banner_cubit.dart';
 import '../../../home/UI/components/add_baner.dart';
-import '../../../profile/Logic/personal_info/user_data_cubit.dart';
 import 'widgets/new_requests_section.dart';
 import 'widgets/section_header.dart';
 import 'widgets/welcome_widget.dart';

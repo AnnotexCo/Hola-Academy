@@ -7,17 +7,17 @@ class CategoriesCubit extends Cubit<CategoriesState> {
 
   CategoriesCubit(this.categoriesRepo) : super(CategoriesInitial()) {
     fetchAllCategories();
-    print("Get All Categories");
+    // print("Get All Categories");
   }
 
   // Fetch all categories
   void fetchAllCategories() async {
     try {
-      print('fetching categories');
+      // print('fetching categories');
      if (!isClosed) emit(CategoriesLoading());
       final categories = await categoriesRepo.getAllCategories();
-      print('categories fetched');
-      print(categories);
+      // print('categories fetched');
+      // print(categories);
       if (!isClosed) emit(CategoriesSuccess(categories));
     } catch (e) {
       if (!isClosed) emit(CategoriesError(e.toString()));

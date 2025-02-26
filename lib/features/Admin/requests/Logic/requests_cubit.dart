@@ -16,7 +16,6 @@ class RequestsCubit extends Cubit<RequestsState> {
     try {
       if (!isClosed) emit(RequestsLoading());
       final requestsList = await requestsRepo.fetchAllRequests();
-      print('Requestsss: $requestsList');
       if (!isClosed) emit(AllRequestsSuccess(requestsList));
     } catch (error) {
       if (!isClosed) emit(RequestsError(error.toString()));
@@ -39,14 +38,14 @@ class RequestsCubit extends Cubit<RequestsState> {
     try {
       if (!isClosed) emit(RequestsLoading());
 
-      print("📤 Sending Booking Data: ${bookingProgramModel.toJson()}"); // Debugging log
-      if (imageFile != null) print("📸 Image File: ${imageFile.path}"); // Debugging log
+      // print("📤 Sending Booking Data: ${bookingProgramModel.toJson()}"); // Debugging log
+      // if (imageFile != null) print("📸 Image File: ${imageFile.path}"); // Debugging log
 
       await requestsRepo.bookProgram(bookingProgramModel, imageFile: imageFile); // ✅ Fixed call
 
       if (!isClosed) emit(BookRequestSuccess());
     } catch (error) {
-      print("❌ Booking Error: $error");
+      // print("❌ Booking Error: $error");
 
       if (error is DioException) {
         final response = error.response?.data;

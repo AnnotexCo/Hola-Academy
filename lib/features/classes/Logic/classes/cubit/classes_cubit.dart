@@ -17,18 +17,18 @@ class ClassesCubit extends Cubit<ClassesState> {
     try {
       classes = await classesRepo.getAllClasses();
       print("  Yaaaaaaaboy $classes");
-      emit(ClassesLoaded(classes: classes));
+     if (!isClosed) emit(ClassesLoaded(classes: classes));
     } catch (error) {
-      emit(ClassesError(error: error.toString()));
+     if (!isClosed) emit(ClassesError(error: error.toString()));
     }
   }
 
   Future<void> getClassById(String id) async {
-    emit(ClassesLoading());
+   if (!isClosed) emit(ClassesLoading());
     try {
-      emit(ClassesLoaded(classes: classes));
+    if (!isClosed)  emit(ClassesLoaded(classes: classes));
     } catch (error) {
-      emit(ClassesError(error: error.toString()));
+     if (!isClosed) emit(ClassesError(error: error.toString()));
     }
   }
 }

@@ -9,7 +9,6 @@ class ProgramsCubit extends Cubit<ProgramsState> {
 
   ProgramsCubit(this.programRepo) : super(ProgramsInitial()) {
     fetchAllPrograms();
-        print("Get All Prgorams");
 
   }
 
