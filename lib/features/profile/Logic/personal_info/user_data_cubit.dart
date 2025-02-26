@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hola_academy/core/local_db/save_token.dart';
+// import 'package:hola_academy/core/local_db/save_token.dart';
 import 'package:hola_academy/features/profile/Data/Model/trainee_model.dart';
 import 'package:hola_academy/features/profile/Data/Model/update_user_model.dart';
 import 'package:hola_academy/features/profile/Data/Model/user_model.dart';
@@ -50,8 +50,8 @@ class UserDataCubit extends Cubit<UserDataState> {
     try {
       if (!isClosed) emit(UserDataLoading());
       final user = await userRepo.getMyData();
-      await SaveTokenDB.saveNameAndImage(
-          user.name, user.profileImage?.path ?? '');
+      // await SaveTokenDB.saveNameAndImage(
+      //     user.name, user.profileImage?.path ?? '');
       if (!isClosed) emit(UserDataSuccess(userModel: user));
     } catch (e) {
       if (!isClosed) emit(UserDataFailure(message: e.toString()));
