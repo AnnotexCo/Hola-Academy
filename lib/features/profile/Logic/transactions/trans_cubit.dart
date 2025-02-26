@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hola_academy/features/profile/Data/Model/transactions_model.dart';
 import 'package:hola_academy/features/profile/Data/Repo/transaction_repo.dart';

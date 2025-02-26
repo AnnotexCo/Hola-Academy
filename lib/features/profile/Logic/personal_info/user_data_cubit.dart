@@ -49,8 +49,6 @@ class UserDataCubit extends Cubit<UserDataState> {
     try {
       if (!isClosed) emit(UserDataLoading());
       final user = await userRepo.getMyData();
-      print(user.name);
-      print(user.profileImage?.path);
       await SaveTokenDB.saveNameAndImage(
           user.name, user.profileImage?.path ?? '');
       if (!isClosed) emit(UserDataSuccess(userModel: user));

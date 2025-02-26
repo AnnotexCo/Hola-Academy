@@ -27,7 +27,6 @@ class DioForgetPassword {
       return false;
     } catch (error) {
       final api = ApiErrorHandler.handle(error);
-      print(api.message);
       throw "${api.message}";
     }
   }

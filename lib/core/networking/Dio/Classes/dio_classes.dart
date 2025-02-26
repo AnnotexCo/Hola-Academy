@@ -18,7 +18,6 @@ class DioClasses {
       }
       throw Exception("Failed to load classes");
     } catch (error) {
-      print(error);
       rethrow;
     }
   }

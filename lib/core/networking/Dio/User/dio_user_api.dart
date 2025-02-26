@@ -29,6 +29,7 @@ class DioUserApi {
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {
+            print('user data: ${response.data}');
         return UserModel.fromJson(response.data['data']);
       }
       throw Exception('Failed to load data');
