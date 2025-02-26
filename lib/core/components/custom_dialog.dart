@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CustomDialog extends StatelessWidget {
   final String? imageUrl;
@@ -47,9 +49,15 @@ class CustomDialog extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CircleAvatar(
-                            radius: 30.r,
-                            backgroundImage: AssetImage(imageUrl!),
+                          ClipOval(
+                            child: CachedNetworkImage(
+                              imageUrl: imageUrl!,
+                              width: 60.r,
+                              height: 60.r,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) => _shimmerEffect(),
+                              errorWidget: (context, url, error) => _defaultProfileImage(),
+                            ),
                           ),
                           SizedBox(width: 19.w),
                           Text(
@@ -63,9 +71,8 @@ class CustomDialog extends StatelessWidget {
                           ),
                         ],
                       ),
-          
                     SizedBox(height: 16.h),
-          
+
                     // Components
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -74,7 +81,7 @@ class CustomDialog extends StatelessWidget {
                   ],
                 ),
               ),
-          
+
               // Cancel Button
               Positioned(
                 right: 9.w,
@@ -100,6 +107,35 @@ class CustomDialog extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  /// Shimmer Effect for Loading State
+  Widget _shimmerEffect() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Container(
+        width: 60.r,
+        height: 60.r,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.circle,
+        ),
+      ),
+    );
+  }
+
+  /// Default Profile Image in case of error
+  Widget _defaultProfileImage() {
+    return Container(
+      width: 60.r,
+      height: 60.r,
+      decoration: BoxDecoration(
+        color: Colors.grey[400],
+        shape: BoxShape.circle,
+      ),
+      child: Icon(Icons.person, size: 30.r, color: Colors.white),
     );
   }
 }
