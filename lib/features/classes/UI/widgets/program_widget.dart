@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/api_constants.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/constants/color_manager.dart';
 import '../../Data/Model/programs_model.dart';
@@ -12,9 +13,8 @@ class ProgramWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final String imageUrl = ImageManager.onBoardingImage1;
-    final String imageUrl = '${ApiConstants.imagesURLApi}${program.image?.path}';
-    print(program.image?.path);
+    final String imageUrl =
+        '${ApiConstants.imagesURLApi}${program.image?.path}';
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -43,8 +43,11 @@ class ProgramWidget extends StatelessWidget {
                 height: double.infinity,
                 width: 110.w,
                 fit: BoxFit.cover,
-                placeholder: (context, url) =>
-                    Center(child: CircularProgressIndicator()),
+                placeholder: (context, url) => ImageShimmer(
+                  width: 110.w,
+                  height: double.infinity,
+                  borderRadius: 12,
+                ),
                 errorWidget: (context, url, error) => Icon(
                   Icons.error,
                   size: 36.w,
@@ -101,6 +104,35 @@ class ProgramWidget extends StatelessWidget {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class ImageShimmer extends StatelessWidget {
+  final double width;
+  final double height;
+  final double borderRadius;
+
+  const ImageShimmer({
+    super.key,
+    required this.width,
+    required this.height,
+    this.borderRadius = 0,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(borderRadius.r),
         ),
       ),
     );

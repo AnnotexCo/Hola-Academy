@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/api_constants.dart';
 import 'package:hola_academy/features/not_found/not_found_screen.dart';
+import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../../../core/components/custom_app_bar.dart';
 import '../../../../core/components/custom_dialog.dart';
 import '../../../../core/components/general_text_form_field.dart';
@@ -180,8 +182,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
                       imageUrl:
                           "${ApiConstants.imagesURLApi}${request.user?.profileImage?.path}",
                       fit: BoxFit.cover,
-                      placeholder: (context, url) =>
-                          Center(child: CircularProgressIndicator()),
+                      placeholder: (context, url) => _buildShimmerCircle(36.w),
                       errorWidget: (context, url, error) => Icon(Icons.error,
                           size: 36.w, color: ColorManager.redMagmaColor),
                     ),
@@ -223,7 +224,9 @@ class _RequestsScreenState extends State<RequestsScreen> {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Text(request.createdAt.toString(),
+                Text(
+                    DateFormat('dd/MM/yyyy hh:mm a')
+                        .format(DateTime.parse(request.createdAt)),
                     style: TextStyle(
                         fontSize: 10.sp, fontWeight: FontWeight.w400)),
               ],
@@ -246,4 +249,19 @@ class _RequestsScreenState extends State<RequestsScreen> {
         return const Color(0xFFFFB74D);
     }
   }
+}
+
+Widget _buildShimmerCircle(double size) {
+  return Shimmer.fromColors(
+    baseColor: Colors.grey[300]!,
+    highlightColor: Colors.grey[100]!,
+    child: Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+      ),
+    ),
+  );
 }

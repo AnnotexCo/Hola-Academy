@@ -88,7 +88,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 } else if (state is NotificationsLoaded) {
                   final notifications = state.notifications;
                   if (notifications.isEmpty) {
-                    return Center(child: Text("No notifications available"));
+                    return NotFoundScreen(title: ("No notifications available"));
                   }
 
                   return ListView.builder(
