@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/core/dependency_injection/dependency.dart';
-
+import 'package:hola_academy/features/classes/Logic/programms/programs_cubit.dart';
 
 import 'package:hola_academy/features/home/UI/home_screen_coach.dart';
 import 'package:hola_academy/features/notifications/UI/notifications_screen.dart';
@@ -28,13 +28,16 @@ class _LayoutCoachScreenState extends State<LayoutCoachScreen> {
   final PageController _pageController = PageController();
 
   final List<Widget> _screens = [
-    HomeScreenCoach(),
+    BlocProvider(
+      create: (context) => getIT<ProgramsCubit>(),
+      child: HomeScreenCoach(),
+    ),
     ScheduleEvaluationScreen(),
-     BlocProvider(
+    BlocProvider(
       create: (context) => getIT<NotificationsCubit>(),
       child: NotificationsScreen(),
     ),
-      BlocProvider(
+    BlocProvider(
       create: (context) => getIT<UserDataCubit>(),
       child: ProfileScreen(),
     ),
@@ -125,7 +128,7 @@ class _LayoutCoachScreenState extends State<LayoutCoachScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: PageView(
-           physics: const NeverScrollableScrollPhysics(), 
+          physics: const NeverScrollableScrollPhysics(),
           controller: _pageController,
           onPageChanged: (index) {
             setState(() {

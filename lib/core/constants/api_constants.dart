@@ -26,6 +26,9 @@ class ApiConstants {
   static String classesApi = 'api/classes';
   static String classesbyIdApi = 'api/classes';
   static String myclassesApi = 'api/classes/me';
+  // Levels
+  static String getAllLevels = '/api/levels';
+
 
   static String transactionsApi = 'api/transaction';
   static String transactionsAskForMoney = 'api/transaction/me/ask-for-money';
