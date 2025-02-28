@@ -35,6 +35,8 @@ class FetchAllUsersSuccess extends UserDataState {
   FetchAllUsersSuccess({required this.users});
 }
 
+
+
 class FetchAllUsersFailure extends UserDataState {
   final String message;
   FetchAllUsersFailure({required this.message});

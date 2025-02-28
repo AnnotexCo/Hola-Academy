@@ -16,19 +16,28 @@ class ClassesCubit extends Cubit<ClassesState> {
     emit(ClassesLoading());
     try {
       classes = await classesRepo.getAllClasses();
-      print("  Yaaaaaaaboy $classes");
-     if (!isClosed) emit(ClassesLoaded(classes: classes));
+      if (!isClosed) emit(ClassesLoaded(classes: classes));
     } catch (error) {
-     if (!isClosed) emit(ClassesError(error: error.toString()));
+      if (!isClosed) emit(ClassesError(error: error.toString()));
+    }
+  }
+
+  Future<void> getAllClassesbyLevelId(int id) async {
+    emit(ClassesLoading());
+    try {
+      classes = await classesRepo.getClassesyByLevel(id);
+      if (!isClosed) emit(ClassesLoaded(classes: classes));
+    } catch (error) {
+      if (!isClosed) emit(ClassesError(error: error.toString()));
     }
   }
 
   Future<void> getClassById(String id) async {
-   if (!isClosed) emit(ClassesLoading());
+    if (!isClosed) emit(ClassesLoading());
     try {
-    if (!isClosed)  emit(ClassesLoaded(classes: classes));
+      if (!isClosed) emit(ClassesLoaded(classes: classes));
     } catch (error) {
-     if (!isClosed) emit(ClassesError(error: error.toString()));
+      if (!isClosed) emit(ClassesError(error: error.toString()));
     }
   }
 }

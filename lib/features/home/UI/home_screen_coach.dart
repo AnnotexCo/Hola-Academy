@@ -7,6 +7,8 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_state.dart';
+import 'package:hola_academy/features/classes/Logic/classes/cubit/classes_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/levels/cubit/levels_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/programms/programs_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/programms/programs_state.dart';
 import 'package:hola_academy/features/home/UI/components/add_baner.dart';
@@ -108,7 +110,11 @@ class HomeScreenCoach extends StatelessWidget {
                                       onTap: () {
                                         final programsCubit =
                                             context.read<ProgramsCubit>();
+                                        final levelsCubit =
+                                            context.read<LevelsCubit>();
 
+                                        final classesCubit =
+                                            context.read<ClassesCubit>();
                                         showDialog(
                                           context: context,
                                           builder: (_) {
@@ -152,8 +158,11 @@ class HomeScreenCoach extends StatelessWidget {
                                                                 .name) {
                                                           showPrivateLevelsDialog(
                                                               context,
+                                                              levelsCubit,
+                                                              classesCubit,
                                                               selectedProgram
-                                                                  .id);
+                                                                  .id,
+                                                              selectedTitle);
                                                         }
                                                       },
                                                     );
@@ -208,59 +217,91 @@ class HomeScreenCoach extends StatelessWidget {
   }
 }
 
-void showPrivateLevelsDialog(BuildContext context, int programId) {
-  
+void showPrivateLevelsDialog(BuildContext context, LevelsCubit levelsCubit,
+    ClassesCubit classesCubit, int programId, String programName) {
+  levelsCubit.fetchLevelsbyID(programId);
   showDialog(
     context: context,
     builder: (_) {
-      return ClassesDialog(
-        title: "Private Levels",
-        onCancel: () => Navigator.pop(context),
-        options: [
-          {"title": "Level A", "icon": "programs/image-1740165589525-446718069.png"},
-          {"title": "Level B", "icon":"programs/image-1740165589525-446718069.png"},
-          {"title": "Level C", "icon": "programs/image-1740165589525-446718069.png"},
-          {"title": "Level D", "icon": "programs/image-1740165589525-446718069.png"},
-        ],
-        onOptionSelected: (selectedLevel) {
-          if (selectedLevel == "Level A") {
-            showClassifcationDialog(context, selectedLevel);
-          }
-        },
+      return BlocProvider.value(
+        value: levelsCubit,
+        child: BlocBuilder<LevelsCubit, LevelsState>(
+          builder: (context, state) {
+            if (state is LevelsSuccess) {
+              final options = state.levels
+                  .map((level) => {
+                        "title": level.name,
+                        "icon": level.image?.path, // Handle null image safely
+                      })
+                  .toList();
+
+              return ClassesDialog(
+                title: "$programName Levels",
+                onCancel: () => Navigator.pop(context),
+                options: options,
+                onOptionSelected: (selectedTitle) {
+                  // Find the program that matches the selected title
+                  final selectedProgram = state.levels.firstWhere(
+                    (level) => level.name == selectedTitle,
+                  );
+
+                  if (selectedTitle == selectedProgram.name) {
+                    showClassifcationDialog(context, classesCubit,
+                        selectedProgram.id, selectedProgram.name);
+                  }
+                },
+              );
+            } else if (state is LevelsError) {
+              print(state.message);
+            }
+            return SizedBox.shrink();
+          },
+        ),
       );
     },
   );
 }
 
-void showClassifcationDialog(BuildContext context, String levl) {
+void showClassifcationDialog(BuildContext context, ClassesCubit classesCubit,
+    int levelId, String levelName) {
+  classesCubit.getAllClassesbyLevelId(levelId);
+
+  print("$levelId Levlsl");
   showDialog(
     context: context,
     builder: (_) {
-      return ClassesDialog(
-        title: levl,
-        onCancel: () => Navigator.pop(context),
-        options: [
-          {
-            "title": "Beginner Swimming Class",
-            "icon": ImageManager.privateclass
-          },
-          {
-            "title": "Intermediate Swimming Class",
-            "icon": ImageManager.semiprivateclass
-          },
-          {"title": "Aqua Fitness Class", "icon": ImageManager.aquaclass},
-          {
-            "title": "Open Water Swimming Class",
-            "icon": ImageManager.semiprivateclass
-          },
-          {"title": "Kids Swimming Class", "icon": ImageManager.kidsclass},
-        ],
-        onOptionSelected: (selectedLevel) {
-          if (selectedLevel == "Beginner Swimming Class") {
-            Navigator.pushNamed(context, Routes.findTraineeScreen);
-          }
-        },
-      );
+      return BlocProvider.value(
+          value: classesCubit,
+          child: BlocBuilder<ClassesCubit, ClassesState>(
+            builder: (context, state) {
+              if (state is ClassesLoaded) {
+                final options = state.classes
+                    .map((level) => {
+                          "title": level.name,
+                          "icon": level.imageUrl, // Handle null image safely
+                        })
+                    .toList();
+
+                return ClassesDialog(
+                  title: "$levelName ",
+                  onCancel: () => Navigator.pop(context),
+                  options: options,
+                  onOptionSelected: (selectedTitle) {
+                    // Find the program that matches the selected title
+                    final selectedclass = state.classes.firstWhere(
+                      (level) => level.name == selectedTitle,
+                    );
+
+                    if (selectedTitle == selectedclass.name) {
+                      Navigator.pushNamed(context, Routes.findTraineeScreen,
+                          arguments: selectedclass.id);
+                    }
+                  },
+                );
+              } else if (state is ClassesError) {}
+              return SizedBox.shrink();
+            },
+          ));
     },
   );
 }

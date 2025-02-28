@@ -248,7 +248,17 @@ class AppRouter {
                 child: AdminTransactionsScreen()));
 
       case Routes.findTraineeScreen:
-        return MaterialPageRoute(builder: (_) => const FindTraineesScreen());
+        return MaterialPageRoute(builder: (_) {
+          final int classID = settings.arguments as int;
+
+          return BlocProvider(
+            create: (context) =>
+                getIT<UserDataCubit>()..fetchTraineesByID(classID),
+            child: FindTraineesScreen(
+              classID: classID,
+            ),
+          );
+        });
 
       // coach
       case Routes.layoutCoachScreen:

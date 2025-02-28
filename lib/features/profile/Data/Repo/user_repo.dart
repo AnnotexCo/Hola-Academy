@@ -21,4 +21,8 @@ class UserRepo {
   Future<AllUsersModel> fetchAllUsers({String? role}) async {
     return await dioUserApi.fetchAllUsers(role: role);
   }
+
+  Future<AllUsersModel> fetchTraineesByID(int classID) async {
+    return await dioUserApi.fetchTraineesbyClassID(classID);
+  }
 }

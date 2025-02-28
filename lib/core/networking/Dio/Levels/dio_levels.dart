@@ -11,7 +11,8 @@ class DioLevels {
   /// Fetch all programs
   Future<List<LevelsModel>> getAllLevels() async {
     try {
-      final response = await _dio.get("${ApiConstants.baseUrl}${ApiConstants.getAllLevels}");
+      final response =
+          await _dio.get("${ApiConstants.baseUrl}${ApiConstants.getAllLevels}");
 
       if (response.statusCode == 200) {
         List<dynamic> data = response.data['data'];
@@ -24,21 +25,21 @@ class DioLevels {
   }
 
   /// Fetch a single program by ID
-  Future<List<LevelsModel>>  getLevelsbyId(int id) async {
+  Future<List<LevelsModel>> getLevelsbyId(int id) async {
     try {
-      final response = await _dio.get("${ApiConstants.baseUrl}${ApiConstants.getAllLevels}"
-      ,
-      data: {
-"programId" : id,
-        
-      });
+      final response = await _dio.get(
+          "${ApiConstants.baseUrl}${ApiConstants.getAllLevels}",
+          queryParameters: {
+            "programId": id,
+          });
 
       if (response.statusCode == 200) {
-  List<dynamic> data = response.data['data'];
-        return data.map((json) => LevelsModel.fromMap(json)).toList();      }
+        List<dynamic> data = response.data['data'];
+        return data.map((json) => LevelsModel.fromMap(json)).toList();
+      }
       throw Exception("Failed to load program");
     } catch (error) {
-      throw ApiErrorHandler.handle(error);
+      throw error.toString();
     }
   }
 }

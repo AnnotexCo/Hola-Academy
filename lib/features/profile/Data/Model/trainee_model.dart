@@ -65,7 +65,7 @@ class User {
         role: json['role'],
         profileImage: json['profileImage'] != null
             ? ProfileImage.fromJson(json['profileImage'])
-            : null,
+            : ProfileImage.fromJson(json['ProfileImage']),
       );
 }
 
@@ -92,7 +92,7 @@ class ProfileImage {
   factory ProfileImage.fromJson(Map<String, dynamic> json) => ProfileImage(
         id: json['id'],
         name: json['name'],
-        path: json['path'],
+        path: json['path'] ?? "programs/image-1740165531232-997805655.png",
         type: json['type'],
         size: json['size'],
         isDeleted: json['isDeleted'],

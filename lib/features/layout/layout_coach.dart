@@ -6,6 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/core/dependency_injection/dependency.dart';
+import 'package:hola_academy/features/classes/Logic/classes/cubit/classes_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/levels/cubit/levels_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/programms/programs_cubit.dart';
 
 import 'package:hola_academy/features/home/UI/home_screen_coach.dart';
@@ -28,8 +30,18 @@ class _LayoutCoachScreenState extends State<LayoutCoachScreen> {
   final PageController _pageController = PageController();
 
   final List<Widget> _screens = [
-    BlocProvider(
-      create: (context) => getIT<ProgramsCubit>(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIT<ProgramsCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIT<LevelsCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIT<ClassesCubit>(),
+        ),
+      ],
       child: HomeScreenCoach(),
     ),
     ScheduleEvaluationScreen(),

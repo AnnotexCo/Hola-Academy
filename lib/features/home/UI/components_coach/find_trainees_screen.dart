@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/components/general_text_form_field.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/home/UI/components_coach/listof_trainee.dart';
+import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 
 class FindTraineesScreen extends StatelessWidget {
-  const FindTraineesScreen({super.key});
+  final int classID;
+  const FindTraineesScreen({super.key, required this.classID});
 
   @override
   Widget build(BuildContext context) {
@@ -97,8 +100,33 @@ class FindTraineesScreen extends StatelessWidget {
             ),
             SizedBox(height: 18.h),
             Expanded(
-              child: ListofTrainee(),
-            ),
+                child: BlocConsumer<UserDataCubit, UserDataState>(
+              listener: (context, state) {
+                if (state is FetchAllUsersFailure) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(state.message),
+                    ),
+                  );
+                }
+              },
+              builder: (context, state) {
+                // Show shimmer effect during loading state
+                if (state is UpdateUserDataLoading) {
+                  return CircularProgressIndicator();
+                }
+
+                // Once the data is fetched successfully, display the list
+                if (state is FetchAllUsersSuccess) {
+                  return ListofTrainee(
+                    allUsersModel: state.users,
+                  );
+                }
+
+                // Return an empty widget if no relevant state
+                return SizedBox.shrink();
+              },
+            )),
           ],
         ),
       ),

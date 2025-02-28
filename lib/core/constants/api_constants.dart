@@ -13,6 +13,7 @@ class ApiConstants {
   static String getMyDataApi = 'api/users/me';
   static String updateMyDataApi = 'api/users/me';
   static String fetchAllUsersApi = 'api/users';
+  static String fetchTraineesbyClassIdApi = 'api/users/trainees/classes/';
 
   static String imagesURLApi = 'http://109.176.197.232:3100/static-uploads/';
 
@@ -27,8 +28,7 @@ class ApiConstants {
   static String classesbyIdApi = 'api/classes';
   static String myclassesApi = 'api/classes/me';
   // Levels
-  static String getAllLevels = '/api/levels';
-
+  static String getAllLevels = 'api/levels';
 
   static String transactionsApi = 'api/transaction';
   static String transactionsAskForMoney = 'api/transaction/me/ask-for-money';

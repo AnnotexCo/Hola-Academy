@@ -9,11 +9,16 @@ sealed class LevelsState extends Equatable {
 
 final class LevelsInitial extends LevelsState {}
 
-final class LevelsSuccess extends LevelsState{
+final class LevelsSuccess extends LevelsState {
+  final List<LevelsModel> levels;
+  const LevelsSuccess(this.levels);
+}
 
-    final List<LevelsModel> model;
- const LevelsSuccess(this.model);
+final class LevelsLoading extends LevelsState {}
+
+final class LevelsError extends LevelsState {
+    final String message;
+
+  const LevelsError({required this.message});
 
 }
-final class LevelsLoading extends LevelsState{}
-final class LevelsError extends LevelsState{}

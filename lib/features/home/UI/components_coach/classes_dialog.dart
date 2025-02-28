@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 class ClassesDialog extends StatelessWidget {
   final String title;
@@ -88,7 +87,11 @@ class ClassesDialog extends StatelessWidget {
                         child: Row(
                           children: [
                             CachedNetworkImage(
-                                width: 35.w, height: 35.h, imageUrl: "http://109.176.197.232:3100/static-uploads/${item['icon']}",),
+                              width: 35.w,
+                              height: 35.h,
+                              imageUrl:
+                                  "http://109.176.197.232:3100/static-uploads/${item['icon']}",
+                            ),
                             SizedBox(width: 12.w),
                             Expanded(
                               child: Text(

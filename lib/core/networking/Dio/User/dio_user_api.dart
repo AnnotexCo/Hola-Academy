@@ -29,7 +29,7 @@ class DioUserApi {
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {
-            print('user data: ${response.data}');
+        print('user data: ${response.data}');
         return UserModel.fromJson(response.data['data']);
       }
       throw Exception('Failed to load data');
@@ -96,7 +96,6 @@ class DioUserApi {
           },
         ),
       );
-      print('response.data: ${response.data}'); // Print the response.data);
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {
@@ -105,6 +104,28 @@ class DioUserApi {
       throw Exception('Failed to load data');
     } on DioException catch (dioError) {
       print(dioError.response?.data['message']);
+      throw dioError.response?.data['message'] ?? 'Unknown error occurred';
+    }
+  }
+
+  Future<AllUsersModel> fetchTraineesbyClassID(int id) async {
+    String? token = await SaveTokenDB.getToken();
+    try {
+      final response = await _dio.get(
+        '${ApiConstants.baseUrl}${ApiConstants.fetchTraineesbyClassIdApi}$id',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        return AllUsersModel.fromJson(response.data);
+      }
+      throw Exception('Failed to load data');
+    } on DioException catch (dioError) {
       throw dioError.response?.data['message'] ?? 'Unknown error occurred';
     }
   }

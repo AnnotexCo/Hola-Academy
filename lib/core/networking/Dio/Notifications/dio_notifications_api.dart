@@ -28,7 +28,6 @@ class DioNotificationsApi {
         throw Exception("Failed to load notifications");
       }
     } catch (error) {
-      print('Error fetching notifications: $error');
       throw ApiErrorHandler.handle(error);
     }
   }
@@ -44,7 +43,6 @@ class DioNotificationsApi {
         throw Exception("Failed to fetch notification");
       }
     } catch (error) {
-      print('Error fetching notification: $error');
       throw ApiErrorHandler.handle(error);
     }
   }
@@ -79,7 +77,6 @@ class DioNotificationsApi {
         throw Exception("Failed to mark notification as read");
       }
     } catch (error) {
-      print('Error marking notification as read: $error');
       throw ApiErrorHandler.handle(error);
     }
   }
@@ -93,7 +90,6 @@ class DioNotificationsApi {
         throw Exception("Failed to delete notification");
       }
     } catch (error) {
-      print('Error deleting notification: $error');
       throw ApiErrorHandler.handle(error);
     }
   }

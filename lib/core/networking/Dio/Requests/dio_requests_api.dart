@@ -32,11 +32,7 @@ class DioRequestsApi {
       }
       throw Exception("Failed to load requests");
     } catch (error) {
-       print("Error request program: $error");
 
-      if (error is DioException && error.response != null) {
-        print("Full Response: ${error.response?.data}");
-      }
       throw ApiErrorHandler.handle(error);
     }
   }

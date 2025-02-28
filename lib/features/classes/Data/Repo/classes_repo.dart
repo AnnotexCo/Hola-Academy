@@ -11,4 +11,8 @@ class ClassesRepo {
   Future<ClasssModel> getClassesyById(int id) async {
     return await _dioCategoriess.getClassesyById(id);
   }
+
+  Future<List<ClasssModel>> getClassesyByLevel(int id) async {
+    return await _dioCategoriess.getClassesByLevel(id);
+  }
 }

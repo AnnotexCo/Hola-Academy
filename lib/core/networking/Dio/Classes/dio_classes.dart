@@ -35,4 +35,20 @@ class DioClasses {
       rethrow;
     }
   }
+
+  Future<List<ClasssModel>> getClassesByLevel(int id) async {
+    try {
+      final response = await _dio.get(
+          "${ApiConstants.baseUrl}${ApiConstants.classesApi}",
+          queryParameters: {"levelId": id});
+
+      if (response.statusCode == 200) {
+        List<dynamic> data = response.data['data'];
+        return data.map((json) => ClasssModel.fromMap(json)).toList();
+      }
+      throw Exception("Failed to load classes");
+    } catch (error) {
+      rethrow;
+    }
+  }
 }

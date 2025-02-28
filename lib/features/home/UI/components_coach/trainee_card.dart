@@ -1,15 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
-import 'package:hola_academy/core/constants/image_manager.dart';
 
+import '../../../../core/constants/api_constants.dart';
 import '../../../trainee/widgets/evaluate_dialog.dart';
 
-
 class TraineeCard extends StatelessWidget {
- final String? name;
+  final String? name;
   final String? phone;
-  const TraineeCard({this.name, this.phone, super.key});
+  final String? image;
+  const TraineeCard({this.name, this.phone, super.key, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +30,8 @@ class TraineeCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8.r),
-            child: Image.asset(
-              ImageManager.pic,
+            child: CachedNetworkImage(
+              imageUrl: "${ApiConstants.imagesURLApi}${image!}",
               width: 50.w,
               height: 50.h,
             ),
@@ -101,17 +102,17 @@ class TraineeCard extends StatelessWidget {
               ),
               onPressed: () {
                 showDialog(
-                          context: context,
-                          builder: (context) {
-                            return EvaluateDialog(
-                              imageUrl: ImageManager.pic,
-                              traineeName: 'Robert Fox',
-                              courseTitle: 'Basic Swimming Techniques',
-                              onCancel: () {
-                                Navigator.of(context).pop();
-                              },
-                            );
-                          });
+                    context: context,
+                    builder: (context) {
+                      return EvaluateDialog(
+                        imageUrl: image!,
+                        traineeName: 'Robert Fox',
+                        courseTitle: 'Basic Swimming Techniques',
+                        onCancel: () {
+                          Navigator.of(context).pop();
+                        },
+                      );
+                    });
               },
               child: Text(
                 "Evaluate",
