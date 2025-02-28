@@ -31,39 +31,45 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  Future<void> doGoogleLogin() async {
-    emit(LoginLoading());
+Future<void> doGoogleLogin() async {
+  emit(LoginLoading());
 
-    try {
-      final GoogleSignIn googleLogin = GoogleSignIn();
+  try {
+    final GoogleSignIn googleLogin = GoogleSignIn();
+    final GoogleSignInAccount? googleUser = await googleLogin.signIn();
 
-      final GoogleSignInAccount? googleUser = await googleLogin.signIn();
-
-      if (googleUser == null) {
-        emit(LoginFailure(message: "Google sign-in was canceled"));
-        return;
-      }
-
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
-
-      final String? accessToken = googleAuth.accessToken;
-      if (accessToken == null) {
-        emit(LoginFailure(message: "Google Access Token not found"));
-        return;
-      }
-
-      bool isSuccess = await loginRepo.doGoogleLogin(accessToken: accessToken);
-
-      if (isSuccess) {
-        emit(LoginSuccess(role: "TRAINEE", token: accessToken));
-      } else {
-        emit(LoginFailure(message: "Google login failed"));
-      }
-    } catch (e) {
-      emit(LoginFailure(message: e.toString()));
+    if (googleUser == null) {
+      emit(LoginFailure(message: "Google sign-in was canceled"));
+      return;
     }
+
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final String? accessToken = googleAuth.accessToken;
+
+    if (accessToken == null) {
+      emit(LoginFailure(message: "Google Access Token not found"));
+      return;
+    }
+
+    bool isSuccess = await loginRepo.doGoogleLogin(accessToken: accessToken);
+
+    if (isSuccess) {
+      String? token = await SaveTokenDB.getToken();
+      String? role = await SaveTokenDB.getRole(); // Get the saved role
+
+      if (token != null && role != null) {
+        emit(LoginSuccess(role: role, token: token));
+      } else {
+        emit(LoginFailure(message: "Role or Token not found after Google login"));
+      }
+    } else {
+      emit(LoginFailure(message: "Google login failed"));
+    }
+  } catch (e) {
+    emit(LoginFailure(message: e.toString()));
   }
+}
+
 
   Future<void> logout() async {
     await SaveTokenDB.deleteTokenAndRole(); // Clear both token & role
