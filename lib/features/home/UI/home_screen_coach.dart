@@ -7,6 +7,8 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_state.dart';
+import 'package:hola_academy/features/classes/Logic/programms/programs_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/programms/programs_state.dart';
 import 'package:hola_academy/features/home/UI/components/add_baner.dart';
 
 import 'package:hola_academy/features/home/UI/components/timeline_widget.dart';
@@ -14,6 +16,7 @@ import 'package:hola_academy/features/home/UI/components/welcome_header.dart';
 import 'package:hola_academy/features/home/UI/components_coach/classes_dialog.dart';
 import 'package:hola_academy/features/home/UI/components_coach/evaluate_card.dart';
 import 'package:hola_academy/features/home/UI/components_coach/session_card.dart';
+import 'package:hola_academy/features/not_found/not_found_screen.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'package:hola_academy/features/trainee/widgets/evaluate_dialog.dart';
 
@@ -103,39 +106,73 @@ class HomeScreenCoach extends StatelessWidget {
                                   itemBuilder: (context, index) {
                                     return GestureDetector(
                                       onTap: () {
+                                        final programsCubit =
+                                            context.read<ProgramsCubit>();
+
                                         showDialog(
                                           context: context,
                                           builder: (_) {
-                                            return ClassesDialog(
-                                              title: "Educational",
-                                              onCancel: () =>
-                                                  Navigator.pop(context),
-                                              options: [
-                                                {
-                                                  "title": "Private",
-                                                  "icon":
-                                                      ImageManager.privateclass
+                                            return BlocProvider.value(
+                                              value: programsCubit,
+                                              child: BlocBuilder<ProgramsCubit,
+                                                  ProgramsState>(
+                                                builder: (context, state) {
+                                                  if (state
+                                                      is ProgramsSuccess) {
+                                                    final options = state
+                                                        .programs
+                                                        .map((program) => {
+                                                              "title":
+                                                                  program.name,
+                                                              "icon": program
+                                                                  .image
+                                                                  ?.path, // Handle null image safely
+                                                            })
+                                                        .toList();
+
+                                                    return ClassesDialog(
+                                                      title: "Educational",
+                                                      onCancel: () =>
+                                                          Navigator.pop(
+                                                              context),
+                                                      options: options,
+                                                      onOptionSelected:
+                                                          (selectedTitle) {
+                                                        // Find the program that matches the selected title
+                                                        final selectedProgram =
+                                                            state.programs
+                                                                .firstWhere(
+                                                          (program) =>
+                                                              program.name ==
+                                                              selectedTitle,
+                                                        );
+
+                                                        if (selectedTitle ==
+                                                            selectedProgram
+                                                                .name) {
+                                                          showPrivateLevelsDialog(
+                                                              context,
+                                                              selectedProgram
+                                                                  .id);
+                                                        }
+                                                      },
+                                                    );
+                                                  }
+
+                                                  if (state is ProgramsError) {
+                                                    return NotFoundScreen();
+                                                  }
+
+                                                  if (state
+                                                      is ProgramsLoading) {
+                                                    return Center(
+                                                        child:
+                                                            CircularProgressIndicator()); // Centered loading
+                                                  }
+
+                                                  return SizedBox.shrink();
                                                 },
-                                                {
-                                                  "title": "SemiPrivate",
-                                                  "icon": ImageManager
-                                                      .semiprivateclass
-                                                },
-                                                {
-                                                  "title": "Aqua",
-                                                  "icon": ImageManager.aquaclass
-                                                },
-                                                {
-                                                  "title": "Kids",
-                                                  "icon": ImageManager.kidsclass
-                                                },
-                                              ],
-                                              onOptionSelected: (selected) {
-                                                if (selected == "Private") {
-                                                  showPrivateLevelsDialog(
-                                                      context);
-                                                }
-                                              },
+                                              ),
                                             );
                                           },
                                         );
@@ -171,7 +208,7 @@ class HomeScreenCoach extends StatelessWidget {
   }
 }
 
-void showPrivateLevelsDialog(BuildContext context) {
+void showPrivateLevelsDialog(BuildContext context, int programId) {
   showDialog(
     context: context,
     builder: (_) {
