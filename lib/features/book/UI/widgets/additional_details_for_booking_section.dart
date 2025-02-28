@@ -65,28 +65,31 @@ class _AdditionalDetailsForBookingSectionState
     _hasHealthIssues = widget.userData?.healthStatus?.isNotEmpty ?? false;
   }
 
-   void _saveProfileData() {
-    // Create a BookingProgramModel instance with the updated data
-    final bookingData = BookingProgramModel(
-      programId: widget.programId,
-      address: _addressController.text,
-      nationality: _nationalityController.text,
-      healthStatus: _hasHealthIssues ? _healthStatusController.text : null,
-      parentAddress: _parentAddressController.text,
-      parentName: _parentNameController.text,
-      parentNationality: _parentNationalityController.text,
-      phoneNumber: _phoneNumberController.text, 
-      // note: _noteController.text,
-    );
+  void _saveProfileData() {
+  final updatedBookingData = BookingProgramModel(
+    programId: widget.programId,
+    address: _addressController.text.isNotEmpty ? _addressController.text : widget.userData?.address,
+    nationality: _nationalityController.text.isNotEmpty ? _nationalityController.text : widget.userData?.nationality,
+    healthStatus: _hasHealthIssues 
+        ? (_healthStatusController.text.isNotEmpty ? _healthStatusController.text : widget.userData?.healthStatus)
+        : null,
+    parentAddress: _parentAddressController.text.isNotEmpty ? _parentAddressController.text : widget.userData?.parentAddress,
+    parentName: _parentNameController.text.isNotEmpty ? _parentNameController.text : widget.userData?.parentName,
+    parentNationality: _parentNationalityController.text.isNotEmpty ? _parentNationalityController.text : widget.userData?.parentNationality,
+    phoneNumber: _phoneNumberController.text.isNotEmpty ? _phoneNumberController.text : widget.userData?.phoneNumber,
+  );
 
-    // Pass the saved data back to the parent widget
-    widget.onSavePressed(bookingData);
+  widget.onSavePressed(updatedBookingData);
+  
+  // Force UI update
+  setState(() {});
 
-    // Show a success message
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Changes saved successfully!')),
-    );
-  }
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(content: Text('Changes saved successfully!')),
+  );
+}
+
+
 
   @override
   Widget build(BuildContext context) {
