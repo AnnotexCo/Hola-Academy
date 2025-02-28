@@ -182,7 +182,7 @@ class DetailClassScreen extends StatelessWidget {
                   },
                   child: ProgramCard(
                     backgroundColor: Color(0xffF7E9E9),
-                    text: program.levels?[index].name ?? "Level A",
+                    text: program.levels?[index].name ?? "Level B",
                     height: 240.h,
                     width: 196.w,
                     color: Color(0xffAD2525),

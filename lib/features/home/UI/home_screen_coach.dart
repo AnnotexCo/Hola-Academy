@@ -209,6 +209,7 @@ class HomeScreenCoach extends StatelessWidget {
 }
 
 void showPrivateLevelsDialog(BuildContext context, int programId) {
+  
   showDialog(
     context: context,
     builder: (_) {
@@ -216,10 +217,10 @@ void showPrivateLevelsDialog(BuildContext context, int programId) {
         title: "Private Levels",
         onCancel: () => Navigator.pop(context),
         options: [
-          {"title": "Level A", "icon": ImageManager.privateclass},
-          {"title": "Level B", "icon": ImageManager.semiprivateclass},
-          {"title": "Level C", "icon": ImageManager.kidsclass},
-          {"title": "Level D", "icon": ImageManager.aquaclass},
+          {"title": "Level A", "icon": "programs/image-1740165589525-446718069.png"},
+          {"title": "Level B", "icon":"programs/image-1740165589525-446718069.png"},
+          {"title": "Level C", "icon": "programs/image-1740165589525-446718069.png"},
+          {"title": "Level D", "icon": "programs/image-1740165589525-446718069.png"},
         ],
         onOptionSelected: (selectedLevel) {
           if (selectedLevel == "Level A") {
