@@ -295,8 +295,8 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             socialButton(ImageManager.googleLogo, _handleGoogleSignIn),
-            SizedBox(width: 20.w),
-            socialButton(ImageManager.appleLogo, () {}),
+            // SizedBox(width: 20.w),
+            // socialButton(ImageManager.appleLogo, () {}),
           ],
         ),
       ],

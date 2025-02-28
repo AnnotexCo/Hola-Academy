@@ -38,28 +38,37 @@ class DioLoginApi {
     }
   }
 
- Future<bool> dioGoogleLogin({required String accessToken}) async {
-    try {
-      final response = await _dio.post(
-        '${ApiConstants.baseUrl}${ApiConstants.googleLoginApi}',
-        data: {
-          "accessToken": accessToken,
+Future<bool> dioGoogleLogin({required String accessToken}) async {
+  try {
+    final response = await _dio.post(
+      '${ApiConstants.baseUrl}${ApiConstants.googleLoginApi}',
+      data: {
+        "accessToken": accessToken,
+      },
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
         },
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        ),
-      );
+      ),
+    );
 
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
-        return true;
+    if (response.statusCode != null &&
+        response.statusCode! >= 200 &&
+        response.statusCode! < 300) {
+      final responseData = response.data['data'];
+      String? token = responseData['access_token'];
+      String? role = responseData['user']['role']; // Extract role correctly
+
+      if (token != null && role != null) {
+        await SaveTokenDB.saveTokenAndRole(token, role); // Save both token & role
       }
-      return false;
-    } on DioException catch (dioError) {
-      throw dioError.response?.data['message'] ?? "Login failed";
+
+      return true;
     }
+    return false;
+  } on DioException catch (dioError) {
+    throw dioError.response?.data['message'] ?? "Google login failed";
   }
+}
+
 }
