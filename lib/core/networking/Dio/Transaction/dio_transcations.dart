@@ -76,8 +76,6 @@ class DioTranscations {
           },
         ),
       );
-      // print(response.data['message']);
-      // print(response.data['error']);
       if (response.statusCode == 200) {
         return response.data;
       }

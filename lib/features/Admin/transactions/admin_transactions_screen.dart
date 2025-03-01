@@ -7,8 +7,10 @@ import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/Admin/transactions/widgets/admin_transaction_card.dart';
 import 'package:hola_academy/features/Admin/transactions/widgets/money_card.dart';
 import 'package:hola_academy/features/Admin/transactions/widgets/transaction_tap_bar.dart';
+import 'package:hola_academy/features/notifications/UI/loading/shimmer_notifications_list.dart';
 import 'package:hola_academy/features/profile/Data/Model/transactions_model.dart';
 import 'package:hola_academy/features/profile/Logic/transactions/trans_cubit.dart';
+import 'package:intl/intl.dart';
 
 class AdminTransactionsScreen extends StatefulWidget {
   const AdminTransactionsScreen({super.key});
@@ -24,9 +26,9 @@ class _AdminTransactionsScreenState extends State<AdminTransactionsScreen>
   @override
   void initState() {
     super.initState();
-    context.read<TransCubit>().getTransactions();
-    context.read<TransCubit>().getTransactionsByFilter(isIncome: true);
-    //BlocProvider.of<TransCubit>(context).getTransactions();
+    context.read<TransCubit>().getTransactions().then((v) {
+      context.read<TransCubit>().getTransactionsByFilter(isIncome: true);
+    });
     tabController = TabController(length: 2, vsync: this);
   }
 
@@ -79,51 +81,75 @@ class _AdminTransactionsScreenState extends State<AdminTransactionsScreen>
                       Expanded(
                         child: SizedBox(
                           //height: 500.h,
-                          child: TabBarView(
-                            controller: tabController,
-                            children: [
-                              ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: state is IncomeTransactionsSuccess
-                                      ? state.transactions.transactions.length
-                                      : 0,
-                                  itemBuilder: (context, index) {
-                                    List<Transactions> transactions =
-                                        state is IncomeTransactionsSuccess
-                                            ? state.transactions.transactions
-                                            : [];
-                                    return AdminTransactionCard(
-                                      title: transactions[index].type??'',
-                                      dateTime: transactions[index].updatedAt??'',
-                                      price: transactions[index]
-                                          .finalAmount
-                                          .toString(),
-                                      status: transactions[index].status??'',
-                                      income: true,
-                                    );
-                                  }),
-                              ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: state is ExpenseTransactionsSuccess
-                                      ? state.transactions.transactions.length
-                                      : 0,
-                                  itemBuilder: (context, index) {
-                                    List<Transactions> transactions =
-                                        state is ExpenseTransactionsSuccess
-                                            ? state.transactions.transactions
-                                            : [];
-                                    return AdminTransactionCard(
-                                      title: transactions[index].type??'',
-                                      dateTime: transactions[index].updatedAt??'',
-                                      price: transactions[index]
-                                          .finalAmount
-                                          .toString(),
-                                      status: transactions[index].status??'',
-                                      income: false,
-                                    );
-                                  }),
-                            ],
-                          ),
+                          child: state is TransactionsLoading
+                              ? ShimmerNotificationsList()
+                              : TabBarView(
+                                  controller: tabController,
+                                  children: [
+                                    ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount:
+                                            state is IncomeTransactionsSuccess
+                                                ? state.transactions
+                                                    .transactions.length
+                                                : 0,
+                                        itemBuilder: (context, index) {
+                                          List<Transactions> transactions =
+                                              state is IncomeTransactionsSuccess
+                                                  ? state
+                                                      .transactions.transactions
+                                                  : [];
+                                          return AdminTransactionCard(
+                                            title:
+                                                transactions[index].type ?? '',
+                                            dateTime:
+                                                DateFormat('dd/MM/yyyy hh:mm a')
+                                                    .format(DateTime.parse(
+                                                        transactions[index]
+                                                                .updatedAt ??
+                                                            '')),
+                                            price: transactions[index]
+                                                .finalAmount
+                                                .toString(),
+                                            status:
+                                                transactions[index].status ??
+                                                    '',
+                                            income: true,
+                                          );
+                                        }),
+                                    ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount:
+                                            state is ExpenseTransactionsSuccess
+                                                ? state.transactions
+                                                    .transactions.length
+                                                : 0,
+                                        itemBuilder: (context, index) {
+                                          List<
+                                              Transactions> transactions = state
+                                                  is ExpenseTransactionsSuccess
+                                              ? state.transactions.transactions
+                                              : [];
+                                          return AdminTransactionCard(
+                                            title:
+                                                transactions[index].type ?? '',
+                                            dateTime:
+                                                DateFormat('dd/MM/yyyy hh:mm a')
+                                                    .format(DateTime.parse(
+                                                        transactions[index]
+                                                                .updatedAt ??
+                                                            '')),
+                                            price: transactions[index]
+                                                .finalAmount
+                                                .toString(),
+                                            status:
+                                                transactions[index].status ??
+                                                    '',
+                                            income: false,
+                                          );
+                                        }),
+                                  ],
+                                ),
                         ),
                       ),
                     ])),

@@ -6,8 +6,19 @@ import '../../../../../core/constants/color_manager.dart';
 import '../../../../home/UI/components/profile_pic_widget.dart';
 import '../../../../profile/Logic/personal_info/user_data_cubit.dart';
 
-class WelcomeWidget extends StatelessWidget {
+class WelcomeWidget extends StatefulWidget {
   const WelcomeWidget({super.key});
+
+  @override
+  State<WelcomeWidget> createState() => _WelcomeWidgetState();
+}
+
+class _WelcomeWidgetState extends State<WelcomeWidget> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<UserDataCubit>().fetchAllUsers();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +28,9 @@ class WelcomeWidget extends StatelessWidget {
         String pic = '';
 
         if (state is UserDataSuccess) {
-          name = state.userModel.name;
-          pic = state.userModel.profileImage?.path ?? '';
+          name = context.read<UserDataCubit>().userModel?.name ?? '';
+          pic =
+              context.read<UserDataCubit>().userModel?.profileImage?.path ?? '';
         }
 
         return Row(
@@ -30,7 +42,12 @@ class WelcomeWidget extends StatelessWidget {
                 ProfilePicWidget(
                   height: 60,
                   width: 60,
-                  pic: pic,
+                  pic: context
+                          .read<UserDataCubit>()
+                          .userModel
+                          ?.profileImage
+                          ?.path ??
+                      '',
                 ),
                 const SizedBox(width: 16),
                 Column(
@@ -42,7 +59,7 @@ class WelcomeWidget extends StatelessWidget {
                           fontSize: 14.sp, fontWeight: FontWeight.w300),
                     ),
                     Text(
-                      name,
+                      context.read<UserDataCubit>().userModel?.name ?? '',
                       style: TextStyle(
                           fontSize: 16.sp, fontWeight: FontWeight.w500),
                     ),
@@ -71,9 +88,9 @@ class WelcomeWidget extends StatelessWidget {
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Text(
-                        'No. Of Trainees : 50',
+                        'No. Of Trainees : ${context.read<UserDataCubit>().trainees.length}',
                         style: TextStyle(
                           fontSize: 8,
                           fontWeight: FontWeight.w400,
@@ -83,7 +100,7 @@ class WelcomeWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'No. Of Coaches : 10',
+                        'No. Of Coaches : ${context.read<UserDataCubit>().coaches.length}',
                         style: TextStyle(
                           fontSize: 8,
                           fontWeight: FontWeight.w400,

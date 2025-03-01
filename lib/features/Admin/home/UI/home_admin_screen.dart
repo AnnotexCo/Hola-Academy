@@ -69,22 +69,30 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
                   action: 'View All',
                   onPressed: () {
                     // Navigate to the new requests screen
-                    Navigator.of(context).pushNamed(Routes.traineesScreen, arguments: 'COACH');
+                    Navigator.of(context)
+                        .pushNamed(Routes.traineesScreen, arguments: 'COACH');
                   },
                 ),
                 SizedBox(height: 16.h),
-                const CoachesSection(),
+                BlocProvider(
+                  create: (context) => getIT<UserDataCubit>(),
+                  child: const CoachesSection(),
+                ),
                 SizedBox(height: 24.h),
                 SectionHeader(
                   title: 'Trainee',
                   action: 'View All',
                   onPressed: () {
                     // Navigate to the new requests screen
-                    Navigator.of(context).pushNamed(Routes.traineesScreen, arguments: 'TRAINEE');
+                    Navigator.of(context)
+                        .pushNamed(Routes.traineesScreen, arguments: 'TRAINEE');
                   },
                 ),
                 SizedBox(height: 16.h),
-                const CoachesSection(),
+                BlocProvider(
+                  create: (context) => getIT<UserDataCubit>(),
+                  child: const CoachesSection(),
+                ),
               ],
             ),
           ),
@@ -93,9 +101,6 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
     );
   }
 }
-
-
-
 
 // Custom Painter for Pentagon Shape
 class PentagonPainter extends CustomPainter {

@@ -50,6 +50,7 @@ class UserDataCubit extends Cubit<UserDataState> {
     try {
       if (!isClosed) emit(UserDataLoading());
       final user = await userRepo.getMyData();
+      userModel = user;
       // await SaveTokenDB.saveNameAndImage(
       //     user.name, user.profileImage?.path ?? '');
       if (!isClosed) emit(UserDataSuccess(userModel: user));
@@ -79,11 +80,24 @@ class UserDataCubit extends Cubit<UserDataState> {
     }
   }
 
+  List<User> users = [];
+  List<User> trainees = [];
+  List<User> coaches = [];
   Future<void> fetchAllUsers() async {
     try {
       if (!isClosed) emit(UserDataLoading());
-      final users = await userRepo.fetchAllUsers();
-      if (!isClosed) emit(FetchAllUsersSuccess(users: users));
+      final userss = await userRepo.fetchAllUsers();
+      users = userss.data.users;
+      coaches.clear();
+      trainees.clear();
+      for (var user in users) {
+        if (user.role == "COACH") {
+          coaches.add(user);
+        } else if (user.role == "TRAINEE") {
+          trainees.add(user);
+        }
+      }
+      if (!isClosed) emit(FetchAllUsersSuccess(users: userss));
     } catch (e) {
       if (!isClosed) emit(FetchAllUsersFailure(message: e.toString()));
     }

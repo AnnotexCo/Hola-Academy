@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,7 +25,7 @@ class _TraineesScreenState extends State<TraineesScreen> {
   @override
   void initState() {
     super.initState();
-    //context.read<UserDataCubit>().fetchUsersByRole(role: widget.role);
+    context.read<UserDataCubit>().fetchUsersByRole(role: widget.role);
     ();
   }
 
@@ -116,7 +115,9 @@ class _TraineesScreenState extends State<TraineesScreen> {
                   if (users.isEmpty) {
                     return Center(
                         child: NotFoundScreen(
-                      title: widget.role == AppString.trainee ? 'No Trainees Found' : 'No COACH Found',
+                      title: widget.role == AppString.trainee
+                          ? 'No Trainees Found'
+                          : 'No COACH Found',
                     ));
                   }
                   return Expanded(
