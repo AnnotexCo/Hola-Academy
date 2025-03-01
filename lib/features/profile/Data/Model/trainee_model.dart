@@ -64,8 +64,7 @@ class User {
         parentWhatsappNumber: json['parentWhatsappNumber'],
         role: json['role'],
         profileImage: json['profileImage'] != null
-            ? ProfileImage.fromJson(json['profileImage'])
-            : ProfileImage.fromJson(json['ProfileImage']),
+            ? ProfileImage.fromJson(json['profileImage']):null,
       );
 }
 

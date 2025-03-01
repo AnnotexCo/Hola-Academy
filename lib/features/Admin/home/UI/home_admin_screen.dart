@@ -34,7 +34,7 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 BlocProvider(
-                  create: (context) => getIT<UserDataCubit>()..getMyData(),
+                  create: (context) => getIT<UserDataCubit>()..fetchAllUsers(),
                   child: WelcomeWidget(),
                 ),
                 SizedBox(height: 16.h),

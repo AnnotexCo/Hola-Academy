@@ -14,7 +14,6 @@ import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubi
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
 import 'package:intl/intl.dart';
-
 import '../../../core/local_db/save_token.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
@@ -31,8 +30,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
 
   final TextEditingController phoneController = TextEditingController();
 
-  final TextEditingController birthDayController = TextEditingController();
-
   final TextEditingController parentWhatsappNumberController =
       TextEditingController();
 
@@ -42,6 +39,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
 
   // final bool _isPasswordVisible = false;
 
+  String? birthDate;
   String? selectedGender;
 
   final List<String> genderOptions = ['Male', 'Female'];
@@ -85,7 +83,8 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                     nameController.text = state.userModel.name;
                     parentNameController.text = state.userModel.parentName;
                     phoneController.text = state.userModel.phoneNumber;
-                    birthDayController.text = state.userModel.dob;
+                    birthDate = DateFormat('dd/MM/yyyy')
+                        .format(DateTime.parse(state.userModel.dob).toLocal());
                     parentWhatsappNumberController.text =
                         state.userModel.parentWhatsappNumber.toString();
                     emailController.text = state.userModel.email;
@@ -257,7 +256,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                               ],
                               GeneralTextFormField(
                                 label: AppString.birthDay,
-                                hint: AppString.chooseYourBirthDate,
+                                hint: birthDate ?? '',
                                 labelStyle: TextStyle(
                                   fontSize: 18.sp,
                                   color: ColorManager.blackFontColor,
@@ -270,7 +269,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   Icons.calendar_month,
                                   color: ColorManager.textRedColor,
                                 ),
-                                controller: birthDayController,
                                 keyboardType: TextInputType.datetime,
                                 onTap: () async {
                                   // Open date picker

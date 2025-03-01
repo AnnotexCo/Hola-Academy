@@ -8,7 +8,6 @@ import 'package:hola_academy/features/not_found/not_found_screen.dart';
 import 'package:hola_academy/features/notifications/UI/widgets/notification_item.dart';
 import 'package:hola_academy/features/notifications/Logic/notifications_cubit.dart';
 import 'package:intl/intl.dart';
-
 import '../Logic/notifications_state.dart';
 import 'loading/shimmer_notifications_list.dart';
 

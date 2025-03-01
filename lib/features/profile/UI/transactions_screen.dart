@@ -9,6 +9,7 @@ import 'package:hola_academy/features/not_found/not_found_screen.dart';
 import 'package:hola_academy/features/profile/Data/Model/transactions_model.dart';
 import 'package:hola_academy/features/profile/Logic/transactions/trans_cubit.dart';
 import 'package:hola_academy/features/profile/UI/widgets/transaction_card.dart';
+import 'package:intl/intl.dart';
 
 import '../../../core/local_db/save_token.dart';
 
@@ -191,7 +192,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                                     : [];
                             return TransactionCard(
                               title: transactions[index].type ?? '',
-                              dateTime: transactions[index].updatedAt ?? '',
+                              dateTime: DateFormat('dd/MM/yyyy hh:mm a').format(
+                                  DateTime.parse(
+                                      transactions[index].updatedAt ?? '')),
                               price: transactions[index].finalAmount.toString(),
                               status: transactions[index].status ?? '',
                               userCase: transactions[index].userCase ?? '',
