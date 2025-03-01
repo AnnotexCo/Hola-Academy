@@ -16,6 +16,11 @@ final class ClassesLoaded extends ClassesState {
   const ClassesLoaded({required this.classes});
 }
 
+final class MyClassesLoaded extends ClassesState {
+  final List<MyClassModel> classes;
+  const MyClassesLoaded({required this.classes});
+}
+
 final class ClassesError extends ClassesState {
   final String error;
   const ClassesError({required this.error});

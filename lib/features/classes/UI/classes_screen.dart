@@ -37,6 +37,14 @@ class ClassesScreenState extends State<ClassesScreen> {
       );
       selectedCategoryId = null;
     });
+
+    if (selectedTab == ClassesTab.myClasses) {
+      context.read<ClassesCubit>().getmyClass();
+    }
+
+    if (selectedTab == ClassesTab.available) {
+      context.read<ClassesCubit>().getAllClasses();
+    }
   }
 
   @override
@@ -79,8 +87,11 @@ class ClassesScreenState extends State<ClassesScreen> {
         programsState is ProgramsSuccess ? programsState.programs : [];
     final availableClasses =
         classesState is ClassesLoaded ? classesState.classes : [];
+    final myClasses =
+        classesState is MyClassesLoaded ? classesState.classes : [];
 
-    List filteredPrograms = _getFilteredPrograms(allPrograms, availableClasses);
+    List filteredPrograms =
+        _getFilteredPrograms(allPrograms, availableClasses, myClasses);
 
     return Scaffold(
       backgroundColor: ColorManager.backgroundColor,
@@ -108,14 +119,15 @@ class ClassesScreenState extends State<ClassesScreen> {
           _buildTabTitle(),
           if (selectedTab == ClassesTab.allPrograms) _buildCategoryFilter(),
           _buildProgramsList(filteredPrograms),
-          if (selectedTab == ClassesTab.myClasses)
-            _buildCompletedClasses(filteredPrograms),
+          // if (selectedTab == ClassesTab.myClasses)
+          //   _buildCompletedClasses(filteredPrograms),
         ],
       ),
     );
   }
 
-  List _getFilteredPrograms(List allPrograms, List availableClasses) {
+  List _getFilteredPrograms(
+      List allPrograms, List availableClasses, List myClasses) {
     switch (selectedTab) {
       case ClassesTab.allPrograms:
         return selectedCategoryId == null
@@ -126,7 +138,7 @@ class ClassesScreenState extends State<ClassesScreen> {
       case ClassesTab.available:
         return availableClasses;
       case ClassesTab.myClasses:
-        return [];
+        return myClasses;
     }
   }
 
@@ -186,46 +198,49 @@ class ClassesScreenState extends State<ClassesScreen> {
   Widget _buildClassItem(dynamic program) {
     switch (selectedTab) {
       case ClassesTab.myClasses:
-        return ProgressClassWidget();
+        return ProgressClassWidget(
+            name: program.name,
+            description: program.description,
+            compelation: program.completion);
       case ClassesTab.available:
         return AvailableClassWidget(
             name: program.name, description: program.description);
       default:
         return GestureDetector(
-          onTap: ()=> Navigator.pushNamed(context, Routes.detailsScreen,
+            onTap: () => Navigator.pushNamed(context, Routes.detailsScreen,
                 arguments: program.id),
-          child: ProgramWidget(program: program));
+            child: ProgramWidget(program: program));
     }
   }
 
-  Widget _buildCompletedClasses(List filteredPrograms) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(left: 32.w),
-          child: Text(
-            "Completed",
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w600,
-              color: ColorManager.graycolorHeadline,
-            ),
-          ),
-        ),
-        Expanded(
-          child: ListView.builder(
-            padding: EdgeInsets.only(top: 2),
-            itemCount: filteredPrograms.length,
-            itemBuilder: (context, index) => Padding(
-              padding: EdgeInsets.only(bottom: 18.0.h),
-              child: ProgressClassWidget(),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _buildCompletedClasses(List filteredPrograms) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Padding(
+  //         padding: EdgeInsets.only(left: 32.w),
+  //         child: Text(
+  //           "Completed",
+  //           style: TextStyle(
+  //             fontSize: 18.sp,
+  //             fontWeight: FontWeight.w600,
+  //             color: ColorManager.graycolorHeadline,
+  //           ),
+  //         ),
+  //       ),
+  //       Expanded(
+  //         child: ListView.builder(
+  //           padding: EdgeInsets.only(top: 2),
+  //           itemCount: filteredPrograms.length,
+  //           itemBuilder: (context, index) => Padding(
+  //             padding: EdgeInsets.only(bottom: 18.0.h),
+  //             child: ProgressClassWidget(),
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   PopupMenuItem<String> _buildMenuItem(String value, String name) {
     bool isSelected = selectedTab.name == value;

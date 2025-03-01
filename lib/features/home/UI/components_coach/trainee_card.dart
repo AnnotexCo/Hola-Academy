@@ -2,15 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
+import 'package:hola_academy/features/trainee/widgets/lessons_dialog.dart';
 
 import '../../../../core/constants/api_constants.dart';
-import '../../../trainee/widgets/evaluate_dialog.dart';
 
 class TraineeCard extends StatelessWidget {
+  final int classId;
   final String? name;
   final String? phone;
   final String? image;
-  const TraineeCard({this.name, this.phone, super.key, required this.image});
+  const TraineeCard({this.name, this.phone, super.key, required this.image, required this.classId});
 
   @override
   Widget build(BuildContext context) {
@@ -101,12 +102,13 @@ class TraineeCard extends StatelessWidget {
                     MaterialTapTargetSize.shrinkWrap, // Removes extra margin
               ),
               onPressed: () {
+
                 showDialog(
                     context: context,
                     builder: (context) {
-                      return EvaluateDialog(
+                      return LessonsDialog(
                         imageUrl: image!,
-                        traineeName: 'Robert Fox',
+                        traineeName: name!,
                         courseTitle: 'Basic Swimming Techniques',
                         onCancel: () {
                           Navigator.of(context).pop();

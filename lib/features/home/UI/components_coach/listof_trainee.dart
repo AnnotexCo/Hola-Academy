@@ -5,11 +5,12 @@ import 'package:hola_academy/features/home/UI/components_coach/trainee_card.dart
 import 'package:hola_academy/features/profile/Data/Model/trainee_model.dart';
 
 class ListofTrainee extends StatelessWidget {
+  final int classId;
   final AllUsersModel allUsersModel;
 
   const ListofTrainee({
     super.key,
-    required this.allUsersModel,
+    required this.allUsersModel, required this.classId,
   });
 
   @override
@@ -24,6 +25,7 @@ class ListofTrainee extends StatelessWidget {
               vertical: 9.h,
             ),
             child: TraineeCard(
+              classId: classId,
                 name: user.name,
                 phone: user.phoneNumber,
                 image: user.profileImage!.path));
