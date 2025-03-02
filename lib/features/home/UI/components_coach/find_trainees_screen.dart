@@ -9,7 +9,8 @@ import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubi
 
 class FindTraineesScreen extends StatelessWidget {
   final int classID;
-  const FindTraineesScreen({super.key, required this.classID});
+  final String className;
+  const FindTraineesScreen({super.key, required this.classID, required this.className});
 
   @override
   Widget build(BuildContext context) {
@@ -119,8 +120,9 @@ class FindTraineesScreen extends StatelessWidget {
                 // Once the data is fetched successfully, display the list
                 if (state is FetchAllUsersSuccess) {
                   return ListofTrainee(
-                    
-                    allUsersModel: state.users, classId: classID,
+                    className: className,
+                    allUsersModel: state.users,
+                    classId: classID,
                   );
                 }
 

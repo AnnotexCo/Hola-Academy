@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/Routing/app_router.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/calender_widget.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
@@ -118,6 +119,12 @@ class HomeScreenCoach extends StatelessWidget {
                                         showDialog(
                                           context: context,
                                           builder: (_) {
+                                            String categoryName =
+                                                state.categories[index].name;
+                                            int categoryID =
+                                                state.categories[index].id;
+
+                                            // TODO Get Programs by Category ID
                                             return BlocProvider.value(
                                               value: programsCubit,
                                               child: BlocBuilder<ProgramsCubit,
@@ -137,7 +144,7 @@ class HomeScreenCoach extends StatelessWidget {
                                                         .toList();
 
                                                     return ClassesDialog(
-                                                      title: "Educational",
+                                                      title: categoryName,
                                                       onCancel: () =>
                                                           Navigator.pop(
                                                               context),
@@ -293,8 +300,12 @@ void showClassifcationDialog(BuildContext context, ClassesCubit classesCubit,
                     );
 
                     if (selectedTitle == selectedclass.name) {
-                      Navigator.pushNamed(context, Routes.findTraineeScreen,
-                          arguments: selectedclass.id);
+                      Navigator.pushNamed(
+                        context,
+                        Routes.findTraineeScreen,
+                        arguments: ClassDetails(
+                            name: selectedclass.name, id: selectedclass.id),
+                      );
                     }
                   },
                 );

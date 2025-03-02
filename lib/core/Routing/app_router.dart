@@ -13,6 +13,7 @@ import 'package:hola_academy/features/auth/verification/Data/Model/reset_args.da
 import 'package:hola_academy/features/auth/verification/Logic/cubit/check_otp_cubit.dart';
 import 'package:hola_academy/features/auth/verification/UI/verfication_screen.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/lessons/cubit/lessons_cubit.dart';
 import 'package:hola_academy/features/classes/UI/classes_screen.dart';
 import 'package:hola_academy/features/classes/UI/detail_class_screen.dart';
 import 'package:hola_academy/features/classes/UI/program_levl_screen.dart';
@@ -249,13 +250,21 @@ class AppRouter {
 
       case Routes.findTraineeScreen:
         return MaterialPageRoute(builder: (_) {
-          final int classID = settings.arguments as int;
+          final args = settings.arguments as ClassDetails;
 
-          return BlocProvider(
-            create: (context) =>
-                getIT<UserDataCubit>()..fetchTraineesByID(classID),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) =>
+                    getIT<UserDataCubit>()..fetchTraineesByID(args.id),
+              ),
+              BlocProvider(
+                create: (context) => getIT<LessonsCubit>(),
+              ),
+            ],
             child: FindTraineesScreen(
-              classID: classID,
+              className: args.name,
+              classID: args.id,
             ),
           );
         });
@@ -276,4 +285,11 @@ class AppRouter {
         return null;
     }
   }
+}
+
+class ClassDetails {
+  final String name;
+  final int id;
+
+  ClassDetails({required this.name, required this.id});
 }

@@ -33,6 +33,7 @@ class Data {
 }
 
 class User {
+  final int? id;
   final String? email;
   final String? name;
   final String? gender;
@@ -43,6 +44,7 @@ class User {
   final String? role;
   final ProfileImage? profileImage;
   User({
+    this.id,
     this.email,
     this.name,
     this.gender,
@@ -55,17 +57,17 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        email: json['email'],
-        name: json['name'],
-        gender: json['gender'],
-        dob: json['dob'],
-        parentName: json['parentName'],
-        phoneNumber: json['phoneNumber'],
-        parentWhatsappNumber: json['parentWhatsappNumber'],
-        role: json['role'],
-        profileImage: json['profileImage'] != null
-            ? ProfileImage.fromJson(json['profileImage']):null,
-      );
+      id: json['id'],
+      email: json['email'],
+      name: json['name'],
+      gender: json['gender'],
+      dob: json['dob'],
+      parentName: json['parentName'],
+      phoneNumber: json['phoneNumber'],
+      parentWhatsappNumber: json['parentWhatsappNumber'],
+      role: json['role'],
+      profileImage:
+          json['profileImage'] ?? ProfileImage.fromJson(json['ProfileImage']));
 }
 
 class ProfileImage {

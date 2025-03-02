@@ -87,6 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         );
                       }
                     } else if (state is LoginFailure) {
+                      Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(state.message)),
                       );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:hola_academy/core/constants/api_constants.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CustomDialog extends StatelessWidget {
@@ -28,7 +29,8 @@ class CustomDialog extends StatelessWidget {
       child: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom, // Adjust for keyboard
+            bottom:
+                MediaQuery.of(context).viewInsets.bottom, // Adjust for keyboard
           ),
           child: Stack(
             children: [
@@ -51,12 +53,14 @@ class CustomDialog extends StatelessWidget {
                         children: [
                           ClipOval(
                             child: CachedNetworkImage(
-                              imageUrl: imageUrl!,
+                              imageUrl:
+                                  "${ApiConstants.imagesURLApi}${imageUrl!}",
                               width: 60.r,
                               height: 60.r,
                               fit: BoxFit.cover,
                               placeholder: (context, url) => _shimmerEffect(),
-                              errorWidget: (context, url, error) => _defaultProfileImage(),
+                              errorWidget: (context, url, error) =>
+                                  _defaultProfileImage(),
                             ),
                           ),
                           SizedBox(width: 19.w),

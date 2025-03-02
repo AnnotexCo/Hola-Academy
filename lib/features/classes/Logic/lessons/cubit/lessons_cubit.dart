@@ -19,4 +19,15 @@ class LessonsCubit extends Cubit<LessonsState> {
       emit(LessonsError(message: e.toString()));
     }
   }
+
+  getLessonsByID(int traineeID, int classID) async {
+    try {
+      emit(LessonsLoading());
+
+      final lessons = await repo.getLessonsByID(traineeID, classID);
+      emit(LessonsSuccess(lessons: lessons));
+    } catch (e) {
+      emit(LessonsError(message: e.toString()));
+    }
+  }
 }

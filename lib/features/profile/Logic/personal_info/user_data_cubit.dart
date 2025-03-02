@@ -117,6 +117,7 @@ class UserDataCubit extends Cubit<UserDataState> {
     try {
       if (!isClosed) emit(UserDataLoading());
       final users = await userRepo.fetchTraineesByID(classID);
+      print("Hello user coming $users");
       print(users);
       if (!isClosed) emit(FetchAllUsersSuccess(users: users));
     } catch (e) {

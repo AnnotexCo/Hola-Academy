@@ -10,10 +10,19 @@ class DioLessons {
   DioLessons({required Dio dio}) : _dio = dio;
 
   /// Fetch all programs
-  Future<List<LessonModel>> getAllLevels() async {
+  Future<List<LessonModel>> getLessonsByID(int traineeID, int classID) async {
+    String? token = await SaveTokenDB.getToken();
+
     try {
-      final response = await _dio
-          .get("${ApiConstants.baseUrl}${ApiConstants.getallLessonsApi}");
+      final response = await _dio.get(
+          "${ApiConstants.baseUrl}${ApiConstants.getLessonsApibyID}",
+          queryParameters: {"traineeId": traineeID, "classId": classID},
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+              'Content-Type': 'application/json',
+            },
+          ));
 
       if (response.statusCode == 200) {
         List<dynamic> data = response.data['data'];

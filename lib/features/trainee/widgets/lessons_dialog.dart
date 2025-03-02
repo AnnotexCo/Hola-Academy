@@ -3,21 +3,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/components/custom_dialog.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
-import 'package:hola_academy/core/constants/image_manager.dart';
-import 'package:hola_academy/features/trainee/widgets/feedback_dialog.dart';
+import 'package:hola_academy/features/classes/Data/Model/lessons_model.dart';
+import 'package:hola_academy/features/trainee/widgets/evaluate_dialog.dart';
+import 'package:intl/intl.dart';
 
 class LessonsDialog extends StatelessWidget {
   final String traineeName;
   final String courseTitle;
   final String imageUrl;
   final VoidCallback onCancel;
+  final List<LessonModel> lessons;
 
   const LessonsDialog(
       {super.key,
       required this.traineeName,
       required this.courseTitle,
       required this.imageUrl,
-      required this.onCancel});
+      required this.onCancel,
+      required this.lessons});
 
   @override
   Widget build(BuildContext context) {
@@ -53,47 +56,28 @@ class LessonsDialog extends StatelessWidget {
                 ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: skills.length,
+                    itemCount: lessons.length,
                     itemBuilder: (context, index) {
                       return BuildSkillsItem(
-                        skillName: skills[index]['name'],
-                        rating: skills[index]['rating'],
+                        skillName: DateFormat('MMM dd, yyyy, hh:mm a')
+                            .format(lessons[index].date),
+                        rating: lessons[index].lessonEvaluationCount.toDouble(),
                         onChanged: (value) {
-                          skills[index]['rating'] = value;
+                          Navigator.of(context).pop();
                         },
                         onTap: () {
+                          
                           Navigator.of(context).pop();
                           showDialog(
                             context: context,
                             builder: (context) {
-                              return FeedbackDialog(
-                                imageUrl: ImageManager.pic,
-                                traineeName: 'Robert Fox',
-                                courseTitle: 'Basic Swimming Techniques',
-                                techniqueTitle: skills[index]['name'],
-                                onSave: () {
-                                  // Handle save action
-                                  Navigator.of(context).pop();
-                                },
-                                onCancel: () {
-                                  // Handle cancel action
-                                  Navigator.of(context).pop();
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return LessonsDialog(
-                                        imageUrl: ImageManager.pic,
-                                        traineeName: 'Robert Fox',
-                                        courseTitle:
-                                            'Basic Swimming Techniques',
-                                        onCancel: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      );
-                                    },
-                                  );
-                                },
-                              );
+                              return EvaluateDialog(
+                                  traineeName: traineeName,
+                                  courseTitle: courseTitle,
+                                  imageUrl: imageUrl,
+                                  onCancel: () {
+                                    Navigator.of(context).pop();
+                                  });
                             },
                           );
                         },

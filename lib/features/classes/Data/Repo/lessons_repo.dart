@@ -9,4 +9,8 @@ class LessonsRepo {
   Future<List<LessonModel>> getmyLessons() async {
     return await dioLessons.getLessonsbytrainee();
   }
+
+  Future<List<LessonModel>> getLessonsByID(int traineeID, int classID) async {
+    return await dioLessons.getLessonsByID(traineeID, classID);
+  }
 }
