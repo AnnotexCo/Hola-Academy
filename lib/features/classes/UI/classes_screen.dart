@@ -15,6 +15,7 @@ import 'package:hola_academy/features/classes/UI/widgets/available_class_widget.
 import 'package:hola_academy/features/classes/UI/widgets/progress_class_widget.dart';
 import 'package:hola_academy/features/classes/UI/widgets/program_widget.dart';
 import 'package:hola_academy/features/classes/UI/widgets/categories_tap_buttons.dart';
+import 'package:hola_academy/features/not_found/not_found_screen.dart';
 
 enum ClassesTab { allPrograms, available, myClasses }
 
@@ -118,7 +119,9 @@ class ClassesScreenState extends State<ClassesScreen> {
           SizedBox(height: 12.h),
           _buildTabTitle(),
           if (selectedTab == ClassesTab.allPrograms) _buildCategoryFilter(),
-          _buildProgramsList(filteredPrograms),
+          filteredPrograms.isNotEmpty
+              ? _buildProgramsList(filteredPrograms)
+              : NotFoundScreen(),
           // if (selectedTab == ClassesTab.myClasses)
           //   _buildCompletedClasses(filteredPrograms),
         ],
