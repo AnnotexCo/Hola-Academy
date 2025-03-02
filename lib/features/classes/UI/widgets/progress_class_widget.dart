@@ -4,7 +4,14 @@ import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class ProgressClassWidget extends StatelessWidget {
-  const ProgressClassWidget({super.key});
+  final String name;
+  final String description;
+  final double compelation;
+  const ProgressClassWidget(
+      {super.key,
+      required this.name,
+      required this.description,
+      required this.compelation});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +52,7 @@ class ProgressClassWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Gold Medal Training Plan",
+                    name,
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w700,
@@ -53,7 +60,7 @@ class ProgressClassWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Swim With the pros! ",
+                    description,
                     style: TextStyle(
                       fontSize: 10.sp,
                       fontWeight: FontWeight.w400,
@@ -75,9 +82,9 @@ class ProgressClassWidget extends StatelessWidget {
                             7, // Use CustomMQ for responsive line height
                         backgroundColor:
                             const Color.fromARGB(255, 228, 225, 225),
-                        percent: (5 / 10),
+                        percent: (compelation / 100),
                         trailing: Text(
-                          "  40%",
+                          "$compelation %",
                           style: TextStyle(
                             fontSize: 8.sp,
                             fontWeight: FontWeight.w400,

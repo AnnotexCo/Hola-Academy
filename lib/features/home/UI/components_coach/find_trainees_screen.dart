@@ -119,7 +119,8 @@ class FindTraineesScreen extends StatelessWidget {
                 // Once the data is fetched successfully, display the list
                 if (state is FetchAllUsersSuccess) {
                   return ListofTrainee(
-                    allUsersModel: state.users,
+                    
+                    allUsersModel: state.users, classId: classID,
                   );
                 }
 

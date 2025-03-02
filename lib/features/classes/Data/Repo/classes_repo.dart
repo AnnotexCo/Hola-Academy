@@ -1,5 +1,6 @@
 import 'package:hola_academy/core/networking/Dio/Classes/dio_classes.dart';
 import 'package:hola_academy/features/classes/Data/Model/classs_model.dart';
+import 'package:hola_academy/features/classes/Data/Model/myclass_model.dart';
 
 class ClassesRepo {
   final DioClasses _dioCategoriess;
@@ -14,5 +15,9 @@ class ClassesRepo {
 
   Future<List<ClasssModel>> getClassesyByLevel(int id) async {
     return await _dioCategoriess.getClassesByLevel(id);
+  }
+
+  Future<List<MyClassModel>> getmyClass() async {
+    return await _dioCategoriess.getmyClasses();
   }
 }

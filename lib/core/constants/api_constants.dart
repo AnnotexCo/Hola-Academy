@@ -37,4 +37,9 @@ class ApiConstants {
   static const String notificationsApi = 'api/notifications/my-notifications';
   static const String notificationUdateStatusApi = 'api/notifications/status/';
   static const String notificationsByIdApi = 'api/notifications/';
+
+  //Lessons
+
+  static const String myLessonsApi = 'api/lessons/me';
+  static const String getallLessonsApi = 'api/lessons';
 }
