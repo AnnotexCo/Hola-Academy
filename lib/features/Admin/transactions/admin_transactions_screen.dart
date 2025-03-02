@@ -28,6 +28,7 @@ class _AdminTransactionsScreenState extends State<AdminTransactionsScreen>
     super.initState();
     context.read<TransCubit>().getTransactions().then((v) {
       context.read<TransCubit>().getTransactionsByFilter(isIncome: true);
+      context.read<TransCubit>().getTransactionsByFilter(isIncome: false);
     });
     tabController = TabController(length: 2, vsync: this);
   }
@@ -88,17 +89,23 @@ class _AdminTransactionsScreenState extends State<AdminTransactionsScreen>
                                   children: [
                                     ListView.builder(
                                         shrinkWrap: true,
-                                        itemCount:
-                                            state is IncomeTransactionsSuccess
-                                                ? state.transactions
-                                                    .transactions.length
-                                                : 0,
+                                        itemCount: context
+                                                    .read<TransCubit>()
+                                                    .incomeTransactions !=
+                                                null
+                                            ? context
+                                                .read<TransCubit>()
+                                                .incomeTransactions
+                                                ?.transactions
+                                                .length
+                                            : 0,
                                         itemBuilder: (context, index) {
                                           List<Transactions> transactions =
-                                              state is IncomeTransactionsSuccess
-                                                  ? state
-                                                      .transactions.transactions
-                                                  : [];
+                                              context
+                                                      .read<TransCubit>()
+                                                      .incomeTransactions
+                                                      ?.transactions ??
+                                                  [];
                                           return AdminTransactionCard(
                                             title:
                                                 transactions[index].type ?? '',
@@ -119,17 +126,23 @@ class _AdminTransactionsScreenState extends State<AdminTransactionsScreen>
                                         }),
                                     ListView.builder(
                                         shrinkWrap: true,
-                                        itemCount:
-                                            state is ExpenseTransactionsSuccess
-                                                ? state.transactions
-                                                    .transactions.length
-                                                : 0,
+                                        itemCount: context
+                                                    .read<TransCubit>()
+                                                    .expenseTransactions !=
+                                                null
+                                            ? context
+                                                .read<TransCubit>()
+                                                .expenseTransactions
+                                                ?.transactions
+                                                .length
+                                            : 0,
                                         itemBuilder: (context, index) {
-                                          List<
-                                              Transactions> transactions = state
-                                                  is ExpenseTransactionsSuccess
-                                              ? state.transactions.transactions
-                                              : [];
+                                          List<Transactions> transactions =
+                                              context
+                                                      .read<TransCubit>()
+                                                      .expenseTransactions
+                                                      ?.transactions ??
+                                                  [];
                                           return AdminTransactionCard(
                                             title:
                                                 transactions[index].type ?? '',

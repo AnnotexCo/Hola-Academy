@@ -97,7 +97,7 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
         String name = " ";
         String pic = '';
         if (state is UserDataSuccess) {
-          name = state.userModel.name;
+          name = state.userModel.name??'';
           pic = state.userModel.profileImage?.path ?? '';
         }
         return Stack(

@@ -1,12 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
+import 'package:hola_academy/core/constants/api_constants.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
+import 'package:hola_academy/features/Admin/home/UI/loading/new_requests_shimmer.dart';
 import 'package:hola_academy/features/Admin/requests/Logic/requests_cubit.dart';
+import 'package:hola_academy/features/home/UI/components/profile_pic_widget.dart';
 import 'package:hola_academy/features/home/UI/components/timeline_widget.dart';
+import 'package:hola_academy/features/profile/Data/Model/trainee_model.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
-
 import '../../../../core/dependency_injection/dependency.dart';
 import '../../../home/Logic/banner_logic/banner_cubit.dart';
 import '../../../home/UI/components/add_baner.dart';
@@ -31,7 +35,7 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 BlocProvider(
                   create: (context) => getIT<UserDataCubit>()..getMyData(),
@@ -75,8 +79,10 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
                 ),
                 SizedBox(height: 16.h),
                 BlocProvider(
-                  create: (context) => getIT<UserDataCubit>(),
-                  child: const CoachesSection(),
+                  create: (context) => getIT<UserDataCubit>()..fetchAllUsers(),
+                  child: CoachesSection(
+                    isCoach: true,
+                  ),
                 ),
                 SizedBox(height: 24.h),
                 SectionHeader(
@@ -91,7 +97,9 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
                 SizedBox(height: 16.h),
                 BlocProvider(
                   create: (context) => getIT<UserDataCubit>(),
-                  child: const CoachesSection(),
+                  child: CoachesSection(
+                    isCoach: false,
+                  ),
                 ),
               ],
             ),
@@ -102,124 +110,152 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
   }
 }
 
-// Custom Painter for Pentagon Shape
-class PentagonPainter extends CustomPainter {
-  final Color color;
-  PentagonPainter(this.color);
+class CoachesSection extends StatefulWidget {
+  final bool isCoach;
+  const CoachesSection({super.key, required this.isCoach});
 
   @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = color;
-
-    final path = Path();
-    final width = size.width;
-    final height = size.height;
-
-    path.moveTo(width * 0.5, 0); // Top point
-    path.lineTo(width, height * 0.38); // Top-right
-    path.lineTo(width * 0.81, height); // Bottom-right
-    path.lineTo(width * 0.19, height); // Bottom-left
-    path.lineTo(0, height * 0.38); // Top-left
-    path.close();
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
-  }
+  State<CoachesSection> createState() => _CoachesSectionState();
 }
 
-class CoachesSection extends StatelessWidget {
-  const CoachesSection({super.key});
+class _CoachesSectionState extends State<CoachesSection> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<UserDataCubit>().fetchAllUsers();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 16.w,
-        mainAxisSpacing: 16.h,
-        childAspectRatio: 1.2, // Adjusted for better layout proportions
+    return BlocConsumer<UserDataCubit, UserDataState>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        return GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 16.w,
+              mainAxisSpacing: 16.h,
+              childAspectRatio: 1.2, // Adjusted for better layout proportions
+            ),
+            itemCount: 2,
+            itemBuilder: (context, index) {
+              List<User> users = widget.isCoach
+                  ? context.read<UserDataCubit>().coaches
+                  : context.read<UserDataCubit>().trainees;
+
+              return users.isEmpty
+                  ? NewRequestsShimmer()
+                  : CoachCard(
+                      name: users[index].name ?? '',
+                      phoneNumber: users[index].phoneNumber ?? '',
+                      pic: users[index].profileImage?.path ?? '');
+            });
+      },
+    );
+  }
+}
+
+class CoachCard extends StatelessWidget {
+  final String name;
+  final String phoneNumber;
+  final String pic;
+
+  const CoachCard(
+      {super.key,
+      required this.name,
+      required this.phoneNumber,
+      required this.pic});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 194.w,
+      height: 126.h,
+      decoration: BoxDecoration(
+        color: ColorManager.lightYellow, // Light orange background
+        border: Border.all(
+          color: ColorManager.primaryOrangeColor, // Border color
+          width: 1.w,
+        ),
+        borderRadius: BorderRadius.circular(12.r),
       ),
-      itemCount: 2,
-      itemBuilder: (context, index) => Container(
-        width: 194.w,
-        height: 126.h,
-        decoration: BoxDecoration(
-          color: ColorManager.lightYellow, // Light orange background
-          border: Border.all(
-            color: ColorManager.primaryOrangeColor, // Border color
-            width: 1.w,
+      padding: EdgeInsets.only(left: 7.w),
+      child: Column(
+        spacing: 8.h,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Circle Avatar
+          Center(
+              child: SizedBox(
+            height: 60.h,
+            width: 60.w,
+            child: ClipOval(
+              child: CachedNetworkImage(
+                imageUrl: '${ApiConstants.imagesURLApi}$pic',
+                fit: BoxFit.cover,
+                placeholder: (context, ur0l) => ShimmerCircle(size: 50.w),
+                errorWidget: (context, url, error) => CircleAvatar(
+                  backgroundColor: ColorManager.lightYellow,
+                  child:
+                      const Icon(Icons.person, color: Colors.white, size: 30),
+                ),
+              ),
+            ),
+          )),
+          SizedBox(height: 12.h),
+          // Name
+          RichText(
+            textAlign: TextAlign.left,
+            text: TextSpan(
+              text: 'Name: ',
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
+                color: ColorManager.primaryOrangeColor, // Orange text color
+              ),
+              children: [
+                TextSpan(
+                  text: name,
+                  style: TextStyle(
+                    // fontFamily: 'Poppins',
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    color: ColorManager.whiteColor, // Orange text color
+                  ),
+                ),
+              ],
+            ),
           ),
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        padding: EdgeInsets.only(left: 7.w),
-        child: Column(
-          spacing: 8.h,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Circle Avatar
-            Center(
-              child: CircleAvatar(
-                radius: 28.r,
-                backgroundImage: AssetImage('assets/images/profilepic.png'),
+          SizedBox(height: 8.h),
+          // Phone Number
+          RichText(
+            textAlign: TextAlign.left,
+            text: TextSpan(
+              text: 'Phone Number: ',
+              style: TextStyle(
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w600,
+                color: const Color(0xFFFFA500), // Orange text color
               ),
-            ),
-            SizedBox(height: 12.h),
-            // Name
-            RichText(
-              textAlign: TextAlign.left,
-              text: TextSpan(
-                text: 'Name: ',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  color: ColorManager.primaryOrangeColor, // Orange text color
-                ),
-                children: [
-                  TextSpan(
-                    text: 'Robert Fox',
-                    style: TextStyle(
-                      // fontFamily: 'Poppins',
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      color: ColorManager.whiteColor, // Orange text color
-                    ),
+              children: [
+                TextSpan(
+                  text: phoneNumber,
+                  style: TextStyle(
+                    // fontFamily: 'Poppins',
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w400,
+                    color: ColorManager.whiteColor, // Orange text color
                   ),
-                ],
-              ),
-            ),
-            SizedBox(height: 8.h),
-            // Phone Number
-            RichText(
-              textAlign: TextAlign.left,
-              text: TextSpan(
-                text: 'Phone Number: ',
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w600,
-                  color: const Color(0xFFFFA500), // Orange text color
                 ),
-                children: [
-                  TextSpan(
-                    text: '01228569715',
-                    style: TextStyle(
-                      // fontFamily: 'Poppins',
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      color: ColorManager.whiteColor, // Orange text color
-                    ),
-                  ),
-                ],
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -14,7 +14,7 @@ class TermsScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          CustomAppBar(title: AppString.terms),
+          CustomAppBar(title: AppString.terms, isBack: true),
           SizedBox(
             height: 24.h,
           ),

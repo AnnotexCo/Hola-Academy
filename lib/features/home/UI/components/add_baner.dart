@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/constants/api_constants.dart';
 import '../../Logic/banner_logic/banner_cubit.dart';
 import '../../Logic/banner_logic/banner_state.dart';

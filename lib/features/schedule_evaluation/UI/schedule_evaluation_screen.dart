@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hola_academy/core/local_db/save_token.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,11 +19,20 @@ class ScheduleEvaluationScreen extends StatefulWidget {
 class _ScheduleEvaluationScreenState extends State<ScheduleEvaluationScreen> {
   int selectedDayIndex = 2;
   late DateTime selectedDate;
+  String? _userRole;
 
   @override
   void initState() {
     super.initState();
+    _loadUserRole();
     selectedDate = DateTime.now().add(Duration(days: selectedDayIndex));
+  }
+
+  Future<void> _loadUserRole() async {
+    String? role = await SaveTokenDB.getRole();
+    setState(() {
+      _userRole = role;
+    });
   }
 
   @override
@@ -34,6 +44,7 @@ class _ScheduleEvaluationScreenState extends State<ScheduleEvaluationScreen> {
           // Custom Header with back button
           CustomAppBar(
             title: AppString.availableEvaluation,
+            isBack: _userRole != AppString.coach,
           ),
 
           // Custom Header with Days

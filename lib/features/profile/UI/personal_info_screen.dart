@@ -80,14 +80,15 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
               child: BlocConsumer<UserDataCubit, UserDataState>(
                 listener: (context, state) {
                   if (state is UserDataSuccess) {
-                    nameController.text = state.userModel.name;
-                    parentNameController.text = state.userModel.parentName;
-                    phoneController.text = state.userModel.phoneNumber;
-                    birthDate = DateFormat('dd/MM/yyyy')
-                        .format(DateTime.parse(state.userModel.dob).toLocal());
+                    nameController.text = state.userModel.name ?? '';
+                    parentNameController.text =
+                        state.userModel.parentName ?? '';
+                    phoneController.text = state.userModel.phoneNumber ?? '';
+                    birthDate = DateFormat('dd/MM/yyyy').format(
+                        DateTime.parse(state.userModel.dob ?? '').toLocal());
                     parentWhatsappNumberController.text =
                         state.userModel.parentWhatsappNumber.toString();
-                    emailController.text = state.userModel.email;
+                    emailController.text = state.userModel.email ?? '';
                     selectedGender = state.userModel.gender;
                     userModel = state.userModel;
                   }
@@ -113,7 +114,10 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                         CustomProfileBackgroung(
                           isEdit: true,
                         ),
-                        CustomProfileAppBar(qrCode: true),
+                        CustomProfileAppBar(
+                          qrCode: true,
+                          isLayout: _userRole == AppString.admin,
+                        ),
                       ]),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 27.w),

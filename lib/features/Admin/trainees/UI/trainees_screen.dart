@@ -12,8 +12,8 @@ import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubi
 import 'widgets/custom_list_view.dart';
 
 class TraineesScreen extends StatefulWidget {
-  String role;
-  TraineesScreen({super.key, required this.role});
+  final String role;
+  const TraineesScreen({super.key, required this.role});
 
   @override
   State<TraineesScreen> createState() => _TraineesScreenState();

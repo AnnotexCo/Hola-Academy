@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hola_academy/core/components/admin_clip_oval.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
@@ -29,7 +29,14 @@ class AdminTransactionCard extends StatelessWidget {
         width: 363.w,
 
         child: ListTile(
-          leading: SizedBox(
+          leading: SvgPicture.asset(
+            income
+                ? ImageManager.confirm
+                : ImageManager.expenses,
+            height: 24.h,
+            width: 24.w,
+          ),
+          /*SizedBox(
             height: 56.h,
             width: 56.w,
             child: AdminClipOval(
@@ -38,7 +45,7 @@ class AdminTransactionCard extends StatelessWidget {
                   : ColorManager.softPinkColor,
               image: ImageManager.pic,
             ),
-          ),
+          ),*/
           title: Text(
             title,
             style: TextStyle(

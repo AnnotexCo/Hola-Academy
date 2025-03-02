@@ -64,6 +64,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         children: [
           CustomAppBar(
             title: "Notification",
+            isBack: false,
             widget: PopupMenuButton<String>(
               icon: Icon(Icons.more_vert, color: Colors.black87),
               borderRadius: BorderRadius.circular(12.r),
@@ -87,7 +88,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 } else if (state is NotificationsLoaded) {
                   final notifications = state.notifications;
                   if (notifications.isEmpty) {
-                    return NotFoundScreen(title: ("No notifications available"));
+                    return NotFoundScreen(
+                        title: ("No notifications available"));
                   }
 
                   return ListView.builder(
@@ -127,7 +129,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                       shape: BoxShape.circle,
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Colors.grey.withValues(alpha: 0.3),
+                                          color: Colors.grey
+                                              .withValues(alpha: 0.3),
                                           blurRadius: 4,
                                           spreadRadius: 2,
                                           offset: Offset(0, 2),
@@ -144,7 +147,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               id: notification.id,
                               title: notification.title,
                               message: notification.message,
-                              time: DateFormat('h:mm a').format(DateTime.parse(notification.createdAt)),
+                              time: DateFormat('h:mm a').format(
+                                  DateTime.parse(notification.createdAt)),
                               icon: Icons.notifications_active_sharp,
                               iconColor: Colors.amber,
                               isSelected: selectedNotifications
@@ -175,32 +179,32 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     );
   }
 
+  Widget _buildDateHeader(String dateString) {
+    DateTime date = DateTime.parse(dateString);
+    DateTime now = DateTime.now();
+    DateTime yesterday = now.subtract(Duration(days: 1));
 
-Widget _buildDateHeader(String dateString) {
-  DateTime date = DateTime.parse(dateString);
-  DateTime now = DateTime.now();
-  DateTime yesterday = now.subtract(Duration(days: 1));
+    String formattedDate;
+    if (DateFormat('yyyy-MM-dd').format(date) ==
+        DateFormat('yyyy-MM-dd').format(now)) {
+      formattedDate = 'Today, ${DateFormat('MMM d').format(date)}';
+    } else if (DateFormat('yyyy-MM-dd').format(date) ==
+        DateFormat('yyyy-MM-dd').format(yesterday)) {
+      formattedDate = 'Yesterday, ${DateFormat('MMM d').format(date)}';
+    } else {
+      formattedDate = DateFormat('MMM d').format(date);
+    }
 
-  String formattedDate;
-  if (DateFormat('yyyy-MM-dd').format(date) == DateFormat('yyyy-MM-dd').format(now)) {
-    formattedDate = 'Today, ${DateFormat('MMM d').format(date)}';
-  } else if (DateFormat('yyyy-MM-dd').format(date) == DateFormat('yyyy-MM-dd').format(yesterday)) {
-    formattedDate = 'Yesterday, ${DateFormat('MMM d').format(date)}';
-  } else {
-    formattedDate = DateFormat('MMM d').format(date);
-  }
-
-  return Padding(
-    padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 45.w),
-    child: Text(
-      formattedDate,
-      style: TextStyle(
-        fontSize: 18.sp,
-        fontWeight: FontWeight.w600,
-        color: Colors.black87,
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 45.w),
+      child: Text(
+        formattedDate,
+        style: TextStyle(
+          fontSize: 18.sp,
+          fontWeight: FontWeight.w600,
+          color: Colors.black87,
+        ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 }

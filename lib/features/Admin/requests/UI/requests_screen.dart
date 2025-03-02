@@ -1,17 +1,15 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/components/admin_clip_oval.dart';
 import 'package:hola_academy/core/constants/api_constants.dart';
 import 'package:hola_academy/features/not_found/not_found_screen.dart';
 import 'package:intl/intl.dart';
-import 'package:shimmer/shimmer.dart';
 import '../../../../core/components/custom_app_bar.dart';
 import '../../../../core/components/custom_dialog.dart';
 import '../../../../core/components/general_text_form_field.dart';
 import '../../../../core/components/options_buttons.dart';
 import '../../../../core/constants/color_manager.dart';
-import '../../home/UI/home_admin_screen.dart';
 import '../Data/Model/requests_model.dart';
 import '../Logic/requests_cubit.dart';
 import '../Logic/requests_state.dart';
@@ -38,7 +36,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
     return Scaffold(
       body: Column(
         children: [
-          CustomAppBar(title: 'Requests'),
+          CustomAppBar(title: 'Requests', isBack: true),
           const SizedBox(height: 24),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
@@ -168,7 +166,12 @@ class _RequestsScreenState extends State<RequestsScreen> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Stack(
+            AdminClipOval(
+                color: Color(0xFFFEF5E9),
+                image:
+                    "${ApiConstants.imagesURLApi}${request.user?.profileImage?.path}"),
+
+            /*Stack(
               alignment: Alignment.center,
               children: [
                 CustomPaint(
@@ -189,7 +192,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
                   ),
                 ),
               ],
-            ),
+            ),*/
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -249,19 +252,4 @@ class _RequestsScreenState extends State<RequestsScreen> {
         return const Color(0xFFFFB74D);
     }
   }
-}
-
-Widget _buildShimmerCircle(double size) {
-  return Shimmer.fromColors(
-    baseColor: Colors.grey[300]!,
-    highlightColor: Colors.grey[100]!,
-    child: Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
-      ),
-    ),
-  );
 }

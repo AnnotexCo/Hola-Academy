@@ -11,7 +11,7 @@ class TimelineWidget extends StatefulWidget {
 }
 
 class _TimelineWidgetState extends State<TimelineWidget> {
-  DateTime selectedDate = DateTime(2025, 1, 4);
+  DateTime selectedDate = DateTime.now(); // Set default selected date to today
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
       body: Column(
         children: [
           EasyDateTimeLine(
-            initialDate: DateTime(2025, 1, 1),
+            initialDate: DateTime.now(), // Start from today's date
             onDateChange: (newDate) {
               setState(() {
                 selectedDate = newDate;
@@ -33,11 +33,9 @@ class _TimelineWidgetState extends State<TimelineWidget> {
               width: 68.w,
               height: 76.h,
             ),
-            // Customizing layout of dayStr and dayNum
             itemBuilder: (context, date, isActive, onTap) {
-              final dayStr =
-                  EasyConstants.getDayString(date.weekday); // E.g., "Mon"
-              final dayNum = date.day.toString(); // E.g., "1"
+              final dayStr = EasyConstants.getDayString(date.weekday);
+              final dayNum = date.day.toString();
 
               return InkWell(
                 onTap: onTap,
@@ -49,30 +47,27 @@ class _TimelineWidgetState extends State<TimelineWidget> {
                           color: ColorManager.primaryOrangeColor,
                           borderRadius: BorderRadius.circular(10.r),
                           boxShadow: [
-                              BoxShadow(
-                                color:
-                                    Color(0XFfCED2D9).withValues(alpha: 0.76),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset:
-                                    Offset(0, 0), // changes position of shadow
-                              ),
-                            ])
+                            BoxShadow(
+                              color: const Color(0xFFCED2D9).withOpacity(0.76),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 0),
+                            ),
+                          ],
+                        )
                       : BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10.r),
                           boxShadow: [
-                              BoxShadow(
-                                blurStyle: BlurStyle.inner,
-
-                                color:
-                                    Color(0XFfCED2D9).withValues(alpha: 0.76),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset:
-                                    Offset(2, 2), // changes position of shadow
-                              ),
-                            ]),
+                            BoxShadow(
+                              blurStyle: BlurStyle.inner,
+                              color: const Color(0xFFCED2D9).withValues(alpha: 0.76),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(2, 2),
+                            ),
+                          ],
+                        ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -107,19 +102,19 @@ class _TimelineWidgetState extends State<TimelineWidget> {
 class EasyConstants {
   static String getDayString(int weekday) {
     switch (weekday) {
-      case 1:
+      case DateTime.monday:
         return "Mon";
-      case 2:
+      case DateTime.tuesday:
         return "Tue";
-      case 3:
+      case DateTime.wednesday:
         return "Wed";
-      case 4:
+      case DateTime.thursday:
         return "Thu";
-      case 5:
+      case DateTime.friday:
         return "Fri";
-      case 6:
+      case DateTime.saturday:
         return "Sat";
-      case 7:
+      case DateTime.sunday:
         return "Sun";
       default:
         return "";

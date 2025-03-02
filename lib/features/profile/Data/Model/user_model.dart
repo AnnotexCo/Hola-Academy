@@ -1,16 +1,16 @@
 class UserModel {
-  final String dob;
-  final String email;
-  final String gender;
-  final num id;
-  final String name;
-  final String parentName;
+  final String? dob;
+  final String? email;
+  final String? gender;
+  final num? id;
+  final String? name;
+  final String? parentName;
   final String? parentWhatsappNumber;
   final ImageModel? profileImage;
-  final String role;
-  final String phoneNumber;
-  final String reachResource;
-  final num balance;
+  final String? role;
+  final String? phoneNumber;
+  final String? reachResource;
+  final num? balance;
   final String? salaryType;
   final num? salary;
   final String? address;
@@ -18,24 +18,24 @@ class UserModel {
   final String? nationality;
   final String? parentAddress;
   final String? parentNationality;
-  final String qrCode;
+  final String? qrCode;
   final String? lastSalaryDate;
-  final Count count;
-  final String userType;
+  final Count? count;
+  final String? userType;
 
   UserModel({
-    required this.dob,
-    required this.email,
-    required this.gender,
-    required this.id,
-    required this.name,
-    required this.parentName,
+    this.dob,
+    this.email,
+    this.gender,
+    this.id,
+    this.name,
+    this.parentName,
     this.parentWhatsappNumber,
     this.profileImage,
-    required this.role,
-    required this.phoneNumber,
-    required this.reachResource,
-    required this.balance,
+    this.role,
+    this.phoneNumber,
+    this.reachResource,
+    this.balance,
     this.salaryType,
     this.salary,
     this.address,
@@ -43,10 +43,10 @@ class UserModel {
     this.nationality,
     this.parentAddress,
     this.parentNationality,
-    required this.qrCode,
+    this.qrCode,
     this.lastSalaryDate,
-    required this.count,
-    required this.userType,
+    this.count,
+    this.userType,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -63,7 +63,7 @@ class UserModel {
       qrCode: json['qrCode'],
       parentName: json['parentName'],
       parentWhatsappNumber: json['parentWhatsappNumber'],
-      profileImage: ImageModel.fromJson(json['ProfileImage']),
+      profileImage: json['ProfileImage'] != null ? ImageModel.fromJson(json['ProfileImage']) : null,
       salaryType: json['salaryType'],
       salary: json['salary'],
       address: json['address'],
@@ -99,11 +99,11 @@ class Count {
 
 
 class ImageModel {
-  final int id;
-  final String name;
-  final String path;
-  final String type;
-  final int size;
+  final int? id;
+  final String? name;
+  final String? path;
+  final String? type;
+  final int? size;
 
   ImageModel({
     required this.id,

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:shimmer/shimmer.dart';
 
 class AdminClipOval extends StatelessWidget {
@@ -34,10 +35,11 @@ class AdminClipOval extends StatelessWidget {
                   fit: BoxFit.cover,
                   placeholder: (context, url) => AdminClipShimmer(width: 36.w, height: 36.h),
                   // Fallback image on error
-                  errorWidget: (context, url, error) => Image.asset(
-                    "assets/images/profilepic.png",
-                    fit: BoxFit.cover,
-                  ),
+                  errorWidget: (context, url, error) => CircleAvatar(
+                  backgroundColor: ColorManager.lightYellow,
+                  child:
+                      const Icon(Icons.person, color: Colors.white, size: 30),
+                ),
                 ),
               ),
             ),

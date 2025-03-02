@@ -89,6 +89,7 @@ class ClassesScreenState extends State<ClassesScreen> {
         children: [
           CustomAppBar(
             title: AppString.programs,
+            isBack: false,
             widget: PopupMenuButton<String>(
               padding: EdgeInsets.zero,
               icon: Icon(Icons.format_list_bulleted_rounded,

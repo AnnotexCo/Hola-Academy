@@ -36,6 +36,7 @@ class _RequestPaymentScreenState extends State<RequestPaymentScreen> {
           children: [
             CustomAppBar(
               title: AppString.requestPayment,
+              isBack: true,
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 27.w, vertical: 27.h),
@@ -44,6 +45,23 @@ class _RequestPaymentScreenState extends State<RequestPaymentScreen> {
                 child: BlocConsumer<TransCubit, TransState>(
                   listener: (context, state) {
                     // TODO: implement listener
+                     if (state is TransactionsFailure) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.error),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+            if (state is TransactionsSuccess) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Transactions loaded successfully'),
+                  backgroundColor: ColorManager.textRedColor,
+                ),
+              );
+              print('Transactions: ${state.transactions}');
+            }
                   },
                   builder: (context, state) {
                     return Column(

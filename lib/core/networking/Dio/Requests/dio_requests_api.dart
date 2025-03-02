@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:hola_academy/features/Admin/requests/Data/Model/requests_model.dart';
@@ -32,6 +31,11 @@ class DioRequestsApi {
       }
       throw Exception("Failed to load requests");
     } catch (error) {
+      print('error****////////////////***$error');
+      print("❌ Error booking program: $error");
+      if (error is DioException && error.response != null) {
+        print("Full Response: ${error.response?.data}");
+      }
 
       throw ApiErrorHandler.handle(error);
     }
@@ -55,12 +59,14 @@ class DioRequestsApi {
       }
       throw Exception("Failed to load request");
     } catch (error) {
+      print('error**********************$error');
       throw ApiErrorHandler.handle(error);
     }
   }
 
 // Booking a program with Base64-encoded image in multipart request
- Future<void> bookProgram(Map<String, dynamic> bookingProgramData, File? imageFile) async {
+  Future<void> bookProgram(
+      Map<String, dynamic> bookingProgramData, File? imageFile) async {
     try {
       String? token = await SaveTokenDB.getToken();
 
@@ -70,7 +76,8 @@ class DioRequestsApi {
           "image": await MultipartFile.fromFile(
             imageFile.path,
             filename: imageFile.path.split('/').last,
-            contentType: MediaType('image', 'jpeg'), // Adjust for 'image/png' if needed
+            contentType:
+                MediaType('image', 'jpeg'), // Adjust for 'image/png' if needed
           ),
       });
 

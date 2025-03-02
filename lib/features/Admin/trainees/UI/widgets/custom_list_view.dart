@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hola_academy/core/components/admin_clip_oval.dart';
 import 'package:hola_academy/core/components/custom_dialog.dart';
 import 'package:hola_academy/core/components/general_text_form_field.dart';
+import 'package:hola_academy/core/constants/api_constants.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/profile/Data/Model/trainee_model.dart';
@@ -13,7 +16,6 @@ class CustomListView extends StatelessWidget {
   final double itemHeight;
   final Color backgroundColor;
   final Color borderColor;
-  final String profileImagePath;
 
   const CustomListView({
     super.key,
@@ -21,7 +23,6 @@ class CustomListView extends StatelessWidget {
     this.itemHeight = 74.0,
     this.backgroundColor = ColorManager.backgroundLightPink,
     this.borderColor = ColorManager.textRedColor,
-    this.profileImagePath = 'assets/images/profilepic.png',
   });
 
   @override
@@ -36,15 +37,16 @@ class CustomListView extends StatelessWidget {
               context: context,
               builder: (context) {
                 return CustomDialog(
-                    title: trainee.name??'',
-                    imageUrl: profileImagePath,
+                    title: trainee.name ?? '',
+                    imageUrl:
+                        '${ApiConstants.imagesURLApi}${trainee.profileImage?.path}',
                     onCancel: () {
                       Navigator.of(context).pop();
                     },
                     components: [
                       GeneralTextFormField(
                         height: 45.h,
-                        hint: trainee.email??'',
+                        hint: trainee.email ?? '',
                         label: AppString.email,
                         labelStyle: TextStyle(
                           fontSize: 18.sp,
@@ -62,7 +64,7 @@ class CustomListView extends StatelessWidget {
                       ),
                       GeneralTextFormField(
                         height: 45.h,
-                        hint: trainee.phoneNumber??'',
+                        hint: trainee.phoneNumber ?? '',
                         label: AppString.phoneNumber,
                         labelStyle: TextStyle(
                           fontSize: 18.sp,
@@ -153,12 +155,21 @@ class CustomListView extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8.r),
-                    child: Image.asset(
-                      profileImagePath,
+                  ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          '${ApiConstants.imagesURLApi}${trainee.profileImage?.path}',
                       width: 50.w,
                       height: 50.h,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) =>
+                          AdminClipShimmer(width: 36.w, height: 36.h),
+                      // Fallback image on error
+                      errorWidget: (context, url, error) => CircleAvatar(
+                        backgroundColor: ColorManager.lightYellow,
+                        child: const Icon(Icons.person,
+                            color: Colors.white, size: 30),
+                      ),
                     ),
                   ),
                   SizedBox(width: 20.w),

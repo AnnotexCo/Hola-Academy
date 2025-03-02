@@ -8,12 +8,13 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-
 import '../../../../core/local_db/save_token.dart';
 
 class CustomProfileAppBar extends StatefulWidget {
   final bool qrCode;
-  const CustomProfileAppBar({super.key, this.qrCode = false});
+  final bool isLayout;
+  const CustomProfileAppBar(
+      {super.key, this.qrCode = false, required this.isLayout});
 
   @override
   State<CustomProfileAppBar> createState() => _CustomProfileAppBarState();
@@ -46,16 +47,19 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            GestureDetector(
-              onTap: () {
-                //Navigator.pushNamed(context, Routes.layoutScreen);
-                // Navigator.pop(context);
-              },
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                color: ColorManager.textRedColor,
+            if (!widget.isLayout) ...[
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(
+                  Icons.arrow_back_ios_new,
+                  color: ColorManager.textRedColor,
+                ),
               ),
-            ),
+            ] else ...[
+              Spacer(),
+            ],
             Row(
               children: [
                 // if (widget.qrCode == true)
@@ -65,7 +69,7 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
                     builder: (context, state) {
                       String qr = " ";
                       if (state is UserDataSuccess) {
-                        qr = state.userModel.qrCode;
+                        qr = state.userModel.qrCode ?? '';
                       }
                       return GestureDetector(
                           onTap: () async {

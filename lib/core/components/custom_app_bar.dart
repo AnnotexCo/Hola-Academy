@@ -6,7 +6,8 @@ class CustomAppBar extends StatelessWidget {
   final Widget? widget;
   final void Function()? onPressed;
   final String? title;
-  const CustomAppBar({super.key, this.onPressed, this.widget, this.title});
+  final bool isBack;
+  const CustomAppBar({super.key, this.onPressed, this.widget, this.title, this.isBack = true});
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,7 @@ class CustomAppBar extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            if(isBack)
             IconButton(
                 onPressed: () {
                   Navigator.pop(context);
