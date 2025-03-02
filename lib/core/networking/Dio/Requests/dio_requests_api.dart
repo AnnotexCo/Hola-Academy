@@ -102,7 +102,7 @@ class DioRequestsApi {
       if (error is DioException && error.response != null) {
         print("Full Response: ${error.response?.data}");
       }
-      throw ApiErrorHandler.handle(error);
+      throw ApiErrorHandler.handle(error).message.toString();
     }
   }
 }

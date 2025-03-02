@@ -13,7 +13,6 @@ class DioClasses {
     try {
       final response =
           await _dio.get("${ApiConstants.baseUrl}${ApiConstants.classesApi}");
-
       if (response.statusCode == 200) {
         List<dynamic> data = response.data['data'];
         return data.map((json) => ClasssModel.fromMap(json)).toList();

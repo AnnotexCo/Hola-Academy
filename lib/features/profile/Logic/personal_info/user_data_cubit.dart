@@ -79,6 +79,7 @@ class UserDataCubit extends Cubit<UserDataState> {
   }
 
   List<User> users = [];
+  List<User> filteredUsers = [];
   List<User> trainees = [];
   List<User> coaches = [];
   Future<void> fetchAllUsers() async {
@@ -86,6 +87,7 @@ class UserDataCubit extends Cubit<UserDataState> {
       if (!isClosed) emit(UserDataLoading());
       final userss = await userRepo.fetchAllUsers();
       users = userss.data.users;
+      filteredUsers = users;
       coaches.clear();
       trainees.clear();
       for (var user in users) {
@@ -101,13 +103,45 @@ class UserDataCubit extends Cubit<UserDataState> {
     }
   }
 
+  // Optimized Search Function
+  void searchUsers(String query, String role) {
+    List<User> source = role=="COACH"?coaches:trainees;
+    if (query.trim().isEmpty) {
+      filteredUsers = List.from(source);
+    } else {
+      final searchQuery = query.toLowerCase();
+      filteredUsers = source.where((user) {
+        return (user.name?.toLowerCase().contains(searchQuery) ?? false) ||
+            (user.phoneNumber?.toLowerCase().contains(searchQuery) ?? false);
+      }).toList();
+    }
+    print(filteredUsers);
+
+    if (!isClosed) emit(FilterUsersSuccess(filteredUsers: filteredUsers));
+  }
+
+  //Search Function
+  /*void searchUsers(String query) {
+    if (query.isEmpty) {
+      filteredUsers = users;
+    } else {
+      filteredUsers = users.where((user) {
+        final name = user.name?.toLowerCase();
+        final phone = user.phoneNumber?.toLowerCase();
+        final searchQuery = query.toLowerCase();
+        return name!.contains(searchQuery) || phone!.contains(searchQuery);
+      }).toList();
+    }
+    emit(FilterUsersSuccess(filteredUsers: filteredUsers));
+  }*/
+
   Future<void> fetchUsersByRole({String? role}) async {
     try {
       if (!isClosed) emit(UserDataLoading());
       final users = await userRepo.fetchAllUsers(role: role);
-      if (!isClosed) emit(FetchAllUsersSuccess(users: users));
+      if (!isClosed) emit(FetchUsersByRoleSuccess(users: users));
     } catch (e) {
-      if (!isClosed) emit(FetchAllUsersFailure(message: e.toString()));
+      if (!isClosed) emit(FetchUsersByRoleFailure(message: e.toString()));
     }
   }
 
