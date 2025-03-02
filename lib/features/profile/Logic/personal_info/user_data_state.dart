@@ -34,10 +34,23 @@ class FetchAllUsersSuccess extends UserDataState {
   final AllUsersModel users;
   FetchAllUsersSuccess({required this.users});
 }
+class FetchUsersByRoleSuccess extends UserDataState {
+  final AllUsersModel users;
+  FetchUsersByRoleSuccess({required this.users});
+}
+
+class FilterUsersSuccess extends UserDataState {
+  final List<User> filteredUsers;
+  FilterUsersSuccess({required this.filteredUsers});
+}
 
 
 
 class FetchAllUsersFailure extends UserDataState {
   final String message;
   FetchAllUsersFailure({required this.message});
+}
+class FetchUsersByRoleFailure extends UserDataState {
+  final String message;
+  FetchUsersByRoleFailure({required this.message});
 }

@@ -53,18 +53,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: SingleChildScrollView(
           child: BlocBuilder<UserDataCubit, UserDataState>(
             builder: (context, state) {
-              if (state is UserDataSuccess) {
-              }
+              if (state is UserDataSuccess) {}
               return Column(spacing: 56.h, children: [
                 BlocProvider(
                   create: (context) => getIT<UserDataCubit>()..getMyData(),
                   child: Stack(alignment: Alignment.topCenter, children: [
                     CustomProfileBackgroung(),
-                    CustomProfileAppBar(qrCode: true),
+                    CustomProfileAppBar(qrCode: true, isLayout: true),
                   ]),
                 ),
                 Container(
-                  height: 420.h,
+                  height: userRole == AppString.coach ? 300.h : 420.h,
                   width: 385.w,
                   decoration: BoxDecoration(
                     color: ColorManager.whiteColor,
@@ -98,14 +97,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ));
                         },
                       ),
-                      _buildMenuItem(
-                        icon: ImageManager.analysis,
-                        text: AppString.analytics,
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, Routes.analyticsSkillsScreen);
-                        },
-                      ),
+                      if (userRole != AppString.coach)
+                        _buildMenuItem(
+                          icon: ImageManager.analysis,
+                          text: AppString.analytics,
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, Routes.analyticsSkillsScreen);
+                          },
+                        ),
                       _buildMenuItem(
                         icon: ImageManager.transaction,
                         text: AppString.transaction,
@@ -119,13 +119,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ));
                         },
                       ),
-                      _buildMenuItem(
-                        icon: ImageManager.booking,
-                        text: AppString.booked,
-                        onTap: () {
-                          Navigator.pushNamed(context, Routes.bookedScreen);
-                        },
-                      ),
+                      if (userRole != AppString.coach)
+                        _buildMenuItem(
+                          icon: ImageManager.booking,
+                          text: AppString.booked,
+                          onTap: () {
+                            Navigator.pushNamed(context, Routes.bookedScreen);
+                          },
+                        ),
                       _buildMenuItem(
                         icon: ImageManager.terms,
                         text: AppString.terms,

@@ -14,7 +14,7 @@ class WelcomeHeader extends StatelessWidget {
         String name = " ";
         String pic = '';
         if (state is UserDataSuccess) {
-          name = state.userModel.name;
+          name = state.userModel.name ?? '';
           pic = state.userModel.profileImage?.path ?? '';
         }
         return SizedBox(
@@ -27,6 +27,7 @@ class WelcomeHeader extends StatelessWidget {
                 width: 50,
                 pic: pic,
               ),
+              SizedBox(width: 10.w),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

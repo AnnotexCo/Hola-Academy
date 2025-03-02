@@ -36,6 +36,7 @@ class _RequestPaymentScreenState extends State<RequestPaymentScreen> {
           children: [
             CustomAppBar(
               title: AppString.requestPayment,
+              isBack: true,
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 27.w, vertical: 27.h),
@@ -44,6 +45,22 @@ class _RequestPaymentScreenState extends State<RequestPaymentScreen> {
                 child: BlocConsumer<TransCubit, TransState>(
                   listener: (context, state) {
                     // TODO: implement listener
+                    if (state is TransactionsFailure) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.error),
+                          backgroundColor: ColorManager.textRedColor,
+                        ),
+                      );
+                    }
+                    if (state is RefundSuccess) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Transactions loaded successfully'),
+                          backgroundColor: ColorManager.textRedColor,
+                        ),
+                      );
+                    }
                   },
                   builder: (context, state) {
                     return Column(
@@ -122,7 +139,9 @@ class _RequestPaymentScreenState extends State<RequestPaymentScreen> {
       onPressed: () {
         if (_formKey.currentState!.validate() && selectedReason != null) {
           context.read<TransCubit>().askForRefund(
-                amount: _ammountController.text.isEmpty ? 0 : int.parse(_ammountController.text),
+                amount: _ammountController.text.isEmpty
+                    ? 0
+                    : int.parse(_ammountController.text),
                 type: selectedReason!,
                 description: _notesController.text,
               );

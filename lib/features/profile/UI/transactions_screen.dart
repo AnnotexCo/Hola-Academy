@@ -44,27 +44,10 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        CustomAppBar(title: AppString.viewAllTransaction),
+        CustomAppBar(title: AppString.viewAllTransaction, isBack: true),
         BlocConsumer<TransCubit, TransState>(
           listener: (context, state) {
             // TODO: implement listener
-            if (state is TransactionsFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.error),
-                  backgroundColor: Colors.red,
-                ),
-              );
-            }
-            if (state is TransactionsSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Transactions loaded successfully'),
-                  backgroundColor: ColorManager.textRedColor,
-                ),
-              );
-              print('Transactions: ${state.transactions}');
-            }
           },
           builder: (context, state) {
             return Expanded(

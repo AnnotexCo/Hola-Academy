@@ -37,6 +37,7 @@ class DetailClassScreen extends StatelessWidget {
                           children: [
                             CustomAppBar(
                               title: program.name,
+                              isBack: true,
                               widget: CustomColoredOutlineButton(
                                 radius: 25,
                                 title: 'Book Now',

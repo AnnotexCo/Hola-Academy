@@ -69,6 +69,7 @@ class DioTranscations {
     try {
       final response = await _dio.post(
         "${ApiConstants.baseUrl}${ApiConstants.transactionsAskForMoney}",
+        data: {"amount": amount, "description": description, "type": type},
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -79,11 +80,12 @@ class DioTranscations {
       if (response.statusCode == 200) {
         return response.data;
       }
-      // print('response.data*******************${response.data}');
+      print('response.data*******************${response.data}');
       throw Exception("Failed to load transcations");
     } catch (error) {
       if (error is DioException && error.response != null) {}
-      throw error.toString();
+      print('error****////////////////***$error');
+      throw ApiErrorHandler.handle(error).message.toString();
       //final errorMessage = ApiErrorHandler.handle(error);
       //throw errorMessage;
     }

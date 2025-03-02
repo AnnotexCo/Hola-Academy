@@ -27,7 +27,7 @@ class ProfilePicWidget extends StatelessWidget {
         child: CachedNetworkImage(
           imageUrl: '${ApiConstants.imagesURLApi}$pic',
           fit: BoxFit.cover,
-          placeholder: (context, url) => ShimmerCircle(size: imageSize), 
+          placeholder: (context, ur0l) => ShimmerCircle(size: imageSize), 
           errorWidget: (context, url, error) => CircleAvatar(
             backgroundColor: ColorManager.lightYellow,
             child: const Icon(Icons.person, color: Colors.white, size: 30),

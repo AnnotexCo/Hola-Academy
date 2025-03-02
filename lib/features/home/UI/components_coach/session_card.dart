@@ -16,9 +16,12 @@ class SessionReminderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(children: [
       Positioned.fill(
-        child: Image.asset(
-          ImageManager.backgroundSession,
-          fit: BoxFit.cover,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16.r),
+          child: Image.asset(
+            ImageManager.backgroundSession,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
       Container(

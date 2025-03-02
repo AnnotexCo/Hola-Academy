@@ -50,17 +50,14 @@ class NewRequestsSection extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 12.w),
-
                   // Profile Image with AdminClipOval
                   AdminClipOval(
                     color: ColorManager.linearGradient1,
                     image: request.user?.profileImage?.path != null
                         ? "${ApiConstants.imagesURLApi}${request.user?.profileImage?.path}"
-                        : "assets/images/profilepic.png", // Default Image
+                        : "", // Default Image
                   ),
-
                   SizedBox(width: 12.w),
-
                   // Name and Type
                   Expanded(
                     child: Column(

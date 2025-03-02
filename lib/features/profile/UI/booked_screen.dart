@@ -20,7 +20,7 @@ class BookedScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          CustomAppBar(title: AppString.booked),
+          CustomAppBar(title: AppString.booked, isBack: true),
           Expanded(
             child: BlocBuilder<RequestsCubit, RequestsState>(
               builder: (context, state) {

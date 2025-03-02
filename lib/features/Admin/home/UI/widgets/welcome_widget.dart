@@ -24,15 +24,6 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
   Widget build(BuildContext context) {
     return BlocBuilder<UserDataCubit, UserDataState>(
       builder: (context, state) {
-        String name = " ";
-        String pic = '';
-
-        if (state is UserDataSuccess) {
-          name = context.read<UserDataCubit>().userModel?.name ?? '';
-          pic =
-              context.read<UserDataCubit>().userModel?.profileImage?.path ?? '';
-        }
-
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

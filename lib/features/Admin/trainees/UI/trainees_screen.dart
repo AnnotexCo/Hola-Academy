@@ -12,8 +12,8 @@ import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubi
 import 'widgets/custom_list_view.dart';
 
 class TraineesScreen extends StatefulWidget {
-  String role;
-  TraineesScreen({super.key, required this.role});
+  final String role;
+  const TraineesScreen({super.key, required this.role});
 
   @override
   State<TraineesScreen> createState() => _TraineesScreenState();
@@ -25,6 +25,7 @@ class _TraineesScreenState extends State<TraineesScreen> {
   @override
   void initState() {
     super.initState();
+    context.read<UserDataCubit>().fetchAllUsers();
     context.read<UserDataCubit>().fetchUsersByRole(role: widget.role);
     ();
   }
@@ -59,6 +60,7 @@ class _TraineesScreenState extends State<TraineesScreen> {
                       ),
                       child: GeneralTextFormField(
                         height: 37.h,
+                        controller: _searchController,
                         hintStyle: TextStyle(
                           color: ColorManager.graycolorHeadline,
                           fontSize: 14.sp,
@@ -78,7 +80,11 @@ class _TraineesScreenState extends State<TraineesScreen> {
                   ),
                   SizedBox(width: 19.w),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<UserDataCubit>().searchUsers(
+                            _searchController.text, widget.role
+                          );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFF5BD69),
                       minimumSize: Size(128.w, 42.h),
@@ -110,7 +116,7 @@ class _TraineesScreenState extends State<TraineesScreen> {
             BlocBuilder<UserDataCubit, UserDataState>(
               builder: (context, state) {
                 List<User> users;
-                if (state is FetchAllUsersSuccess) {
+                if (state is FetchUsersByRoleSuccess) {
                   users = state.users.data.users;
                   if (users.isEmpty) {
                     return Center(
@@ -125,9 +131,16 @@ class _TraineesScreenState extends State<TraineesScreen> {
                       data: users,
                     ),
                   );
-                } else if (state is FetchAllUsersFailure) {
-                  return Center(
-                    child: Text(state.message),
+                } else if (state is FilterUsersSuccess) {
+                  users = state.filteredUsers;
+                  return Expanded(
+                    child: CustomListView(
+                      data: users,
+                    ),
+                  );
+                } else if (state is FetchUsersByRoleFailure) {
+                  return NotFoundScreen(
+                    title: 'No Trainees Found',
                   );
                 } else if (state is UserDataLoading) {
                   return Center(
@@ -135,8 +148,12 @@ class _TraineesScreenState extends State<TraineesScreen> {
                     color: ColorManager.textRedColor,
                   ));
                 }
-                return NotFoundScreen(
-                  title: 'No Trainees Found',
+                return Expanded(
+                  child: CustomListView(
+                    data: widget.role == AppString.trainee
+                        ? context.read<UserDataCubit>().trainees
+                        : context.read<UserDataCubit>().coaches,
+                  ),
                 );
               },
             ),

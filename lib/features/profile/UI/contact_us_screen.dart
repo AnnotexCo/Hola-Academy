@@ -36,7 +36,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
               create: (context) => getIT<UserDataCubit>()..getMyData(),
               child: Stack(alignment: Alignment.topCenter, children: [
                 CustomProfileBackgroung(),
-                CustomProfileAppBar(qrCode: true),
+                CustomProfileAppBar(qrCode: true, isLayout: false),
               ]),
             ),
             SizedBox(
