@@ -107,7 +107,7 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, Routes.logoutScreen);
+                    Navigator.pushNamedAndRemoveUntil(context, Routes.logoutScreen,(route) => false);
                     logout();
                   },
                   child: Row(
