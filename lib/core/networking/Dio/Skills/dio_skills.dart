@@ -26,7 +26,7 @@ class DioSkills {
 
       if (response.statusCode == 200) {
         List<dynamic> data = response.data['data'];
-        return data.map((json) => LessonModel.fromJson(json)).toList();
+        return data.map((json) => LessonModel.fromMap(json)).toList();
       }
       throw Exception("Failed to load program");
     } catch (error) {

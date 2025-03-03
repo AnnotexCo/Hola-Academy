@@ -61,12 +61,12 @@ class LessonsDialog extends StatelessWidget {
                       return BuildSkillsItem(
                         skillName: DateFormat('MMM dd, yyyy, hh:mm a')
                             .format(lessons[index].date),
-                        rating: lessons[index].lessonEvaluationCount.toDouble(),
+                        rating:
+                            lessons[index].lessonEvaluationCount!.toDouble(),
                         onChanged: (value) {
                           Navigator.of(context).pop();
                         },
                         onTap: () {
-                          
                           Navigator.of(context).pop();
                           showDialog(
                             context: context,

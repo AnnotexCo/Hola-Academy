@@ -3,14 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
-import 'package:hola_academy/core/dependency_injection/dependency.dart';
-import 'package:hola_academy/features/home/Logic/banner_logic/banner_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/lessons/cubit/lessons_cubit.dart';
 import 'package:hola_academy/features/home/UI/components/add_baner.dart';
 import 'package:hola_academy/features/home/UI/components/evaluation_card.dart';
 import 'package:hola_academy/features/home/UI/components/list_of_programs.dart';
 import 'package:hola_academy/features/home/UI/components/timeline_widget.dart';
 import 'package:hola_academy/features/home/UI/components/welcome_header.dart';
-import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 
 import '../../../core/components/calender_widget.dart';
 import '../../../core/local_db/save_token.dart';
@@ -54,15 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 13.h,
                 ),
-                BlocProvider(
-                  create: (context) => getIT<UserDataCubit>()..getMyData(),
-                  child: Align(
-                      alignment: Alignment.centerLeft, child: WelcomeHeader()),
-                ),
-                BlocProvider(
-                  create: (context) => getIT<BannersCubit>()..fetchAllBanners(),
-                  child: AddBaner(),
-                ),
+                Align(alignment: Alignment.centerLeft, child: WelcomeHeader()),
+                AddBaner(),
                 SizedBox(
                   height: 80.h,
                   width: double.infinity,
@@ -70,7 +61,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 if (_userRole == AppString.user ||
                     _userRole == AppString.trainee) ...[
-                  EvaluationAppointmentCard(),
+                  BlocBuilder<LessonsCubit, LessonsState>(
+                    builder: (context, state) {
+                      if (state is NextLessonsSuccess) {
+                        return EvaluationAppointmentCard();
+                      }
+                      return SizedBox.shrink();
+                    },
+                  ),
                 ],
                 // Conditional Rendering Based on Role
                 if (_userRole == AppString.user ||

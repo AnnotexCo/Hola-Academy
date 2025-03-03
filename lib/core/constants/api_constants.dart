@@ -41,6 +41,7 @@ class ApiConstants {
   //Lessons
 
   static const String myLessonsApi = 'api/lessons/me';
+  static const String myNextLessonsApi = 'api/lessons/next';
   static const String getLessonsApibyID = 'api/lessons';
 
   static const String getallLessonsApi = 'api/lessons';
