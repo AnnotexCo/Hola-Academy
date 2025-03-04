@@ -5,6 +5,8 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import '../../../../core/Routing/routes.dart';
 
 class EvaluationAppointmentCard extends StatelessWidget {
+  final String time;
+  final String date;
   final VoidCallback? onScheduleCheck;
   final String location;
   final List<String> requiredItems;
@@ -18,6 +20,8 @@ class EvaluationAppointmentCard extends StatelessWidget {
       "Accessories: Don't Forget A Swim Cap And Goggles For Your Session",
       "Other: Carry A Towel And Water Bottle For Hydration",
     ],
+    required this.date,
+    required this.time,
   });
 
   @override
@@ -54,11 +58,15 @@ class EvaluationAppointmentCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildScheduleButton(context),
+                      _buildnextLessonDay(date),
+                      SizedBox(height: 12.h),
+                      _buildnextLessonDate(time),
                       SizedBox(height: 12.h),
                       _buildLocationInfo(),
                       SizedBox(height: 12.h),
                       _buildEarlyArrivalNote(),
+                      SizedBox(height: 12.h),
+                      _buildScheduleButton(context),
                     ],
                   ),
                 ),
@@ -132,6 +140,52 @@ class EvaluationAppointmentCard extends StatelessWidget {
         Expanded(
           child: Text(
             location,
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 11.sp,
+              color: Colors.black87,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildnextLessonDate(String time) {
+    return Row(
+      children: [
+        Icon(
+          Icons.timer,
+          color: Colors.redAccent,
+          size: 20.r,
+        ),
+        SizedBox(width: 8.w),
+        Expanded(
+          child: Text(
+            time,
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 11.sp,
+              color: Colors.black87,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildnextLessonDay(String date) {
+    return Row(
+      children: [
+        Icon(
+          Icons.calendar_month_rounded,
+          color: Colors.redAccent,
+          size: 20.r,
+        ),
+        SizedBox(width: 8.w),
+        Expanded(
+          child: Text(
+            "${date}th",
             style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 11.sp,

@@ -9,6 +9,7 @@ import 'package:hola_academy/features/home/UI/components/evaluation_card.dart';
 import 'package:hola_academy/features/home/UI/components/list_of_programs.dart';
 import 'package:hola_academy/features/home/UI/components/timeline_widget.dart';
 import 'package:hola_academy/features/home/UI/components/welcome_header.dart';
+import 'package:intl/intl.dart';
 
 import '../../../core/components/calender_widget.dart';
 import '../../../core/local_db/save_token.dart';
@@ -64,7 +65,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   BlocBuilder<LessonsCubit, LessonsState>(
                     builder: (context, state) {
                       if (state is NextLessonsSuccess) {
-                        return EvaluationAppointmentCard();
+                        return EvaluationAppointmentCard(
+                          date: DateFormat('MMM dd').format(state.lessons.date),
+                          time: state.lessons.startTime.toString(),
+                        );
+                      }
+                      if (state is LessonsError) {
+                        return EvaluationAppointmentCard(
+                          date: "There is no availabe date",
+                          time: "There is no available time",
+                        );
                       }
                       return SizedBox.shrink();
                     },
