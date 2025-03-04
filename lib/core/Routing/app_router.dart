@@ -277,13 +277,6 @@ class AppRouter {
       case Routes.layoutCoachScreen:
         return MaterialPageRoute(builder: (_) => const LayoutCoachScreen());
 
-     /* case Routes.adminQrCodeScannerScreen:
-        return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (context) => getIT<AttendanceCubit>(),
-                  child: const QRCodeScannerScreen(),
-                ));*/
-
       case Routes.splashScreen:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
 

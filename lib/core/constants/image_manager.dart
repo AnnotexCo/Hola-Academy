@@ -65,10 +65,8 @@ class ImageManager {
   static const String reminderImageCoach =
       "assets/images/reminderSessionImage.png";
 
-  static const String evaluateBackgroundVector =
-      "assets/icons/evaluatevector1.svg";
   //Admin Home Screen
-  static const String addBanner = "assets/images/ads-baner.png";
+  static const String addBanner = "assets/images/addpaner.png";
 
   // Admin Trainee Screen
   static const String category = 'assets/icons/category.svg';
@@ -88,4 +86,7 @@ class ImageManager {
   static const String confirmedAttendance = "assets/images/confirmed_attendance.svg";
 
   static const String notFound = "assets/images/not_found.svg";
+
+  static const String evaluation = "assets/images/evaluationimg.png";
+
 }

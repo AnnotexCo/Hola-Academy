@@ -37,8 +37,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
 
   final TextEditingController passwordController = TextEditingController();
 
-  // final bool _isPasswordVisible = false;
-
   String? birthDate;
   String? selectedGender;
 
@@ -61,7 +59,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
     });
   }
 
-// ---------------------------------------
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -274,65 +271,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   color: ColorManager.textRedColor,
                                 ),
                                 keyboardType: TextInputType.datetime,
-                                onTap: () async {
-                                  // Open date picker
-                                  /*  DateTime? pickedDate = */
-                                  /* await showDialog(
-                                                                              context: context,
-                                                                              builder: (context) {
-                                                                                return Dialog(
-                                                                                  insetPadding: EdgeInsets.only(
-                                                                                      left: 29.w, right: 29.w, top: 360.h),
-                                                                                  shape: RoundedRectangleBorder(
-                                                                                    borderRadius:
-                                                                                        BorderRadius.circular(8.r),
-                                                                                  ),
-                                                                                  backgroundColor:
-                                                                                      ColorManager.backgroundPinkColor,
-                                                                                  child: Container(
-                                                                                    height: 241.h,
-                                                                                    decoration: BoxDecoration(
-                                                                                      color:
-                                                                                          ColorManager.backgroundPinkColor,
-                                                                                      borderRadius:
-                                                                                          BorderRadius.circular(8.r),
-                                                                                      border: Border.all(
-                                                                                        color: ColorManager.textRedColor,
-                                                                                        width: 1,
-                                                                                      ),
-                                                                                    ),
-                                                                                    child: Theme(
-                                                                                      data: ThemeData.light().copyWith(
-                                                                                        colorScheme: ColorScheme.light(
-                                                                                            primary:
-                                                                                                ColorManager.textRedColor),
-                                                                                        datePickerTheme:
-                                                                                            DatePickerThemeData(
-                                                                                                todayBorder: BorderSide(
-                                                                                          color: ColorManager.textRedColor,
-                                                                                          style: BorderStyle.none,
-                                                                                          strokeAlign:
-                                                                                              BorderSide.strokeAlignInside,
-                                                                                        )),
-                                                                                      ),
-                                                                                      child: CalendarDatePicker(
-                                                                                        initialDate: DateTime.now(),
-                                                                                        firstDate: DateTime(1900),
-                                                                                        lastDate: DateTime.now(),
-                                                                                        onDateChanged: (selectedDate) {
-                                                                                          setState(() {
-                                                                                            birthDayController.text =
-                                                                                                "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
-                                                                                          });
-                                                                                          Navigator.pop(context);
-                                                                                        },
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                            );*/
-                                },
+                                onTap: () async {},
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please select a date';
@@ -340,18 +279,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   return null;
                                 },
                               ),
-
-                              /*CustomDropDownSelection(
-                                                                  value: selectedGender,
-                                                                  hint: AppString.chooseYourGender,
-                                                                  label: AppString.gender,
-                                                                  options: genderOptions,
-                                                                  onChanged: (String? newValue) {
-                                                                    setState(() {
-                                                                      selectedGender = newValue; // Update the selected value
-                                                                    });
-                                                                  },
-                                                                ),*/
                               GeneralTextFormField(
                                 hint: selectedGender!,
                                 label: AppString.gender,
@@ -406,7 +333,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                       userDataCubit
                                           .updateMyData(updateUserModel);
                                     }
-                                    // Navigator.pop(context);
                                   })
                             ],
                           ),
@@ -430,7 +356,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
     required VoidCallback onTap,
   }) {
     return SizedBox(
-      //height: 32.h,
       width: 349.w,
       child: Column(
         children: [

@@ -19,8 +19,6 @@ class CustomProfileBackgroung extends StatefulWidget {
 }
 
 class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
-  // Function to pick image from gallery
-  
 
   // Function to display bottom sheet for selecting photo source
   void showPhotoSourcePicker(
@@ -89,7 +87,6 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserDataCubit, UserDataState>(
@@ -97,7 +94,7 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
         String name = " ";
         String pic = '';
         if (state is UserDataSuccess) {
-          name = state.userModel.name??'';
+          name = state.userModel.name ?? '';
           pic = state.userModel.profileImage?.path ?? '';
         }
         return Stack(
@@ -131,24 +128,20 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                           ),
-                          child: context.read<UserDataCubit>().profileImage == null &&
+                          child: context.read<UserDataCubit>().profileImage ==
+                                      null &&
                                   pic.isEmpty
                               ? Container()
-                              : context.read<UserDataCubit>().profileImage != null
-                                  ? Image.file(context.read<UserDataCubit>().profileImage!,
+                              : context.read<UserDataCubit>().profileImage !=
+                                      null
+                                  ? Image.file(
+                                      context
+                                          .read<UserDataCubit>()
+                                          .profileImage!,
                                       fit: BoxFit.fill)
                                   : Image.network(
                                       ApiConstants.imagesURLApi + pic,
                                       fit: BoxFit.fill),
-                          /*CachedNetworkImage(
-                                  imageUrl: 
-                                  imageUrl ?? widget.profileImage.toString(),
-                                  placeholder: (context, url) =>
-                                      CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
-                                  fit: BoxFit.fill,
-                                ),*/
                         ),
                       ),
                     ),
@@ -159,14 +152,19 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
                         top: 0,
                         child: GestureDetector(
                           onTap: () => showPhotoSourcePicker(
-                            pickImageFromGallery: () {
-                  Navigator.pop(context);
-                  context.read<UserDataCubit>().pickImageFromGallery();
-                },
-                pickImageFromCamera: () {
-                  Navigator.pop(context);
-                  context.read<UserDataCubit>().pickImageFromCamera();
-                }, context: context),
+                              pickImageFromGallery: () {
+                                Navigator.pop(context);
+                                context
+                                    .read<UserDataCubit>()
+                                    .pickImageFromGallery();
+                              },
+                              pickImageFromCamera: () {
+                                Navigator.pop(context);
+                                context
+                                    .read<UserDataCubit>()
+                                    .pickImageFromCamera();
+                              },
+                              context: context),
                           child: CircleAvatar(
                             radius: 18,
                             backgroundColor: ColorManager.backgroundPinkColor,

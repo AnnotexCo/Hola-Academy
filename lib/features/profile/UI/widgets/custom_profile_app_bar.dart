@@ -63,7 +63,6 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
             ],
             Row(
               children: [
-                // if (widget.qrCode == true)
                 if (_userRole == AppString.trainee ||
                     _userRole == AppString.coach)
                   BlocBuilder<UserDataCubit, UserDataState>(
@@ -83,7 +82,6 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
                                   child: Container(
                                       height: 702.h,
                                       width: 439.w,
-                                      //padding: EdgeInsets.symmetric(vertical: 131.h),
                                       decoration: BoxDecoration(
                                         color: ColorManager.whiteColor,
                                         borderRadius: BorderRadius.all(
@@ -110,7 +108,6 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
                   onTap: () {
                      context.read<LoginCubit>().logout();
                     Navigator.pushNamedAndRemoveUntil(context, Routes.logoutScreen,(route) => false);
-                    // TODO: implement logout
                   },
                   child: Row(
                     children: [

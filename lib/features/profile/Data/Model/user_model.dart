@@ -63,7 +63,9 @@ class UserModel {
       qrCode: json['qrCode'],
       parentName: json['parentName'],
       parentWhatsappNumber: json['parentWhatsappNumber'],
-      profileImage: json['ProfileImage'] != null ? ImageModel.fromJson(json['ProfileImage']) : null,
+      profileImage: json['ProfileImage'] != null
+          ? ImageModel.fromJson(json['ProfileImage'])
+          : null,
       salaryType: json['salaryType'],
       salary: json['salary'],
       address: json['address'],
@@ -97,7 +99,6 @@ class Count {
       };
 }
 
-
 class ImageModel {
   final int? id;
   final String? name;
@@ -123,39 +124,3 @@ class ImageModel {
     );
   }
 }
-
-
-
-/*
-{
-  "message": "Request successful",
-  "data": {
-    "dob": "2001-01-01T00:00:00.000Z",
-    "email": "coach@gmail.com",
-    "gender": "MALE",
-    "id": 3,
-    "name": "coach name",
-    "parentName": "coach parent name",
-    "parentWhatsappNumber": null,
-    "profileImageId": null,
-    "role": "COACH",
-    "phoneNumber": "+201234567890",
-    "reachResource": "OTHER",
-    "balance": 0,
-    "salaryType": null,
-    "salary": null,
-    "address": null,
-    "healthStatus": null,
-    "nationality": null,
-    "parentAddress": null,
-    "parentNationality": null,
-    "qrCode": "a1e20aa0-2f01-4311-ba3a-575cf740e7c8",
-    "lastSalaryDate": null,
-    "_count": {
-      "Request": 0,
-      "LevelTrainee": 0
-    },
-    "userType": "COACH"
-  }
-}
-  */

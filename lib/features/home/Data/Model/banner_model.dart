@@ -2,10 +2,8 @@ class BannerModel {
   final int id;
   final int imageId;
   final String title;
-  // final String? description;
   final bool isAdv;
   final String url;
-  // final String date;
   final String createdAt;
   final String updatedAt;
   final ImageBannerModel image;
@@ -14,10 +12,8 @@ class BannerModel {
     required this.id,
     required this.imageId,
     required this.title,
-    // this.description,
     required this.isAdv,
     required this.url,
-    // required this.date,
     required this.createdAt,
     required this.updatedAt,
     required this.image,
@@ -28,10 +24,8 @@ class BannerModel {
       id: json['id'],
       imageId: json['imageId'],
       title: json['title'],
-      // description: json['description'],
       isAdv: json['isAdv'], 
       url: json['url'],
-      // date: json['date'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
       image: ImageBannerModel.fromJson(json['Image']),

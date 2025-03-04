@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/constants/image_manager.dart';
 import '../../../../core/constants/api_constants.dart';
 import '../../Logic/banner_logic/banner_cubit.dart';
 import '../../Logic/banner_logic/banner_state.dart';
@@ -31,7 +32,7 @@ class AddBaner extends StatelessWidget {
               fit: BoxFit.cover,
               placeholder: (context, url) => buildbannerLoading(),
               errorWidget: (context, url, error) => Image.asset(
-                "assets/images/addpaner.png",
+                ImageManager.addBanner,
                 fit: BoxFit.cover,
               ),
             ),
@@ -53,7 +54,7 @@ class AddBaner extends StatelessWidget {
               fit: BoxFit.cover,
               placeholder: (context, url) => buildbannerLoading(),
               errorWidget: (context, url, error) => Image.asset(
-                "assets/images/addpaner.png",
+                ImageManager.addBanner,
                 fit: BoxFit.cover,
               ),
             ),

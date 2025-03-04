@@ -37,16 +37,10 @@ class RequestsCubit extends Cubit<RequestsState> {
  Future<void> bookProgram(BookingProgramModel bookingProgramModel, {File? imageFile}) async {
     try {
       if (!isClosed) emit(RequestsLoading());
-
-      // print("📤 Sending Booking Data: ${bookingProgramModel.toJson()}"); // Debugging log
-      // if (imageFile != null) print("📸 Image File: ${imageFile.path}"); // Debugging log
-
-      await requestsRepo.bookProgram(bookingProgramModel, imageFile: imageFile); // ✅ Fixed call
+      await requestsRepo.bookProgram(bookingProgramModel, imageFile: imageFile);
 
       if (!isClosed) emit(BookRequestSuccess());
     } catch (error) {
-      // print("❌ Booking Error: $error");
-
       if (error is DioException) {
         final response = error.response?.data;
 

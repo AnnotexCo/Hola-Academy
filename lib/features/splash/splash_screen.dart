@@ -74,7 +74,6 @@ class _SplashScreenState extends State<SplashScreen> {
               numberOfDots: 3,
 
               animationDuration: Duration(milliseconds: 600),
-              // animationDuration = Duration(milliseconds: 200),
             ),
           ],
         ),

@@ -104,7 +104,6 @@ class HomeScreenCoach extends StatelessWidget {
                                           builder: (_) {
                                             String categoryName =
                                                 state.categories[index].name;
-                                            //int categoryID = state.categories[index].id;
                                             // TODO Get Programs by Category ID
                                             return BlocProvider.value(
                                               value: programsCubit,
@@ -176,7 +175,7 @@ class HomeScreenCoach extends StatelessWidget {
                                       },
                                       child: EvaluateCard(
                                         backgroundImage: state.categories[index]
-                                            .image!.path, //ImageManager.pic,
+                                            .image!.path,
                                         title: state.categories[index].name,
                                       ),
                                     );

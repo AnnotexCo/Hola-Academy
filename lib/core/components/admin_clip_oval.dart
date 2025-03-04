@@ -33,13 +33,14 @@ class AdminClipOval extends StatelessWidget {
                 child: CachedNetworkImage(
                   imageUrl: image,
                   fit: BoxFit.cover,
-                  placeholder: (context, url) => AdminClipShimmer(width: 36.w, height: 36.h),
+                  placeholder: (context, url) =>
+                      AdminClipShimmer(width: 36.w, height: 36.h),
                   // Fallback image on error
                   errorWidget: (context, url, error) => CircleAvatar(
-                  backgroundColor: ColorManager.lightYellow,
-                  child:
-                      const Icon(Icons.person, color: Colors.white, size: 30),
-                ),
+                    backgroundColor: ColorManager.lightYellow,
+                    child:
+                        const Icon(Icons.person, color: Colors.white, size: 30),
+                  ),
                 ),
               ),
             ),
@@ -62,14 +63,6 @@ class HexagonPainter extends CustomPainter {
     final width = size.width;
     final height = size.height;
 
-    /* path.moveTo(width * 0.7.w, 0.h); // Top point
-    path.lineTo(width * 1.3.w, height * 0.4.h); // Top-right
-    path.lineTo(width * 1.3.w, height.h * 1.5.h); // Bottom-right
-    path.lineTo(width * 0.7.w, height * 1.6.h); // Bottom
-    path.lineTo(0.w, height.h * 1.3); // Bottom-left
-    path.lineTo(0.w, height * 0.4.h); // Top-left
-    path.close();*/
-
     // Define the six points of the hexagon
     final path = Path()
       ..moveTo(width * 0.5, 0) // Top-center
@@ -88,20 +81,12 @@ class HexagonPainter extends CustomPainter {
     return false;
   }
 }
- /*path.moveTo(width * 0.5.w, height * 0.1.h); // Top point
-    path.lineTo(width.w, height * 0.35.h); // Top-right
-    path.lineTo(width.w, height.h); // Bottom-right
-    path.lineTo(width * 0.5.w, height * 1.25.h); // Bottom
-    path.lineTo(width * 0.01.w, height.h); // Bottom-left
-    path.lineTo(0.w, height * 0.38.h); // Top-left
-    path.close();*/
-
-
 class AdminClipShimmer extends StatelessWidget {
   final double width;
   final double height;
 
-  const AdminClipShimmer({super.key, required this.width, required this.height});
+  const AdminClipShimmer(
+      {super.key, required this.width, required this.height});
 
   @override
   Widget build(BuildContext context) {

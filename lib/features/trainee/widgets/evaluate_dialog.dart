@@ -158,6 +158,3 @@ class BuildSkillsItem extends StatelessWidget {
     );
   }
 }
-/*
-
-*/

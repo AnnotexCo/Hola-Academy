@@ -28,7 +28,6 @@ class ProgramCard extends StatelessWidget {
           ),
           child: ClipRRect(
               borderRadius: BorderRadius.circular(22.r),
-              // TODO: get image from API
               child: Image.asset(ImageManager.programImage, fit: BoxFit.cover)),
         ),
         Positioned(

@@ -108,12 +108,12 @@ class _RequestPaymentScreenState extends State<RequestPaymentScreen> {
       label: AppString.notes,
       labelColor: ColorManager.blackFontColor,
       hint: AppString.additionalNotes,
-      // validator: (value) {
-      //   if (value == null || value.isEmpty) {
-      //     return "Notes is required";
-      //   }
-      //   return null;
-      // },
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Notes is required";
+        }
+        return null;
+      },
     );
   }
 

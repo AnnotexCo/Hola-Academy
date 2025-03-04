@@ -23,9 +23,6 @@ class UserDataCubit extends Cubit<UserDataState> {
     if (pickedFile != null) {
       profileImage = File(pickedFile.path);
       emit(PickImageSuccess(profileImage: profileImage!));
-      //getMyData();
-      print(
-          'Picked file path: $profileImage'); // Print the picked file path (pickedFile.path);
     }
   }
 
@@ -37,8 +34,6 @@ class UserDataCubit extends Cubit<UserDataState> {
 
     if (pickedFile != null) {
       profileImage = File(pickedFile.path);
-      //emit(PickImageSuccess(profileImage: profileImage!));
-      //getMyData();
     }
   }
 
@@ -49,8 +44,6 @@ class UserDataCubit extends Cubit<UserDataState> {
       if (!isClosed) emit(UserDataLoading());
       final user = await userRepo.getMyData();
       userModel = user;
-      // await SaveTokenDB.saveNameAndImage(
-      //     user.name, user.profileImage?.path ?? '');
       if (!isClosed) emit(UserDataSuccess(userModel: user));
     } catch (e) {
       if (!isClosed) emit(UserDataFailure(message: e.toString()));
@@ -65,9 +58,7 @@ class UserDataCubit extends Cubit<UserDataState> {
           await userRepo.updateMyData(updateUserModel: updateUserModel);
       if (isUpdated) {
         if (!isClosed) emit(UpdateUserDataSuccess());
-        print(
-            'Updated picture path: ${updateUserModel.picture}'); // Print the updated picture path (updateUserModel.picture);
-        getMyData();
+        await getMyData();
         profileImage = null;
       } else {
         if (!isClosed)
@@ -105,7 +96,7 @@ class UserDataCubit extends Cubit<UserDataState> {
 
   // Optimized Search Function
   void searchUsers(String query, String role) {
-    List<User> source = role=="COACH"?coaches:trainees;
+    List<User> source = role == "COACH" ? coaches : trainees;
     if (query.trim().isEmpty) {
       filteredUsers = List.from(source);
     } else {
@@ -119,21 +110,6 @@ class UserDataCubit extends Cubit<UserDataState> {
 
     if (!isClosed) emit(FilterUsersSuccess(filteredUsers: filteredUsers));
   }
-
-  //Search Function
-  /*void searchUsers(String query) {
-    if (query.isEmpty) {
-      filteredUsers = users;
-    } else {
-      filteredUsers = users.where((user) {
-        final name = user.name?.toLowerCase();
-        final phone = user.phoneNumber?.toLowerCase();
-        final searchQuery = query.toLowerCase();
-        return name!.contains(searchQuery) || phone!.contains(searchQuery);
-      }).toList();
-    }
-    emit(FilterUsersSuccess(filteredUsers: filteredUsers));
-  }*/
 
   Future<void> fetchUsersByRole({String? role}) async {
     try {
