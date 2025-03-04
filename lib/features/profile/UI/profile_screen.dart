@@ -17,6 +17,7 @@ import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
 
 import '../../../core/local_db/save_token.dart';
+import '../../auth/login/Logic/login_cubit.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -59,7 +60,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   create: (context) => getIT<UserDataCubit>()..getMyData(),
                   child: Stack(alignment: Alignment.topCenter, children: [
                     CustomProfileBackgroung(),
-                    CustomProfileAppBar(qrCode: true, isLayout: true),
+                      BlocProvider(
+                            create: (context) => getIT<LoginCubit>(), 
+                            child: CustomProfileAppBar(qrCode: true, isLayout: true),
+                          ),
                   ]),
                 ),
                 Container(
