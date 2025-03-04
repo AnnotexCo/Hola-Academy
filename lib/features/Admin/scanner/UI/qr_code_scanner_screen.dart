@@ -63,7 +63,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
           if (state is AttendanceFailure) {
             return Column(
               children: [
-                NotFoundScreen(title: 'Fail to Scan'),
+                NotFoundScreen(title: 'Fail to Scan!'),
                 SizedBox(height: 18.h),
                 Text(
                   state.error,
