@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hola_academy/core/Routing/routes.dart';
+import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/core/dependency_injection/dependency.dart';
@@ -51,7 +51,7 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
   void initState() {
     super.initState();
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.white,
+      statusBarColor: ColorManager.whiteColor,
       statusBarIconBrightness: Brightness.dark,
     ));
   }
@@ -67,18 +67,18 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
   Color _selectedColor(int index) {
     return _selectedIndex == index
         ? ColorManager.primaryOrangeColor
-        : const Color(0xff6D6D6D);
+        : ColorManager.disabledColor;
   }
 
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
+        statusBarColor: ColorManager.whiteColor,
         statusBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: ColorManager.whiteColor,
         body: PageView(
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
@@ -101,7 +101,7 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                     width: 24.w,
                     color: _selectedColor(0),
                   ),
-                  label: 'Home',
+                  label: AppString.home,
                 ),
                 BottomNavigationBarItem(
                   icon: SvgPicture.asset(
@@ -110,7 +110,7 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                     width: 24.w,
                     color: _selectedColor(1),
                   ),
-                  label: 'Transactions',
+                  label: AppString.transactions,
                 ),
                 const BottomNavigationBarItem(
                   icon: SizedBox.shrink(), // Placeholder for Floating Button
@@ -123,7 +123,7 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                     width: 24.w,
                     color: _selectedColor(3),
                   ),
-                  label: 'Notifications',
+                  label: AppString.notifications,
                 ),
                 BottomNavigationBarItem(
                   icon: SvgPicture.asset(
@@ -132,11 +132,11 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                     width: 24.w,
                     color: _selectedColor(4),
                   ),
-                  label: 'Profile',
+                  label: AppString.profile,
                 ),
               ],
               selectedItemColor: ColorManager.primaryOrangeColor,
-              unselectedItemColor: Colors.grey,
+              unselectedItemColor: ColorManager.disabledColor,
               showUnselectedLabels: true,
               type: BottomNavigationBarType.fixed,
               currentIndex: _selectedIndex,
@@ -154,8 +154,8 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Color(0xffffffff).withValues(alpha: 0.4),
-                        Color(0xffF09C1F).withValues(alpha: 0.8),
+                        ColorManager.whiteColor.withValues(alpha: 0.4),
+                        ColorManager.primaryOrangeColor.withValues(alpha: 0.8),
                       ]),
                   boxShadow: [
                     BoxShadow(
@@ -181,7 +181,7 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                     ImageManager.scanQricon,
                     height: 35.h,
                     width: 35.w,
-                    color: Colors.white,
+                    color: ColorManager.whiteColor,
                   ),
                 ),
               ),

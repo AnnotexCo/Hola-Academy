@@ -208,4 +208,16 @@ class AppString {
   static const String dataRecorded = "The data has been recorded. Thank you!";
 
   static const String continueButton = "Continue";
+
+  static const String failToScan = "Fail to Scan!";
+
+  static const String tryAgain = "Try again";
+
+
+  // Nav bar labels
+  static const String home = "Home";
+  static const String schedule = "Schedule";
+  static const String transactions = "Transactions";
+  static const String notifications = "Notifications";
+  static const String profile = "Profile";
 }

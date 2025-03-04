@@ -8,7 +8,6 @@ import 'package:hola_academy/features/Admin/scanner/Logic/attendance_state.dart'
 import 'package:hola_academy/features/Admin/scanner/UI/scan_complete.dart';
 import 'package:hola_academy/features/auth/register/UI/widgets/custom_button.dart';
 import 'package:hola_academy/features/not_found/not_found_screen.dart';
-
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
 class QRCodeScannerScreen extends StatefulWidget {
@@ -63,7 +62,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
           if (state is AttendanceFailure) {
             return Column(
               children: [
-                NotFoundScreen(title: 'Fail to Scan!'),
+                NotFoundScreen(title: AppString.failToScan),
                 SizedBox(height: 18.h),
                 Text(
                   state.error,
@@ -81,7 +80,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
                       context.read<AttendanceCubit>().resetState();
                     },
                     height: 72.h,
-                    text: 'Try again')
+                    text: AppString.tryAgain)
               ],
             );
           } else {

@@ -6,7 +6,6 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
 class ScanComplete extends StatelessWidget {
-  // Default SVG
   const ScanComplete({super.key});
 
   @override

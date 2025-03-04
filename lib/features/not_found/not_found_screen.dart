@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
+import 'package:hola_academy/core/constants/image_manager.dart';
 
 class NotFoundScreen extends StatelessWidget {
   final String? svgPath; // Path to the SVG image
-  final String defaultSvgPath = 'assets/images/not_found.svg'; // Default SVG
   final String? title;
   const NotFoundScreen({this.svgPath, this.title, super.key});
 
@@ -20,7 +20,7 @@ class NotFoundScreen extends StatelessWidget {
             Opacity(
               opacity: 1.0,
               child: SvgPicture.asset(
-                svgPath ?? defaultSvgPath,
+                svgPath ?? ImageManager.notFound,
                 width: 384.w,
                 height: 343.h,
               ),

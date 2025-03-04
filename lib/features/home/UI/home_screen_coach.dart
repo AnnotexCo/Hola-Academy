@@ -12,7 +12,6 @@ import 'package:hola_academy/features/classes/Logic/levels/cubit/levels_cubit.da
 import 'package:hola_academy/features/classes/Logic/programms/programs_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/programms/programs_state.dart';
 import 'package:hola_academy/features/home/UI/components/add_baner.dart';
-
 import 'package:hola_academy/features/home/UI/components/timeline_widget.dart';
 import 'package:hola_academy/features/home/UI/components/welcome_header.dart';
 import 'package:hola_academy/features/home/UI/components_coach/classes_dialog.dart';
@@ -20,7 +19,6 @@ import 'package:hola_academy/features/home/UI/components_coach/evaluate_card.dar
 import 'package:hola_academy/features/home/UI/components_coach/session_card.dart';
 import 'package:hola_academy/features/not_found/not_found_screen.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
-
 import '../../../core/dependency_injection/dependency.dart';
 import '../Logic/banner_logic/banner_cubit.dart';
 
@@ -106,9 +104,7 @@ class HomeScreenCoach extends StatelessWidget {
                                           builder: (_) {
                                             String categoryName =
                                                 state.categories[index].name;
-                                            int categoryID =
-                                                state.categories[index].id;
-
+                                            //int categoryID = state.categories[index].id;
                                             // TODO Get Programs by Category ID
                                             return BlocProvider.value(
                                               value: programsCubit,
