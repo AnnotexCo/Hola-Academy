@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,6 +14,15 @@ import 'core/bloc_observer/bloc_observer.dart';
 import 'core/dependency_injection/dependency.dart';
 import 'core/local_notification_service/local_notification_service.dart';
 
+
+
+///  **Handle background notifications (when the app is completely closed)**
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print(' Background Notification Received: ${message.messageId}');
+  print(' Title: ${message.notification?.title}');
+  print(' Body: ${message.notification?.body}');
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -20,8 +30,45 @@ void main() async {
 );
   setUpGetIt();
   Bloc.observer = MyBlocObserver();
-  // initialize notification
+
+  //  Initialize Notification Service
   await LocalNotificationService().initNotification();
+
+  //  Listen for background notifications
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  //  Get Firebase Messaging instance
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  //  Request permission for notifications (iOS only)
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+  print(' Notification permission status: ${settings.authorizationStatus}');
+
+  //  Handle notification when the app is in the foreground
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print(' Foreground Notification Received!');
+    print(' Title: ${message.notification?.title}');
+    print(' Body: ${message.notification?.body}');
+
+    // **Show the notification using LocalNotificationService**
+    LocalNotificationService().showNotification(
+      title: message.notification?.title ?? "No Title",
+      body: message.notification?.body ?? "No Body",
+    );
+  });
+
+  //  Handle notification click when app is in the background or terminated
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    print("🚀 Notification Clicked! Navigating to a screen...");
+    print(" Title: ${message.notification?.title}");
+    print(" Body: ${message.notification?.body}");
+    
+    // TODO: Navigate to the correct screen (if needed)
+  });
   runApp(
     MultiBlocProvider(
       providers: [
