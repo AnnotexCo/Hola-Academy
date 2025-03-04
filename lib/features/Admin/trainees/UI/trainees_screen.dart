@@ -140,7 +140,9 @@ class _TraineesScreenState extends State<TraineesScreen> {
                   );
                 } else if (state is FetchUsersByRoleFailure) {
                   return NotFoundScreen(
-                    title: 'No Trainees Found',
+                   title: widget.role == AppString.trainee
+                          ? 'No Trainees Found'
+                          : 'No COACH Found',
                   );
                 } else if (state is UserDataLoading) {
                   return Center(

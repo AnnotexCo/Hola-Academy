@@ -62,8 +62,10 @@ class _ScheduleEvaluationScreenState extends State<ScheduleEvaluationScreen> {
                 return GestureDetector(
                   onTap: () {
                     setState(() {
+                      
                       selectedDayIndex = index;
                       selectedDate = date;
+
                     });
                   },
                   child: Transform(

@@ -9,6 +9,7 @@ import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../../../core/local_db/save_token.dart';
+import '../../../auth/login/Logic/login_cubit.dart';
 
 class CustomProfileAppBar extends StatefulWidget {
   final bool qrCode;
@@ -107,8 +108,9 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
                 ),
                 GestureDetector(
                   onTap: () {
+                     context.read<LoginCubit>().logout();
                     Navigator.pushNamedAndRemoveUntil(context, Routes.logoutScreen,(route) => false);
-                    logout();
+                    // TODO: implement logout
                   },
                   child: Row(
                     children: [
@@ -143,6 +145,4 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
   }
 }
 
-Future<void> logout() async {
-  await SaveTokenDB.deleteTokenAndRole(); // Clear both token & role
-}
+

@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hola_academy/core/local_db/save_token.dart';
 import '../Data/Model/login_model.dart';
@@ -13,7 +14,12 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> doLogin(LoginModel loginModel) async {
     emit(LoginLoading());
     try {
-      bool isSuccess = await loginRepo.doLogin(loginModel: loginModel);
+       String? fcmtoken = await FirebaseMessaging.instance.getToken();
+      if (fcmtoken == null) {
+        emit(LoginFailure(message: "Failed to get FCM Token"));
+        return;
+      }
+      bool isSuccess = await loginRepo.doLogin(loginModel: loginModel, fcmtoken: fcmtoken);
       if (isSuccess) {
         String? token = await SaveTokenDB.getToken();
         String? role = await SaveTokenDB.getRole();
@@ -50,8 +56,13 @@ Future<void> doGoogleLogin() async {
       emit(LoginFailure(message: "Google Access Token not found"));
       return;
     }
+      String? fcmtoken = await FirebaseMessaging.instance.getToken();
+      if (fcmtoken == null) {
+        emit(LoginFailure(message: "Failed to get FCM Token"));
+        return;
+      }
 
-    bool isSuccess = await loginRepo.doGoogleLogin(accessToken: accessToken);
+    bool isSuccess = await loginRepo.doGoogleLogin(accessToken: accessToken, fcmtoken: fcmtoken);
 
     if (isSuccess) {
       String? token = await SaveTokenDB.getToken();
@@ -71,8 +82,24 @@ Future<void> doGoogleLogin() async {
 }
 
 
-  Future<void> logout() async {
-    await SaveTokenDB.deleteTokenAndRole(); // Clear both token & role
-    emit(LoginInitial());
+ Future<void> logout() async {
+    try {
+      String? fcmtoken = await FirebaseMessaging.instance.getToken();
+      if (fcmtoken == null) {
+        emit(LoginFailure(message: "Failed to get FCM Token"));
+        return;
+      }
+
+      bool isLoggedOut = await loginRepo.doLogout(fcmtoken: fcmtoken);
+
+      if (isLoggedOut) {
+        await SaveTokenDB.deleteTokenAndRole();
+        emit(LoginInitial());
+      } else {
+        emit(LoginFailure(message: "Logout failed"));
+      }
+    } catch (e) {
+      emit(LoginFailure(message: e.toString()));
+    }
   }
 }

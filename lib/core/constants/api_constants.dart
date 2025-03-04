@@ -1,6 +1,7 @@
 class ApiConstants {
   static String baseUrl = 'http://109.176.197.232:3100/';
   static String loginApi = 'api/auth/login';
+  static String logoutApi = 'api/auth/logout';
   static String forgetPasswordApi = 'api/auth/forget-password';
   static String resetPasswordApi = 'api/auth/reset-password';
   static String verifyAccount = 'api/auth/verify-account';
@@ -49,7 +50,7 @@ class ApiConstants {
   // SKILLS
     static const String evaluateSkillsbyLessonsID = 'api/skill/lesson/evaluate';
 
-  static const String getSkillsbyLessonsID = 'api/skill/lesson';
+  static const String getSkillsbyLessonsID = 'api/skill/lesson/';
 
   // Attendance
   static const String  attendanceMarkApi = 'api/attendance/mark/';

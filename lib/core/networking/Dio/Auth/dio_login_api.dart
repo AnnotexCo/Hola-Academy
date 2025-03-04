@@ -8,11 +8,16 @@ class DioLoginApi {
 
   DioLoginApi({required Dio dio}) : _dio = dio;
 
-  Future<bool> dioLogin({required LoginModel loginModel}) async {
+  Future<bool> dioLogin(
+      {required LoginModel loginModel, required String fcmtoken}) async {
     try {
+      print('fcmtokenlogin: $fcmtoken');
       final response = await _dio.post(
         '${ApiConstants.baseUrl}${ApiConstants.loginApi}',
-        data: loginModel.toMap(),
+        data: {
+          ...loginModel.toMap(),
+          "fcmToken": fcmtoken,
+        },
         options: Options(
           headers: {
             'Content-Type': 'application/json',
@@ -24,7 +29,7 @@ class DioLoginApi {
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {
         final responseData = response.data['data'];
-        String? token = responseData['access_token']; 
+        String? token = responseData['access_token'];
         String? role = responseData['role'];
 
         if (token != null && role != null) {
@@ -38,37 +43,65 @@ class DioLoginApi {
     }
   }
 
-Future<bool> dioGoogleLogin({required String accessToken}) async {
-  try {
-    final response = await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.googleLoginApi}',
-      data: {
-        "accessToken": accessToken,
-      },
-      options: Options(
-        headers: {
-          'Content-Type': 'application/json',
+  Future<bool> dioGoogleLogin({required String accessToken, required String fcmtoken}) async {
+    try {
+      print('fcmtokengoogle: $fcmtoken');
+      final response = await _dio.post(
+        '${ApiConstants.baseUrl}${ApiConstants.googleLoginApi}',
+        data: {
+          "accessToken": accessToken,
+          "fcmToken": fcmtoken
         },
-      ),
-    );
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
-    if (response.statusCode != null &&
-        response.statusCode! >= 200 &&
-        response.statusCode! < 300) {
-      final responseData = response.data['data'];
-      String? token = responseData['access_token'];
-      String? role = responseData['user']['role']; // Extract role correctly
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        final responseData = response.data['data'];
+        String? token = responseData['access_token'];
+        String? role = responseData['user']['role']; // Extract role correctly
 
-      if (token != null && role != null) {
-        await SaveTokenDB.saveTokenAndRole(token, role); // Save both token & role
+        if (token != null && role != null) {
+          await SaveTokenDB.saveTokenAndRole(
+              token, role); // Save both token & role
+        }
+
+        return true;
       }
-
-      return true;
+      return false;
+    } on DioException catch (dioError) {
+      throw dioError.response?.data['message'] ?? "Google login failed";
     }
-    return false;
-  } on DioException catch (dioError) {
-    throw dioError.response?.data['message'] ?? "Google login failed";
   }
-}
 
+   Future<bool> dioLogout({required String fcmtoken}) async {
+    try {
+      print('fcmtokenlogout: $fcmtoken');
+      final response = await _dio.post(
+        '${ApiConstants.baseUrl}${ApiConstants.logoutApi}',
+        data: {
+          "fcmToken": fcmtoken, // إرسال FCM Token لحذفه
+        },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        return true;
+      }
+      return false;
+    } on DioException catch (dioError) {
+      throw dioError.response?.data['message'] ?? "Logout failed";
+    }
+  }
 }
