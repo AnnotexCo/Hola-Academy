@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hola_academy/core/dependency_injection/dependency.dart';
+import 'package:hola_academy/features/Admin/scanner/Logic/attendance_cubit.dart';
+import 'package:hola_academy/features/Admin/scanner/UI/qr_code_scanner_screen.dart';
 import 'package:hola_academy/features/Admin/transactions/admin_transactions_screen.dart';
 import 'package:hola_academy/features/auth/forgot_password/Logic/cubit/forget_password_cubit.dart';
 import 'package:hola_academy/features/auth/forgot_password/UI/forgot_password_screen.dart';
@@ -273,8 +275,13 @@ class AppRouter {
       case Routes.layoutCoachScreen:
         return MaterialPageRoute(builder: (_) => const LayoutCoachScreen());
 
-      //case Routes.adminQrCodeScannerScreen:
-      //return MaterialPageRoute(builder: (_) => const QRCodeScannerScreen());
+     /* case Routes.adminQrCodeScannerScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => getIT<AttendanceCubit>(),
+                  child: const QRCodeScannerScreen(),
+                ));*/
+
       case Routes.splashScreen:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
 
