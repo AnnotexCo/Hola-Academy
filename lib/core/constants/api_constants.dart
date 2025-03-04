@@ -52,5 +52,6 @@ class ApiConstants {
 
   static const String getSkillsbyLessonsID = 'api/skill/lesson/';
 
-
+  // Attendance
+  static const String  attendanceMarkApi = 'api/attendance/mark/';
 }

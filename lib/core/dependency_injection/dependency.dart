@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
+import 'package:hola_academy/core/networking/Dio/Attendance/dio_attendance_api.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_check_otp.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_forget_password.dart';
 import 'package:hola_academy/core/networking/Dio/Auth/dio_reset_password.dart';
@@ -15,6 +16,8 @@ import 'package:hola_academy/core/networking/Dio/Transaction/dio_transcations.da
 import 'package:hola_academy/core/networking/Dio/User/dio_user_api.dart';
 import 'package:hola_academy/features/Admin/requests/Data/Repo/requests_repo.dart';
 import 'package:hola_academy/features/Admin/requests/Logic/requests_cubit.dart';
+import 'package:hola_academy/features/Admin/scanner/Data/Repo/attendance_repo.dart';
+import 'package:hola_academy/features/Admin/scanner/Logic/attendance_cubit.dart';
 import 'package:hola_academy/features/auth/forgot_password/Data/Repo/forget_password_repo.dart';
 import 'package:hola_academy/features/auth/forgot_password/Logic/cubit/forget_password_cubit.dart';
 import 'package:hola_academy/features/auth/login/Data/Repo/login_repo.dart';
@@ -101,6 +104,10 @@ void setUpGetIt() {
   // Notifications API
   getIT.registerLazySingleton<DioNotificationsApi>(
       () => DioNotificationsApi(dio: getIT<Dio>()));
+
+  // AttendanceDioApi
+  getIT.registerLazySingleton<DioAttendance>(
+      () => DioAttendance(dio: getIT<Dio>()));
 
   //Class APi
   getIT.registerLazySingleton<DioClasses>(() => DioClasses(dio: getIT<Dio>()));
@@ -199,4 +206,11 @@ void setUpGetIt() {
 
   getIT.registerFactory<NotificationsCubit>(
       () => NotificationsCubit(getIT<NotificationsRepo>()));
+
+  // Attendance
+  getIT.registerLazySingleton<AttendanceRepo>(() =>
+      AttendanceRepo(dioAttendance: getIT<DioAttendance>()));
+
+  getIT.registerFactory<AttendanceCubit>(
+      () => AttendanceCubit(getIT<AttendanceRepo>()));
 }

@@ -80,11 +80,9 @@ class DioTranscations {
       if (response.statusCode == 200) {
         return response.data;
       }
-      print('response.data*******************${response.data}');
       throw Exception("Failed to load transcations");
     } catch (error) {
       if (error is DioException && error.response != null) {}
-      print('error****////////////////***$error');
       throw ApiErrorHandler.handle(error).message.toString();
       //final errorMessage = ApiErrorHandler.handle(error);
       //throw errorMessage;

@@ -84,4 +84,6 @@ class ImageManager {
   static const String transactionIcon = "assets/icons/transactionIcon.svg";
 
   static const String scheduleIcon = "assets/icons/schedule.svg";
+
+  static const String confirmedAttendance = "assets/images/confirmed_attendance.svg";
 }

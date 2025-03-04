@@ -203,4 +203,9 @@ class AppString {
   static const String logingOut = "Logging out";
 
   static const String done = "Done";
+
+  static const String scanComplete = "Scan Complete!";
+  static const String dataRecorded = "The data has been recorded. Thank you!";
+
+  static const String continueButton = "Continue";
 }

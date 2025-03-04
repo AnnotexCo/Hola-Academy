@@ -6,7 +6,8 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
   final String text;
   final bool isLoading;
-  const CustomButton({super.key, required this.onTap, required this.text, this.isLoading = false});
+  final double? height;
+  const CustomButton({super.key, required this.onTap, required this.text, this.isLoading = false, this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class CustomButton extends StatelessWidget {
         padding: EdgeInsets.only(top: 5.h, bottom: 4.h),
         child: Container(
           width: 203.w,
-          height: 40.h,
+          height: height ?? 40.h,
           decoration: BoxDecoration(
             color: ColorManager.primaryOrangeColor,
             borderRadius: BorderRadius.circular(32.r),

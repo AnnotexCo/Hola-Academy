@@ -3,15 +3,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/core/dependency_injection/dependency.dart';
 import 'package:hola_academy/features/Admin/home/UI/home_admin_screen.dart';
+import 'package:hola_academy/features/Admin/scanner/Logic/attendance_cubit.dart';
 import 'package:hola_academy/features/notifications/UI/notifications_screen.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'package:hola_academy/features/profile/Logic/transactions/trans_cubit.dart';
 import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
-import '../Admin/scanner/qr_code_scanner_screen.dart';
+import '../Admin/scanner/UI/qr_code_scanner_screen.dart';
 import '../Admin/transactions/admin_transactions_screen.dart';
 import '../notifications/Logic/notifications_cubit.dart';
 
@@ -31,8 +33,11 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
     BlocProvider(
         create: (context) => getIT<TransCubit>(),
         child: AdminTransactionsScreen()),
-    QRCodeScannerScreen(),
-     BlocProvider(
+    BlocProvider(
+      create: (context) => getIT<AttendanceCubit>(),
+      child: QRCodeScannerScreen(),
+    ),
+    BlocProvider(
       create: (context) => getIT<NotificationsCubit>(),
       child: NotificationsScreen(),
     ),
