@@ -15,7 +15,6 @@ class ImageManager {
   static const String roundDoubleAltArrowDown =
       "assets/icons/round double alt arrow down.svg";
   static const String password = "assets/icons/mdi_password-outline.svg";
-  static const String eye = "assets/icons/eye.svg";
   static const String checkBox = "assets/icons/rectangle.svg";
   static const String ellipse = "assets/icons/ellipse.svg";
   static const String hola = "assets/images/hola.png";
@@ -72,12 +71,6 @@ class ImageManager {
   static const String category = 'assets/icons/category.svg';
 
 //Coach Home Screen
-  static const String privateclass = 'assets/icons/private_class_icon.svg';
-  static const String semiprivateclass =
-      'assets/icons/semiprivate_class_icon.svg';
-  static const String kidsclass = 'assets/icons/kids_icon.svg';
-  static const String aquaclass = 'assets/icons/aqua_class_icon.svg';
-
   static const String scanQricon = "assets/icons/scan.svg";
   static const String transactionIcon = "assets/icons/transactionIcon.svg";
 
