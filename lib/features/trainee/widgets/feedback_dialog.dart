@@ -5,14 +5,16 @@ import 'package:hola_academy/core/components/custom_colored_outline_button.dart'
 import 'package:hola_academy/core/components/custom_dialog.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
+import 'package:hola_academy/features/classes/Logic/skills/cubit/skills_cubit.dart';
 
 class FeedbackDialog extends StatelessWidget {
+  final int lessonId;
+  final int skilldId;
+  final SkillsCubit skillsCubit;
   final String traineeName;
   final String courseTitle;
   final String techniqueTitle;
   final String imageUrl;
-  final VoidCallback onSave;
-  final VoidCallback onCancel;
 
   const FeedbackDialog({
     super.key,
@@ -20,13 +22,15 @@ class FeedbackDialog extends StatelessWidget {
     required this.courseTitle,
     required this.techniqueTitle,
     required this.imageUrl,
-    required this.onSave,
-    required this.onCancel,
+    required this.skillsCubit,
+    required this.lessonId,
+    required this.skilldId,
   });
 
   @override
   Widget build(BuildContext context) {
-    // double rating = 0;
+    double rating = 0;
+    bool isPassed = false;
     TextEditingController feedbackController = TextEditingController();
 
     return CustomDialog(
@@ -83,7 +87,12 @@ class FeedbackDialog extends StatelessWidget {
                       color: ColorManager.primaryOrangeColor,
                     ),
                     onRatingUpdate: (value) {
-                     // rating = value;
+                      rating = value;
+                      if (rating >= 7) {
+                        isPassed = true;
+                      } else {
+                        isPassed = false;
+                      }
                     },
                   ),
                   SizedBox(height: 25.h),
@@ -122,7 +131,18 @@ class FeedbackDialog extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       GestureDetector(
-                        onTap: onSave,
+                        onTap: () {
+                          print(
+                              "$rating  $skilldId $lessonId {$isPassed} ${feedbackController.text}");
+                          skillsCubit.evaluateSkill(
+                            lessonId,
+                            skilldId,
+                            rating.toInt(),
+                            isPassed,
+                            feedbackController.text,
+                          );
+                          Navigator.of(context).pop();
+                        },
                         child: Container(
                           width: 120.w,
                           height: 30.h,
@@ -153,7 +173,7 @@ class FeedbackDialog extends StatelessWidget {
                               color: ColorManager.primaryOrangeColor,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w400),
-                          onTap: onCancel),
+                          onTap: () {}),
                     ],
                   ),
                 ],

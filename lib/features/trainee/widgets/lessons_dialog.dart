@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/components/custom_dialog.dart';
-import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/features/classes/Data/Model/lessons_model.dart';
+import 'package:hola_academy/features/classes/Logic/skills/cubit/skills_cubit.dart';
 import 'package:hola_academy/features/trainee/widgets/evaluate_dialog.dart';
 import 'package:intl/intl.dart';
 
 class LessonsDialog extends StatelessWidget {
+  final SkillsCubit skillsCubit;
   final String traineeName;
   final String courseTitle;
   final String imageUrl;
@@ -20,7 +22,8 @@ class LessonsDialog extends StatelessWidget {
       required this.courseTitle,
       required this.imageUrl,
       required this.onCancel,
-      required this.lessons});
+      required this.lessons,
+      required this.skillsCubit});
 
   @override
   Widget build(BuildContext context) {
@@ -67,17 +70,38 @@ class LessonsDialog extends StatelessWidget {
                           Navigator.of(context).pop();
                         },
                         onTap: () {
-                          Navigator.of(context).pop();
+                          skillsCubit.getSkillsbyLessonID(lessons[index].id);
+                          Navigator.pop(context);
+
                           showDialog(
                             context: context,
                             builder: (context) {
-                              return EvaluateDialog(
-                                  traineeName: traineeName,
-                                  courseTitle: courseTitle,
-                                  imageUrl: imageUrl,
-                                  onCancel: () {
-                                    Navigator.of(context).pop();
-                                  });
+                              return BlocProvider.value(
+                                value: skillsCubit,
+                                child: BlocConsumer<SkillsCubit, SkillsState>(
+                                  listener: (context, state) {
+                                    if (state is SkillsError) {
+                                      print(state.error);
+                                    }
+                                  },
+                                  builder: (context, state) {
+                                    if (state is SkillsLoaded) {
+                                      return EvaluateDialog(
+                                          lessonId: lessons[index].id,
+                                          skillsCubit: skillsCubit,
+                                          skills: state.skills,
+                                          traineeName: traineeName,
+                                          courseTitle: courseTitle,
+                                          imageUrl: imageUrl,
+                                          onCancel: () {
+                                            Navigator.of(context).pop();
+                                          });
+                                    }
+
+                                    return const SizedBox();
+                                  },
+                                ),
+                              );
                             },
                           );
                         },
@@ -89,29 +113,6 @@ class LessonsDialog extends StatelessWidget {
         ]);
   }
 }
-
-List<Map<String, dynamic>> skills = [
-  {
-    'name': AppString.armStrokeTechnique,
-    'rating': 0.0,
-  },
-  {
-    'name': AppString.legKickCoordination,
-    'rating': 1.0,
-  },
-  {
-    'name': AppString.breathingPatternConsistency,
-    'rating': 1.0,
-  },
-  {
-    'name': AppString.headPosition,
-    'rating': 1.0,
-  },
-  {
-    'name': AppString.coreStabilityWhileFloating,
-    'rating': 0.0,
-  },
-];
 
 class BuildSkillsItem extends StatelessWidget {
   final String skillName;

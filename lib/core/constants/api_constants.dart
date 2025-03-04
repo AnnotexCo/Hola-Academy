@@ -49,7 +49,7 @@ class ApiConstants {
   // SKILLS
     static const String evaluateSkillsbyLessonsID = 'api/skill/lesson/evaluate';
 
-  static const String getSkillsbyLessonsID = 'api/skill/lesson';
+  static const String getSkillsbyLessonsID = 'api/skill/lesson/';
 
 
 }

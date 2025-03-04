@@ -14,6 +14,7 @@ import 'package:hola_academy/features/auth/verification/Logic/cubit/check_otp_cu
 import 'package:hola_academy/features/auth/verification/UI/verfication_screen.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/lessons/cubit/lessons_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/skills/cubit/skills_cubit.dart';
 import 'package:hola_academy/features/classes/UI/classes_screen.dart';
 import 'package:hola_academy/features/classes/UI/detail_class_screen.dart';
 import 'package:hola_academy/features/classes/UI/program_levl_screen.dart';
@@ -260,6 +261,9 @@ class AppRouter {
               ),
               BlocProvider(
                 create: (context) => getIT<LessonsCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => getIT<SkillsCubit>(),
               ),
             ],
             child: FindTraineesScreen(
