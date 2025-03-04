@@ -3,10 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/components/custom_dialog.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
-import 'package:hola_academy/core/constants/image_manager.dart';
+import 'package:hola_academy/features/classes/Data/Model/skills_model.dart';
+import 'package:hola_academy/features/classes/Logic/skills/cubit/skills_cubit.dart';
 import 'package:hola_academy/features/trainee/widgets/feedback_dialog.dart';
 
 class EvaluateDialog extends StatelessWidget {
+  final int lessonId;
+  final SkillsCubit skillsCubit;
+  final List<Skill> skills;
   final String traineeName;
   final String courseTitle;
   final String imageUrl;
@@ -17,7 +21,10 @@ class EvaluateDialog extends StatelessWidget {
       required this.traineeName,
       required this.courseTitle,
       required this.imageUrl,
-      required this.onCancel});
+      required this.onCancel,
+      required this.skills,
+      required this.skillsCubit,
+      required this.lessonId});
 
   @override
   Widget build(BuildContext context) {
@@ -56,43 +63,22 @@ class EvaluateDialog extends StatelessWidget {
                     itemCount: skills.length,
                     itemBuilder: (context, index) {
                       return BuildSkillsItem(
-                        skillName: skills[index]['name'],
-                        rating: skills[index]['rating'],
-                        onChanged: (value) {
-                          skills[index]['rating'] = value;
-                        },
+                        skillName: skills[index].name,
+                        rating: 0.5,
+                        onChanged: (value) {},
                         onTap: () {
                           Navigator.of(context).pop();
                           showDialog(
                             context: context,
                             builder: (context) {
                               return FeedbackDialog(
-                                imageUrl: ImageManager.pic,
-                                traineeName: 'Robert Fox',
-                                courseTitle: 'Basic Swimming Techniques',
-                                techniqueTitle: skills[index]['name'],
-                                onSave: () {
-                                  // Handle save action
-                                  Navigator.of(context).pop();
-                                },
-                                onCancel: () {
-                                  // Handle cancel action
-                                  Navigator.of(context).pop();
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return EvaluateDialog(
-                                        imageUrl: ImageManager.pic,
-                                        traineeName: 'Robert Fox',
-                                        courseTitle:
-                                            'Basic Swimming Techniques',
-                                        onCancel: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      );
-                                    },
-                                  );
-                                },
+                                skilldId: skills[index].id,
+                                imageUrl: imageUrl,
+                                traineeName: traineeName,
+                                courseTitle: courseTitle,
+                                techniqueTitle: skills[index].name,
+                                skillsCubit: skillsCubit,
+                                lessonId: lessonId,
                               );
                             },
                           );
@@ -105,29 +91,6 @@ class EvaluateDialog extends StatelessWidget {
         ]);
   }
 }
-
-List<Map<String, dynamic>> skills = [
-  {
-    'name': AppString.armStrokeTechnique,
-    'rating': 0.0,
-  },
-  {
-    'name': AppString.legKickCoordination,
-    'rating': 1.0,
-  },
-  {
-    'name': AppString.breathingPatternConsistency,
-    'rating': 1.0,
-  },
-  {
-    'name': AppString.headPosition,
-    'rating': 1.0,
-  },
-  {
-    'name': AppString.coreStabilityWhileFloating,
-    'rating': 0.0,
-  },
-];
 
 class BuildSkillsItem extends StatelessWidget {
   final String skillName;

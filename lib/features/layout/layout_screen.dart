@@ -7,7 +7,9 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/classes/cubit/classes_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/lessons/cubit/lessons_cubit.dart';
 import 'package:hola_academy/features/classes/UI/classes_screen.dart';
+import 'package:hola_academy/features/home/Logic/banner_logic/banner_cubit.dart';
 import 'package:hola_academy/features/home/UI/home_screen.dart';
 import 'package:hola_academy/features/notifications/UI/notifications_screen.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
@@ -29,7 +31,16 @@ class _LayoutScreenState extends State<LayoutScreen> {
   final PageController _pageController = PageController();
 
   final List<Widget> _screens = [
-    HomeScreen(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIT<UserDataCubit>()..getMyData()),
+        BlocProvider(
+            create: (context) => getIT<BannersCubit>()..fetchAllBanners()),
+        BlocProvider(
+            create: (context) => getIT<LessonsCubit>()..getNextLessons()),
+      ],
+      child: HomeScreen(),
+    ),
     MultiBlocProvider(providers: [
       BlocProvider(create: (context) => getIT<ProgramsCubit>()),
       BlocProvider(create: (context) => getIT<CategoriesCubit>()),

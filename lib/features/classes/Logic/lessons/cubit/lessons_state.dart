@@ -14,6 +14,11 @@ final class LessonsSuccess extends LessonsState {
   const LessonsSuccess({required this.lessons});
 }
 
+final class NextLessonsSuccess extends LessonsState {
+  final LessonModel lessons;
+  const NextLessonsSuccess({required this.lessons});
+}
+
 final class LessonsLoading extends LessonsState {}
 
 final class LessonsError extends LessonsState {

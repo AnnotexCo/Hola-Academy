@@ -5,7 +5,6 @@ import 'package:hola_academy/core/Routing/app_router.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/calender_widget.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
-import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_state.dart';
 import 'package:hola_academy/features/classes/Logic/classes/cubit/classes_cubit.dart';
@@ -21,7 +20,6 @@ import 'package:hola_academy/features/home/UI/components_coach/evaluate_card.dar
 import 'package:hola_academy/features/home/UI/components_coach/session_card.dart';
 import 'package:hola_academy/features/not_found/not_found_screen.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
-import 'package:hola_academy/features/trainee/widgets/evaluate_dialog.dart';
 
 import '../../../core/dependency_injection/dependency.dart';
 import '../Logic/banner_logic/banner_cubit.dart';
@@ -50,20 +48,7 @@ class HomeScreenCoach extends StatelessWidget {
                       alignment: Alignment.centerLeft, child: WelcomeHeader()),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return EvaluateDialog(
-                            imageUrl: ImageManager.pic,
-                            traineeName: 'Robert Fox',
-                            courseTitle: 'Basic Swimming Techniques',
-                            onCancel: () {
-                              Navigator.of(context).pop();
-                            },
-                          );
-                        });
-                  },
+                  onTap: () {},
                   child: BlocProvider(
                     create: (context) =>
                         getIT<BannersCubit>()..fetchAllBanners(),

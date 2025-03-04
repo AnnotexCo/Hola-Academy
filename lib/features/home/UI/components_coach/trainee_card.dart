@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/features/classes/Logic/lessons/cubit/lessons_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/skills/cubit/skills_cubit.dart';
 import 'package:hola_academy/features/trainee/widgets/lessons_dialog.dart';
 
 import '../../../../core/constants/api_constants.dart';
@@ -122,6 +123,7 @@ class TraineeCard extends StatelessWidget {
               onPressed: () {
                 final lessonsCubit = context.read<LessonsCubit>();
                 lessonsCubit.getLessonsByID(userId!, classId);
+                final skillsCubit = context.read<SkillsCubit>();
 
                 showDialog(
                     context: context,
@@ -135,6 +137,7 @@ class TraineeCard extends StatelessWidget {
                           builder: (context, state) {
                             if (state is LessonsSuccess) {
                               return LessonsDialog(
+                                skillsCubit: skillsCubit,
                                 lessons: state.lessons,
                                 imageUrl: image!,
                                 traineeName: name!,

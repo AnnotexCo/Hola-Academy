@@ -10,6 +10,7 @@ import 'package:hola_academy/core/networking/Dio/Home/dio_banner_api.dart';
 import 'package:hola_academy/core/networking/Dio/Lessons/dio_lessons.dart';
 import 'package:hola_academy/core/networking/Dio/Levels/dio_levels.dart';
 import 'package:hola_academy/core/networking/Dio/Requests/dio_requests_api.dart';
+import 'package:hola_academy/core/networking/Dio/Skills/dio_skills.dart';
 import 'package:hola_academy/core/networking/Dio/Transaction/dio_transcations.dart';
 import 'package:hola_academy/core/networking/Dio/User/dio_user_api.dart';
 import 'package:hola_academy/features/Admin/requests/Data/Repo/requests_repo.dart';
@@ -29,10 +30,12 @@ import 'package:hola_academy/features/classes/Data/Repo/categories_repo.dart';
 import 'package:hola_academy/features/classes/Data/Repo/classes_repo.dart';
 import 'package:hola_academy/features/classes/Data/Repo/lessons_repo.dart';
 import 'package:hola_academy/features/classes/Data/Repo/levels_repo.dart';
+import 'package:hola_academy/features/classes/Data/Repo/skills_repo.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/classes/cubit/classes_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/lessons/cubit/lessons_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/levels/cubit/levels_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/skills/cubit/skills_cubit.dart';
 import 'package:hola_academy/features/profile/Data/Repo/transaction_repo.dart';
 import 'package:hola_academy/features/profile/Data/Repo/user_repo.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
@@ -85,6 +88,8 @@ void setUpGetIt() {
   getIT.registerLazySingleton<DioBannerApi>(
       () => DioBannerApi(dio: getIT<Dio>()));
 
+  // Skills Api
+  getIT.registerLazySingleton<DioSkills>(() => DioSkills(dio: getIT<Dio>()));
 // RequestsDioApi
   getIT.registerLazySingleton<DioRequestsApi>(
       () => DioRequestsApi(dio: getIT<Dio>()));
@@ -160,6 +165,11 @@ void setUpGetIt() {
       ));
   getIT.registerFactory<LessonsCubit>(() => LessonsCubit(getIT()));
 
+  //Skills
+  getIT.registerLazySingleton<SkillsRepo>(() => SkillsRepo(
+        skills: getIT(),
+      ));
+  getIT.registerFactory<SkillsCubit>(() => SkillsCubit (getIT()));
   //Personal Info
   getIT.registerLazySingleton<DioUserApi>(() => DioUserApi(dio: getIT<Dio>()));
 
