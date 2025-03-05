@@ -48,7 +48,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
                           borderRadius: BorderRadius.circular(10.r),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFFCED2D9).withOpacity(0.76),
+                              color: const Color(0xFFCED2D9).withValues(alpha: 0.76),
                               spreadRadius: 1,
                               blurRadius: 5,
                               offset: const Offset(0, 0),

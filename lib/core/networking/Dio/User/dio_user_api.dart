@@ -103,7 +103,6 @@ class DioUserApi {
       }
       throw Exception('Failed to load data');
     } on DioException catch (dioError) {
-      print(dioError.response?.data['message']);
       throw dioError.response?.data['message'] ?? 'Unknown error occurred';
     }
   }

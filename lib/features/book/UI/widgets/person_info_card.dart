@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/components/custom_colored_outline_button.dart';
-import 'package:hola_academy/core/constants/image_manager.dart';
 
 import '../../../../core/constants/api_constants.dart';
 import '../../../../core/constants/color_manager.dart';
@@ -59,11 +58,16 @@ class PersonalInfoCard extends StatelessWidget {
                       _buildInfoRow(Icons.person, userData?.name ?? 'N/A'),
                       SizedBox(height: 8.0.h),
                       _buildInfoRow(
-                          Icons.location_on, userData?.address ?? 'Address not provided',),
+                        Icons.location_on,
+                        userData?.address ?? 'Address not provided',
+                      ),
                       SizedBox(height: 8.0.h),
                       _buildInfoRow(Icons.email, userData?.email ?? 'N/A'),
                       SizedBox(height: 8.0.h),
-                      _buildInfoRow(Icons.phone,  userData?.phoneNumber ?? 'Phone not provided',),
+                      _buildInfoRow(
+                        Icons.phone,
+                        userData?.phoneNumber ?? 'Phone not provided',
+                      ),
                     ],
                   ),
                 ),
@@ -92,18 +96,16 @@ class PersonalInfoCard extends StatelessWidget {
     );
   }
 
-   Widget _buildProfileImage(String? imagePath) {
+  Widget _buildProfileImage(String? imagePath) {
     if (imagePath == null || imagePath.isEmpty) {
-      return Image.asset(
-        ImageManager.pic, // Default profile image
-        width: 80.0.w,
-        height: 80.0.h,
-        fit: BoxFit.cover,
+      return Icon(
+        Icons.person,
+        size: 80.0.sp,
+        color: Colors.grey,
       );
     }
 
     final String imageUrl = '${ApiConstants.imagesURLApi}$imagePath';
-    // print("Profile Image URL: $imageUrl"); // Debugging print
 
     return CachedNetworkImage(
       imageUrl: imageUrl,
@@ -118,17 +120,14 @@ class PersonalInfoCard extends StatelessWidget {
       fadeInDuration: Duration(milliseconds: 300), //  Smooth transition
       placeholder: (context, url) => Center(child: CircularProgressIndicator()),
       errorWidget: (context, url, error) {
-        // print("Error loading image: $error"); // Debugging print
-        return Image.asset(
-          ImageManager.pic, // Fallback image on error
-          width: 80.0.w,
-          height: 80.0.h,
-          fit: BoxFit.cover,
+        return Icon(
+          Icons.person,
+          size: 80.0.sp,
+          color: Colors.grey, // Fallback icon color
         );
       },
     );
   }
-
 
   // Widget for building each row of user info with an icon
   Widget _buildInfoRow(IconData icon, String text) {

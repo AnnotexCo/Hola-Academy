@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hola_academy/core/constants/image_manager.dart';
+import 'package:hola_academy/core/constants/api_constants.dart';
 
 class ClassesDialog extends StatelessWidget {
   final String title;
@@ -91,11 +91,12 @@ class ClassesDialog extends StatelessWidget {
                               width: 35.w,
                               height: 35.h,
                               imageUrl:
-                                  "http://109.176.197.232:3100/static-uploads/${item['icon']}",
-                              errorWidget: (context, url, error) => Image.asset(
-                                ImageManager.programImage, // Default image path
-                                width: 35.w,
-                                height: 35.h,
+                                  "${ApiConstants.imagesURLApi}${item['icon']}",
+                              errorWidget: (context, url, error) => Icon(
+                                Icons.broken_image,
+                                size: 35.sp,
+                                color: Colors
+                                    .grey, 
                               ),
                             ),
                             SizedBox(width: 12.w),

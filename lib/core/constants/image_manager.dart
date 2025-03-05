@@ -34,7 +34,6 @@ class ImageManager {
   static const String logOut = 'assets/icons/log-out.svg';
   static const String scanQr = 'assets/icons/scan_qr.svg';
   static const String gender = 'assets/icons/gender.svg';
-  static const String pic = 'assets/images/pic.png';
   static const String personalInformation =
       'assets/icons/personal_information.svg';
   static const String sms = 'assets/icons/sms.svg';
@@ -64,8 +63,6 @@ class ImageManager {
   static const String reminderImageCoach =
       "assets/images/reminderSessionImage.png";
 
-  //Admin Home Screen
-  static const String addBanner = "assets/images/addpaner.png";
 
   // Admin Trainee Screen
   static const String category = 'assets/icons/category.svg';

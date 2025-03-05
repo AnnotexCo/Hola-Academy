@@ -140,8 +140,12 @@ class OnboardingState extends State<Onboarding> {
                                 onTap: () async {
                                   await OnboardingStatusDB
                                       .setOnboardingSeen(); // Mark onboarding as seen
-                                  Navigator.pushNamed(
-                                      context, Routes.loginScreen);
+                                  if (context.mounted) {
+                                    Navigator.pushNamed(
+                                      context,
+                                      Routes.loginScreen,
+                                    );
+                                  }
                                 },
                                 child: Text(
                                   "Skip",
@@ -168,8 +172,12 @@ class OnboardingState extends State<Onboarding> {
                                   onPressed: () async {
                                     await OnboardingStatusDB
                                         .setOnboardingSeen(); // Mark onboarding as seen
-                                    Navigator.pushReplacementNamed(
-                                        context, Routes.registerScreen);
+                                    if (context.mounted) {
+                                      Navigator.pushReplacementNamed(
+                                        context,
+                                        Routes.registerScreen,
+                                      );
+                                    }
                                   },
                                 ),
                               ),

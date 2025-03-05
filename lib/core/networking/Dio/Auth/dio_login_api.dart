@@ -11,7 +11,6 @@ class DioLoginApi {
   Future<bool> dioLogin(
       {required LoginModel loginModel, required String fcmtoken}) async {
     try {
-      print('fcmtokenlogin: $fcmtoken');
       final response = await _dio.post(
         '${ApiConstants.baseUrl}${ApiConstants.loginApi}',
         data: {
@@ -45,7 +44,6 @@ class DioLoginApi {
 
   Future<bool> dioGoogleLogin({required String accessToken, required String fcmtoken}) async {
     try {
-      print('fcmtokengoogle: $fcmtoken');
       final response = await _dio.post(
         '${ApiConstants.baseUrl}${ApiConstants.googleLoginApi}',
         data: {
@@ -81,11 +79,10 @@ class DioLoginApi {
 
    Future<bool> dioLogout({required String fcmtoken}) async {
     try {
-      print('fcmtokenlogout: $fcmtoken');
-      final response = await _dio.post(
+      final response = await _dio.patch(
         '${ApiConstants.baseUrl}${ApiConstants.logoutApi}',
         data: {
-          "fcmToken": fcmtoken, // إرسال FCM Token لحذفه
+          "fcmToken": fcmtoken,
         },
         options: Options(
           headers: {

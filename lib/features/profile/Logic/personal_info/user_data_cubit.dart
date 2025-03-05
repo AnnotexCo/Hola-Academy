@@ -52,7 +52,6 @@ class UserDataCubit extends Cubit<UserDataState> {
 
   Future<void> updateMyData(UpdateUserModel updateUserModel) async {
     try {
-      print('profileImage: $profileImage');
       if (!isClosed) emit(UpdateUserDataLoading());
       final isUpdated =
           await userRepo.updateMyData(updateUserModel: updateUserModel);
@@ -61,8 +60,7 @@ class UserDataCubit extends Cubit<UserDataState> {
         await getMyData();
         profileImage = null;
       } else {
-        if (!isClosed)
-          emit(UserDataFailure(message: 'Failed to update user data'));
+        if (!isClosed)emit(UserDataFailure(message: 'Failed to update user data'));
       }
     } catch (e) {
       if (!isClosed) emit(UpdateUserDataFailure(message: e.toString()));
@@ -106,7 +104,6 @@ class UserDataCubit extends Cubit<UserDataState> {
             (user.phoneNumber?.toLowerCase().contains(searchQuery) ?? false);
       }).toList();
     }
-    print(filteredUsers);
 
     if (!isClosed) emit(FilterUsersSuccess(filteredUsers: filteredUsers));
   }
@@ -125,8 +122,6 @@ class UserDataCubit extends Cubit<UserDataState> {
     try {
       if (!isClosed) emit(UserDataLoading());
       final users = await userRepo.fetchTraineesByID(classID);
-      print("Hello user coming $users");
-      print(users);
       if (!isClosed) emit(FetchAllUsersSuccess(users: users));
     } catch (e) {
       if (!isClosed) emit(FetchAllUsersFailure(message: e.toString()));

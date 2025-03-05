@@ -18,9 +18,7 @@ import 'core/local_notification_service/local_notification_service.dart';
 
 ///  **Handle background notifications (when the app is completely closed)**
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print(' Background Notification Received: ${message.messageId}');
-  print(' Title: ${message.notification?.title}');
-  print(' Body: ${message.notification?.body}');
+
 }
 
 void main() async {
@@ -46,13 +44,11 @@ void main() async {
     badge: true,
     sound: true,
   );
-  print(' Notification permission status: ${settings.authorizationStatus}');
+  // print(' Notification permission status: ${settings.authorizationStatus}');
 
   //  Handle notification when the app is in the foreground
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    print(' Foreground Notification Received!');
-    print(' Title: ${message.notification?.title}');
-    print(' Body: ${message.notification?.body}');
+
 
     // **Show the notification using LocalNotificationService**
     LocalNotificationService().showNotification(
@@ -63,9 +59,6 @@ void main() async {
 
   //  Handle notification click when app is in the background or terminated
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    print("🚀 Notification Clicked! Navigating to a screen...");
-    print(" Title: ${message.notification?.title}");
-    print(" Body: ${message.notification?.body}");
     
     // TODO: Navigate to the correct screen (if needed)
   });
