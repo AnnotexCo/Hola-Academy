@@ -33,8 +33,6 @@ class _TransactionCardState extends State<TransactionCard> {
     return Padding(
       padding: EdgeInsets.only(bottom: 12.h),
       child: Stack(
-        //alignment: AlignmentDirectional.bottomCenter,
-        //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (_isHovered && widget.status == "CANCELLED")
             Padding(

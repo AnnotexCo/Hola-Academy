@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
+import 'package:hola_academy/core/constants/image_manager.dart';
 
 import '../../../../core/Routing/routes.dart';
 
@@ -75,7 +76,7 @@ class EvaluationAppointmentCard extends StatelessWidget {
                   child: Image.asset(
                     height: 110.h,
                     width: 137.w,
-                    'assets/images/evaluationimg.png',
+                    ImageManager.evaluation,
                     fit: BoxFit.cover,
                   ),
                 ),

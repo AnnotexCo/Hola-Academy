@@ -116,7 +116,7 @@ class CustomListView extends StatelessWidget {
                       ),
                       GeneralTextFormField(
                         height: 45.h,
-                        hint: 'Male',
+                        hint: trainee.gender ?? '',
                         label: AppString.gender,
                         labelStyle: TextStyle(
                           fontSize: 18.sp,

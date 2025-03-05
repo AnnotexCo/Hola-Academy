@@ -15,7 +15,6 @@ class ImageManager {
   static const String roundDoubleAltArrowDown =
       "assets/icons/round double alt arrow down.svg";
   static const String password = "assets/icons/mdi_password-outline.svg";
-  static const String eye = "assets/icons/eye.svg";
   static const String checkBox = "assets/icons/rectangle.svg";
   static const String ellipse = "assets/icons/ellipse.svg";
   static const String hola = "assets/images/hola.png";
@@ -35,7 +34,6 @@ class ImageManager {
   static const String logOut = 'assets/icons/log-out.svg';
   static const String scanQr = 'assets/icons/scan_qr.svg';
   static const String gender = 'assets/icons/gender.svg';
-  static const String pic = 'assets/images/pic.png';
   static const String personalInformation =
       'assets/icons/personal_information.svg';
   static const String sms = 'assets/icons/sms.svg';
@@ -65,21 +63,11 @@ class ImageManager {
   static const String reminderImageCoach =
       "assets/images/reminderSessionImage.png";
 
-  static const String evaluateBackgroundVector =
-      "assets/icons/evaluatevector1.svg";
-  //Admin Home Screen
-  static const String addBanner = "assets/images/ads-baner.png";
 
   // Admin Trainee Screen
   static const String category = 'assets/icons/category.svg';
 
 //Coach Home Screen
-  static const String privateclass = 'assets/icons/private_class_icon.svg';
-  static const String semiprivateclass =
-      'assets/icons/semiprivate_class_icon.svg';
-  static const String kidsclass = 'assets/icons/kids_icon.svg';
-  static const String aquaclass = 'assets/icons/aqua_class_icon.svg';
-
   static const String scanQricon = "assets/icons/scan.svg";
   static const String transactionIcon = "assets/icons/transactionIcon.svg";
 
@@ -88,4 +76,7 @@ class ImageManager {
   static const String confirmedAttendance = "assets/images/confirmed_attendance.svg";
 
   static const String notFound = "assets/images/not_found.svg";
+
+  static const String evaluation = "assets/images/evaluationimg.png";
+
 }

@@ -29,7 +29,6 @@ class DioTranscations {
       throw Exception("Failed to load transcations");
     } catch (error) {
       if (error is DioException && error.response != null) {}
-      //throw error.toString();
       final errorMessage = ApiErrorHandler.handle(error);
       throw errorMessage;
     }
@@ -84,8 +83,6 @@ class DioTranscations {
     } catch (error) {
       if (error is DioException && error.response != null) {}
       throw ApiErrorHandler.handle(error).message.toString();
-      //final errorMessage = ApiErrorHandler.handle(error);
-      //throw errorMessage;
     }
   }
 }

@@ -23,9 +23,6 @@ class UserDataCubit extends Cubit<UserDataState> {
     if (pickedFile != null) {
       profileImage = File(pickedFile.path);
       emit(PickImageSuccess(profileImage: profileImage!));
-      //getMyData();
-      print(
-          'Picked file path: $profileImage'); // Print the picked file path (pickedFile.path);
     }
   }
 
@@ -37,8 +34,6 @@ class UserDataCubit extends Cubit<UserDataState> {
 
     if (pickedFile != null) {
       profileImage = File(pickedFile.path);
-      //emit(PickImageSuccess(profileImage: profileImage!));
-      //getMyData();
     }
   }
 
@@ -49,8 +44,6 @@ class UserDataCubit extends Cubit<UserDataState> {
       if (!isClosed) emit(UserDataLoading());
       final user = await userRepo.getMyData();
       userModel = user;
-      // await SaveTokenDB.saveNameAndImage(
-      //     user.name, user.profileImage?.path ?? '');
       if (!isClosed) emit(UserDataSuccess(userModel: user));
     } catch (e) {
       if (!isClosed) emit(UserDataFailure(message: e.toString()));
@@ -59,19 +52,15 @@ class UserDataCubit extends Cubit<UserDataState> {
 
   Future<void> updateMyData(UpdateUserModel updateUserModel) async {
     try {
-      print('profileImage: $profileImage');
       if (!isClosed) emit(UpdateUserDataLoading());
       final isUpdated =
           await userRepo.updateMyData(updateUserModel: updateUserModel);
       if (isUpdated) {
         if (!isClosed) emit(UpdateUserDataSuccess());
-        print(
-            'Updated picture path: ${updateUserModel.picture}'); // Print the updated picture path (updateUserModel.picture);
-        getMyData();
+        await getMyData();
         profileImage = null;
       } else {
-        if (!isClosed)
-          emit(UserDataFailure(message: 'Failed to update user data'));
+        if (!isClosed)emit(UserDataFailure(message: 'Failed to update user data'));
       }
     } catch (e) {
       if (!isClosed) emit(UpdateUserDataFailure(message: e.toString()));
@@ -105,7 +94,7 @@ class UserDataCubit extends Cubit<UserDataState> {
 
   // Optimized Search Function
   void searchUsers(String query, String role) {
-    List<User> source = role=="COACH"?coaches:trainees;
+    List<User> source = role == "COACH" ? coaches : trainees;
     if (query.trim().isEmpty) {
       filteredUsers = List.from(source);
     } else {
@@ -115,25 +104,9 @@ class UserDataCubit extends Cubit<UserDataState> {
             (user.phoneNumber?.toLowerCase().contains(searchQuery) ?? false);
       }).toList();
     }
-    print(filteredUsers);
 
     if (!isClosed) emit(FilterUsersSuccess(filteredUsers: filteredUsers));
   }
-
-  //Search Function
-  /*void searchUsers(String query) {
-    if (query.isEmpty) {
-      filteredUsers = users;
-    } else {
-      filteredUsers = users.where((user) {
-        final name = user.name?.toLowerCase();
-        final phone = user.phoneNumber?.toLowerCase();
-        final searchQuery = query.toLowerCase();
-        return name!.contains(searchQuery) || phone!.contains(searchQuery);
-      }).toList();
-    }
-    emit(FilterUsersSuccess(filteredUsers: filteredUsers));
-  }*/
 
   Future<void> fetchUsersByRole({String? role}) async {
     try {
@@ -149,8 +122,6 @@ class UserDataCubit extends Cubit<UserDataState> {
     try {
       if (!isClosed) emit(UserDataLoading());
       final users = await userRepo.fetchTraineesByID(classID);
-      print("Hello user coming $users");
-      print(users);
       if (!isClosed) emit(FetchAllUsersSuccess(users: users));
     } catch (e) {
       if (!isClosed) emit(FetchAllUsersFailure(message: e.toString()));

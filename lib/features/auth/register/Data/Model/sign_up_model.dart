@@ -1,4 +1,4 @@
-class SignUpModel{
+class SignUpModel {
   final String name;
   final String? parentName;
   final String email;
@@ -32,28 +32,14 @@ class SignUpModel{
     );
   }
 
-Map<String, dynamic> toMap() => {
-  'name': name,
-  'parentName': parentName,
-  'email': email,
-  'dob': dob,
-  'gender' : gender,
-  'phoneNumber': phoneNumber,
-  'parentWhatsappNumber': parentWhatsappNumber,
-  'password': password,
-};
-
+  Map<String, dynamic> toMap() => {
+        'name': name,
+        'parentName': parentName,
+        'email': email,
+        'dob': dob,
+        'gender': gender,
+        'phoneNumber': phoneNumber,
+        'parentWhatsappNumber': parentWhatsappNumber,
+        'password': password,
+      };
 }
-/*
-{
-  "name": "Mustafa",
-  "parentName": "Elsharawy",
-  "email": "example@gmail.com",
-  "dob": "1999-09-09",
-  "gender": "MALE",
-  "parentWhatsappNumber": "+201234567890",
-  "password": "MeMo@1",
-  "phoneNumber":    "+201234567890",
-  }
-  */
-  

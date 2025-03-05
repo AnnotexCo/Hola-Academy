@@ -170,29 +170,6 @@ class _RequestsScreenState extends State<RequestsScreen> {
                 color: Color(0xFFFEF5E9),
                 image:
                     "${ApiConstants.imagesURLApi}${request.user?.profileImage?.path}"),
-
-            /*Stack(
-              alignment: Alignment.center,
-              children: [
-                CustomPaint(
-                    size: Size(56.w, 56.h),
-                    painter: PentagonPainter(Color(0xFFFEF5E9))),
-                ClipOval(
-                  child: SizedBox(
-                    width: 36.w,
-                    height: 36.h,
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          "${ApiConstants.imagesURLApi}${request.user?.profileImage?.path}",
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => _buildShimmerCircle(36.w),
-                      errorWidget: (context, url, error) => Icon(Icons.error,
-                          size: 36.w, color: ColorManager.redMagmaColor),
-                    ),
-                  ),
-                ),
-              ],
-            ),*/
             const SizedBox(width: 12),
             Expanded(
               child: Column(

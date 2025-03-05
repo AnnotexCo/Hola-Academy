@@ -6,7 +6,8 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 class TransactionTapBar extends StatelessWidget {
   final TabController tabController;
   final void Function(int)? onTap;
-  const TransactionTapBar({super.key, required this.tabController, required this.onTap});
+  const TransactionTapBar(
+      {super.key, required this.tabController, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +41,6 @@ class TransactionTapBar extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
             indicator: BoxDecoration(
-              /*boxShadow: [
-                BoxShadow(
-                  blurStyle: BlurStyle.inner,
-                  color: Colors.black.withValues(alpha: 0.1), // Shadow color
-                  spreadRadius: 0, // How wide the shadow spreads
-                  blurRadius: 4, // How soft the shadow is
-                  offset: Offset(0, 4), // The shadow's offset
-                ),
-              ],*/
               borderRadius: BorderRadius.circular(50.r),
               color: ColorManager.primaryOrangeColor,
             ),

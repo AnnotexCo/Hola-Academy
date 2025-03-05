@@ -17,10 +17,10 @@ class CategoryFilterButtons extends StatefulWidget {
   });
 
   @override
-  _CategoryFilterButtonsState createState() => _CategoryFilterButtonsState();
+  CategoryFilterButtonsState createState() => CategoryFilterButtonsState();
 }
 
-class _CategoryFilterButtonsState extends State<CategoryFilterButtons> {
+class CategoryFilterButtonsState extends State<CategoryFilterButtons> {
   int? selectedCategoryId;
 
   @override

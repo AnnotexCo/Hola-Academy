@@ -36,16 +36,6 @@ class AdminTransactionCard extends StatelessWidget {
             height: 24.h,
             width: 24.w,
           ),
-          /*SizedBox(
-            height: 56.h,
-            width: 56.w,
-            child: AdminClipOval(
-              color: income
-                  ? ColorManager.linearGradient1
-                  : ColorManager.softPinkColor,
-              image: ImageManager.pic,
-            ),
-          ),*/
           title: Text(
             title,
             style: TextStyle(

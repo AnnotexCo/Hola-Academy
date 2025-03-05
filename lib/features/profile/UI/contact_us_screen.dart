@@ -9,6 +9,8 @@ import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
 import 'package:hola_academy/features/profile/UI/widgets/social_media_card.dart';
 
+import '../../auth/login/Logic/login_cubit.dart';
+
 class ContactUsScreen extends StatefulWidget {
   const ContactUsScreen({super.key});
 
@@ -36,7 +38,10 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
               create: (context) => getIT<UserDataCubit>()..getMyData(),
               child: Stack(alignment: Alignment.topCenter, children: [
                 CustomProfileBackgroung(),
-                CustomProfileAppBar(qrCode: true, isLayout: false),
+                BlocProvider(
+                  create: (context) =>  getIT<LoginCubit>(),
+                  child: CustomProfileAppBar(qrCode: true, isLayout: false),
+                ),
               ]),
             ),
             SizedBox(

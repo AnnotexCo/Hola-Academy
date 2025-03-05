@@ -21,8 +21,6 @@ class TransactionsScreen extends StatefulWidget {
 }
 
 class _TransactionsScreenState extends State<TransactionsScreen> {
-  // final bool coach = true;
-  // ------------------------------------
   String? _userRole;
 
   @override
@@ -47,7 +45,6 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
         CustomAppBar(title: AppString.viewAllTransaction, isBack: true),
         BlocConsumer<TransCubit, TransState>(
           listener: (context, state) {
-            // TODO: implement listener
           },
           builder: (context, state) {
             return Expanded(
@@ -192,81 +189,4 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
       ]),
     );
   }
-
-  // Sample transaction data
-  final List<Map<String, dynamic>> transactions1 = [
-    {
-      'title': 'Swimming Basics',
-      'dateTime': '01 Jan 2025, 10:00 AM',
-      'price': '50.00',
-      'status': 'Pending',
-      'icon': Icons.pool,
-      'statusColor': Colors.orange,
-    },
-    {
-      'title': 'Advanced Training',
-      'dateTime': '02 Jan 2025, 02:00 PM',
-      'price': '70.00',
-      'status': 'Confirmed',
-      'icon': Icons.sports,
-      'statusColor': Colors.green,
-    },
-    {
-      'title': 'Kids Beginner Class',
-      'dateTime': '03 Jan 2025, 04:00 PM',
-      'price': '40.00',
-      'status': 'Canceled',
-      'icon': Icons.child_care,
-      'statusColor': Colors.red,
-    },
-    {
-      'title': 'Swimming Basics',
-      'dateTime': '01 Jan 2025, 10:00 AM',
-      'price': '50.00',
-      'status': 'Pending',
-      'icon': Icons.pool,
-      'statusColor': Colors.orange,
-    },
-    {
-      'title': 'Advanced Training',
-      'dateTime': '02 Jan 2025, 02:00 PM',
-      'price': '70.00',
-      'status': 'Confirmed',
-      'icon': Icons.sports,
-      'statusColor': Colors.green,
-    },
-    {
-      'title': 'Kids Beginner Class',
-      'dateTime': '03 Jan 2025, 04:00 PM',
-      'price': '40.00',
-      'status': 'Canceled',
-      'icon': Icons.child_care,
-      'statusColor': Colors.red,
-    },
-    {
-      'title': 'Swimming Basics',
-      'dateTime': '01 Jan 2025, 10:00 AM',
-      'price': '50.00',
-      'status': 'Pending',
-      'icon': Icons.pool,
-      'statusColor': Colors.orange,
-    },
-    {
-      'title': 'Advanced Training',
-      'dateTime': '02 Jan 2025, 02:00 PM',
-      'price': '70.00',
-      'status': 'Confirmed',
-      'icon': Icons.sports,
-      'statusColor': Colors.green,
-    },
-    {
-      'title': 'Kids Beginner Class',
-      'dateTime': '03 Jan 2025, 04:00 PM',
-      'price': '40.00',
-      'status': 'Canceled',
-      'icon': Icons.child_care,
-      'statusColor': Colors.red,
-    },
-    // Add more transactions here
-  ];
 }
