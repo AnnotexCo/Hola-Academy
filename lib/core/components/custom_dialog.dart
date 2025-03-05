@@ -135,8 +135,6 @@ class CustomDialog extends StatelessWidget {
 
   /// Default Profile Image in case of error
   Widget _defaultProfileImage() {
-    print('error');
-    print(imageUrl);
     return Container(
       width: 60.r,
       height: 60.r,

@@ -17,7 +17,6 @@ class LoginRepo {
   }
 
   Future<bool> doGoogleLogin({required String accessToken, required String fcmtoken}) async {
-    // print('Access Tooken: $accessToken');
     return await dioLoginApi.dioGoogleLogin(accessToken: accessToken, fcmtoken: fcmtoken);
   }
 

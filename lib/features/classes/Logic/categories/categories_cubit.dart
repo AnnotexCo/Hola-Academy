@@ -13,11 +13,8 @@ class CategoriesCubit extends Cubit<CategoriesState> {
   // Fetch all categories
   void fetchAllCategories() async {
     try {
-      // print('fetching categories');
      if (!isClosed) emit(CategoriesLoading());
       final categories = await categoriesRepo.getAllCategories();
-      // print('categories fetched');
-      // print(categories);
       if (!isClosed) emit(CategoriesSuccess(categories));
     } catch (e) {
       if (!isClosed) emit(CategoriesError(e.toString()));
