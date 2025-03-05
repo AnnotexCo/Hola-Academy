@@ -9,13 +9,13 @@ class DioLoginApi {
   DioLoginApi({required Dio dio}) : _dio = dio;
 
   Future<bool> dioLogin(
-      {required LoginModel loginModel, required String fcmtoken}) async {
+      {required LoginModel loginModel, required String fcmToken}) async {
     try {
       final response = await _dio.post(
         '${ApiConstants.baseUrl}${ApiConstants.loginApi}',
         data: {
           ...loginModel.toMap(),
-          "fcmToken": fcmtoken,
+          "fcmToken": fcmToken,
         },
         options: Options(
           headers: {
@@ -23,7 +23,6 @@ class DioLoginApi {
           },
         ),
       );
-
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {
@@ -42,14 +41,12 @@ class DioLoginApi {
     }
   }
 
-  Future<bool> dioGoogleLogin({required String accessToken, required String fcmtoken}) async {
+  Future<bool> dioGoogleLogin(
+      {required String accessToken, required String fcmToken}) async {
     try {
       final response = await _dio.post(
         '${ApiConstants.baseUrl}${ApiConstants.googleLoginApi}',
-        data: {
-          "accessToken": accessToken,
-          "fcmToken": fcmtoken
-        },
+        data: {"accessToken": accessToken, "fcmToken": fcmToken},
         options: Options(
           headers: {
             'Content-Type': 'application/json',
@@ -77,12 +74,12 @@ class DioLoginApi {
     }
   }
 
-   Future<bool> dioLogout({required String fcmtoken}) async {
+  Future<bool> dioLogout({required String fcmToken}) async {
     try {
       final response = await _dio.patch(
         '${ApiConstants.baseUrl}${ApiConstants.logoutApi}',
         data: {
-          "fcmToken": fcmtoken,
+          "fcmToken": fcmToken,
         },
         options: Options(
           headers: {

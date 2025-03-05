@@ -22,10 +22,10 @@ class TransactionCard extends StatefulWidget {
   });
 
   @override
-  _TransactionCardState createState() => _TransactionCardState();
+  TransactionCardState createState() => TransactionCardState();
 }
 
-class _TransactionCardState extends State<TransactionCard> {
+class TransactionCardState extends State<TransactionCard> {
   bool _isHovered = false;
 
   @override
@@ -122,7 +122,7 @@ class _TransactionCardState extends State<TransactionCard> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: statusColors[widget.status]?.withOpacity(0.2),
+                        color: statusColors[widget.status]?.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(

@@ -61,7 +61,6 @@ class DioSkills {
 
         // Assuming that the evaluation data is inside the nested structure like 'class.level.Skill' or similar
         List<Evaluation> evaluations = Evaluation.fromJsonList(data);
-        print(evaluations);
         return evaluations;
       }
       throw Exception("Failed to load evaluations");

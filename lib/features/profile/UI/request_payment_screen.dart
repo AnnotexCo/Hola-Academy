@@ -44,7 +44,6 @@ class _RequestPaymentScreenState extends State<RequestPaymentScreen> {
                 key: _formKey,
                 child: BlocConsumer<TransCubit, TransState>(
                   listener: (context, state) {
-                    // TODO: implement listener
                     if (state is TransactionsFailure) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
