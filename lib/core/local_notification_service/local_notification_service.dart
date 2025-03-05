@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class LocalNotificationService {
@@ -31,6 +32,8 @@ class LocalNotificationService {
         channelDescription: 'Daily Notification Channel',
         importance: Importance.max,
         priority: Priority.high,
+        color: Colors.white,
+        icon: '@mipmap/ic_launcher',
       ),
       iOS: DarwinNotificationDetails(),
     );

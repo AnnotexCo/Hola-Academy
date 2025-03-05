@@ -26,6 +26,13 @@ package="com.example.hola_academy">
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!-- prevent Rotation -->
+        <activity
+            android:exported="true"
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
@@ -35,6 +42,8 @@ package="com.example.hola_academy">
             <meta-data
             android:name="com.google.android.gms.auth.api.signin.v2"
             android:value="true" />
+
+            
     </application>
     
      <!-- Permissions for camera and external storage access -->

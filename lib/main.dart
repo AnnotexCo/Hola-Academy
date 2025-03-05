@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -23,6 +24,12 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+// Lock the app to portrait mode
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
 );
@@ -58,10 +65,22 @@ void main() async {
   });
 
   //  Handle notification click when app is in the background or terminated
-  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    
-    // TODO: Navigate to the correct screen (if needed)
-  });
+FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+  // Get the current navigator state
+  final navigator = MyApp.navigatorKey.currentState;
+
+  if (navigator != null) {
+    // Check if message.data contains the screen key
+    if (message.data.containsKey('screen')) {
+      navigator.pushNamed(message.data['screen']!);
+    } else {
+      // Default to navigating to Routes.notificationsScreen
+      navigator.pushNamed(Routes.notificationsScreen);
+    }
+  }
+});
+
+
   runApp(
     MultiBlocProvider(
       providers: [
