@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:hola_academy/core/constants/api_constants.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CustomDialog extends StatelessWidget {
@@ -47,34 +46,38 @@ class CustomDialog extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     // Centered User Image and Title
-                    if (imageUrl != null)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ClipOval(
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "${ApiConstants.imagesURLApi}${imageUrl!}",
-                              width: 60.r,
-                              height: 60.r,
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) => _shimmerEffect(),
-                              errorWidget: (context, url, error) =>
-                                  _defaultProfileImage(),
-                            ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ClipOval(
+                          child: CachedNetworkImage(
+                            imageUrl: imageUrl!,
+                            width: 50.w,
+                            height: 50.h,
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) => _shimmerEffect(),
+                            errorWidget: (context, url, error) =>
+                                _defaultProfileImage(),
                           ),
-                          SizedBox(width: 19.w),
-                          Text(
+                        ),
+                        SizedBox(width: 19.w),
+                        SizedBox(
+                          width: 200.w,
+                          child: Text(
                             title,
                             style: TextStyle(
-                              fontSize: 24.sp,
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.w600,
                               color: const Color(0xFFF09C1F),
                             ),
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.start,
+                            overflow: TextOverflow
+                                .ellipsis, // Truncate with dots if overflow
+                            maxLines: 1, //
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    ),
                     SizedBox(height: 16.h),
 
                     // Components
@@ -132,6 +135,8 @@ class CustomDialog extends StatelessWidget {
 
   /// Default Profile Image in case of error
   Widget _defaultProfileImage() {
+    print('error');
+    print(imageUrl);
     return Container(
       width: 60.r,
       height: 60.r,
