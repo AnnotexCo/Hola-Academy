@@ -1,4 +1,5 @@
 import 'package:hola_academy/core/networking/Dio/Skills/dio_skills.dart';
+import 'package:hola_academy/features/classes/Data/Model/evaluations_model.dart';
 import 'package:hola_academy/features/classes/Data/Model/skills_model.dart';
 
 class SkillsRepo {
@@ -13,5 +14,9 @@ class SkillsRepo {
   void evaluateSkill(
       int lessonID, int skillId, int score, bool passed, String notes) async {
     await skills.evaluateSkill(lessonID, skillId, score, passed, notes);
+  }
+
+  Future<List<Evaluation>> getEvaluationsbyLevelID(int lessonID) async {
+    return await skills.getEvaluationsbyLevelID(lessonID);
   }
 }

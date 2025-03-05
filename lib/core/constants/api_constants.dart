@@ -48,10 +48,10 @@ class ApiConstants {
   static const String getallLessonsApi = 'api/lessons';
 
   // SKILLS
-    static const String evaluateSkillsbyLessonsID = 'api/skill/lesson/evaluate';
+  static const String evaluateSkillsbyLessonsID = 'api/skill/lesson/evaluate';
 
   static const String getSkillsbyLessonsID = 'api/skill/lesson/';
-
+  static const String getEvaluationsbyLessonID = 'api/skill/level/';
   // Attendance
-  static const String  attendanceMarkApi = 'api/attendance/mark/';
+  static const String attendanceMarkApi = 'api/attendance/mark/';
 }

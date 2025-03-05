@@ -209,7 +209,12 @@ class AppRouter {
 
       // analytics
       case Routes.analyticsSkillsScreen:
-        return MaterialPageRoute(builder: (_) => const AnalyticsSkillsScreen());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) =>
+                      getIT<SkillsCubit>()..getEvaluationsbyLevelID(1),
+                  child: const AnalyticsSkillsScreen(),
+                ));
 
       // not found
       case Routes.notFoundScreen:

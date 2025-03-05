@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/features/classes/Logic/skills/cubit/skills_cubit.dart';
+import 'package:hola_academy/features/not_found/not_found_screen.dart';
 
 import '../../../core/components/custom_app_bar.dart';
 import 'widgets/level_button.dart';
@@ -11,49 +14,59 @@ class AnalyticsSkillsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomAppBar(title: 'Analytics'),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
-            child: Column(
-              children: [
-                LevelSelector(),
-                SizedBox(height: 20.h),
-                PerformanceCard(
-                  title: 'Freestyle Stroke',
-                  icon: Icons.pool,
-                  score: '0/10',
-                ),
-                SizedBox(height: 20.h),
-                PerformanceCard(
-                  title: 'Time Management',
-                  icon: Icons.timer,
-                  score: '0/10',
-                ),
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomAppBar(title: 'Analytics'),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+              child: Column(
+                children: [
+                  LevelSelector(
+                    onLevelSelected: (_) {
+                      context.read<SkillsCubit>().getEvaluationsbyLevelID(_);
+                    },
+                  ),
+                  SizedBox(height: 20.h),
+                  BlocBuilder<SkillsCubit, SkillsState>(
+                    builder: (context, state) {
+                      if (state is SkillsLoading) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (state is SkillsError) {
+                        // Show error message if fetching fails
+                        return Text('Error: ${state.error}');
+                      } else if (state is EvaluationsLoaded) {
+                        if (state.evaluations.isNotEmpty &&
+                            state.evaluations[0].lessonEvaluations.isNotEmpty) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: state.evaluations.length,
+                            itemBuilder: (context, builder) {
+                              final evaluation = state.evaluations[builder];
+                              return PerformanceCard(
+                                title: evaluation.name,
+                                icon: Icons.timer,
+                                score: evaluation
+                                    .lessonEvaluations[builder].score
+                                    .toString(),
+                              );
+                            },
+                          );
+                        }
+                        return NotFoundScreen();
+                      } else {
+                        return NotFoundScreen();
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    );
-  }
-}
-
-class LevelSelector extends StatelessWidget {
-  const LevelSelector({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      spacing: 8.w,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        buildLevelButton('Level A', true),
-        buildLevelButton('Level B', false),
-        buildLevelButton('Level D', true),
-      ],
     );
   }
 }

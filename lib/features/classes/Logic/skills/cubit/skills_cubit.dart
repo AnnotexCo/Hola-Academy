@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hola_academy/features/classes/Data/Model/evaluations_model.dart';
 import 'package:hola_academy/features/classes/Data/Model/skills_model.dart';
 import 'package:hola_academy/features/classes/Data/Repo/skills_repo.dart';
 
@@ -25,11 +26,21 @@ class SkillsCubit extends Cubit<SkillsState> {
     int score,
     bool passed,
     String notes,
-  ) async{
+  ) async {
     emit(SkillsLoading());
     try {
-      skillsRepo.evaluateSkill( lessonID, skillId, score, passed, notes);
+      skillsRepo.evaluateSkill(lessonID, skillId, score, passed, notes);
       emit(SkillSucessfulyEvaluated());
+    } catch (e) {
+      emit(SkillsError(error: e.toString()));
+    }
+  }
+
+  Future<void> getEvaluationsbyLevelID(int lessonID) async {
+    emit(SkillsLoading());
+    try {
+      final evaluations = await skillsRepo.getEvaluationsbyLevelID(lessonID);
+      emit(EvaluationsLoaded(evaluations: evaluations));
     } catch (e) {
       emit(SkillsError(error: e.toString()));
     }

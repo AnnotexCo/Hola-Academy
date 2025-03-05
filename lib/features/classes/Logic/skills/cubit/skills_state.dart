@@ -15,6 +15,11 @@ final class SkillsLoaded extends SkillsState {
   final List<Skill> skills;
   const SkillsLoaded({required this.skills});
 }
+
+final class EvaluationsLoaded extends SkillsState {
+  final List<Evaluation> evaluations;
+  const EvaluationsLoaded({required this.evaluations});
+}
 final class SkillSucessfulyEvaluated extends SkillsState {
   const SkillSucessfulyEvaluated();
 }

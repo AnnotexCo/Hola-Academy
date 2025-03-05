@@ -16,7 +16,7 @@ class _TapBarState extends State<TapBar> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -42,8 +42,9 @@ class _TapBarState extends State<TapBar> with SingleTickerProviderStateMixin {
         unselectedLabelColor: ColorManager.backgroundColor,
         controller: _tabController,
         tabs: const [
-          Tab(text: "Educational"),
-          Tab(text: "Training"),
+          Tab(text: "A"),
+          Tab(text: "B"),
+          Tab(text: "C"),
         ],
         labelStyle: TextStyle(
             fontSize: 14.sp,
