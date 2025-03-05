@@ -7,6 +7,7 @@ import 'package:hola_academy/core/components/general_text_form_field.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
+import 'package:hola_academy/features/auth/login/Logic/login_cubit.dart';
 import 'package:hola_academy/features/not_found/not_found_screen.dart';
 import 'package:hola_academy/features/profile/Data/Model/update_user_model.dart';
 import 'package:hola_academy/features/profile/Data/Model/user_model.dart';
@@ -14,6 +15,7 @@ import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubi
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
 import 'package:intl/intl.dart';
+import '../../../core/dependency_injection/dependency.dart';
 import '../../../core/local_db/save_token.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
@@ -111,9 +113,12 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                         CustomProfileBackgroung(
                           isEdit: true,
                         ),
-                        CustomProfileAppBar(
-                          qrCode: true,
-                          isLayout: _userRole == AppString.admin,
+                        BlocProvider(
+                          create: (context) =>  getIT<LoginCubit>(),
+                          child: CustomProfileAppBar(
+                            qrCode: true,
+                            isLayout: _userRole == AppString.admin,
+                          ),
                         ),
                       ]),
                       Padding(

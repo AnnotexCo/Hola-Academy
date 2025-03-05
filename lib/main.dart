@@ -44,7 +44,7 @@ void main() async {
     badge: true,
     sound: true,
   );
-  // print(' Notification permission status: ${settings.authorizationStatus}');
+  print(' Notification permission status: ${settings.authorizationStatus}');
 
   //  Handle notification when the app is in the foreground
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
