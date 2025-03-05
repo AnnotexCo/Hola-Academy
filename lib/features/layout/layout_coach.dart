@@ -8,6 +8,7 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/core/dependency_injection/dependency.dart';
 import 'package:hola_academy/features/classes/Logic/classes/cubit/classes_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/lessons/cubit/lessons_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/levels/cubit/levels_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/programms/programs_cubit.dart';
 import 'package:hola_academy/features/home/UI/home_screen_coach.dart';
@@ -43,7 +44,10 @@ class _LayoutCoachScreenState extends State<LayoutCoachScreen> {
       ],
       child: HomeScreenCoach(),
     ),
-    ScheduleEvaluationScreen(),
+    BlocProvider(
+      create: (context) => getIT<LessonsCubit>(),
+      child: ScheduleEvaluationScreen(),
+    ),
     BlocProvider(
       create: (context) => getIT<NotificationsCubit>(),
       child: NotificationsScreen(),
@@ -157,7 +161,8 @@ class _LayoutCoachScreenState extends State<LayoutCoachScreen> {
           items: _navBarItems(),
           selectedItemColor:
               ColorManager.primaryOrangeColor, // Color for selected item
-          unselectedItemColor: ColorManager.disabledColor, // Color for unselected items
+          unselectedItemColor:
+              ColorManager.disabledColor, // Color for unselected items
           showUnselectedLabels: true, // Show labels for unselected items
           type: BottomNavigationBarType
               .fixed, // Fixed layout for consistent display)

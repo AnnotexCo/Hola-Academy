@@ -10,6 +10,17 @@ class LessonsCubit extends Cubit<LessonsState> {
 
   LessonsCubit(this.repo) : super(LessonsInitial());
 
+  Future<void> getLessonsbyDate(String startDate, String endDate) async {
+    emit(LessonsLoading());
+    try {
+      print("startDate: $startDate, endDate: $endDate");
+      final lessons = await repo.getLessonsByDate(startDate, endDate);
+      emit(LessonsSuccess(lessons: lessons));
+    } catch (e) {
+      emit(LessonsError(message: e.toString()));
+    }
+  }
+
   getLessons() async {
     emit(LessonsLoading());
     try {
@@ -35,7 +46,7 @@ class LessonsCubit extends Cubit<LessonsState> {
     try {
       emit(LessonsLoading());
       final lessons = await repo.getNextLessons();
-      
+
       emit(NextLessonsSuccess(lessons: lessons));
     } catch (e) {
       emit(LessonsError(message: e.toString()));

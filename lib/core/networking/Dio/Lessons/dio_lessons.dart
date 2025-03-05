@@ -9,7 +9,34 @@ class DioLessons {
 
   DioLessons({required Dio dio}) : _dio = dio;
 
-  /// Fetch all programs
+//Fetch Lessons by StartDate and end date
+
+  Future<List<LessonModel>> getLessonsByDate(
+      String startDate, String endDate) async {
+    String? token = await SaveTokenDB.getToken();
+
+    try {
+      final response = await _dio.get(
+          "${ApiConstants.baseUrl}${ApiConstants.getLessonsApibyID}",
+          queryParameters: {"startDate": startDate, "endDate": endDate},
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+              'Content-Type': 'application/json',
+            },
+          ));
+
+      if (response.statusCode == 200) {
+        List<dynamic> data = response.data['data'];
+        return data.map((json) => LessonModel.fromMap(json)).toList();
+      }
+      throw Exception("Failed to load programs");
+    } catch (error) {
+      throw ApiErrorHandler.handle(error);
+    }
+  }
+
+  /// Fetch all Lessons by Id's
   Future<List<LessonModel>> getLessonsByID(int traineeID, int classID) async {
     String? token = await SaveTokenDB.getToken();
 
