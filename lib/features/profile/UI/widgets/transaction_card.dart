@@ -85,15 +85,16 @@ class TransactionCardState extends State<TransactionCard> {
               ),
               child: ListTile(
                 leading: SvgPicture.asset(
-                  widget.userCase == "INCOME"?
-                  ImageManager.confirm: ImageManager.expenses,
+                  widget.userCase == "INCOME"
+                      ? ImageManager.confirm
+                      : ImageManager.expenses,
                   height: 24.h,
                   width: 24.w,
                 ),
                 title: Text(
                   widget.title,
                   style: TextStyle(
-                    color: ColorManager.graycolorHeadline,
+                    color: ColorManager.grayColorHeadline,
                     fontWeight: FontWeight.w600,
                     fontSize: 14.sp,
                   ),
@@ -114,7 +115,7 @@ class TransactionCardState extends State<TransactionCard> {
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 14.sp,
-                        color: ColorManager.graycolorHeadline,
+                        color: ColorManager.grayColorHeadline,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -122,7 +123,8 @@ class TransactionCardState extends State<TransactionCard> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: statusColors[widget.status]?.withValues(alpha: 0.2),
+                        color:
+                            statusColors[widget.status]?.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(

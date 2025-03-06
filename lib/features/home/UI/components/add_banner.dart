@@ -7,13 +7,13 @@ import '../../Logic/banner_logic/banner_cubit.dart';
 import '../../Logic/banner_logic/banner_state.dart';
 import '../Loading/banners_loading.dart';
 
-class AddBaner extends StatelessWidget {
-  const AddBaner({super.key});
+class AddBanner extends StatelessWidget {
+  const AddBanner({super.key});
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BannersCubit, BannerState>(builder: (context, state) {
       if (state is BannerLoading) {
-        return buildbannerLoading();
+        return buildBannerLoading();
       } else if (state is AllBannersSuccess) {
         if (state.banners.isEmpty) {
           return _buildPlaceholder(); // Handle empty banner
@@ -29,14 +29,14 @@ class AddBaner extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: imageUrl,
               fit: BoxFit.cover,
-              placeholder: (context, url) => buildbannerLoading(),
-              errorWidget: (context, url, error) =>_buildPlaceholder(),
+              placeholder: (context, url) => buildBannerLoading(),
+              errorWidget: (context, url, error) => _buildPlaceholder(),
             ),
           ),
         );
       } else if (state is SingleBannerSuccess) {
         if (state.banner.image.path.isEmpty) {
-           return _buildPlaceholder(); // Handle empty banner
+          return _buildPlaceholder(); // Handle empty banner
         }
         final String imageUrl =
             '${ApiConstants.imagesURLApi}${state.banner.image.path}';
@@ -48,7 +48,7 @@ class AddBaner extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: imageUrl,
               fit: BoxFit.cover,
-              placeholder: (context, url) => buildbannerLoading(),
+              placeholder: (context, url) => buildBannerLoading(),
               errorWidget: (context, url, error) => _buildPlaceholder(),
             ),
           ),
@@ -56,15 +56,16 @@ class AddBaner extends StatelessWidget {
       } else if (state is BannerError) {
         return Center(child: Text("Error: ${state.message}"));
       }
-      return buildbannerLoading();
+      return buildBannerLoading();
     });
   }
-    Widget _buildPlaceholder() {
+
+  Widget _buildPlaceholder() {
     return Container(
       height: 107.h,
       width: 380.w,
       decoration: BoxDecoration(
-        color: Colors.grey[300], 
+        color: Colors.grey[300],
         borderRadius: BorderRadius.circular(20.r),
       ),
       alignment: Alignment.center,

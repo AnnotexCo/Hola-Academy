@@ -35,10 +35,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: BlocConsumer<AttendanceCubit, AttendanceState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
+      body: BlocBuilder<AttendanceCubit, AttendanceState>(
         builder: (context, state) {
           if (state is AttendanceLoading) {
             return const Center(
@@ -71,7 +68,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
                   style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w600,
-                    color: ColorManager.graycolorHeadline,
+                    color: ColorManager.grayColorHeadline,
                   ),
                 ),
                 SizedBox(height: 100.h),

@@ -16,7 +16,7 @@ import 'package:hola_academy/features/home/UI/home_screen.dart';
 import 'package:hola_academy/features/notifications/UI/notifications_screen.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import '../../core/dependency_injection/dependency.dart';
-import '../classes/Logic/programms/programs_cubit.dart';
+import '../classes/Logic/programs/programs_cubit.dart';
 import '../notifications/Logic/notifications_cubit.dart';
 import '../profile/UI/profile_screen.dart';
 
@@ -76,16 +76,16 @@ class _LayoutScreenState extends State<LayoutScreen> {
   }
 
   void _onItemTapped(int index) {
-    // تحقق مما إذا كانت الصفحة الجديدة مجاورة
+    // Check if the new page is adjacent
     if ((index - _selectedIndex).abs() == 1) {
-      // إذا كانت مجاورة، استخدم الرسوم المتحركة
+     // If adjacent, use animation
       setState(() {
         _selectedIndex = index;
       });
       _pageController.animateToPage(index,
           duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
     } else {
-      // إذا كانت بعيدة، انتقل مباشرة
+     // If far apart, jump directly
       setState(() {
         _selectedIndex = index;
       });
@@ -108,7 +108,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
           ImageManager.home,
           height: 24.h,
           width: 24.w,
-          color: _selectedColor(0),
+          colorFilter: ColorFilter.mode(
+            _selectedColor(0),
+            BlendMode.srcIn,
+          ),
         ),
         label: AppString.home,
       ),
@@ -117,7 +120,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
           ImageManager.classesIcon,
           height: 24.h,
           width: 24.w,
-          color: _selectedColor(1),
+          colorFilter: ColorFilter.mode(
+            _selectedColor(1),
+            BlendMode.srcIn,
+          ),
         ),
         label: AppString.classes,
       ),
@@ -126,7 +132,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
             ImageManager.notification,
             height: 24.h,
             width: 24.w,
-            color: _selectedColor(2),
+            colorFilter: ColorFilter.mode(
+              _selectedColor(2),
+              BlendMode.srcIn,
+            ),
           ),
           label: AppString.notifications),
       BottomNavigationBarItem(
@@ -134,7 +143,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
           ImageManager.profile,
           height: 24.h,
           width: 24.w,
-          color: _selectedColor(3),
+          colorFilter: ColorFilter.mode(
+            _selectedColor(3),
+            BlendMode.srcIn,
+          ),
         ),
         label: AppString.profile,
       ),

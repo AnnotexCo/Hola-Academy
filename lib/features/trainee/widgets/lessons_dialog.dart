@@ -70,7 +70,7 @@ class LessonsDialog extends StatelessWidget {
                           Navigator.of(context).pop();
                         },
                         onTap: () {
-                          skillsCubit.getSkillsbyLessonID(lessons[index].id);
+                          skillsCubit.getSkillsByLessonID(lessons[index].id);
                           Navigator.pop(context);
 
                           showDialog(
@@ -81,7 +81,7 @@ class LessonsDialog extends StatelessWidget {
                                 child: BlocConsumer<SkillsCubit, SkillsState>(
                                   listener: (context, state) {
                                     if (state is SkillsError) {
-                                      print(state.error);
+                                      Text('something went wrong');
                                     }
                                   },
                                   builder: (context, state) {

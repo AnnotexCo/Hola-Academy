@@ -62,7 +62,7 @@ class _TraineesScreenState extends State<TraineesScreen> {
                         height: 37.h,
                         controller: _searchController,
                         hintStyle: TextStyle(
-                          color: ColorManager.graycolorHeadline,
+                          color: ColorManager.grayColorHeadline,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w400,
                         ),
@@ -81,9 +81,9 @@ class _TraineesScreenState extends State<TraineesScreen> {
                   SizedBox(width: 19.w),
                   ElevatedButton(
                     onPressed: () {
-                      context.read<UserDataCubit>().searchUsers(
-                            _searchController.text, widget.role
-                          );
+                      context
+                          .read<UserDataCubit>()
+                          .searchUsers(_searchController.text, widget.role);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFF5BD69),
@@ -140,9 +140,9 @@ class _TraineesScreenState extends State<TraineesScreen> {
                   );
                 } else if (state is FetchUsersByRoleFailure) {
                   return NotFoundScreen(
-                   title: widget.role == AppString.trainee
-                          ? 'No Trainees Found'
-                          : 'No COACH Found',
+                    title: widget.role == AppString.trainee
+                        ? 'No Trainees Found'
+                        : 'No COACH Found',
                   );
                 } else if (state is UserDataLoading) {
                   return Center(

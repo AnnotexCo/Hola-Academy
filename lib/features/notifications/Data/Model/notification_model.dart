@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 // Enum for notification types
+// ignore: constant_identifier_names
 enum NotificationType { CLASS, CATEGORY, LEVEL, PROGRAM, PRIVATE, UNKNOWN }
 
 class NotificationModel {

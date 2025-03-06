@@ -5,7 +5,7 @@ import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/features/classes/Logic/lessons/cubit/lessons_cubit.dart';
 import 'package:hola_academy/features/classes/UI/Loading/programs_loading_screen.dart';
-import 'package:hola_academy/features/home/UI/components/add_baner.dart';
+import 'package:hola_academy/features/home/UI/components/add_banner.dart';
 import 'package:hola_academy/features/home/UI/components/evaluation_card.dart';
 import 'package:hola_academy/features/home/UI/components/list_of_programs.dart';
 import 'package:hola_academy/features/home/UI/components/timeline_widget.dart';
@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Align(
                         alignment: Alignment.centerLeft,
                         child: WelcomeHeader()),
-                    AddBaner(),
+                    AddBanner(),
                     SizedBox(
                       height: 80.h,
                       width: double.infinity,

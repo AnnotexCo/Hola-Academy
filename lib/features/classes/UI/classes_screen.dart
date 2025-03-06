@@ -8,7 +8,7 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/features/classes/Data/Model/category_model.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/classes/cubit/classes_cubit.dart';
-import 'package:hola_academy/features/classes/Logic/programms/programs_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/programs/programs_cubit.dart';
 import 'package:hola_academy/features/classes/UI/widgets/available_class_widget.dart';
 import 'package:hola_academy/features/classes/UI/widgets/progress_class_widget.dart';
 import 'package:hola_academy/features/classes/UI/widgets/program_widget.dart';
@@ -16,7 +16,7 @@ import 'package:hola_academy/features/classes/UI/widgets/categories_tap_buttons.
 import 'package:hola_academy/features/classes/UI/widgets/shimmereffect.dart';
 
 import '../Logic/categories/categories_state.dart';
-import '../Logic/programms/programs_state.dart';
+import '../Logic/programs/programs_state.dart';
 
 enum ClassesTab { allPrograms, available, myClasses }
 
@@ -178,7 +178,7 @@ class ClassesScreenState extends State<ClassesScreen> {
         style: TextStyle(
             fontSize: 18.sp,
             fontWeight: FontWeight.w600,
-            color: ColorManager.graycolorHeadline),
+            color: ColorManager.grayColorHeadline),
       ),
     );
   }

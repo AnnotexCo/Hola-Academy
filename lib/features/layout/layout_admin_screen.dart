@@ -99,7 +99,10 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                     ImageManager.home,
                     height: 24.h,
                     width: 24.w,
-                    color: _selectedColor(0),
+                    colorFilter: ColorFilter.mode(
+                      _selectedColor(0),
+                      BlendMode.srcIn,
+                    ),
                   ),
                   label: AppString.home,
                 ),
@@ -108,7 +111,10 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                     ImageManager.transactionIcon,
                     height: 24.h,
                     width: 24.w,
-                    color: _selectedColor(1),
+                    colorFilter: ColorFilter.mode(
+                      _selectedColor(1),
+                      BlendMode.srcIn,
+                    ),
                   ),
                   label: AppString.transactions,
                 ),
@@ -121,7 +127,10 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                     ImageManager.notification,
                     height: 24.h,
                     width: 24.w,
-                    color: _selectedColor(3),
+                    colorFilter: ColorFilter.mode(
+                      _selectedColor(3),
+                      BlendMode.srcIn,
+                    ),
                   ),
                   label: AppString.notifications,
                 ),
@@ -130,7 +139,10 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                     ImageManager.profile,
                     height: 24.h,
                     width: 24.w,
-                    color: _selectedColor(4),
+                    colorFilter: ColorFilter.mode(
+                      _selectedColor(4),
+                      BlendMode.srcIn,
+                    ),
                   ),
                   label: AppString.profile,
                 ),
@@ -178,10 +190,13 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                     _pageController.jumpToPage(2);
                   },
                   child: SvgPicture.asset(
-                    ImageManager.scanQricon,
+                    ImageManager.scanQrIcon,
                     height: 35.h,
                     width: 35.w,
-                    color: ColorManager.whiteColor,
+                    colorFilter: ColorFilter.mode(
+                      ColorManager.whiteColor,
+                      BlendMode.srcIn,
+                    ),
                   ),
                 ),
               ),

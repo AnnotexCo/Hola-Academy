@@ -43,7 +43,7 @@ class ScanComplete extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w600,
-                color: ColorManager.graycolorHeadline,
+                color: ColorManager.grayColorHeadline,
               ),
             ),
           ],

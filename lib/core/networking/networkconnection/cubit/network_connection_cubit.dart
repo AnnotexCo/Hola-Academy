@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-
 part 'network_connection_state.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class NetworkConnectionCubit extends Cubit<NetworkConnectionState> {
   final InternetConnectionChecker _connectionChecker;
@@ -23,7 +25,6 @@ class NetworkConnectionCubit extends Cubit<NetworkConnectionState> {
 
     _subscription = _connectionChecker.onStatusChange.listen(
       (status) {
-
         final newState = (status == InternetConnectionStatus.connected);
         if (newState != isConnected) {
           isConnected = newState;
@@ -31,10 +32,18 @@ class NetworkConnectionCubit extends Cubit<NetworkConnectionState> {
         }
       },
       onError: (error) {
-          print("Network error: $error");
-
+        showSnackBar("Network error: $error");
       },
     );
+  }
+
+  void showSnackBar(String message) {
+    final context = navigatorKey.currentState?.context;
+    if (context != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
+      );
+    }
   }
 
   @override

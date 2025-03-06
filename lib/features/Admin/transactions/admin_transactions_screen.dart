@@ -27,8 +27,10 @@ class _AdminTransactionsScreenState extends State<AdminTransactionsScreen>
   void initState() {
     super.initState();
     context.read<TransCubit>().getTransactions().then((v) {
-      context.read<TransCubit>().getTransactionsByFilter(isIncome: true);
-      context.read<TransCubit>().getTransactionsByFilter(isIncome: false);
+      if (mounted) {
+        context.read<TransCubit>().getTransactionsByFilter(isIncome: true);
+        context.read<TransCubit>().getTransactionsByFilter(isIncome: false);
+      }
     });
     tabController = TabController(length: 2, vsync: this);
   }

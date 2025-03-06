@@ -9,7 +9,7 @@ import 'package:hola_academy/features/classes/Logic/skills/cubit/skills_cubit.da
 
 class FeedbackDialog extends StatelessWidget {
   final int lessonId;
-  final int skilldId;
+  final int skilledId;
   final SkillsCubit skillsCubit;
   final String traineeName;
   final String courseTitle;
@@ -24,7 +24,7 @@ class FeedbackDialog extends StatelessWidget {
     required this.imageUrl,
     required this.skillsCubit,
     required this.lessonId,
-    required this.skilldId,
+    required this.skilledId,
   });
 
   @override
@@ -70,7 +70,7 @@ class FeedbackDialog extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.w500,
-                      color: ColorManager.graycolorHeadline,
+                      color: ColorManager.grayColorHeadline,
                     ),
                   ),
                   SizedBox(height: 18.h),
@@ -103,7 +103,7 @@ class FeedbackDialog extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.w500,
-                      color: ColorManager.graycolorHeadline,
+                      color: ColorManager.grayColorHeadline,
                     ),
                   ),
                   SizedBox(height: 18.h),
@@ -132,11 +132,9 @@ class FeedbackDialog extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          print(
-                              "$rating  $skilldId $lessonId {$isPassed} ${feedbackController.text}");
                           skillsCubit.evaluateSkill(
                             lessonId,
-                            skilldId,
+                            skilledId,
                             rating.toInt(),
                             isPassed,
                             feedbackController.text,

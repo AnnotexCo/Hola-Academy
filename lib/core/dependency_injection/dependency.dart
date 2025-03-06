@@ -45,7 +45,7 @@ import 'package:hola_academy/features/profile/Data/Repo/user_repo.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'package:hola_academy/features/profile/Logic/transactions/trans_cubit.dart';
 import '../../features/classes/Data/Repo/programs_repo.dart';
-import '../../features/classes/Logic/programms/programs_cubit.dart';
+import '../../features/classes/Logic/programs/programs_cubit.dart';
 import '../../features/home/Data/Repo/banner_repo.dart';
 import '../../features/home/Logic/banner_logic/banner_cubit.dart';
 import '../../features/notifications/Data/Repo/notification_repo.dart';

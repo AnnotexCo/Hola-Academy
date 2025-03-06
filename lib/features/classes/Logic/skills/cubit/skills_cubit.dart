@@ -10,7 +10,7 @@ class SkillsCubit extends Cubit<SkillsState> {
   final SkillsRepo skillsRepo;
   SkillsCubit(this.skillsRepo) : super(SkillsInitial());
 
-  Future<void> getSkillsbyLessonID(int lessonID) async {
+  Future<void> getSkillsByLessonID(int lessonID) async {
     if (!isClosed) emit(SkillsLoading());
     try {
       final skills = await skillsRepo.getSkillsbyLessonID(lessonID);
@@ -36,7 +36,7 @@ class SkillsCubit extends Cubit<SkillsState> {
     }
   }
 
-  Future<void> getEvaluationsbyLevelID(int lessonID) async {
+  Future<void> getEvaluationsByLevelID(int lessonID) async {
     if (!isClosed) emit(SkillsLoading());
     try {
       final evaluations = await skillsRepo.getEvaluationsbyLevelID(lessonID);

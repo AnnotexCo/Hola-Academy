@@ -15,7 +15,7 @@ class ClassesCubit extends Cubit<ClassesState> {
   }
 
   Future<void> getAllClasses() async {
-    if (!isClosed)  emit(ClassesLoading());
+    if (!isClosed) emit(ClassesLoading());
     try {
       classes = await classesRepo.getAllClasses();
       if (!isClosed) emit(ClassesLoaded(classes: classes));
@@ -24,8 +24,8 @@ class ClassesCubit extends Cubit<ClassesState> {
     }
   }
 
-  Future<void> getAllClassesbyLevelId(int id) async {
-    if (!isClosed)  emit(ClassesLoading());
+  Future<void> getAllClassesByLevelId(int id) async {
+    if (!isClosed) emit(ClassesLoading());
     try {
       classes = await classesRepo.getClassesyByLevel(id);
       if (!isClosed) emit(ClassesLoaded(classes: classes));
@@ -44,7 +44,7 @@ class ClassesCubit extends Cubit<ClassesState> {
   }
 
   Future<void> getmyClass() async {
-    if (!isClosed)  emit(ClassesLoading());
+    if (!isClosed) emit(ClassesLoading());
     try {
       myClasses = await classesRepo.getmyClass();
       if (!isClosed) emit(MyClassesLoaded(classes: myClasses));

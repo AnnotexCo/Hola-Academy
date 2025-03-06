@@ -10,7 +10,7 @@ import 'package:hola_academy/core/dependency_injection/dependency.dart';
 import 'package:hola_academy/features/classes/Logic/classes/cubit/classes_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/lessons/cubit/lessons_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/levels/cubit/levels_cubit.dart';
-import 'package:hola_academy/features/classes/Logic/programms/programs_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/programs/programs_cubit.dart';
 import 'package:hola_academy/features/home/UI/home_screen_coach.dart';
 import 'package:hola_academy/features/notifications/UI/notifications_screen.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
@@ -68,16 +68,16 @@ class _LayoutCoachScreenState extends State<LayoutCoachScreen> {
   }
 
   void _onItemTapped(int index) {
-    // تحقق مما إذا كانت الصفحة الجديدة مجاورة
+    // Check if the new page is adjacent
     if ((index - _selectedIndex).abs() == 1) {
-      // إذا كانت مجاورة، استخدم الرسوم المتحركة
+      // If adjacent, use animation
       setState(() {
         _selectedIndex = index;
       });
       _pageController.animateToPage(index,
           duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
     } else {
-      // إذا كانت بعيدة، انتقل مباشرة
+       // If far apart, jump directly
       setState(() {
         _selectedIndex = index;
       });
@@ -100,7 +100,10 @@ class _LayoutCoachScreenState extends State<LayoutCoachScreen> {
           ImageManager.home,
           height: 24.h,
           width: 24.w,
-          color: _selectedColor(0),
+          colorFilter: ColorFilter.mode(
+            _selectedColor(0),
+            BlendMode.srcIn,
+          ),
         ),
         label: AppString.home,
       ),
@@ -109,7 +112,10 @@ class _LayoutCoachScreenState extends State<LayoutCoachScreen> {
           ImageManager.scheduleIcon,
           height: 24.h,
           width: 24.w,
-          color: _selectedColor(1),
+          colorFilter: ColorFilter.mode(
+            _selectedColor(1),
+            BlendMode.srcIn,
+          ),
         ),
         label: AppString.schedule,
       ),
@@ -118,7 +124,10 @@ class _LayoutCoachScreenState extends State<LayoutCoachScreen> {
             ImageManager.notification,
             height: 24.h,
             width: 24.w,
-            color: _selectedColor(2),
+            colorFilter: ColorFilter.mode(
+              _selectedColor(2),
+              BlendMode.srcIn,
+            ),
           ),
           label: AppString.notifications),
       BottomNavigationBarItem(
@@ -126,7 +135,10 @@ class _LayoutCoachScreenState extends State<LayoutCoachScreen> {
           ImageManager.profile,
           height: 24.h,
           width: 24.w,
-          color: _selectedColor(3),
+          colorFilter: ColorFilter.mode(
+            _selectedColor(3),
+            BlendMode.srcIn,
+          ),
         ),
         label: AppString.profile,
       ),

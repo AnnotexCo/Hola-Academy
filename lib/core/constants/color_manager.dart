@@ -12,7 +12,7 @@ class ColorManager {
   static const Color linearGradient1 = Color(0xffFEF5E9);
   static const Color linearGradient2 = Color(0xffF09C1F);
   static const Color linearGradient3 = Color(0xfffcead0);
-  static const Color graycolorHeadline = Color(0xFF6C757D);
+  static const Color grayColorHeadline = Color(0xFF6C757D);
 
   static const Color redMagmaColor = Color(0xffBB4227);
   static const Color backgroundLightPink = Color(0xffFAF0EA);

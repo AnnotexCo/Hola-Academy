@@ -9,7 +9,7 @@ class LevelsCubit extends Cubit<LevelsState> {
   final LevelsRepo levelsRepo;
   LevelsCubit(this.levelsRepo) : super(LevelsInitial());
 
-  fetchLevelsbyID(int id) async {
+  fetchLevelsByID(int id) async {
     try {
       if (!isClosed) emit(LevelsLoading());
 

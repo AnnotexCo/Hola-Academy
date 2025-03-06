@@ -13,7 +13,7 @@ import 'package:hola_academy/features/profile/Data/Model/trainee_model.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import '../../../../core/dependency_injection/dependency.dart';
 import '../../../home/Logic/banner_logic/banner_cubit.dart';
-import '../../../home/UI/components/add_baner.dart';
+import '../../../home/UI/components/add_banner.dart';
 import 'widgets/new_requests_section.dart';
 import 'widgets/section_header.dart';
 import 'widgets/welcome_widget.dart';
@@ -44,7 +44,7 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
                 SizedBox(height: 16.h),
                 BlocProvider(
                   create: (context) => getIT<BannersCubit>()..fetchAllBanners(),
-                  child: AddBaner(),
+                  child: AddBanner(),
                 ),
                 SizedBox(height: 16.h),
                 SizedBox(
@@ -127,10 +127,7 @@ class _CoachesSectionState extends State<CoachesSection> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<UserDataCubit, UserDataState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+    return BlocBuilder<UserDataCubit, UserDataState>(
       builder: (context, state) {
         return GridView.builder(
             shrinkWrap: true,

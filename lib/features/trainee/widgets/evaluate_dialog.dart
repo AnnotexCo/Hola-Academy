@@ -72,7 +72,7 @@ class EvaluateDialog extends StatelessWidget {
                             context: context,
                             builder: (context) {
                               return FeedbackDialog(
-                                skilldId: skills[index].id,
+                                skilledId: skills[index].id,
                                 imageUrl: imageUrl,
                                 traineeName: traineeName,
                                 courseTitle: courseTitle,

@@ -7,7 +7,7 @@ class LessonsRepo {
   LessonsRepo({required this.dioLessons});
 
   Future<List<LessonModel>> getmyLessons() async {
-    return await dioLessons.getLessonsbytrainee();
+    return await dioLessons.getLessonsByTrainee();
   }
 
   Future<List<LessonModel>> getLessonsByID(int traineeID, int classID) async {
@@ -15,9 +15,8 @@ class LessonsRepo {
   }
 
   Future<LessonModel> getNextLessons() async {
-    return await dioLessons.getmyNextLessons();
+    return await dioLessons.getMyNextLessons();
   }
-
 
   Future<List<LessonModel>> getLessonsByDate(String startDate, String endDate) {
     return dioLessons.getLessonsByDate(startDate, endDate);

@@ -63,20 +63,19 @@ class ImageManager {
   static const String reminderImageCoach =
       "assets/images/reminderSessionImage.png";
 
-
   // Admin Trainee Screen
   static const String category = 'assets/icons/category.svg';
 
 //Coach Home Screen
-  static const String scanQricon = "assets/icons/scan.svg";
+  static const String scanQrIcon = "assets/icons/scan.svg";
   static const String transactionIcon = "assets/icons/transactionIcon.svg";
 
   static const String scheduleIcon = "assets/icons/schedule.svg";
 
-  static const String confirmedAttendance = "assets/images/confirmed_attendance.svg";
+  static const String confirmedAttendance =
+      "assets/images/confirmed_attendance.svg";
 
   static const String notFound = "assets/images/not_found.svg";
 
   static const String evaluation = "assets/images/evaluationimg.png";
-
 }

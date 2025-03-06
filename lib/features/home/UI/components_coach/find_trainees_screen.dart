@@ -10,7 +10,8 @@ import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubi
 class FindTraineesScreen extends StatelessWidget {
   final int classID;
   final String className;
-  const FindTraineesScreen({super.key, required this.classID, required this.className});
+  const FindTraineesScreen(
+      {super.key, required this.classID, required this.className});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class FindTraineesScreen extends StatelessWidget {
                       child: GeneralTextFormField(
                         height: 37.h,
                         hintStyle: TextStyle(
-                          color: ColorManager.graycolorHeadline,
+                          color: ColorManager.grayColorHeadline,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w400,
                         ),

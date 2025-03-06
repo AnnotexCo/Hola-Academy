@@ -10,9 +10,9 @@ import 'package:hola_academy/features/classes/Logic/categories/categories_state.
 import 'package:hola_academy/features/classes/Logic/classes/cubit/classes_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/lessons/cubit/lessons_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/levels/cubit/levels_cubit.dart';
-import 'package:hola_academy/features/classes/Logic/programms/programs_cubit.dart';
-import 'package:hola_academy/features/classes/Logic/programms/programs_state.dart';
-import 'package:hola_academy/features/home/UI/components/add_baner.dart';
+import 'package:hola_academy/features/classes/Logic/programs/programs_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/programs/programs_state.dart';
+import 'package:hola_academy/features/home/UI/components/add_banner.dart';
 import 'package:hola_academy/features/home/UI/components/timeline_widget.dart';
 import 'package:hola_academy/features/home/UI/components/welcome_header.dart';
 import 'package:hola_academy/features/home/UI/components_coach/classes_dialog.dart';
@@ -51,7 +51,7 @@ class HomeScreenCoach extends StatelessWidget {
                   child: BlocProvider(
                     create: (context) =>
                         getIT<BannersCubit>()..fetchAllBanners(),
-                    child: AddBaner(),
+                    child: AddBanner(),
                   ),
                 ),
                 SizedBox(
@@ -105,7 +105,6 @@ class HomeScreenCoach extends StatelessWidget {
                                           builder: (_) {
                                             String categoryName =
                                                 state.categories[index].name;
-                                            // TODO Get Programs by Category ID
                                             return BlocProvider.value(
                                               value: programsCubit,
                                               child: BlocBuilder<ProgramsCubit,
@@ -216,7 +215,7 @@ class HomeScreenCoach extends StatelessWidget {
 
 void showPrivateLevelsDialog(BuildContext context, LevelsCubit levelsCubit,
     ClassesCubit classesCubit, int programId, String programName) {
-  levelsCubit.fetchLevelsbyID(programId);
+  levelsCubit.fetchLevelsByID(programId);
   showDialog(
     context: context,
     builder: (_) {
@@ -243,13 +242,13 @@ void showPrivateLevelsDialog(BuildContext context, LevelsCubit levelsCubit,
                   );
 
                   if (selectedTitle == selectedProgram.name) {
-                    showClassifcationDialog(context, classesCubit,
+                    showClassIfCationDialog(context, classesCubit,
                         selectedProgram.id, selectedProgram.name);
                   }
                 },
               );
             } else if (state is LevelsError) {
-              print(state.message);
+              Text(state.message);
             }
             return SizedBox.shrink();
           },
@@ -259,9 +258,9 @@ void showPrivateLevelsDialog(BuildContext context, LevelsCubit levelsCubit,
   );
 }
 
-void showClassifcationDialog(BuildContext context, ClassesCubit classesCubit,
+void showClassIfCationDialog(BuildContext context, ClassesCubit classesCubit,
     int levelId, String levelName) {
-  classesCubit.getAllClassesbyLevelId(levelId);
+  classesCubit.getAllClassesByLevelId(levelId);
 
   showDialog(
     context: context,
@@ -284,21 +283,23 @@ void showClassifcationDialog(BuildContext context, ClassesCubit classesCubit,
                   options: options,
                   onOptionSelected: (selectedTitle) {
                     // Find the program that matches the selected title
-                    final selectedclass = state.classes.firstWhere(
+                    final selectedClass = state.classes.firstWhere(
                       (level) => level.name == selectedTitle,
                     );
 
-                    if (selectedTitle == selectedclass.name) {
+                    if (selectedTitle == selectedClass.name) {
                       Navigator.pushNamed(
                         context,
                         Routes.findTraineeScreen,
                         arguments: ClassDetails(
-                            name: selectedclass.name, id: selectedclass.id),
+                            name: selectedClass.name, id: selectedClass.id),
                       );
                     }
                   },
                 );
-              } else if (state is ClassesError) {}
+              } else if (state is ClassesError) {
+                Text('something went wrong');
+              }
               return SizedBox.shrink();
             },
           ));

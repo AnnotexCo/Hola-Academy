@@ -14,7 +14,7 @@ class DioLessons {
       String startDate, String endDate) async {
     try {
       final response = await _dio.get(
-        "${ApiConstants.baseUrl}${ApiConstants.getLessonsApibyID}",
+        "${ApiConstants.baseUrl}${ApiConstants.getLessonsApiByID}",
         queryParameters: {"startDate": startDate, "endDate": endDate},
       );
 
@@ -32,7 +32,7 @@ class DioLessons {
   Future<List<LessonModel>> getLessonsByID(int traineeID, int classID) async {
     try {
       final response = await _dio.get(
-        "${ApiConstants.baseUrl}${ApiConstants.getLessonsApibyID}",
+        "${ApiConstants.baseUrl}${ApiConstants.getLessonsApiByID}",
         queryParameters: {"traineeId": traineeID, "classId": classID},
       );
 
@@ -47,7 +47,7 @@ class DioLessons {
   }
 
   /// Fetch a single program by ID
-  Future<List<LessonModel>> getLessonsbytrainee() async {
+  Future<List<LessonModel>> getLessonsByTrainee() async {
     try {
       final response = await _dio.get(
         "${ApiConstants.baseUrl}${ApiConstants.myLessonsApi}",
@@ -63,7 +63,7 @@ class DioLessons {
     }
   }
 
-  Future<LessonModel> getmyNextLessons() async {
+  Future<LessonModel> getMyNextLessons() async {
     try {
       final response = await _dio.get(
         "${ApiConstants.baseUrl}${ApiConstants.myNextLessonsApi}",
@@ -72,9 +72,6 @@ class DioLessons {
       if (response.statusCode == 200) {
         final data = response.data['data'];
 
-        if (data != null) {
-          print("Dataa $data");
-        }
         return LessonModel.fromMapV2(data);
       }
       throw Exception("Failed to load program");

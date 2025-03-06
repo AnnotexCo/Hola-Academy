@@ -193,7 +193,7 @@ class CustomListView extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
-                                  color: ColorManager.graycolorHeadline,
+                                  color: ColorManager.grayColorHeadline,
                                 ),
                               ),
                             ],
@@ -215,7 +215,7 @@ class CustomListView extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w400,
-                                  color: ColorManager.graycolorHeadline,
+                                  color: ColorManager.grayColorHeadline,
                                 ),
                               ),
                             ],

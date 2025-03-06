@@ -12,11 +12,11 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this.loginRepo) : super(LoginInitial());
 
   Future<void> doLogin(LoginModel loginModel) async {
-    emit(LoginLoading());
+   if (!isClosed) emit(LoginLoading());
     try {
       String? fcmToken = await FirebaseMessaging.instance.getToken();
       if (fcmToken == null) {
-        emit(LoginFailure(message: "Failed to get FCM Token"));
+        if (!isClosed) emit(LoginFailure(message: "Failed to get FCM Token"));
         return;
       }
       bool isSuccess =
@@ -26,27 +26,27 @@ class LoginCubit extends Cubit<LoginState> {
         String? role = await SaveTokenDB.getRole();
         // print(token);
         if (token != null && role != null) {
-          emit(LoginSuccess(role: role, token: token));
+          if (!isClosed) emit(LoginSuccess(role: role, token: token));
         } else {
-          emit(LoginFailure(message: "Token or Role not found"));
+          if (!isClosed) emit(LoginFailure(message: "Token or Role not found"));
         }
       } else {
-        emit(LoginFailure(message: "Invalid login credentials"));
+        if (!isClosed) emit(LoginFailure(message: "Invalid login credentials"));
       }
     } catch (e) {
-      emit(LoginFailure(message: e.toString()));
+      if (!isClosed) emit(LoginFailure(message: e.toString()));
     }
   }
 
   Future<void> doGoogleLogin() async {
-    emit(LoginLoading());
+    if (!isClosed) emit(LoginLoading());
 
     try {
       final GoogleSignIn googleLogin = GoogleSignIn();
       final GoogleSignInAccount? googleUser = await googleLogin.signIn();
 
       if (googleUser == null) {
-        emit(LoginFailure(message: "Google sign-in was canceled"));
+        if (!isClosed) emit(LoginFailure(message: "Google sign-in was canceled"));
         return;
       }
 
@@ -55,12 +55,12 @@ class LoginCubit extends Cubit<LoginState> {
       final String? accessToken = googleAuth.accessToken;
 
       if (accessToken == null) {
-        emit(LoginFailure(message: "Google Access Token not found"));
+        if (!isClosed) emit(LoginFailure(message: "Google Access Token not found"));
         return;
       }
       String? fcmToken = await FirebaseMessaging.instance.getToken();
       if (fcmToken == null) {
-        emit(LoginFailure(message: "Failed to get FCM Token"));
+        if (!isClosed) emit(LoginFailure(message: "Failed to get FCM Token"));
         return;
       }
 
@@ -72,16 +72,15 @@ class LoginCubit extends Cubit<LoginState> {
         String? role = await SaveTokenDB.getRole(); // Get the saved role
 
         if (token != null && role != null) {
-          emit(LoginSuccess(role: role, token: token));
+          if (!isClosed) emit(LoginSuccess(role: role, token: token));
         } else {
-          emit(LoginFailure(
-              message: "Role or Token not found after Google login"));
+          if (!isClosed) emit(LoginFailure(message: "Role or Token not found after Google login"));
         }
       } else {
-        emit(LoginFailure(message: "Google login failed"));
+        if (!isClosed) emit(LoginFailure(message: "Google login failed"));
       }
     } catch (e) {
-      emit(LoginFailure(message: e.toString()));
+      if (!isClosed) emit(LoginFailure(message: e.toString()));
     }
   }
 
@@ -89,7 +88,7 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       String? fcmToken = await FirebaseMessaging.instance.getToken();
       if (fcmToken == null) {
-        emit(LoginFailure(message: "Failed to get FCM Token"));
+        if (!isClosed) emit(LoginFailure(message: "Failed to get FCM Token"));
         return;
       }
 
@@ -97,12 +96,12 @@ class LoginCubit extends Cubit<LoginState> {
 
       if (isLoggedOut) {
         await SaveTokenDB.deleteTokenAndRole();
-        emit(LoginInitial());
+        if (!isClosed) emit(LoginInitial());
       } else {
-        emit(LoginFailure(message: "Logout failed"));
+        if (!isClosed) emit(LoginFailure(message: "Logout failed"));
       }
     } catch (e) {
-      emit(LoginFailure(message: e.toString()));
+      if (!isClosed) emit(LoginFailure(message: e.toString()));
     }
   }
 }

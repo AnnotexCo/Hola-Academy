@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,7 +52,9 @@ void main() async {
     badge: true,
     sound: true,
   );
-  print(' Notification permission status: ${settings.authorizationStatus}');
+  if (kDebugMode) {
+    print(' Notification permission status: ${settings.authorizationStatus}');
+  }
 
   //  Handle notification when the app is in the foreground
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {

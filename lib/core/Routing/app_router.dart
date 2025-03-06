@@ -43,7 +43,7 @@ import '../../features/auth/login/Logic/login_cubit.dart';
 import '../../features/auth/register/UI/register_screen.dart';
 import '../../features/book/UI/book_programs_screen.dart';
 import '../../features/classes/Data/Model/programs_model.dart';
-import '../../features/classes/Logic/programms/programs_cubit.dart';
+import '../../features/classes/Logic/programs/programs_cubit.dart';
 import '../../features/not_found/not_found_screen.dart';
 import '../../features/notifications/Logic/notifications_cubit.dart';
 import '../../features/profile/UI/request_payment_screen.dart';
@@ -215,7 +215,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (context) =>
-                      getIT<SkillsCubit>()..getEvaluationsbyLevelID(1),
+                      getIT<SkillsCubit>()..getEvaluationsByLevelID(1),
                   child: const AnalyticsSkillsScreen(),
                 ));
 

@@ -6,7 +6,7 @@ import 'package:hola_academy/core/components/custom_app_bar.dart';
 import 'package:hola_academy/core/constants/api_constants.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/features/not_found/not_found_screen.dart';
-import 'package:hola_academy/features/profile/UI/loading/booked-shimmer.dart';
+import 'package:hola_academy/features/profile/UI/loading/booked_shimmer.dart';
 
 import '../../Admin/requests/Logic/requests_cubit.dart';
 import '../../Admin/requests/Logic/requests_state.dart';

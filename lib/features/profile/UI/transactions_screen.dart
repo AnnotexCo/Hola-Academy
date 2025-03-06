@@ -44,8 +44,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         CustomAppBar(title: AppString.viewAllTransaction, isBack: true),
         BlocConsumer<TransCubit, TransState>(
-          listener: (context, state) {
-          },
+          listener: (context, state) {},
           builder: (context, state) {
             return Expanded(
               child: ListView(
@@ -130,7 +129,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                               style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w600,
-                                color: ColorManager.graycolorHeadline,
+                                color: ColorManager.grayColorHeadline,
                               ),
                             ),
                           ],
