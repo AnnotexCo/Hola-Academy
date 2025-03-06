@@ -6,7 +6,7 @@ import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/core/dependency_injection/dependency.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.dart';
-import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
+import 'package:hola_academy/features/profile/UI/widgets/custom_profile_background.dart';
 import 'package:hola_academy/features/profile/UI/widgets/social_media_card.dart';
 
 import '../../auth/login/Logic/login_cubit.dart';
@@ -37,7 +37,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
             BlocProvider(
               create: (context) => getIT<UserDataCubit>()..getMyData(),
               child: Stack(alignment: Alignment.topCenter, children: [
-                CustomProfileBackgroung(),
+                CustomProfileBackground(),
                 BlocProvider(
                   create: (context) => getIT<LoginCubit>(),
                   child: CustomProfileAppBar(qrCode: true, isLayout: false),
@@ -78,8 +78,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
         'https://www.facebook.com/Holaswimacademy'),
     SocialMedia(AppString.tikTok, ImageManager.tiktok,
         'https://www.tiktok.com/@holaswimacademy'),
-    SocialMedia(
-        AppString.whatsApp, ImageManager.whatsapp, 'https://wa.me/+201070440011'),
+    SocialMedia(AppString.whatsApp, ImageManager.whatsapp,
+        'https://wa.me/+201070440011'),
   ];
 }
 

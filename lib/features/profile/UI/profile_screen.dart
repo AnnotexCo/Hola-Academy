@@ -13,7 +13,7 @@ import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
 import 'package:hola_academy/features/profile/UI/terms_screen.dart';
 import 'package:hola_academy/features/profile/UI/transactions_screen.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.dart';
-import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
+import 'package:hola_academy/features/profile/UI/widgets/custom_profile_background.dart';
 
 import '../../../core/local_db/save_token.dart';
 
@@ -55,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               if (state is UserDataSuccess) {}
               return Column(spacing: 56.h, children: [
                 Stack(alignment: Alignment.topCenter, children: [
-                  CustomProfileBackgroung(),
+                  CustomProfileBackground(),
                   CustomProfileAppBar(qrCode: true, isLayout: true),
                 ]),
                 Container(

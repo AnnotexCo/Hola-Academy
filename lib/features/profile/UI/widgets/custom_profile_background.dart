@@ -7,19 +7,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 
-class CustomProfileBackgroung extends StatefulWidget {
+class CustomProfileBackground extends StatefulWidget {
   final bool isEdit;
-  const CustomProfileBackgroung({
+  const CustomProfileBackground({
     super.key,
     this.isEdit = false,
   });
 
   @override
-  State<CustomProfileBackgroung> createState() =>
-      _CustomProfileBackgroungState();
+  State<CustomProfileBackground> createState() =>
+      _CustomProfileBackgroundState();
 }
 
-class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
+class _CustomProfileBackgroundState extends State<CustomProfileBackground> {
   // Function to display bottom sheet for selecting photo source
   void showPhotoSourcePicker(
       {required BuildContext context,

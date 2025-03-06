@@ -13,7 +13,7 @@ import 'package:hola_academy/features/profile/Data/Model/update_user_model.dart'
 import 'package:hola_academy/features/profile/Data/Model/user_model.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.dart';
-import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
+import 'package:hola_academy/features/profile/UI/widgets/custom_profile_background.dart';
 import 'package:intl/intl.dart';
 import '../../../core/dependency_injection/dependency.dart';
 import '../../../core/local_db/save_token.dart';
@@ -110,7 +110,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                   } else {
                     return Column(children: [
                       Stack(alignment: Alignment.topCenter, children: [
-                        CustomProfileBackgroung(
+                        CustomProfileBackground(
                           isEdit: true,
                         ),
                         BlocProvider(
