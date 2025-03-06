@@ -72,5 +72,10 @@
 <true/>
 <key>NSCameraUsageDescription</key>
 <string>This app needs camera access to scan QR codes</string>
+	<!-- prevent rotation -->
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+    	<string>UIInterfaceOrientationPortrait</string>
+	</array>
 </dict>
 </plist>

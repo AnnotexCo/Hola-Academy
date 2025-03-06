@@ -263,7 +263,6 @@ void showClassifcationDialog(BuildContext context, ClassesCubit classesCubit,
     int levelId, String levelName) {
   classesCubit.getAllClassesbyLevelId(levelId);
 
-  print("$levelId Levlsl");
   showDialog(
     context: context,
     builder: (_) {

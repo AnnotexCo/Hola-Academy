@@ -14,12 +14,13 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> doLogin(LoginModel loginModel) async {
     emit(LoginLoading());
     try {
-       String? fcmtoken = await FirebaseMessaging.instance.getToken();
-      if (fcmtoken == null) {
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+      if (fcmToken == null) {
         emit(LoginFailure(message: "Failed to get FCM Token"));
         return;
       }
-      bool isSuccess = await loginRepo.doLogin(loginModel: loginModel, fcmtoken: fcmtoken);
+      bool isSuccess =
+          await loginRepo.doLogin(loginModel: loginModel, fcmToken: fcmToken);
       if (isSuccess) {
         String? token = await SaveTokenDB.getToken();
         String? role = await SaveTokenDB.getRole();
@@ -37,60 +38,62 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-Future<void> doGoogleLogin() async {
-  emit(LoginLoading());
+  Future<void> doGoogleLogin() async {
+    emit(LoginLoading());
 
-  try {
-    final GoogleSignIn googleLogin = GoogleSignIn();
-    final GoogleSignInAccount? googleUser = await googleLogin.signIn();
-
-    if (googleUser == null) {
-      emit(LoginFailure(message: "Google sign-in was canceled"));
-      return;
-    }
-
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-    final String? accessToken = googleAuth.accessToken;
-
-    if (accessToken == null) {
-      emit(LoginFailure(message: "Google Access Token not found"));
-      return;
-    }
-      String? fcmtoken = await FirebaseMessaging.instance.getToken();
-      if (fcmtoken == null) {
-        emit(LoginFailure(message: "Failed to get FCM Token"));
-        return;
-      }
-
-    bool isSuccess = await loginRepo.doGoogleLogin(accessToken: accessToken, fcmtoken: fcmtoken);
-
-    if (isSuccess) {
-      String? token = await SaveTokenDB.getToken();
-      String? role = await SaveTokenDB.getRole(); // Get the saved role
-
-      if (token != null && role != null) {
-        emit(LoginSuccess(role: role, token: token));
-      } else {
-        emit(LoginFailure(message: "Role or Token not found after Google login"));
-      }
-    } else {
-      emit(LoginFailure(message: "Google login failed"));
-    }
-  } catch (e) {
-    emit(LoginFailure(message: e.toString()));
-  }
-}
-
-
- Future<void> logout() async {
     try {
-      String? fcmtoken = await FirebaseMessaging.instance.getToken();
-      if (fcmtoken == null) {
+      final GoogleSignIn googleLogin = GoogleSignIn();
+      final GoogleSignInAccount? googleUser = await googleLogin.signIn();
+
+      if (googleUser == null) {
+        emit(LoginFailure(message: "Google sign-in was canceled"));
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final String? accessToken = googleAuth.accessToken;
+
+      if (accessToken == null) {
+        emit(LoginFailure(message: "Google Access Token not found"));
+        return;
+      }
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+      if (fcmToken == null) {
         emit(LoginFailure(message: "Failed to get FCM Token"));
         return;
       }
 
-      bool isLoggedOut = await loginRepo.doLogout(fcmtoken: fcmtoken);
+      bool isSuccess = await loginRepo.doGoogleLogin(
+          accessToken: accessToken, fcmToken: fcmToken);
+
+      if (isSuccess) {
+        String? token = await SaveTokenDB.getToken();
+        String? role = await SaveTokenDB.getRole(); // Get the saved role
+
+        if (token != null && role != null) {
+          emit(LoginSuccess(role: role, token: token));
+        } else {
+          emit(LoginFailure(
+              message: "Role or Token not found after Google login"));
+        }
+      } else {
+        emit(LoginFailure(message: "Google login failed"));
+      }
+    } catch (e) {
+      emit(LoginFailure(message: e.toString()));
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+      if (fcmToken == null) {
+        emit(LoginFailure(message: "Failed to get FCM Token"));
+        return;
+      }
+
+      bool isLoggedOut = await loginRepo.doLogout(fcmToken: fcmToken);
 
       if (isLoggedOut) {
         await SaveTokenDB.deleteTokenAndRole();

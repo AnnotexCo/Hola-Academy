@@ -7,8 +7,10 @@ class LoginRepo {
 
   LoginRepo({required this.dioLoginApi});
 
-  Future<bool> doLogin({required LoginModel loginModel, required String fcmtoken}) async {
-    return await dioLoginApi.dioLogin(loginModel: loginModel, fcmtoken: fcmtoken);
+  Future<bool> doLogin(
+      {required LoginModel loginModel, required String fcmToken}) async {
+    return await dioLoginApi.dioLogin(
+        loginModel: loginModel, fcmToken: fcmToken);
   }
 
   /// Fetch saved role
@@ -16,12 +18,13 @@ class LoginRepo {
     return await SaveTokenDB.getRole();
   }
 
-  Future<bool> doGoogleLogin({required String accessToken, required String fcmtoken}) async {
-    return await dioLoginApi.dioGoogleLogin(accessToken: accessToken, fcmtoken: fcmtoken);
+  Future<bool> doGoogleLogin(
+      {required String accessToken, required String fcmToken}) async {
+    return await dioLoginApi.dioGoogleLogin(
+        accessToken: accessToken, fcmToken: fcmToken);
   }
 
-
-  Future<bool> doLogout({required String fcmtoken}) async {
-    return await dioLoginApi.dioLogout(fcmtoken: fcmtoken);
+  Future<bool> doLogout({required String fcmToken}) async {
+    return await dioLoginApi.dioLogout(fcmToken: fcmToken);
   }
 }
