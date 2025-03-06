@@ -13,16 +13,16 @@ class TransCubit extends Cubit<TransState> {
     emit(TransactionsLoading());
     try {
       transactions = await transactionRepo.getTransactions();
-      emit(TransactionsSuccess(transactions: transactions!));
+       if (!isClosed) emit(TransactionsSuccess(transactions: transactions!));
     } catch (e) {
-      emit(TransactionsFailure(error: e.toString()));
+      if (!isClosed)  emit(TransactionsFailure(error: e.toString()));
     }
   }
 
   TransactionsModel? incomeTransactions;
   TransactionsModel? expenseTransactions;
   Future<void> getTransactionsByFilter({required bool isIncome}) async {
-    emit(TransactionsLoading());
+     if (!isClosed) emit(TransactionsLoading());
     try {
       isIncome
           ? incomeTransactions =
@@ -31,22 +31,24 @@ class TransCubit extends Cubit<TransState> {
               await transactionRepo.getTransactionsByFilter(isIncome: isIncome);
       TransactionsModel? filteredTransactions =
           isIncome ? incomeTransactions : expenseTransactions;
-      emit(isIncome
+     if (!isClosed) {
+       emit(isIncome
           ? IncomeTransactionsSuccess(transactions: filteredTransactions!)
           : ExpenseTransactionsSuccess(transactions: filteredTransactions!));
+     }
     } catch (e) {
-      emit(TransactionsFailure(error: e.toString()));
+      if (!isClosed)  emit(TransactionsFailure(error: e.toString()));
     }
   }
 
   Future<void> askForRefund({required num amount, required String description, required String type}) async {
-    emit(TransactionsLoading());
+     if (!isClosed) emit(TransactionsLoading());
     try {
       await transactionRepo.askForRefund(
           amount: amount, description: description, type: type);
-      emit(RefundSuccess());
+     if (!isClosed)   emit(RefundSuccess());
     } catch (e) {
-      emit(TransactionsFailure(error: e.toString()));
+      if (!isClosed)  emit(TransactionsFailure(error: e.toString()));
     }
   }
 }

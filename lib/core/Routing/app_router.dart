@@ -126,8 +126,8 @@ class AppRouter {
       // personal info
       case Routes.personalInfoScreen:
         return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (context) => getIT<UserDataCubit>(),
+            builder: (_) => BlocProvider.value(
+                  value: getIT<UserDataCubit>(),
                   child: PersonalInfoScreen(),
                 ));
 
@@ -192,7 +192,10 @@ class AppRouter {
       // schedule evaluation
       case Routes.scheduleEvaluationScreen:
         return MaterialPageRoute(
-            builder: (_) => const ScheduleEvaluationScreen());
+            builder: (_) => BlocProvider(
+                  create: (context) => getIT<LessonsCubit>(),
+                  child: const ScheduleEvaluationScreen(),
+                ));
 
       // book programs
       case Routes.bookProgramsScreen:

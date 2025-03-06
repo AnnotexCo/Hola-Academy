@@ -114,7 +114,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                           isEdit: true,
                         ),
                         BlocProvider(
-                          create: (context) =>  getIT<LoginCubit>(),
+                          create: (context) => getIT<LoginCubit>(),
                           child: CustomProfileAppBar(
                             qrCode: true,
                             isLayout: _userRole == AppString.admin,

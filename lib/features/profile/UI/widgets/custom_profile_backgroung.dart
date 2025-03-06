@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hola_academy/core/constants/api_constants.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
@@ -19,7 +20,6 @@ class CustomProfileBackgroung extends StatefulWidget {
 }
 
 class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
-
   // Function to display bottom sheet for selecting photo source
   void showPhotoSourcePicker(
       {required BuildContext context,
@@ -95,7 +95,8 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
         String pic = '';
         if (state is UserDataSuccess) {
           name = state.userModel.name ?? '';
-          pic = state.userModel.profileImage?.path ?? '';
+          pic =
+              "${ApiConstants.imagesURLApi}${state.userModel.profileImage?.path}";
         }
         return Stack(
           alignment: Alignment.center,
@@ -128,20 +129,17 @@ class _CustomProfileBackgroungState extends State<CustomProfileBackgroung> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                           ),
-                          child: context.read<UserDataCubit>().profileImage ==
-                                      null &&
-                                  pic.isEmpty
-                              ? Container()
-                              : context.read<UserDataCubit>().profileImage !=
-                                      null
-                                  ? Image.file(
-                                      context
-                                          .read<UserDataCubit>()
-                                          .profileImage!,
-                                      fit: BoxFit.fill)
-                                  : Image.network(
-                                      ApiConstants.imagesURLApi + pic,
-                                      fit: BoxFit.fill),
+                          child: context.read<UserDataCubit>().profileImage !=
+                                  null
+                              ? Image.file(
+                                  context.read<UserDataCubit>().profileImage!,
+                                  fit: BoxFit.fill)
+                              : CachedNetworkImage(
+                                  imageUrl: pic,
+                                  fit: BoxFit.fill,
+                                  placeholder: (context, url) => Container(),
+                                  errorWidget: (context, url, error) =>
+                                      Container()),
                         ),
                       ),
                     ),

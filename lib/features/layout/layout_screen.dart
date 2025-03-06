@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
+import 'package:hola_academy/features/auth/login/Logic/login_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/classes/cubit/classes_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/lessons/cubit/lessons_cubit.dart';
@@ -37,7 +38,9 @@ class _LayoutScreenState extends State<LayoutScreen> {
         BlocProvider(
             create: (context) => getIT<BannersCubit>()..fetchAllBanners()),
         BlocProvider(
-            create: (context) => getIT<LessonsCubit>()..getNextLessons()..getLessons()),
+            create: (context) => getIT<LessonsCubit>()
+              ..getNextLessons()
+              ..getLessons()),
       ],
       child: HomeScreen(),
     ),
@@ -50,8 +53,15 @@ class _LayoutScreenState extends State<LayoutScreen> {
       create: (context) => getIT<NotificationsCubit>(),
       child: NotificationsScreen(),
     ),
-    BlocProvider(
-      create: (context) => getIT<UserDataCubit>(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIT<UserDataCubit>()..getMyData(),
+        ),
+        BlocProvider(
+          create: (context) => getIT<LoginCubit>(),
+        ),
+      ],
       child: ProfileScreen(),
     ),
   ];
@@ -159,7 +169,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
           items: _navBarItems(),
           selectedItemColor:
               ColorManager.primaryOrangeColor, // Color for selected item
-          unselectedItemColor: ColorManager.disabledColor, // Color for unselected items
+          unselectedItemColor:
+              ColorManager.disabledColor, // Color for unselected items
           showUnselectedLabels: true, // Show labels for unselected items
           type: BottomNavigationBarType
               .fixed, // Fixed layout for consistent display)

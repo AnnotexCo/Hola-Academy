@@ -11,12 +11,12 @@ class SkillsCubit extends Cubit<SkillsState> {
   SkillsCubit(this.skillsRepo) : super(SkillsInitial());
 
   Future<void> getSkillsbyLessonID(int lessonID) async {
-    emit(SkillsLoading());
+    if (!isClosed) emit(SkillsLoading());
     try {
       final skills = await skillsRepo.getSkillsbyLessonID(lessonID);
-      emit(SkillsLoaded(skills: skills));
+      if (!isClosed) emit(SkillsLoaded(skills: skills));
     } catch (e) {
-      emit(SkillsError(error: e.toString()));
+      if (!isClosed) emit(SkillsError(error: e.toString()));
     }
   }
 
@@ -27,22 +27,22 @@ class SkillsCubit extends Cubit<SkillsState> {
     bool passed,
     String notes,
   ) async {
-    emit(SkillsLoading());
+    if (!isClosed) emit(SkillsLoading());
     try {
       skillsRepo.evaluateSkill(lessonID, skillId, score, passed, notes);
-      emit(SkillSucessfulyEvaluated());
+      if (!isClosed) emit(SkillSucessfulyEvaluated());
     } catch (e) {
-      emit(SkillsError(error: e.toString()));
+      if (!isClosed) emit(SkillsError(error: e.toString()));
     }
   }
 
   Future<void> getEvaluationsbyLevelID(int lessonID) async {
-    emit(SkillsLoading());
+    if (!isClosed) emit(SkillsLoading());
     try {
       final evaluations = await skillsRepo.getEvaluationsbyLevelID(lessonID);
-      emit(EvaluationsLoaded(evaluations: evaluations));
+      if (!isClosed) emit(EvaluationsLoaded(evaluations: evaluations));
     } catch (e) {
-      emit(SkillsError(error: e.toString()));
+      if (!isClosed) emit(SkillsError(error: e.toString()));
     }
   }
 }

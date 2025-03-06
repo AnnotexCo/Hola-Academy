@@ -9,7 +9,6 @@ import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/core/dependency_injection/dependency.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'package:hola_academy/features/profile/Logic/transactions/trans_cubit.dart';
-import 'package:hola_academy/features/profile/UI/personal_info_screen.dart';
 import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
 import 'package:hola_academy/features/profile/UI/terms_screen.dart';
 import 'package:hola_academy/features/profile/UI/transactions_screen.dart';
@@ -17,7 +16,6 @@ import 'package:hola_academy/features/profile/UI/widgets/custom_profile_app_bar.
 import 'package:hola_academy/features/profile/UI/widgets/custom_profile_backgroung.dart';
 
 import '../../../core/local_db/save_token.dart';
-import '../../auth/login/Logic/login_cubit.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -56,16 +54,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             builder: (context, state) {
               if (state is UserDataSuccess) {}
               return Column(spacing: 56.h, children: [
-                BlocProvider(
-                  create: (context) => getIT<UserDataCubit>()..getMyData(),
-                  child: Stack(alignment: Alignment.topCenter, children: [
-                    CustomProfileBackgroung(),
-                      BlocProvider(
-                            create: (context) => getIT<LoginCubit>(), 
-                            child: CustomProfileAppBar(qrCode: true, isLayout: true),
-                          ),
-                  ]),
-                ),
+                Stack(alignment: Alignment.topCenter, children: [
+                  CustomProfileBackgroung(),
+                  CustomProfileAppBar(qrCode: true, isLayout: true),
+                ]),
                 Container(
                   height: userRole == AppString.coach ? 300.h : 420.h,
                   width: 385.w,
@@ -91,14 +83,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         icon: ImageManager.personalInformation,
                         text: AppString.personalInformation,
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return BlocProvider(
-                                create: (context) => getIT<UserDataCubit>(),
-                                child: PersonalInfoScreen(),
-                              );
-                            },
-                          ));
+                          Navigator.pushNamed(
+                              context, Routes.personalInfoScreen);
                         },
                       ),
                       if (userRole != AppString.coach)

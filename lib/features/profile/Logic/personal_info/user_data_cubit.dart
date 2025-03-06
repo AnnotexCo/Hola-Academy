@@ -60,7 +60,8 @@ class UserDataCubit extends Cubit<UserDataState> {
         await getMyData();
         profileImage = null;
       } else {
-        if (!isClosed)emit(UserDataFailure(message: 'Failed to update user data'));
+        if (!isClosed)
+          emit(UserDataFailure(message: 'Failed to update user data'));
       }
     } catch (e) {
       if (!isClosed) emit(UpdateUserDataFailure(message: e.toString()));

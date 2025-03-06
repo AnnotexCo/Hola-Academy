@@ -12,12 +12,11 @@ class DioLessons {
 
   Future<List<LessonModel>> getLessonsByDate(
       String startDate, String endDate) async {
-
     try {
       final response = await _dio.get(
-          "${ApiConstants.baseUrl}${ApiConstants.getLessonsApibyID}",
-          queryParameters: {"startDate": startDate, "endDate": endDate},
-         );
+        "${ApiConstants.baseUrl}${ApiConstants.getLessonsApibyID}",
+        queryParameters: {"startDate": startDate, "endDate": endDate},
+      );
 
       if (response.statusCode == 200) {
         List<dynamic> data = response.data['data'];
@@ -25,18 +24,17 @@ class DioLessons {
       }
       throw Exception("Failed to load programs");
     } catch (error) {
-      throw ApiErrorHandler.handle(error);
+      throw ApiErrorHandler.handle(error).message.toString();
     }
   }
 
   /// Fetch all Lessons by Id's
   Future<List<LessonModel>> getLessonsByID(int traineeID, int classID) async {
-
     try {
       final response = await _dio.get(
-          "${ApiConstants.baseUrl}${ApiConstants.getLessonsApibyID}",
-          queryParameters: {"traineeId": traineeID, "classId": classID},
-        );
+        "${ApiConstants.baseUrl}${ApiConstants.getLessonsApibyID}",
+        queryParameters: {"traineeId": traineeID, "classId": classID},
+      );
 
       if (response.statusCode == 200) {
         List<dynamic> data = response.data['data'];
@@ -51,9 +49,9 @@ class DioLessons {
   /// Fetch a single program by ID
   Future<List<LessonModel>> getLessonsbytrainee() async {
     try {
-      final response =
-          await _dio.get("${ApiConstants.baseUrl}${ApiConstants.myLessonsApi}",
-              );
+      final response = await _dio.get(
+        "${ApiConstants.baseUrl}${ApiConstants.myLessonsApi}",
+      );
 
       if (response.statusCode == 200) {
         List<dynamic> data = response.data['data'];
@@ -68,8 +66,8 @@ class DioLessons {
   Future<LessonModel> getmyNextLessons() async {
     try {
       final response = await _dio.get(
-          "${ApiConstants.baseUrl}${ApiConstants.myNextLessonsApi}",
-          );
+        "${ApiConstants.baseUrl}${ApiConstants.myNextLessonsApi}",
+      );
 
       if (response.statusCode == 200) {
         final data = response.data['data'];
