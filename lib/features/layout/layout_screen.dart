@@ -37,7 +37,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
         BlocProvider(
             create: (context) => getIT<BannersCubit>()..fetchAllBanners()),
         BlocProvider(
-            create: (context) => getIT<LessonsCubit>()..getNextLessons()),
+            create: (context) => getIT<LessonsCubit>()..getNextLessons()..getLessons()),
       ],
       child: HomeScreen(),
     ),

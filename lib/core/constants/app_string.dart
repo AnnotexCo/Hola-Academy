@@ -220,4 +220,14 @@ class AppString {
   static const String transactions = "Transactions";
   static const String notifications = "Notifications";
   static const String profile = "Profile";
+
+
+  // Calender
+  static const String pastLessons = "Past Lessons";
+  static const String upcomingLessons = "Upcoming Lessons";
+  static const String missedLessons = "Missed Lessons";
+
+  // Evaluation
+  static const String thereIsNoAvailableDate = "There is no availabe date";
+  static const String thereIsNoAvailableTime = "There is no available time";
 }

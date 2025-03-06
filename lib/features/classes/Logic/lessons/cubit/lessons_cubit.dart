@@ -21,10 +21,13 @@ class LessonsCubit extends Cubit<LessonsState> {
     }
   }
 
+  List<LessonModel>? lessonModel;
   getLessons() async {
     emit(LessonsLoading());
     try {
       final lessons = await repo.getmyLessons();
+      lessonModel = lessons;
+      print('lessons: $lessons');
       emit(LessonsSuccess(lessons: lessons));
     } catch (e) {
       emit(LessonsError(message: e.toString()));
@@ -42,10 +45,12 @@ class LessonsCubit extends Cubit<LessonsState> {
     }
   }
 
+  LessonModel? nextLessons;
   getNextLessons() async {
     try {
       emit(LessonsLoading());
       final lessons = await repo.getNextLessons();
+      nextLessons = lessons;
 
       emit(NextLessonsSuccess(lessons: lessons));
     } catch (e) {

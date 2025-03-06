@@ -11,7 +11,7 @@ class LogoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 6), () {
+    Timer(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
     });
     return Scaffold(

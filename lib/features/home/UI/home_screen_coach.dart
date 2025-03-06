@@ -8,6 +8,7 @@ import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/categories/categories_state.dart';
 import 'package:hola_academy/features/classes/Logic/classes/cubit/classes_cubit.dart';
+import 'package:hola_academy/features/classes/Logic/lessons/cubit/lessons_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/levels/cubit/levels_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/programms/programs_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/programms/programs_state.dart';
@@ -174,8 +175,8 @@ class HomeScreenCoach extends StatelessWidget {
                                         );
                                       },
                                       child: EvaluateCard(
-                                        backgroundImage: state.categories[index]
-                                            .image!.path,
+                                        backgroundImage:
+                                            state.categories[index].image!.path,
                                         title: state.categories[index].name,
                                       ),
                                     );
@@ -191,7 +192,16 @@ class HomeScreenCoach extends StatelessWidget {
                     ],
                   ),
                 ),
-                CalendarWidget(),
+                BlocProvider(
+                  create: (context) => getIT<LessonsCubit>()..getLessons(),
+                  child: BlocBuilder<LessonsCubit, LessonsState>(
+                    builder: (context, state) {
+                      return CalendarWidget(
+                          lessons:
+                              context.read<LessonsCubit>().lessonModel ?? []);
+                    },
+                  ),
+                ),
                 SizedBox(
                   height: 13.h,
                 ),

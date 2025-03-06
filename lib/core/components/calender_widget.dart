@@ -1,37 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hola_academy/core/constants/app_string.dart';
+import 'package:hola_academy/features/classes/Data/Model/lessons_model.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarWidget extends StatefulWidget {
-  const CalendarWidget({super.key});
+  final List<LessonModel> lessons;
+  const CalendarWidget({super.key, required this.lessons});
 
   @override
   CalendarWidgetState createState() => CalendarWidgetState();
 }
 
 class CalendarWidgetState extends State<CalendarWidget> {
-  final DateTime _focusedDay = DateTime(2025, 1, 1);
+  final DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
-  final Set<DateTime> pastLessons = {
-    DateTime.utc(2025, 2, 1),
-    DateTime.utc(2025, 2, 5),
-    DateTime.utc(2025, 2, 10),
-    DateTime.utc(2025, 2, 15),
-  };
+  late Set<DateTime> pastLessons;
+  late Set<DateTime> upcomingLessons;
+  late Set<DateTime> missedLessons;
 
-  final Set<DateTime> upcomingLessons = {
-    DateTime.utc(2025, 2, 17),
-    DateTime.utc(2025, 2, 19),
-    DateTime.utc(2025, 2, 24),
-    DateTime.utc(2025, 2, 26),
-  };
+  @override
+  void initState() {
+    super.initState();
+    _categorizeLessons();
+  }
 
-  final Set<DateTime> missedLessons = {
-    DateTime.utc(2025, 1, 29),
-    DateTime.utc(2025, 2, 3),
-    DateTime.utc(2025, 2, 14),
-  };
+  void _categorizeLessons() {
+    DateTime today = DateTime.now();
+    DateTime todayOnly =
+        DateTime(today.year, today.month, today.day); // Normalize time
+
+    pastLessons = widget.lessons
+        .where((lesson) {
+          DateTime lessonDateOnly =
+              DateTime(lesson.date.year, lesson.date.month, lesson.date.day);
+          return lessonDateOnly.isBefore(todayOnly) && lesson.isAttended;
+        })
+        .map((lesson) => DateTime(lesson.date.year, lesson.date.month,
+            lesson.date.day)) // Normalize output
+        .toSet();
+
+    upcomingLessons = widget.lessons
+        .where((lesson) {
+          DateTime lessonDateOnly =
+              DateTime(lesson.date.year, lesson.date.month, lesson.date.day);
+          return lessonDateOnly.isAfter(todayOnly);
+        })
+        .map((lesson) => DateTime(lesson.date.year, lesson.date.month,
+            lesson.date.day)) // Normalize output
+        .toSet();
+
+    missedLessons = widget.lessons
+        .where((lesson) {
+          DateTime lessonDateOnly =
+              DateTime(lesson.date.year, lesson.date.month, lesson.date.day);
+          return lessonDateOnly.isBefore(todayOnly) && !lesson.isAttended;
+        })
+        .map((lesson) => DateTime(lesson.date.year, lesson.date.month,
+            lesson.date.day)) // Normalize output
+        .toSet();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +74,7 @@ class CalendarWidgetState extends State<CalendarWidget> {
             borderRadius: BorderRadius.circular(10.r),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues( alpha :0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 spreadRadius: 2,
                 blurRadius: 5,
                 offset: Offset(0, 2),
@@ -55,7 +84,7 @@ class CalendarWidgetState extends State<CalendarWidget> {
           child: TableCalendar(
             availableGestures: AvailableGestures.horizontalSwipe,
             firstDay: DateTime.utc(2025, 1, 1),
-            lastDay: DateTime.utc(2030, 12, 31),
+            lastDay: DateTime.utc(2050, 12, 31),
             focusedDay: _focusedDay,
             calendarFormat: CalendarFormat.month,
             daysOfWeekHeight: 30,
@@ -152,13 +181,25 @@ class CalendarWidgetState extends State<CalendarWidget> {
   }
 
   Widget _buildLegend() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        _buildLegendItem(Color(0xffE0A89C), "Past Lessons"),
-        SizedBox(width: 20.w),
-        _buildLegendItem(Color(0xffBB4227), "Upcoming Lessons"),
-        SizedBox(width: 30.w),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildLegendItem(Color(0xffE0A89C), AppString.pastLessons),
+            SizedBox(width: 20.w),
+            _buildLegendItem(Color(0xffBB4227), AppString.upcomingLessons),
+            SizedBox(width: 30.w),
+          ],
+        ),
+        SizedBox(height: 10.h),
+        Row(
+          children: [
+            SizedBox(width: 45.w),
+            _buildLegendItem(Color(0xffB96024), AppString.missedLessons),
+          ],
+        ),
       ],
     );
   }
