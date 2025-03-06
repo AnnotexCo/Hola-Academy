@@ -55,6 +55,11 @@
 	<array>
     	<string>google</string>
     	<string>googlechrome</string>
+		<!-- social media -->
+		<string>whatsapp</string>
+  		<string>fb</string>
+  		<string>instagram</string>
+  		<string>tiktok</string>
 	</array>
 
 	<key>CADisableMinimumFrameDurationOnPhone</key>
@@ -63,19 +68,12 @@
 	<true/>
 	<!-- Add these keys for camera and photo library access -->
 	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera to allow you to take a profile photo.</string>
+	<string>This app needs camera access to allow you to take a profile photo and scan QR codes.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need access to your photo library to select a profile photo.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>We need access to save your photos to the photo library.</string>
 	<key>io.flutter.embedded_views_preview</key>
 <true/>
-<key>NSCameraUsageDescription</key>
-<string>This app needs camera access to scan QR codes</string>
-	<!-- prevent rotation -->
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-    	<string>UIInterfaceOrientationPortrait</string>
-	</array>
 </dict>
 </plist>

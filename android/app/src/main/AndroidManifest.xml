@@ -1,5 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 package="com.example.hola_academy">
+
+    <!-- Permissions for camera and external storage access -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+   
     <application
         android:label="Hola Academy"
         android:name="${applicationName}"
@@ -33,18 +40,14 @@ package="com.example.hola_academy">
             android:name="flutterEmbedding"
             android:value="2" />
             <!-- Google Sign-In -->
-            <meta-data
+        <meta-data
             android:name="com.google.android.gms.auth.api.signin.v2"
             android:value="true" />
 
             
     </application>
     
-     <!-- Permissions for camera and external storage access -->
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+
 
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
@@ -55,6 +58,18 @@ package="com.example.hola_academy">
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
+        </intent>
+      <!-- Allow querying browsers for opening URLs -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+
+        <!-- Allow querying for WhatsApp and other social media links -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="whatsapp" />
         </intent>
     </queries>
 </manifest>
