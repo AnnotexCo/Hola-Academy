@@ -39,7 +39,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
               child: Stack(alignment: Alignment.topCenter, children: [
                 CustomProfileBackgroung(),
                 BlocProvider(
-                  create: (context) =>  getIT<LoginCubit>(),
+                  create: (context) => getIT<LoginCubit>(),
                   child: CustomProfileAppBar(qrCode: true, isLayout: false),
                 ),
               ]),
@@ -59,6 +59,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     return SocialMediaCard(
                       name: socialMedia.name,
                       iconPath: socialMedia.iconPath,
+                      url: socialMedia.url,
                     );
                   },
                 ),
@@ -71,16 +72,20 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   }
 
   final List<SocialMedia> socialMediaList = [
-    SocialMedia(AppString.instagram, ImageManager.instagram),
-    SocialMedia(AppString.facebook, ImageManager.facebook),
-    SocialMedia(AppString.tikTok, ImageManager.tiktok),
-    SocialMedia(AppString.whatsApp, ImageManager.whatsapp),
+    SocialMedia(AppString.instagram, ImageManager.instagram,
+        'https://www.instagram.com/holaswimacademy'),
+    SocialMedia(AppString.facebook, ImageManager.facebook,
+        'https://www.facebook.com/Holaswimacademy'),
+    SocialMedia(AppString.tikTok, ImageManager.tiktok,
+        'https://www.tiktok.com/@holaswimacademy'),
+    SocialMedia(
+        AppString.whatsApp, ImageManager.whatsapp, 'https://wa.me/+201070440011'),
   ];
 }
 
 class SocialMedia {
   final String name;
   final String iconPath;
-
-  SocialMedia(this.name, this.iconPath);
+  final String url;
+  SocialMedia(this.name, this.iconPath, this.url);
 }
