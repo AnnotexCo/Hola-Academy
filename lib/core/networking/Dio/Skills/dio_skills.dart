@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hola_academy/core/constants/api_constants.dart';
-import 'package:hola_academy/core/local_db/save_token.dart';
 import 'package:hola_academy/core/networking/ErrorHandler/api_error_handler.dart';
 
 import '../../../../features/classes/Data/Model/evaluations_model.dart';
@@ -13,19 +12,13 @@ class DioSkills {
   DioSkills({required Dio dio}) : _dio = dio;
 
   Future<List<Skill>> getSkillsbyLessonID(int lessonID) async {
-    String? token = await SaveTokenDB.getToken();
     try {
       final response = await _dio.get(
           "${ApiConstants.baseUrl}${ApiConstants.getSkillsbyLessonsID}$lessonID",
           data: {
             "lessonId": lessonID,
           },
-          options: Options(
-            headers: {
-              'Authorization': 'Bearer $token',
-              'Content-Type': 'application/json',
-            },
-          ));
+         );
 
       if (response.statusCode == 200) {
         final data = response.data['data'];
@@ -41,19 +34,13 @@ class DioSkills {
   }
 
   Future<List<Evaluation>> getEvaluationsbyLevelID(int lessonID) async {
-    String? token = await SaveTokenDB.getToken();
     try {
       final response = await _dio.get(
         "${ApiConstants.baseUrl}${ApiConstants.getEvaluationsbyLessonID}$lessonID/evaluations",
         data: {
           "lessonId": lessonID,
         },
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $token',
-            'Content-Type': 'application/json',
-          },
-        ),
+        
       );
 
       if (response.statusCode == 200) {
@@ -71,7 +58,6 @@ class DioSkills {
 
   Future<void> evaluateSkill(
       int lessonID, int skillId, int score, bool passed, String notes) async {
-    String? token = await SaveTokenDB.getToken();
     try {
       final response = await _dio.post(
           "${ApiConstants.baseUrl}${ApiConstants.evaluateSkillsbyLessonsID}",
@@ -82,12 +68,7 @@ class DioSkills {
             "passed": passed,
             "notes": notes
           },
-          options: Options(
-            headers: {
-              'Authorization': 'Bearer $token',
-              'Content-Type': 'application/json',
-            },
-          ));
+        );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (kDebugMode) {

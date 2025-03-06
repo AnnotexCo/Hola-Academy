@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import '../../../../features/notifications/Data/Model/notification_model.dart';
 import '../../../constants/api_constants.dart';
-import '../../../local_db/save_token.dart';
 import '../../ErrorHandler/api_error_handler.dart';
 
 class DioNotificationsApi {
@@ -13,12 +12,7 @@ class DioNotificationsApi {
   Future<List<NotificationData>> fetchNotifications() async {
     try {
       final response = await _dio.get('${ApiConstants.baseUrl}${ApiConstants.notificationsApi}',
-       options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-            "Authorization": "Bearer ${await SaveTokenDB.getToken()}",
-          },
-        ),
+     
       );
 
       if (response.statusCode == 200) {

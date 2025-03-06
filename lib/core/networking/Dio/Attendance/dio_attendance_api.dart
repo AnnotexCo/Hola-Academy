@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:hola_academy/core/constants/api_constants.dart';
-import 'package:hola_academy/core/local_db/save_token.dart';
 import 'package:hola_academy/core/networking/ErrorHandler/api_error_handler.dart';
 
 class DioAttendance {
@@ -9,15 +8,10 @@ class DioAttendance {
   DioAttendance({required Dio dio}): _dio = dio;
 
   Future<dynamic> markAttendance({required String qrCode}) async {
-    String? token = await SaveTokenDB.getToken();
     try {
       final response = await _dio.post(
         "${ApiConstants.baseUrl}${ApiConstants.attendanceMarkApi}$qrCode",
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $token',
-          },
-        ),
+       
       );
       if (response.statusCode == 200) {
         return response.data;

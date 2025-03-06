@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:hola_academy/core/constants/api_constants.dart';
-import 'package:hola_academy/core/local_db/save_token.dart';
 import 'package:hola_academy/core/networking/ErrorHandler/api_error_handler.dart';
 import 'package:hola_academy/features/profile/Data/Model/transactions_model.dart';
 
@@ -11,15 +10,10 @@ class DioTranscations {
 
   /// Fetch all transations
   Future<TransactionsModel> getAllTranscations() async {
-    String? token = await SaveTokenDB.getToken();
     try {
       final response = await _dio.get(
         "${ApiConstants.baseUrl}${ApiConstants.transactionsApi}",
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $token',
-          },
-        ),
+        options: Options(),
       );
       if (response.statusCode == 200) {
         TransactionsModel transactionsModel =
@@ -37,15 +31,9 @@ class DioTranscations {
   Future<TransactionsModel> getAllTranscationsByFilter(
       {required bool isIncome}) async {
     String param = isIncome ? "INCOME" : "EXPENSE";
-    String? token = await SaveTokenDB.getToken();
     try {
       final response = await _dio.get(
         "${ApiConstants.baseUrl}${ApiConstants.transactionsApi}?case=$param",
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $token',
-          },
-        ),
       );
       if (response.statusCode == 200) {
         TransactionsModel transactionsModel =
@@ -64,17 +52,10 @@ class DioTranscations {
       {required num amount,
       required String description,
       required String type}) async {
-    String? token = await SaveTokenDB.getToken();
     try {
       final response = await _dio.post(
         "${ApiConstants.baseUrl}${ApiConstants.transactionsAskForMoney}",
         data: {"amount": amount, "description": description, "type": type},
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $token',
-            'Content-Type': 'application/json',
-          },
-        ),
       );
       if (response.statusCode == 200) {
         return response.data;

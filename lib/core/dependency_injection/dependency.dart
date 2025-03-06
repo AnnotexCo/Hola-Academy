@@ -14,6 +14,7 @@ import 'package:hola_academy/core/networking/Dio/Requests/dio_requests_api.dart'
 import 'package:hola_academy/core/networking/Dio/Skills/dio_skills.dart';
 import 'package:hola_academy/core/networking/Dio/Transaction/dio_transcations.dart';
 import 'package:hola_academy/core/networking/Dio/User/dio_user_api.dart';
+import 'package:hola_academy/core/networking/interceptors/dio_interceptor.dart';
 import 'package:hola_academy/features/Admin/requests/Data/Repo/requests_repo.dart';
 import 'package:hola_academy/features/Admin/requests/Logic/requests_cubit.dart';
 import 'package:hola_academy/features/Admin/scanner/Data/Repo/attendance_repo.dart';
@@ -55,8 +56,12 @@ import '../networking/Dio/Program/dio_programs.dart';
 final getIT = GetIt.instance; // Ensure it's instance, not calling it
 
 void setUpGetIt() {
-  getIT.registerLazySingleton<Dio>(() => Dio());
-  // Register Dio
+  getIT.registerLazySingleton<Dio>(() {
+    final dio = Dio();
+    dio.interceptors
+        .add(DioInterceptor()); 
+    return dio;
+  }); // Register Dio
   getIT.registerLazySingleton<DioSignUpApi>(
       () => DioSignUpApi(dio: getIT<Dio>()));
 
@@ -176,7 +181,7 @@ void setUpGetIt() {
   getIT.registerLazySingleton<SkillsRepo>(() => SkillsRepo(
         skills: getIT(),
       ));
-  getIT.registerFactory<SkillsCubit>(() => SkillsCubit (getIT()));
+  getIT.registerFactory<SkillsCubit>(() => SkillsCubit(getIT()));
   //Personal Info
   getIT.registerLazySingleton<DioUserApi>(() => DioUserApi(dio: getIT<Dio>()));
 
@@ -208,8 +213,8 @@ void setUpGetIt() {
       () => NotificationsCubit(getIT<NotificationsRepo>()));
 
   // Attendance
-  getIT.registerLazySingleton<AttendanceRepo>(() =>
-      AttendanceRepo(dioAttendance: getIT<DioAttendance>()));
+  getIT.registerLazySingleton<AttendanceRepo>(
+      () => AttendanceRepo(dioAttendance: getIT<DioAttendance>()));
 
   getIT.registerFactory<AttendanceCubit>(
       () => AttendanceCubit(getIT<AttendanceRepo>()));

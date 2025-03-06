@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:hola_academy/core/local_db/save_token.dart';
 import 'package:hola_academy/core/networking/ErrorHandler/api_error_handler.dart';
 import 'package:hola_academy/features/profile/Data/Model/trainee_model.dart';
 import 'package:hola_academy/features/profile/Data/Model/update_user_model.dart';
@@ -13,17 +12,9 @@ class DioUserApi {
   DioUserApi({required Dio dio}) : _dio = dio;
 
   Future<UserModel> getMyData() async {
-    String? token = await SaveTokenDB.getToken();
-
     try {
       final response = await _dio.get(
         '${ApiConstants.baseUrl}${ApiConstants.getMyDataApi}',
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer $token',
-          },
-        ),
       );
 
       if (response.statusCode != null &&
@@ -40,8 +31,6 @@ class DioUserApi {
   Future<bool> updateMyData({
     required UpdateUserModel updateUserModel,
   }) async {
-    String? token = await SaveTokenDB.getToken();
-
     try {
       final Map<String, dynamic> formDataMap = {
         'name': updateUserModel.name,
@@ -62,12 +51,6 @@ class DioUserApi {
       final response = await _dio.patch(
         '${ApiConstants.baseUrl}${ApiConstants.updateMyDataApi}',
         data: formData,
-        options: Options(
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': 'Bearer $token',
-          },
-        ),
       );
 
       if (response.statusCode != null &&
@@ -83,17 +66,11 @@ class DioUserApi {
   }
 
   Future<AllUsersModel> fetchAllUsers({String? role}) async {
-    String? token = await SaveTokenDB.getToken();
     try {
       final response = await _dio.get(
         role != null
             ? '${ApiConstants.baseUrl}${ApiConstants.fetchAllUsersApi}?role=$role'
             : '${ApiConstants.baseUrl}${ApiConstants.fetchAllUsersApi}',
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $token',
-          },
-        ),
       );
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
@@ -106,17 +83,10 @@ class DioUserApi {
     }
   }
 
-
   Future<AllUsersModel> fetchTraineesbyClassID(int id) async {
-    String? token = await SaveTokenDB.getToken();
     try {
       final response = await _dio.get(
         '${ApiConstants.baseUrl}${ApiConstants.fetchTraineesbyClassIdApi}$id',
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $token',
-          },
-        ),
       );
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&

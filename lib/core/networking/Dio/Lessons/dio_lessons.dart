@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:hola_academy/core/constants/api_constants.dart';
-import 'package:hola_academy/core/local_db/save_token.dart';
 import 'package:hola_academy/core/networking/ErrorHandler/api_error_handler.dart';
 import 'package:hola_academy/features/classes/Data/Model/lessons_model.dart';
 
@@ -13,18 +12,12 @@ class DioLessons {
 
   Future<List<LessonModel>> getLessonsByDate(
       String startDate, String endDate) async {
-    String? token = await SaveTokenDB.getToken();
 
     try {
       final response = await _dio.get(
           "${ApiConstants.baseUrl}${ApiConstants.getLessonsApibyID}",
           queryParameters: {"startDate": startDate, "endDate": endDate},
-          options: Options(
-            headers: {
-              'Authorization': 'Bearer $token',
-              'Content-Type': 'application/json',
-            },
-          ));
+         );
 
       if (response.statusCode == 200) {
         List<dynamic> data = response.data['data'];
@@ -38,18 +31,12 @@ class DioLessons {
 
   /// Fetch all Lessons by Id's
   Future<List<LessonModel>> getLessonsByID(int traineeID, int classID) async {
-    String? token = await SaveTokenDB.getToken();
 
     try {
       final response = await _dio.get(
           "${ApiConstants.baseUrl}${ApiConstants.getLessonsApibyID}",
           queryParameters: {"traineeId": traineeID, "classId": classID},
-          options: Options(
-            headers: {
-              'Authorization': 'Bearer $token',
-              'Content-Type': 'application/json',
-            },
-          ));
+        );
 
       if (response.statusCode == 200) {
         List<dynamic> data = response.data['data'];
@@ -63,16 +50,10 @@ class DioLessons {
 
   /// Fetch a single program by ID
   Future<List<LessonModel>> getLessonsbytrainee() async {
-    String? token = await SaveTokenDB.getToken();
     try {
       final response =
           await _dio.get("${ApiConstants.baseUrl}${ApiConstants.myLessonsApi}",
-              options: Options(
-                headers: {
-                  'Authorization': 'Bearer $token',
-                  'Content-Type': 'application/json',
-                },
-              ));
+              );
 
       if (response.statusCode == 200) {
         List<dynamic> data = response.data['data'];
@@ -85,16 +66,10 @@ class DioLessons {
   }
 
   Future<LessonModel> getmyNextLessons() async {
-    String? token = await SaveTokenDB.getToken();
     try {
       final response = await _dio.get(
           "${ApiConstants.baseUrl}${ApiConstants.myNextLessonsApi}",
-          options: Options(
-            headers: {
-              'Authorization': 'Bearer $token',
-              'Content-Type': 'application/json',
-            },
-          ));
+          );
 
       if (response.statusCode == 200) {
         final data = response.data['data'];

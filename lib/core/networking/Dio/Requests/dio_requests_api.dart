@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:hola_academy/features/Admin/requests/Data/Model/requests_model.dart';
 import '../../../constants/api_constants.dart';
-import '../../../local_db/save_token.dart';
 import '../../ErrorHandler/api_error_handler.dart';
 
 import 'package:http_parser/http_parser.dart';
@@ -17,12 +16,7 @@ class DioRequestsApi {
     try {
       final response = await _dio.get(
         "${ApiConstants.baseUrl}${ApiConstants.requestsApi}",
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-            "Authorization": "Bearer ${await SaveTokenDB.getToken()}",
-          },
-        ),
+      
       );
 
       if (response.statusCode == 200) {
@@ -43,12 +37,7 @@ class DioRequestsApi {
     try {
       final response = await _dio.get(
         "${ApiConstants.baseUrl}${ApiConstants.requestsApi}$id",
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-            "Authorization": "Bearer ${await SaveTokenDB.getToken()}",
-          },
-        ),
+        
       );
 
       if (response.statusCode == 200) {
@@ -64,8 +53,7 @@ class DioRequestsApi {
   Future<void> bookProgram(
       Map<String, dynamic> bookingProgramData, File? imageFile) async {
     try {
-      String? token = await SaveTokenDB.getToken();
-
+      
       FormData formData = FormData.fromMap({
         ...bookingProgramData,
         if (imageFile != null)
@@ -80,12 +68,7 @@ class DioRequestsApi {
       final response = await _dio.post(
         "${ApiConstants.baseUrl}${ApiConstants.requestsApi}",
         data: formData,
-        options: Options(
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': 'Bearer $token',
-          },
-        ),
+        
       );
 
       if (response.statusCode == 201) {
