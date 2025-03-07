@@ -13,7 +13,8 @@ class UserDataCubit extends Cubit<UserDataState> {
   UserDataCubit(this.userRepo) : super(UserDataInitial());
 
   File? profileImage;
-
+  List<User> traineesByClass = [];
+  List<User> filteredTrainees = [];
   // Function to pick image from gallery
   Future<void> pickImageFromGallery() async {
     final ImagePicker picker = ImagePicker();
@@ -60,7 +61,9 @@ class UserDataCubit extends Cubit<UserDataState> {
         await getMyData();
         profileImage = null;
       } else {
-        if (!isClosed)emit(UserDataFailure(message: 'Failed to update user data'));
+        if (!isClosed) {
+          emit(UserDataFailure(message: 'Failed to update user data'));
+        }
       }
     } catch (e) {
       if (!isClosed) emit(UpdateUserDataFailure(message: e.toString()));
@@ -122,9 +125,25 @@ class UserDataCubit extends Cubit<UserDataState> {
     try {
       if (!isClosed) emit(UserDataLoading());
       final users = await userRepo.fetchTraineesByID(classID);
-      if (!isClosed) emit(FetchAllUsersSuccess(users: users));
+      traineesByClass = users.data.users; // Store fetched trainees
+      filteredTrainees = List.from(traineesByClass); // Initialize filtered list
+      if (!isClosed) emit(FilterUsersSuccess(filteredUsers: users.data.users));
     } catch (e) {
       if (!isClosed) emit(FetchAllUsersFailure(message: e.toString()));
     }
+  }
+
+  void searchTrainees(String query) {
+    if (query.trim().isEmpty) {
+      filteredTrainees = List.from(traineesByClass);
+    } else {
+      final searchQuery = query.toLowerCase();
+      filteredTrainees = traineesByClass.where((user) {
+        return (user.name?.toLowerCase().contains(searchQuery) ?? false) ||
+            (user.phoneNumber?.toLowerCase().contains(searchQuery) ?? false);
+      }).toList();
+    }
+
+    if (!isClosed) emit(FilterUsersSuccess(filteredUsers: filteredTrainees));
   }
 }

@@ -7,6 +7,7 @@ import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/core/dependency_injection/dependency.dart';
+import 'package:hola_academy/features/not_found/not_found_screen.dart';
 import 'package:hola_academy/features/profile/Logic/personal_info/user_data_cubit.dart';
 import 'package:hola_academy/features/profile/Logic/transactions/trans_cubit.dart';
 import 'package:hola_academy/features/profile/UI/contact_us_screen.dart';
@@ -52,101 +53,114 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: SingleChildScrollView(
           child: BlocBuilder<UserDataCubit, UserDataState>(
             builder: (context, state) {
-              if (state is UserDataSuccess) {}
-              return Column(spacing: 56.h, children: [
-                Stack(alignment: Alignment.topCenter, children: [
-                  CustomProfileBackground(),
-                  CustomProfileAppBar(qrCode: true, isLayout: true),
-                ]),
-                Container(
-                  height: userRole == AppString.coach ? 300.h : 420.h,
-                  width: 385.w,
-                  decoration: BoxDecoration(
-                    color: ColorManager.whiteColor,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(12.r),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: ColorManager.shadowColor,
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: Offset(1, 2),
-                      )
-                    ],
-                  ),
-                  child: ListView(
-                    shrinkWrap: true, // Adjusts to content size
-                    physics: NeverScrollableScrollPhysics(),
-                    children: [
-                      _buildMenuItem(
-                        icon: ImageManager.personalInformation,
-                        text: AppString.personalInformation,
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, Routes.personalInfoScreen);
-                        },
+              if (state is UserDataSuccess) {
+                return Column(spacing: 56.h, children: [
+                  Stack(alignment: Alignment.topCenter, children: [
+                    CustomProfileBackground(),
+                    CustomProfileAppBar(qrCode: true, isLayout: true),
+                  ]),
+                  Container(
+                    height: userRole == AppString.coach ? 300.h : 420.h,
+                    width: 385.w,
+                    decoration: BoxDecoration(
+                      color: ColorManager.whiteColor,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12.r),
                       ),
-                      if (userRole != AppString.coach)
+                      boxShadow: [
+                        BoxShadow(
+                          color: ColorManager.shadowColor,
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(1, 2),
+                        )
+                      ],
+                    ),
+                    child: ListView(
+                      shrinkWrap: true, // Adjusts to content size
+                      physics: NeverScrollableScrollPhysics(),
+                      children: [
                         _buildMenuItem(
-                          icon: ImageManager.analysis,
-                          text: AppString.analytics,
+                          icon: ImageManager.personalInformation,
+                          text: AppString.personalInformation,
                           onTap: () {
                             Navigator.pushNamed(
-                                context, Routes.analyticsSkillsScreen);
+                                context, Routes.personalInfoScreen);
                           },
                         ),
-                      _buildMenuItem(
-                        icon: ImageManager.transaction,
-                        text: AppString.transaction,
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return BlocProvider(
-                                  create: (context) => getIT<TransCubit>(),
-                                  child: TransactionsScreen());
+                        if (userRole != AppString.coach)
+                          _buildMenuItem(
+                            icon: ImageManager.analysis,
+                            text: AppString.analytics,
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, Routes.analyticsSkillsScreen);
                             },
-                          ));
-                        },
-                      ),
-                      if (userRole != AppString.coach)
+                          ),
                         _buildMenuItem(
-                          icon: ImageManager.booking,
-                          text: AppString.booked,
+                          icon: ImageManager.transaction,
+                          text: AppString.transaction,
                           onTap: () {
-                            Navigator.pushNamed(context, Routes.bookedScreen);
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return BlocProvider(
+                                    create: (context) => getIT<TransCubit>(),
+                                    child: TransactionsScreen());
+                              },
+                            ));
                           },
                         ),
-                      _buildMenuItem(
-                        icon: ImageManager.terms,
-                        text: AppString.terms,
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return TermsScreen();
+                        if (userRole != AppString.coach)
+                          _buildMenuItem(
+                            icon: ImageManager.booking,
+                            text: AppString.booked,
+                            onTap: () {
+                              Navigator.pushNamed(context, Routes.bookedScreen);
                             },
-                          ));
-                        },
-                      ),
-                      _buildMenuItem(
-                        icon: ImageManager.sms,
-                        text: AppString.contactUs,
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return BlocProvider(
-                                  create: (context) => getIT<UserDataCubit>(),
-                                  child: ContactUsScreen());
-                            },
-                          ));
-                        },
-                        last: true,
-                      ),
-                    ],
+                          ),
+                        _buildMenuItem(
+                          icon: ImageManager.terms,
+                          text: AppString.terms,
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return TermsScreen();
+                              },
+                            ));
+                          },
+                        ),
+                        _buildMenuItem(
+                          icon: ImageManager.sms,
+                          text: AppString.contactUs,
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return BlocProvider(
+                                    create: (context) => getIT<UserDataCubit>(),
+                                    child: ContactUsScreen());
+                              },
+                            ));
+                          },
+                          last: true,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(height: 1.h)
-              ]);
+                  SizedBox(height: 1.h)
+                ]);
+              }
+              if (state is UserDataLoading) {
+                return Center(
+                  heightFactor: 20,
+                  child: CircularProgressIndicator());
+              }
+
+              if (state is UserDataFailure) {
+                return NotFoundScreen(
+                  title: state.message,
+                );
+              }
+              return SizedBox.shrink();
             },
           ),
         ),

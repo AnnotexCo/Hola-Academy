@@ -14,6 +14,7 @@ import 'package:hola_academy/features/classes/UI/widgets/progress_class_widget.d
 import 'package:hola_academy/features/classes/UI/widgets/program_widget.dart';
 import 'package:hola_academy/features/classes/UI/widgets/categories_tap_buttons.dart';
 import 'package:hola_academy/features/classes/UI/widgets/shimmereffect.dart';
+import 'package:hola_academy/features/not_found/not_found_screen.dart';
 
 import '../Logic/categories/categories_state.dart';
 import '../Logic/programs/programs_state.dart';
@@ -202,14 +203,18 @@ class ClassesScreenState extends State<ClassesScreen> {
 
   Widget _buildProgramsList(List filteredPrograms) {
     return Expanded(
-      child: ListView.builder(
-        padding: const EdgeInsets.only(top: 5),
-        itemCount: filteredPrograms.length,
-        itemBuilder: (context, index) => Padding(
-          padding: EdgeInsets.only(bottom: 18.h),
-          child: _buildClassItem(filteredPrograms[index]),
-        ),
-      ),
+      child: filteredPrograms.isNotEmpty
+          ? ListView.builder(
+              padding: const EdgeInsets.only(top: 5),
+              itemCount: filteredPrograms.length,
+              itemBuilder: (context, index) => Padding(
+                padding: EdgeInsets.only(bottom: 18.h),
+                child: _buildClassItem(filteredPrograms[index]),
+              ),
+            )
+          : NotFoundScreen(
+              title: "There is no programs yet!",
+            ),
     );
   }
 

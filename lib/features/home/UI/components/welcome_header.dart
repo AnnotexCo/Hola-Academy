@@ -19,7 +19,7 @@ class WelcomeHeader extends StatelessWidget {
         }
         return SizedBox(
           height: 55.h,
-          width: 188.w,
+          width: double.infinity,
           child: Row(
             children: [
               ProfilePicWidget(

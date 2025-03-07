@@ -7,6 +7,7 @@ import 'package:hola_academy/core/constants/app_string.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/core/constants/image_manager.dart';
 import 'package:hola_academy/core/dependency_injection/dependency.dart';
+import 'package:hola_academy/features/auth/login/Logic/login_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/classes/cubit/classes_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/lessons/cubit/lessons_cubit.dart';
 import 'package:hola_academy/features/classes/Logic/levels/cubit/levels_cubit.dart';
@@ -52,8 +53,15 @@ class _LayoutCoachScreenState extends State<LayoutCoachScreen> {
       create: (context) => getIT<NotificationsCubit>(),
       child: NotificationsScreen(),
     ),
-    BlocProvider(
-      create: (context) => getIT<UserDataCubit>(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIT<UserDataCubit>()..getMyData(),
+        ),
+        BlocProvider(
+          create: (context) => getIT<LoginCubit>(),
+        ),
+      ],
       child: ProfileScreen(),
     ),
   ];
@@ -77,7 +85,7 @@ class _LayoutCoachScreenState extends State<LayoutCoachScreen> {
       _pageController.animateToPage(index,
           duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
     } else {
-       // If far apart, jump directly
+      // If far apart, jump directly
       setState(() {
         _selectedIndex = index;
       });

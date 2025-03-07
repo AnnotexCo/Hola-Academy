@@ -16,7 +16,7 @@ if (keystorePropertiesFile.exists()) {
 }
 android {
     namespace = "com.example.hola_academy"
-    compileSdk = 34 // Ensure this is set to 34 or latest stable version
+    compileSdk = 35 // Ensure this is set to 34 or latest stable version
     ndkVersion = flutter.ndkVersion
 
     defaultConfig {

@@ -3,8 +3,6 @@ import 'package:bloc/bloc.dart';
 import '../Data/Repo/notification_repo.dart';
 import 'notifications_state.dart';
 
-
-
 class NotificationsCubit extends Cubit<NotificationsState> {
   final NotificationsRepo notificationsRepo;
 
@@ -12,34 +10,35 @@ class NotificationsCubit extends Cubit<NotificationsState> {
 
   /// Fetch all notifications
   Future<void> fetchNotifications() async {
-    emit(NotificationsLoading());
+    if (!isClosed) emit(NotificationsLoading());
     try {
       final notifications = await notificationsRepo.fetchNotifications();
-      emit(NotificationsLoaded(notifications: notifications));
+      if (!isClosed) emit(NotificationsLoaded(notifications: notifications));
     } catch (e) {
-      emit(NotificationsError(message: e.toString()));
+      if (!isClosed) emit(NotificationsError(message: e.toString()));
     }
   }
 
   /// Fetch notification by ID
   Future<void> fetchNotificationById(int id) async {
-    emit(NotificationsLoading());
+    if (!isClosed) emit(NotificationsLoading());
     try {
       final notification = await notificationsRepo.fetchNotificationById(id);
-      emit(NotificationsLoaded(notifications: [notification]));
+      if (!isClosed) emit(NotificationsLoaded(notifications: [notification]));
     } catch (e) {
-      emit(NotificationsError(message: e.toString()));
+      if (!isClosed) emit(NotificationsError(message: e.toString()));
     }
   }
 
   /// Fetch notifications by status
   Future<void> fetchNotificationsByStatus(String status) async {
-    emit(NotificationsLoading());
+    if (!isClosed) emit(NotificationsLoading());
     try {
-      final notifications = await notificationsRepo.fetchNotificationsByStatus(status);
-      emit(NotificationsLoaded(notifications: notifications));
+      final notifications =
+          await notificationsRepo.fetchNotificationsByStatus(status);
+      if (!isClosed) emit(NotificationsLoaded(notifications: notifications));
     } catch (e) {
-      emit(NotificationsError(message: e.toString()));
+      if (!isClosed) emit(NotificationsError(message: e.toString()));
     }
   }
 
@@ -47,9 +46,9 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   Future<void> markNotificationAsRead(int id) async {
     try {
       await notificationsRepo.markNotificationAsRead(id);
-      emit(NotificationUpdated());
+      if (!isClosed) emit(NotificationUpdated());
     } catch (e) {
-      emit(NotificationsError(message: e.toString()));
+      if (!isClosed) emit(NotificationsError(message: e.toString()));
     }
   }
 
@@ -57,9 +56,9 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   Future<void> deleteNotification(int id) async {
     try {
       await notificationsRepo.deleteNotification(id);
-      emit(NotificationDeleted());
+      if (!isClosed) emit(NotificationDeleted());
     } catch (e) {
-      emit(NotificationsError(message: e.toString()));
+      if (!isClosed) emit(NotificationsError(message: e.toString()));
     }
   }
 }

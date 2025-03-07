@@ -11,7 +11,7 @@ import '../../../../core/dependency_injection/dependency.dart';
 class ListofTrainee extends StatelessWidget {
   final int classId;
   final String className;
-  final AllUsersModel allUsersModel;
+  final  List<User> allUsersModel;
 
   const ListofTrainee({
     super.key,
@@ -26,9 +26,9 @@ class ListofTrainee extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return ListView.builder(
-            itemCount: allUsersModel.data.users.length,
+            itemCount: allUsersModel.length,
             itemBuilder: (context, index) {
-              var user = allUsersModel.data.users[index];
+              var user = allUsersModel[index];
               return Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: 16.w,

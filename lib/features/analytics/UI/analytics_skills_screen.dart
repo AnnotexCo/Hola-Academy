@@ -24,8 +24,8 @@ class AnalyticsSkillsScreen extends StatelessWidget {
               child: Column(
                 children: [
                   LevelSelector(
-                    onLevelSelected: (_) {
-                      context.read<SkillsCubit>().getEvaluationsByLevelID(_);
+                    onLevelSelected: (eva) {
+                      context.read<SkillsCubit>().getEvaluationsByLevelID(eva);
                     },
                   ),
                   SizedBox(height: 20.h),

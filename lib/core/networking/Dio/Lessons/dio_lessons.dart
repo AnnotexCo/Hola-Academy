@@ -42,7 +42,7 @@ class DioLessons {
       }
       throw Exception("Failed to load programs");
     } catch (error) {
-      throw ApiErrorHandler.handle(error);
+      throw ApiErrorHandler.handle(error).message.toString();
     }
   }
 
@@ -59,7 +59,7 @@ class DioLessons {
       }
       throw Exception("Failed to load program");
     } catch (error) {
-      throw error.toString();
+      throw ApiErrorHandler.handle(error).message.toString();
     }
   }
 
@@ -76,7 +76,7 @@ class DioLessons {
       }
       throw Exception("Failed to load program");
     } catch (error) {
-      throw error.toString();
+      throw ApiErrorHandler.handle(error).message.toString();
     }
   }
 }

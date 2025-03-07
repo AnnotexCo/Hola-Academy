@@ -127,7 +127,7 @@ class AppRouter {
       case Routes.personalInfoScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider.value(
-                  value: getIT<UserDataCubit>(),
+                  value: getIT<UserDataCubit>()..getMyData(),
                   child: PersonalInfoScreen(),
                 ));
 

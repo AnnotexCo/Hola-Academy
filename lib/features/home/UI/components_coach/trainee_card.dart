@@ -124,7 +124,6 @@ class TraineeCard extends StatelessWidget {
                 final lessonsCubit = context.read<LessonsCubit>();
                 lessonsCubit.getLessonsByID(userId!, classId);
                 final skillsCubit = context.read<SkillsCubit>();
-
                 showDialog(
                     context: context,
                     builder: (context) {
@@ -132,7 +131,15 @@ class TraineeCard extends StatelessWidget {
                         value: lessonsCubit,
                         child: BlocConsumer<LessonsCubit, LessonsState>(
                           listener: (context, state) {
-                            if (state is LessonsSuccess) {}
+                            if (state is LessonsError) {
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(state.message),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
                           },
                           builder: (context, state) {
                             if (state is LessonsSuccess) {

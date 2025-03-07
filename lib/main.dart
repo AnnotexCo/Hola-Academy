@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/app_router.dart';
@@ -16,15 +17,16 @@ import 'core/bloc_observer/bloc_observer.dart';
 import 'core/dependency_injection/dependency.dart';
 import 'core/local_notification_service/local_notification_service.dart';
 
-
-
 ///  **Handle background notifications (when the app is completely closed)**
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-
-}
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  final prefs = await SharedPreferences.getInstance();
+
+  // Force save onboarding status to true
+  await prefs.setBool('seen_onboarding', true);
 
 // Lock the app to portrait mode
   await SystemChrome.setPreferredOrientations([
@@ -33,7 +35,7 @@ void main() async {
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
+  );
   setUpGetIt();
   Bloc.observer = MyBlocObserver();
 
@@ -58,8 +60,6 @@ void main() async {
 
   //  Handle notification when the app is in the foreground
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-
-
     // **Show the notification using LocalNotificationService**
     LocalNotificationService().showNotification(
       title: message.notification?.title ?? "No Title",
@@ -68,21 +68,20 @@ void main() async {
   });
 
   //  Handle notification click when app is in the background or terminated
-FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-  // Get the current navigator state
-  final navigator = MyApp.navigatorKey.currentState;
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    // Get the current navigator state
+    final navigator = MyApp.navigatorKey.currentState;
 
-  if (navigator != null) {
-    // Check if message.data contains the screen key
-    if (message.data.containsKey('screen')) {
-      navigator.pushNamed(message.data['screen']!);
-    } else {
-      // Default to navigating to Routes.notificationsScreen
-      navigator.pushNamed(Routes.notificationsScreen);
+    if (navigator != null) {
+      // Check if message.data contains the screen key
+      if (message.data.containsKey('screen')) {
+        navigator.pushNamed(message.data['screen']!);
+      } else {
+        // Default to navigating to Routes.notificationsScreen
+        navigator.pushNamed(Routes.notificationsScreen);
+      }
     }
-  }
-});
-
+  });
 
   runApp(
     MultiBlocProvider(
@@ -92,7 +91,6 @@ FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
           lazy: false,
         ),
       ],
-      
       child: MyApp(appRouter: AppRouter()),
     ),
   );

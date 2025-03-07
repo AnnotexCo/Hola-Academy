@@ -21,40 +21,51 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _navigateToNextScreen(context);
+    _navigateToNextScreen();
   }
 
-  Future<void> _navigateToNextScreen(context) async {
+  Future<void> _navigateToNextScreen() async {
     await Future.delayed(const Duration(seconds: 6));
 
     bool hasSeenOnboarding = await OnboardingStatusDB.hasSeenOnboarding();
+    print('Token: $hasSeenOnboarding');
     String? token = await SaveTokenDB.getToken();
     String? role = await SaveTokenDB.getRole();
 
-    if (!hasSeenOnboarding) {
-      Navigator.pushReplacementNamed(context, Routes.onboarding);
-    } else if (token == null || token.isEmpty) {
-      Navigator.pushReplacementNamed(context, Routes.loginScreen);
-    } else {
-      // Role-based navigation
-      switch (role?.toUpperCase()) {
-        case 'ADMIN':
-          Navigator.pushReplacementNamed(context, Routes.adminLayout);
-          break;
-        case 'USER':
-        case 'PREUSER':
-        case 'TRAINEE':
-          Navigator.pushReplacementNamed(context, Routes.layoutScreen);
-          break;
-        case 'COACH':
-          Navigator.pushReplacementNamed(context, Routes.layoutCoachScreen);
-          break;
-        default:
+    if (!mounted) return; // Ensure widget is still active before navigating
+
+    Future.microtask(() {
+      if (!hasSeenOnboarding) {
+        if (mounted) Navigator.pushReplacementNamed(context, Routes.onboarding);
+      } else if (token == null || token.isEmpty) {
+        if (mounted)
           Navigator.pushReplacementNamed(context, Routes.loginScreen);
-          break;
+      } else {
+        // Role-based navigation
+        switch (role?.toUpperCase()) {
+          case 'ADMIN':
+            if (mounted)
+              Navigator.pushReplacementNamed(context, Routes.adminLayout);
+            break;
+          case 'USER':
+          case 'PREUSER':
+          case 'TRAINEE':
+            if (mounted)
+              Navigator.pushReplacementNamed(context, Routes.layoutScreen);
+            break;
+          case 'COACH':
+            if (mounted)
+              Navigator.pushReplacementNamed(context, Routes.layoutCoachScreen);
+            break;
+          default:
+            if (mounted)
+              Navigator.pushReplacementNamed(context, Routes.loginScreen);
+            break;
+        }
       }
-    }
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +83,6 @@ class _SplashScreenState extends State<SplashScreen> {
               color: ColorManager.primaryOrangeColor,
               radius: 15.r,
               numberOfDots: 3,
-
               animationDuration: Duration(milliseconds: 600),
             ),
           ],

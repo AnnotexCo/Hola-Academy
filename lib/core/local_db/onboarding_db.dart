@@ -1,17 +1,19 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingStatusDB {
-  static const _storage = FlutterSecureStorage();
   static const String _onboardingKey = 'seen_onboarding';
 
   /// Mark onboarding as seen
   static Future<void> setOnboardingSeen() async {
-    await _storage.write(key: _onboardingKey, value: 'true');
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_onboardingKey, true);
   }
 
   /// Check if onboarding has been seen
   static Future<bool> hasSeenOnboarding() async {
-    String? seen = await _storage.read(key: _onboardingKey);
-    return seen?.toLowerCase() == 'true';
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.reload(); // Ensure latest data is loaded
+    bool seen = prefs.getBool(_onboardingKey) ?? false;
+    return seen;
   }
 }

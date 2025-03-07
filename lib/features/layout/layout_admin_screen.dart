@@ -42,7 +42,7 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
       child: NotificationsScreen(),
     ),
     BlocProvider(
-      create: (context) => getIT<UserDataCubit>(),
+      create: (context) => getIT<UserDataCubit>()..getMyData(),
       child: PersonalInfoScreen(),
     ),
   ];

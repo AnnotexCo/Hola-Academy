@@ -15,6 +15,7 @@ class FindTraineesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController searchController = TextEditingController();
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -42,6 +43,7 @@ class FindTraineesScreen extends StatelessWidget {
                         vertical: 16.h,
                       ),
                       child: GeneralTextFormField(
+                        controller: searchController,
                         height: 37.h,
                         hintStyle: TextStyle(
                           color: ColorManager.grayColorHeadline,
@@ -61,29 +63,36 @@ class FindTraineesScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 19.w),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFF5BD69),
-                      minimumSize: Size(128.w, 37.h),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.search,
-                          color: ColorManager.whiteColor,
+                  BlocListener<UserDataCubit, UserDataState>(
+                    listener: (context, state) {},
+                    child: ElevatedButton(
+                      onPressed: () {
+                        context
+                            .read<UserDataCubit>()
+                            .searchTrainees(searchController.text);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFF5BD69),
+                        minimumSize: Size(128.w, 37.h),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.r),
                         ),
-                        SizedBox(width: 8.w),
-                        Text(
-                          'Search',
-                          style: TextStyle(
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.search,
                             color: ColorManager.whiteColor,
                           ),
-                        ),
-                      ],
+                          SizedBox(width: 8.w),
+                          Text(
+                            'Search',
+                            style: TextStyle(
+                              color: ColorManager.whiteColor,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(width: 16.w),
@@ -113,21 +122,18 @@ class FindTraineesScreen extends StatelessWidget {
                 }
               },
               builder: (context, state) {
-                // Show shimmer effect during loading state
-                if (state is UpdateUserDataLoading) {
-                  return CircularProgressIndicator();
+                if (state is UserDataLoading) {
+                  return Center(child: CircularProgressIndicator());
                 }
 
-                // Once the data is fetched successfully, display the list
-                if (state is FetchAllUsersSuccess) {
+                if (state is FilterUsersSuccess) {
                   return ListofTrainee(
                     className: className,
-                    allUsersModel: state.users,
+                    allUsersModel: state.filteredUsers,
                     classId: classID,
                   );
                 }
 
-                // Return an empty widget if no relevant state
                 return SizedBox.shrink();
               },
             )),

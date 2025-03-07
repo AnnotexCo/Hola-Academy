@@ -11,49 +11,49 @@ class LessonsCubit extends Cubit<LessonsState> {
   LessonsCubit(this.repo) : super(LessonsInitial());
 
   Future<void> getLessonsbyDate(String startDate, String endDate) async {
-     if (!isClosed) emit(LessonsLoading());
+    if (!isClosed) emit(LessonsLoading());
     try {
       final lessons = await repo.getLessonsByDate(startDate, endDate);
-      if (!isClosed)  emit(LessonsSuccess(lessons: lessons));
+      if (!isClosed) emit(LessonsSuccess(lessons: lessons));
     } catch (e) {
-      if (!isClosed)  emit(LessonsError(message: e.toString()));
+      if (!isClosed) emit(LessonsError(message: e.toString()));
     }
   }
 
   List<LessonModel>? lessonModel;
   getLessons() async {
-     if (!isClosed) emit(LessonsLoading());
+    if (!isClosed) emit(LessonsLoading());
     try {
       final lessons = await repo.getmyLessons();
       lessonModel = lessons;
-     
-     if (!isClosed)   emit(LessonsSuccess(lessons: lessons));
+
+      if (!isClosed) emit(LessonsSuccess(lessons: lessons));
     } catch (e) {
-       if (!isClosed) emit(LessonsError(message: e.toString()));
+      if (!isClosed) emit(LessonsError(message: e.toString()));
     }
   }
 
   getLessonsByID(int traineeID, int classID) async {
     try {
-    if (!isClosed)    emit(LessonsLoading());
+      if (!isClosed) emit(LessonsLoading());
 
       final lessons = await repo.getLessonsByID(traineeID, classID);
-     if (!isClosed)   emit(LessonsSuccess(lessons: lessons));
+      if (!isClosed) emit(LessonsSuccess(lessons: lessons));
     } catch (e) {
-     if (!isClosed)   emit(LessonsError(message: e.toString()));
+      if (!isClosed) emit(LessonsError(message: e.toString()));
     }
   }
 
   LessonModel? nextLessons;
   getNextLessons() async {
     try {
-      if (!isClosed)  emit(LessonsLoading());
+      if (!isClosed) emit(LessonsLoading());
       final lessons = await repo.getNextLessons();
       nextLessons = lessons;
 
-     if (!isClosed)   emit(NextLessonsSuccess(lessons: lessons));
+      if (!isClosed) emit(NextLessonsSuccess(lessons: lessons));
     } catch (e) {
-     if (!isClosed)   emit(LessonsError(message: e.toString()));
+      if (!isClosed) emit(LessonsError(message: e.toString()));
     }
   }
 }

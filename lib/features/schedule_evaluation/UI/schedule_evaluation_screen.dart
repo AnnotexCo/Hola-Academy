@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/features/classes/Data/Model/lessons_model.dart';
 import 'package:hola_academy/features/classes/Logic/lessons/cubit/lessons_cubit.dart';
+import 'package:hola_academy/features/not_found/not_found_screen.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -119,7 +120,9 @@ class _ScheduleEvaluationScreenState extends State<ScheduleEvaluationScreen> {
                 if (state is LessonsLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is LessonsError) {
-                  return Center(child: Text("Error: ${state.message}"));
+                  return NotFoundScreen(
+                    title: state.message,
+                  );
                 } else if (state is LessonsSuccess) {
                   return SfCalendar(
                     view: CalendarView.day,
@@ -185,7 +188,8 @@ class _ScheduleEvaluationScreenState extends State<ScheduleEvaluationScreen> {
                                   Text(
                                     'Level A',
                                     style: TextStyle(
-                                      color: Colors.white.withValues(alpha:  0.8),
+                                      color:
+                                          Colors.white.withValues(alpha: 0.8),
                                       fontSize: 12.sp,
                                     ),
                                   ),
