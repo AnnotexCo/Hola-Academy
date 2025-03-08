@@ -41,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
-// --------------------------------------------
+//---------------------------------------------
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,8 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               }
               if (state is UserDataLoading) {
                 return Center(
-                  heightFactor: 20,
-                  child: CircularProgressIndicator());
+                    heightFactor: 20, child: CircularProgressIndicator());
               }
 
               if (state is UserDataFailure) {

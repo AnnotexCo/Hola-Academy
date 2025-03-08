@@ -24,18 +24,6 @@ class OnboardingState extends State<Onboarding> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    // Pre-cache images to avoid flashing
-    for (var content in contents) {
-      if (content.image != null) {
-        precacheImage(AssetImage(content.image!), context);
-      }
-    }
-  }
-
-  @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
@@ -56,6 +44,18 @@ class OnboardingState extends State<Onboarding> {
               setState(() {
                 _currentPage = index;
               });
+
+              // Cache images dynamically as they appear
+              if (contents[index].image != null) {
+                precacheImage(AssetImage(contents[index].image!), context);
+              }
+              if (index > 0 && contents[index - 1].image != null) {
+                precacheImage(AssetImage(contents[index - 1].image!), context);
+              }
+              if (index < contents.length - 1 &&
+                  contents[index + 1].image != null) {
+                precacheImage(AssetImage(contents[index + 1].image!), context);
+              }
             },
             itemBuilder: (context, index) {
               return AnimatedBuilder(

@@ -46,6 +46,12 @@ class ClassesScreenState extends State<ClassesScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    context.read<ProgramsCubit>().fetchAllPrograms();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProgramsCubit, ProgramsState>(
       listener: (context, state) {

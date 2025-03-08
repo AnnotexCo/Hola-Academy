@@ -62,29 +62,37 @@ class _LoginScreenState extends State<LoginScreen> {
                           state.token, state.role); // Save session
                       String role = state.role.trim().toUpperCase();
                       if (role == 'ADMIN') {
-                      if (context.mounted) { Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          Routes.adminLayout,
-                          (route) => false,
-                        );}
+                        if (context.mounted) {
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            Routes.adminLayout,
+                            (route) => false,
+                          );
+                        }
                       } else if (role == 'USER' ||
                           role == 'PREUSER' ||
                           role == 'TRAINEE') {
-                       if (context.mounted) { Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          Routes.layoutScreen,
-                          (route) => false,
-                        );}
+                        if (context.mounted) {
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            Routes.layoutScreen,
+                            (route) => false,
+                          );
+                        }
                       } else if (role == 'COACH') {
-                       if (context.mounted) { Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          Routes.layoutCoachScreen,
-                          (route) => false,
-                        );}
+                        if (context.mounted) {
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            Routes.layoutCoachScreen,
+                            (route) => false,
+                          );
+                        }
                       } else {
-                       if (context.mounted) { ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Invalid role: $role')),
-                        );}
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Invalid role: $role')),
+                          );
+                        }
                       }
                     } else if (state is LoginFailure) {
                       Navigator.pop(context);
@@ -93,6 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                     } else if (state is LoginLoading) {
                       showDialog(
+                          barrierDismissible: false,
                           context: context,
                           builder: (_) {
                             return Center(child: CircularProgressIndicator());

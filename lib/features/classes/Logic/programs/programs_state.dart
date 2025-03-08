@@ -31,6 +31,16 @@ class SingleProgramSuccess extends ProgramsState {
   List<Object> get props => [program];
 }
 
+class SingleProgramLoading extends ProgramsState {}
+
+class SingleProgramError extends ProgramsState {
+  final String message;
+  SingleProgramError(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
 // Error state
 class ProgramsError extends ProgramsState {
   final String message;

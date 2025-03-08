@@ -16,13 +16,10 @@ class ScanComplete extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 100.h),
-            Opacity(
-              opacity: 1.0,
-              child: SvgPicture.asset(
-                ImageManager.confirmedAttendance,
-                width: 384.w,
-                height: 343.h,
-              ),
+            SvgPicture.asset(
+              ImageManager.confirmedAttendance,
+              width: 384.w,
+              height: 343.h,
             ),
             SizedBox(height: 8.h),
             Text(

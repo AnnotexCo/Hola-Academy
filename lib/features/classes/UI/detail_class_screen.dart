@@ -21,7 +21,7 @@ class DetailClassScreen extends StatelessWidget {
     return Scaffold(
       body: BlocBuilder<ProgramsCubit, ProgramsState>(
         builder: (context, state) {
-          if (state is ProgramsLoading) {
+          if (state is SingleProgramLoading) {
             return const DetailsClassesLoadingWidget();
           } else if (state is SingleProgramSuccess) {
             final program = state.program;
@@ -31,7 +31,8 @@ class DetailClassScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: SingleChildScrollView(
-                        padding: EdgeInsets.only(bottom: 260.h), // Leave space for the bottom widget
+                        padding: EdgeInsets.only(
+                            bottom: 260.h), // Leave space for the bottom widget
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -74,87 +75,102 @@ class DetailClassScreen extends StatelessWidget {
                   right: 0,
                   child: Container(
                     color: Colors.white, // Background to separate from scroll
-                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                     child: _buildProgramLevels(program),
                   ),
                 ),
               ],
             );
-          } else if (state is ProgramsError) {
+          } else if (state is SingleProgramError) {
             return Center(child: NotFoundScreen(title: state.message));
           } else {
-            return NotFoundScreen(title: 'Program not found');
+            return SizedBox.shrink();
           }
         },
       ),
     );
   }
 
- Widget _buildProgramDetails(program) {
-  return Padding(
-    padding: EdgeInsets.symmetric(vertical: 10.h),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Age Information (With Icons)
-        Row(
-          children: [
-            Icon(Icons.cake, color: Colors.grey, size: 20.w),
-            SizedBox(width: 8.w),
-            Text(
-              "Min Age: ${program.minAge}  |  Max Age: ${program.maxAge}",
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500, color: Colors.black87),
-            ),
-          ],
-        ),
+  Widget _buildProgramDetails(program) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 10.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Age Information (With Icons)
+          Row(
+            children: [
+              Icon(Icons.cake, color: Colors.grey, size: 20.w),
+              SizedBox(width: 8.w),
+              Text(
+                "Min Age: ${program.minAge}  |  Max Age: ${program.maxAge}",
+                style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87),
+              ),
+            ],
+          ),
 
-        SizedBox(height: 8.h),
+          SizedBox(height: 8.h),
 
-        // Suitable Gender
-        Row(
-          children: [
-            Icon(Icons.person, color: Colors.grey, size: 20.w),
-            SizedBox(width: 8.w),
-            Text(
-              "Suitable For: ${program.allowedGender}",
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500, color: Colors.black87),
-            ),
-          ],
-        ),
+          // Suitable Gender
+          Row(
+            children: [
+              Icon(Icons.person, color: Colors.grey, size: 20.w),
+              SizedBox(width: 8.w),
+              Text(
+                "Suitable For: ${program.allowedGender}",
+                style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87),
+              ),
+            ],
+          ),
 
-        SizedBox(height: 8.h),
+          SizedBox(height: 8.h),
 
-        // Category
-        Row(
-          children: [
-            Icon(Icons.category, color: Colors.grey, size: 20.w),
-            SizedBox(width: 8.w),
-            Text(
-              "Category: ${program.category.name}",
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500, color: Colors.black87),
-            ),
-          ],
-        ),
+          // Category
+          Row(
+            children: [
+              Icon(Icons.category, color: Colors.grey, size: 20.w),
+              SizedBox(width: 8.w),
+              Text(
+                "Category: ${program.category.name}",
+                style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87),
+              ),
+            ],
+          ),
 
-        SizedBox(height: 12.h),
+          SizedBox(height: 12.h),
 
-        // Description Header
-        Text(
-          "Program Overview",
-          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold, color: Colors.black),
-        ),
-        SizedBox(height: 6.h),
+          // Description Header
+          Text(
+            "Program Overview",
+            style: TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.bold,
+                color: Colors.black),
+          ),
+          SizedBox(height: 6.h),
 
-        // Description Text
-        Text(
-          program.description,
-          style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400, color: Colors.black54),
-        ),
-      ],
-    ),
-  );
-}
-
+          // Description Text
+          Text(
+            program.description,
+            style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w400,
+                color: Colors.black54),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _buildProgramLevels(program) {
     return Column(
@@ -162,7 +178,10 @@ class DetailClassScreen extends StatelessWidget {
       children: [
         Text(
           "Programs Levels",
-          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600, color: Color(0xff6C757D)),
+          style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w600,
+              color: Color(0xff6C757D)),
         ),
         SizedBox(height: 10.h),
         SizedBox(
@@ -198,10 +217,12 @@ class DetailClassScreen extends StatelessWidget {
   }
 
   TextStyle boldStyle() {
-    return TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Color(0xFF3C4146));
+    return TextStyle(
+        fontSize: 16.sp, fontWeight: FontWeight.w600, color: Color(0xFF3C4146));
   }
 
   TextStyle normalStyle() {
-    return TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400, color: Color(0xFF626A72));
+    return TextStyle(
+        fontSize: 14.sp, fontWeight: FontWeight.w400, color: Color(0xFF626A72));
   }
 }

@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!mounted) return; // Ensure widget is still active before navigating
 
     Future.microtask(() {
-      if (!hasSeenOnboarding) {
+      if (hasSeenOnboarding) {
         if (mounted) Navigator.pushReplacementNamed(context, Routes.onboarding);
         OnboardingStatusDB.setOnboardingSeen();
       } else if (token == null || token.isEmpty) {
