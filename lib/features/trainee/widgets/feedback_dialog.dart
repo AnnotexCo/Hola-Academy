@@ -171,7 +171,7 @@ class FeedbackDialog extends StatelessWidget {
                               color: ColorManager.primaryOrangeColor,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w400),
-                          onTap: () {}),
+                          ),
                     ],
                   ),
                 ],

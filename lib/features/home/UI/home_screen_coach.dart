@@ -47,7 +47,6 @@ class HomeScreenCoach extends StatelessWidget {
                       alignment: Alignment.centerLeft, child: WelcomeHeader()),
                 ),
                 GestureDetector(
-                  onTap: () {},
                   child: BlocProvider(
                     create: (context) =>
                         getIT<BannersCubit>()..fetchAllBanners(),

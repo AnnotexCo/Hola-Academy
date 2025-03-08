@@ -18,7 +18,7 @@ class CustomColoredOutlineButton extends StatelessWidget {
       required this.style,
       required this.height,
       required this.width,
-      required this.onTap});
+       this.onTap});
 
   @override
   Widget build(BuildContext context) {

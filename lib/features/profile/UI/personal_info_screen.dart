@@ -281,7 +281,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                     color: ColorManager.textRedColor,
                                   ),
                                   keyboardType: TextInputType.datetime,
-                                  onTap: () async {},
+                                
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Please select a date';
