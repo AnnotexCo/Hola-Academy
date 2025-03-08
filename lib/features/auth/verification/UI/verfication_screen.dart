@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +10,7 @@ import 'package:hola_academy/features/auth/verification/Logic/cubit/check_otp_cu
 
 import '../../../../core/components/custom_app_button.dart';
 import '../../../../core/constants/color_manager.dart';
+import '../../forgot_password/Logic/cubit/forget_password_cubit.dart';
 import 'widgets/build_back_arrow.dart';
 import 'widgets/build_verfication_message.dart';
 
@@ -26,11 +28,12 @@ class _VerificationScreenState extends State<VerificationScreen> {
       List.generate(6, (_) => TextEditingController());
   List<String> _codeList = [];
   String code = '';
+  Timer? _timer;
+  int _remainingSeconds = 0;
 
   @override
   void initState() {
     super.initState();
-    // Initialize with empty strings
     _codeList = List.filled(6, '');
   }
 
@@ -42,7 +45,23 @@ class _VerificationScreenState extends State<VerificationScreen> {
     for (final controller in _textControllers) {
       controller.dispose();
     }
+    _timer?.cancel();
     super.dispose();
+  }
+
+  void _startResendCooldown() {
+    setState(() {
+      _remainingSeconds = 30;
+    });
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (_remainingSeconds > 0) {
+        setState(() {
+          _remainingSeconds--;
+        });
+      } else {
+        timer.cancel();
+      }
+    });
   }
 
   @override
@@ -57,9 +76,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("Thank you For Verification")),
                 );
-                Navigator.pushNamed(
+                Navigator.pushNamedAndRemoveUntil(
                   context,
                   Routes.resetPassword,
+                  (route) => false,
                   arguments: ResetPasswordArgs(email: widget.email, otp: code),
                 );
               } else if (state is CheckOtpFailure) {
@@ -77,7 +97,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     buildBackArrow(context),
                     SizedBox(height: 48.h),
                     buildTextMessage(AppString.verification,
-                        AppString.sentVerificationCode, '+20 *** **** ***'),
+                        AppString.sentVerificationCode, widget.email),
                     SizedBox(height: 48.h),
                     _customVerificationInputs(),
                     SizedBox(height: 80.h),
@@ -151,15 +171,14 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 if (value.isNotEmpty) {
                   _codeList[index] = value;
                   if (index < 5) {
-                    _focusNodes[index + 1].requestFocus(); // Move to next input
+                    _focusNodes[index + 1].requestFocus();
                   } else {
-                    _focusNodes[index].unfocus(); // Close keyboard on last box
+                    _focusNodes[index].unfocus();
                   }
                 } else {
                   _codeList[index] = '';
                   if (index > 0) {
-                    _focusNodes[index - 1]
-                        .requestFocus(); // Move to previous input
+                    _focusNodes[index - 1].requestFocus();
                   }
                 }
               },
@@ -180,7 +199,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
             code = _codeList.join();
             if (code.length == 6) {
               context.read<CheckOtpCubit>().verifyOtp(widget.email, code);
-              // print(code);
             }
           },
         ),
@@ -195,17 +213,25 @@ class _VerificationScreenState extends State<VerificationScreen> {
               ),
             ),
             TextButton(
-              onPressed: () {
-                // Add .
-                // logic here
-              },
+              onPressed: _remainingSeconds == 0
+                  ? () {
+                      context
+                          .read<ForgetPasswordCubit>()
+                          .forgetpassword(widget.email);
+                      _startResendCooldown();
+                    }
+                  : null,
               child: Text(
-                AppString.resend,
+                _remainingSeconds == 0
+                    ? AppString.resend
+                    : "Resend in $_remainingSeconds s",
                 style: TextStyle(
                   color: ColorManager.textRedColor,
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
-                  decoration: TextDecoration.underline,
+                  decoration: _remainingSeconds == 0
+                      ? TextDecoration.underline
+                      : TextDecoration.none,
                 ),
               ),
             ),

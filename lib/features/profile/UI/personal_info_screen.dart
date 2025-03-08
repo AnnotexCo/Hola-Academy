@@ -82,15 +82,14 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 child: BlocConsumer<UserDataCubit, UserDataState>(
                   listener: (context, state) {
                     if (state is UserDataSuccess) {
-                      nameController.text = state.userModel.name ?? '';
+                      nameController.text = state.userModel.name ?? "N/A";
                       parentNameController.text =
-                          state.userModel.parentName ?? '';
+                          state.userModel.parentName ?? "N/A";
                       phoneController.text = state.userModel.phoneNumber ?? '';
-                      birthDate = DateFormat('dd/MM/yyyy').format(
-                          DateTime.parse(state.userModel.dob ?? '').toLocal());
+                      birthDate = formatDate(state.userModel.dob);
                       parentWhatsappNumberController.text =
-                          state.userModel.parentWhatsappNumber.toString();
-                      emailController.text = state.userModel.email ?? '';
+                          state.userModel.parentWhatsappNumber ?? "N/A";
+                      emailController.text = state.userModel.email ?? "N/A";
                       selectedGender = state.userModel.gender;
                       userModel = state.userModel;
                     }
@@ -221,7 +220,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   },
                                 ),
                                 GeneralTextFormField(
-                                  hint: '01258672352',
+                                  hint: "N/A",
                                   label: AppString.phoneNumber,
                                   labelStyle: TextStyle(
                                     fontSize: 18.sp,
@@ -245,7 +244,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                     _userRole == AppString.user ||
                                     _userRole == AppString.trainee) ...[
                                   GeneralTextFormField(
-                                    hint: '+201258672352',
+                                    hint: "N/A",
                                     label: AppString.parentNumber,
                                     labelStyle: TextStyle(
                                       fontSize: 18.sp,
@@ -281,7 +280,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                     color: ColorManager.textRedColor,
                                   ),
                                   keyboardType: TextInputType.datetime,
-                                
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Please select a date';
@@ -290,7 +288,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   },
                                 ),
                                 GeneralTextFormField(
-                                  hint: selectedGender ?? "",
+                                  hint: selectedGender ?? "N/A",
                                   label: AppString.gender,
                                   labelStyle: TextStyle(
                                     fontSize: 18.sp,
@@ -404,7 +402,15 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   }
 }
 
-String formatDate(String dateString) {
-  DateTime dateTime = DateTime.parse(dateString);
-  return DateFormat('dd-MM-yyyy').format(dateTime); // Change format as needed
+String formatDate(String? dateString) {
+  if (dateString == null || dateString.isEmpty) {
+    return "N/A";
+  }
+
+  try {
+    DateTime dateTime = DateTime.parse(dateString).toLocal();
+    return DateFormat('dd/MM/yyyy').format(dateTime);
+  } catch (e) {
+    return "Invalid Date";
+  }
 }

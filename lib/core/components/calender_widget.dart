@@ -181,26 +181,29 @@ class CalendarWidgetState extends State<CalendarWidget> {
   }
 
   Widget _buildLegend() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _buildLegendItem(Color(0xffE0A89C), AppString.pastLessons),
-            SizedBox(width: 20.w),
-            _buildLegendItem(Color(0xffBB4227), AppString.upcomingLessons),
-            SizedBox(width: 30.w),
-          ],
-        ),
-        SizedBox(height: 10.h),
-        Row(
-          children: [
-            SizedBox(width: 45.w),
-            _buildLegendItem(Color(0xffB96024), AppString.missedLessons),
-          ],
-        ),
-      ],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 40.w),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start, // Center the row
+            children: [
+              _buildLegendItem(Color(0xffE0A89C), AppString.pastLessons),
+              SizedBox(width: 25.w),
+              _buildLegendItem(Color(0xffBB4227), AppString.upcomingLessons),
+            ],
+          ),
+          SizedBox(height: 10.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start, // Center the row
+            children: [
+              _buildLegendItem(Color(0xffB96024), AppString.missedLessons),
+            ],
+          ),
+        ],
+      ),
     );
   }
 

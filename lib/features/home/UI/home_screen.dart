@@ -39,9 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
-    debugPrint('Building MyWidgetMoom');
-
     return Scaffold(
       backgroundColor: ColorManager.backgroundColor,
       body: SafeArea(

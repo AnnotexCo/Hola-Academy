@@ -106,8 +106,15 @@ class AppRouter {
       case Routes.verificationScreen:
         return MaterialPageRoute(builder: (contex) {
           final String email = settings.arguments as String; // Get phone number
-          return BlocProvider(
-            create: (context) => getIT<CheckOtpCubit>(),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => getIT<CheckOtpCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => getIT<ForgetPasswordCubit>(),
+              ),
+            ],
             child: VerificationScreen(
               email: email,
             ),

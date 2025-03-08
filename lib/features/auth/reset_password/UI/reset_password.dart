@@ -43,7 +43,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Password reset successful!")),
                   );
-                  Navigator.pushNamed(context, Routes.loginScreen);
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    Routes.loginScreen,
+                    (route) => false,
+                  );
                 } else if (state is ResetPasswordFailure) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.error)),
