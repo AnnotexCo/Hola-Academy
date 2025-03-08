@@ -12,8 +12,7 @@ class OnboardingStatusDB {
   /// Check if onboarding has been seen
   static Future<bool> hasSeenOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.reload(); // Ensure latest data is loaded
-    bool seen = prefs.getBool(_onboardingKey) ?? false;
-    return seen;
+    final hasSeenDialog = prefs.getBool(_onboardingKey) ?? false;
+    return hasSeenDialog;
   }
 }

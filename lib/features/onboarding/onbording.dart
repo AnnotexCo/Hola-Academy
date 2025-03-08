@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/routes.dart';
 import 'package:hola_academy/core/components/custom_app_button.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
-import 'package:hola_academy/core/local_db/onboarding_db.dart';
 
 import 'content_model.dart';
 
@@ -138,8 +137,6 @@ class OnboardingState extends State<Onboarding> {
                               left: 45.w,
                               child: GestureDetector(
                                 onTap: () async {
-                                  await OnboardingStatusDB
-                                      .setOnboardingSeen(); // Mark onboarding as seen
                                   if (context.mounted) {
                                     Navigator.pushNamed(
                                       context,
@@ -170,8 +167,6 @@ class OnboardingState extends State<Onboarding> {
                                 child: CustomAppButton(
                                   text: "Create Account",
                                   onPressed: () async {
-                                    await OnboardingStatusDB
-                                        .setOnboardingSeen(); // Mark onboarding as seen
                                     if (context.mounted) {
                                       Navigator.pushReplacementNamed(
                                         context,

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/Routing/app_router.dart';
@@ -23,10 +22,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final prefs = await SharedPreferences.getInstance();
-
-  // Force save onboarding status to true
-  await prefs.setBool('seen_onboarding', true);
 
 // Lock the app to portrait mode
   await SystemChrome.setPreferredOrientations([

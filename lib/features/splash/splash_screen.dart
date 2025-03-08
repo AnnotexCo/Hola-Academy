@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 6));
 
     bool hasSeenOnboarding = await OnboardingStatusDB.hasSeenOnboarding();
-    print('Token: $hasSeenOnboarding');
+
     String? token = await SaveTokenDB.getToken();
     String? role = await SaveTokenDB.getRole();
 
@@ -37,29 +37,35 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.microtask(() {
       if (!hasSeenOnboarding) {
         if (mounted) Navigator.pushReplacementNamed(context, Routes.onboarding);
+        OnboardingStatusDB.setOnboardingSeen();
       } else if (token == null || token.isEmpty) {
-        if (mounted)
+        if (mounted) {
           Navigator.pushReplacementNamed(context, Routes.loginScreen);
+        }
       } else {
         // Role-based navigation
         switch (role?.toUpperCase()) {
           case 'ADMIN':
-            if (mounted)
+            if (mounted) {
               Navigator.pushReplacementNamed(context, Routes.adminLayout);
+            }
             break;
           case 'USER':
           case 'PREUSER':
           case 'TRAINEE':
-            if (mounted)
+            if (mounted) {
               Navigator.pushReplacementNamed(context, Routes.layoutScreen);
+            }
             break;
           case 'COACH':
-            if (mounted)
+            if (mounted) {
               Navigator.pushReplacementNamed(context, Routes.layoutCoachScreen);
+            }
             break;
           default:
-            if (mounted)
+            if (mounted) {
               Navigator.pushReplacementNamed(context, Routes.loginScreen);
+            }
             break;
         }
       }
