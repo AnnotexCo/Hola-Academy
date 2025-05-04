@@ -70,40 +70,41 @@ class LessonsDialog extends StatelessWidget {
                           Navigator.of(context).pop();
                         },
                         onTap: () {
+                          print(lessons[index].id);
                           skillsCubit.getSkillsByLessonID(lessons[index].id);
                           Navigator.pop(context);
 
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return BlocProvider.value(
-                                value: skillsCubit,
-                                child: BlocConsumer<SkillsCubit, SkillsState>(
-                                  listener: (context, state) {
-                                    if (state is SkillsError) {
-                                      Text('something went wrong');
-                                    }
-                                  },
-                                  builder: (context, state) {
-                                    if (state is SkillsLoaded) {
-                                      return EvaluateDialog(
-                                          lessonId: lessons[index].id,
-                                          skillsCubit: skillsCubit,
-                                          skills: state.skills,
-                                          traineeName: traineeName,
-                                          courseTitle: courseTitle,
-                                          imageUrl: imageUrl,
-                                          onCancel: () {
-                                            Navigator.of(context).pop();
-                                          });
-                                    }
+                          // showDialog(
+                          //   context: context,
+                          //   builder: (context) {
+                          //     return BlocProvider.value(
+                          //       value: skillsCubit,
+                          //       child: BlocConsumer<SkillsCubit, SkillsState>(
+                          //         listener: (context, state) {
+                          //           if (state is SkillsError) {
+                          //             Text('something went wrong');
+                          //           }
+                          //         },
+                          //         builder: (context, state) {
+                          //           if (state is SkillsLoaded) {
+                          //             return EvaluateDialog(
+                          //                 lessonId: lessons[index].id,
+                          //                 skillsCubit: skillsCubit,
+                          //                 skills: state.skills,
+                          //                 traineeName: traineeName,
+                          //                 courseTitle: courseTitle,
+                          //                 imageUrl: imageUrl,
+                          //                 onCancel: () {
+                          //                   Navigator.of(context).pop();
+                          //                 });
+                          //           }
 
-                                    return const SizedBox();
-                                  },
-                                ),
-                              );
-                            },
-                          );
+                          //           return const SizedBox();
+                          //         },
+                          //       ),
+                          //     );
+                          //   },
+                          // );
                         },
                       );
                     }),
