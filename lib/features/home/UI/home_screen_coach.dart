@@ -92,8 +92,6 @@ class HomeScreenCoach extends StatelessWidget {
                                   itemBuilder: (context, index) {
                                     return GestureDetector(
                                       onTap: () {
-                                        final programsCubit =
-                                            context.read<ProgramsCubit>();
                                         final levelsCubit =
                                             context.read<LevelsCubit>();
 
@@ -105,18 +103,16 @@ class HomeScreenCoach extends StatelessWidget {
                                             String categoryName =
                                                 state.categories[index].name;
                                             return BlocProvider.value(
-                                              value: programsCubit,
-                                              child: BlocBuilder<ProgramsCubit,
-                                                  ProgramsState>(
+                                              value: levelsCubit,
+                                              child: BlocBuilder<LevelsCubit,
+                                                  LevelsState>(
                                                 builder: (context, state) {
-                                                  if (state
-                                                      is ProgramsSuccess) {
-                                                    final options = state
-                                                        .programs
-                                                        .map((program) => {
+                                                  if (state is LevelsSuccess) {
+                                                    final options = state.levels
+                                                        .map((level) => {
                                                               "title":
-                                                                  program.name,
-                                                              "icon": program
+                                                                  level.name,
+                                                              "icon": level
                                                                   .image
                                                                   ?.path, // Handle null image safely
                                                             })
@@ -132,34 +128,33 @@ class HomeScreenCoach extends StatelessWidget {
                                                           (selectedTitle) {
                                                         // Find the program that matches the selected title
                                                         final selectedProgram =
-                                                            state.programs
+                                                            state.levels
                                                                 .firstWhere(
-                                                          (program) =>
-                                                              program.name ==
+                                                          (level) =>
+                                                              level.name ==
                                                               selectedTitle,
                                                         );
 
                                                         if (selectedTitle ==
                                                             selectedProgram
                                                                 .name) {
-                                                          showPrivateLevelsDialog(
+                                                          showClassIfCationDialog(
                                                               context,
-                                                              levelsCubit,
                                                               classesCubit,
                                                               selectedProgram
                                                                   .id,
-                                                              selectedTitle);
+                                                              selectedProgram
+                                                                  .name);
                                                         }
                                                       },
                                                     );
                                                   }
 
-                                                  if (state is ProgramsError) {
+                                                  if (state is LevelsError) {
                                                     return NotFoundScreen();
                                                   }
 
-                                                  if (state
-                                                      is ProgramsLoading) {
+                                                  if (state is LevelsLoading) {
                                                     return Center(
                                                         child:
                                                             CircularProgressIndicator()); // Centered loading

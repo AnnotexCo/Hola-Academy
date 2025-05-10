@@ -14,11 +14,11 @@ class DioSkills {
   Future<List<Skill>> getSkillsbyLessonID(int lessonID) async {
     try {
       final response = await _dio.get(
-          "${ApiConstants.baseUrl}${ApiConstants.getSkillsbyLessonsID}$lessonID",
-          data: {
-            "lessonId": lessonID,
-          },
-         );
+        "${ApiConstants.baseUrl}${ApiConstants.getSkillsbyLessonsID}$lessonID",
+        data: {
+          "lessonId": lessonID,
+        },
+      );
 
       if (response.statusCode == 200) {
         final data = response.data['data'];
@@ -40,7 +40,6 @@ class DioSkills {
         data: {
           "lessonId": lessonID,
         },
-        
       );
 
       if (response.statusCode == 200) {
@@ -60,15 +59,15 @@ class DioSkills {
       int lessonID, int skillId, int score, bool passed, String notes) async {
     try {
       final response = await _dio.post(
-          "${ApiConstants.baseUrl}${ApiConstants.evaluateSkillsbyLessonsID}",
-          data: {
-            "lessonId": lessonID,
-            "skillId": skillId,
-            "score": score,
-            "passed": passed,
-            "notes": notes
-          },
-        );
+        "${ApiConstants.baseUrl}${ApiConstants.evaluateSkillsbyLessonsID}",
+        data: {
+          "lessonId": lessonID,
+          "skillId": skillId,
+          "score": score,
+          "passed": passed,
+          "notes": notes
+        },
+      );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (kDebugMode) {
@@ -77,6 +76,23 @@ class DioSkills {
       }
     } catch (error) {
       throw error.toString();
+    }
+  }
+
+  Future<bool> toggleAttendLesson(int lessonID) async {
+    try {
+      print(lessonID);
+      final response = await _dio.patch(
+        "${ApiConstants.baseUrl}${ApiConstants.toggleAttendLesson.replaceAll('{id}', lessonID.toString())}",
+        data: {
+          "lessonId": lessonID,
+        },
+      );
+      print(response.data);
+      return response.statusCode == 200 || response.statusCode == 201;
+    } catch (error) {
+      print(error);
+      throw ApiErrorHandler.handle(error).message.toString();
     }
   }
 }

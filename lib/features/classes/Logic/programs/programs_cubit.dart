@@ -7,7 +7,9 @@ class ProgramsCubit extends Cubit<ProgramsState> {
   final ProgramsRepo programRepo;
   List<ProgramsModel> _allPrograms = []; // Store all programs
 
-  ProgramsCubit(this.programRepo) : super(ProgramsInitial());
+  ProgramsCubit(this.programRepo) : super(ProgramsInitial()) {
+    fetchAllPrograms();
+  }
 
   // Fetch all programs
   void fetchAllPrograms() async {

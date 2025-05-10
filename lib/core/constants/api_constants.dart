@@ -52,6 +52,7 @@ class ApiConstants {
 
   static const String getSkillsbyLessonsID = 'api/skill/lesson/';
   static const String getEvaluationsbyLessonID = 'api/skill/level/';
+  static const String toggleAttendLesson = 'api/lessons/{id}/toggle-attended';
   // Attendance
   static const String attendanceMarkApi = 'api/attendance/mark/';
 }

@@ -8,9 +8,12 @@ class ProgramsRepo {
 
   Future<List<ProgramsModel>> getAllPrograms() async {
     return await dioPrograms.getAllPrograms();
+
   }
 
   Future<ProgramsModel> getProgramById(int id) async {
     return await dioPrograms.getProgramById(id);
   }
+  
+  
 }

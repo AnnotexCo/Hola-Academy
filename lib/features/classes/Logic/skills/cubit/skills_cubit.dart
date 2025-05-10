@@ -45,4 +45,14 @@ class SkillsCubit extends Cubit<SkillsState> {
       if (!isClosed) emit(SkillsError(error: e.toString()));
     }
   }
+
+  Future<void> toggleAttendLesson(int lessonID) async {
+    if (!isClosed) emit(SkillsLoading());
+    try {
+      await skillsRepo.toggleAttendLesson(lessonID);
+      if (!isClosed) emit(SkillSucessfulyEvaluated());
+    } catch (e) {
+      if (!isClosed) emit(SkillsError(error: e.toString()));
+    }
+  }
 }

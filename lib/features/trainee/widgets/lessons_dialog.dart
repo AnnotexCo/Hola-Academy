@@ -5,7 +5,6 @@ import 'package:hola_academy/core/components/custom_dialog.dart';
 import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:hola_academy/features/classes/Data/Model/lessons_model.dart';
 import 'package:hola_academy/features/classes/Logic/skills/cubit/skills_cubit.dart';
-import 'package:hola_academy/features/trainee/widgets/evaluate_dialog.dart';
 import 'package:intl/intl.dart';
 
 class LessonsDialog extends StatelessWidget {
@@ -70,10 +69,43 @@ class LessonsDialog extends StatelessWidget {
                           Navigator.of(context).pop();
                         },
                         onTap: () {
-                          print(lessons[index].id);
-                          skillsCubit.getSkillsByLessonID(lessons[index].id);
+                          print("Lesson ID: ${lessons[index].isAttended}");
+                          skillsCubit.toggleAttendLesson(lessons[index].id);
                           Navigator.pop(context);
 
+                          showDialog(
+                              barrierColor: Colors.transparent,
+                              context: context,
+                              builder: (context) {
+                                return BlocProvider.value(
+                                  value: skillsCubit,
+                                  child: BlocConsumer<SkillsCubit, SkillsState>(
+                                    listener: (context, state) {
+                                      if (state is SkillsLoading) {
+                                        print("Loading");
+                                      }
+                                      if (state is SkillSucessfulyEvaluated) {
+                                        Navigator.pop(context);
+                                      }
+
+                                      if (state is SkillsError) {
+                                        Navigator.pop(context);
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content:
+                                                Text('something went wrong'),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    builder: (context, state) {
+                                      return const SizedBox();
+                                    },
+                                  ),
+                                );
+                              });
+                          // skillsCubit.getSkillsByLessonID(lessons[index].id);
                           // showDialog(
                           //   context: context,
                           //   builder: (context) {

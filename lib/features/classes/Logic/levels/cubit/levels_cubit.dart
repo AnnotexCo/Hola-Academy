@@ -7,7 +7,19 @@ part 'levels_state.dart';
 
 class LevelsCubit extends Cubit<LevelsState> {
   final LevelsRepo levelsRepo;
-  LevelsCubit(this.levelsRepo) : super(LevelsInitial());
+  LevelsCubit(this.levelsRepo) : super(LevelsInitial()) {
+    fetchAllLevels();
+  }
+
+  fetchAllLevels() async {
+    try {
+      if (!isClosed) emit(LevelsLoading());
+      final model = await levelsRepo.fetchAllLevels();
+      if (!isClosed) emit(LevelsSuccess(model));
+    } catch (e) {
+      if (!isClosed) emit(LevelsError(message: e.toString()));
+    }
+  }
 
   fetchLevelsByID(int id) async {
     try {

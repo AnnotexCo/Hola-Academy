@@ -19,4 +19,8 @@ class SkillsRepo {
   Future<List<Evaluation>> getEvaluationsbyLevelID(int lessonID) async {
     return await skills.getEvaluationsbyLevelID(lessonID);
   }
+
+  Future<bool> toggleAttendLesson(int lessonID) async {
+    return await skills.toggleAttendLesson(lessonID);
+  }
 }

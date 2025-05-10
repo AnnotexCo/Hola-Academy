@@ -35,89 +35,90 @@ class ClassesDialog extends StatelessWidget {
               color: const Color(0xFFFEF5E9),
               borderRadius: BorderRadius.circular(30.r),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(height: 20.h),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 20.h),
 
-                // Title
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12.h),
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xffF09C1F),
+                  // Title
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12.h),
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xffF09C1F),
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                ),
-                SizedBox(height: 70.h),
+                  SizedBox(height: 70.h),
 
-                // Options List
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.h),
-                  width: 300.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.r),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          blurStyle: BlurStyle.outer,
-                          color: Color(0xCED2D9C9),
-                          blurRadius: 2,
-                          offset: Offset(0, 0),
-                          spreadRadius: 0,
-                        )
-                      ]),
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: options.length,
-                    separatorBuilder: (_, __) =>
-                        Divider(color: Colors.grey[300]),
-                    itemBuilder: (context, index) {
-                      var item = options[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                          onOptionSelected(item['title']); // Open next dialog
-                        },
-                        child: Row(
-                          children: [
-                            CachedNetworkImage(
-                              width: 35.w,
-                              height: 35.h,
-                              imageUrl:
-                                  "${ApiConstants.imagesURLApi}${item['icon']}",
-                              errorWidget: (context, url, error) => Icon(
-                                Icons.broken_image,
-                                size: 35.sp,
-                                color: Colors
-                                    .grey, 
+                  // Options List
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.h),
+                    width: 300.w,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12.r),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            blurStyle: BlurStyle.outer,
+                            color: Color(0xCED2D9C9),
+                            blurRadius: 2,
+                            offset: Offset(0, 0),
+                            spreadRadius: 0,
+                          )
+                        ]),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: options.length,
+                      separatorBuilder: (_, __) =>
+                          Divider(color: Colors.grey[300]),
+                      itemBuilder: (context, index) {
+                        var item = options[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                            onOptionSelected(item['title']); // Open next dialog
+                          },
+                          child: Row(
+                            children: [
+                              CachedNetworkImage(
+                                width: 35.w,
+                                height: 35.h,
+                                imageUrl:
+                                    "${ApiConstants.imagesURLApi}${item['icon']}",
+                                errorWidget: (context, url, error) => Icon(
+                                  Icons.broken_image,
+                                  size: 35.sp,
+                                  color: Colors.grey,
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 12.w),
-                            Expanded(
-                              child: Text(
-                                item['title'],
-                                style: TextStyle(
-                                    color: Color(0xff899197),
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w400),
+                              SizedBox(width: 12.w),
+                              Expanded(
+                                child: Text(
+                                  item['title'],
+                                  style: TextStyle(
+                                      color: Color(0xff899197),
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w400),
+                                ),
                               ),
-                            ),
-                            Icon(Icons.arrow_forward_ios,
-                                size: 16, color: Colors.grey),
-                          ],
-                        ),
-                      );
-                    },
+                              Icon(Icons.arrow_forward_ios,
+                                  size: 16, color: Colors.grey),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
 
