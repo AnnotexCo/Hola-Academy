@@ -61,6 +61,7 @@ class LessonsDialog extends StatelessWidget {
                     itemCount: lessons.length,
                     itemBuilder: (context, index) {
                       return BuildSkillsItem(
+                        isAttended: lessons[index].isAttended,
                         skillName: DateFormat('MMM dd, yyyy, hh:mm a')
                             .format(lessons[index].date),
                         rating:
@@ -152,13 +153,14 @@ class BuildSkillsItem extends StatelessWidget {
   final double rating;
   final ValueChanged<double> onChanged;
   final void Function()? onTap;
-
+  final bool isAttended;
   const BuildSkillsItem(
       {super.key,
       required this.skillName,
       required this.rating,
       required this.onChanged,
-      required this.onTap});
+      required this.onTap,
+      required this.isAttended});
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +203,7 @@ class BuildSkillsItem extends StatelessWidget {
                 child: Center(
                     child: Icon(Icons.star,
                         size: 20.w,
-                        color: rating > 0
+                        color: isAttended
                             ? ColorManager.primaryOrangeColor
                             : ColorManager.lightGreyForFontColor)),
               ),

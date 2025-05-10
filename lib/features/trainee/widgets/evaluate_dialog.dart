@@ -93,6 +93,7 @@ class EvaluateDialog extends StatelessWidget {
 }
 
 class BuildSkillsItem extends StatelessWidget {
+  
   final String skillName;
   final double rating;
   final ValueChanged<double> onChanged;
