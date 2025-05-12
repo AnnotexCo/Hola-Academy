@@ -311,6 +311,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Password cannot be empty';
+                                    } else if (value.length < 6) {
+                                      return "Password must be at least 6 characters long";
                                     }
                                     return null;
                                   },
@@ -339,6 +341,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Password cannot be empty';
+                                    } else if (value !=
+                                        passwordController.text) {
+                                      return "Password does not match";
                                     }
                                     return null;
                                   },
