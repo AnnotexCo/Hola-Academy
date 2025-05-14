@@ -1,5 +1,5 @@
 class AppString {
-  static const String appName = "Hola Academy";
+  static const String appName = "BABY FIT";
 
   // Roles
   static const String trainee = "TRAINEE";

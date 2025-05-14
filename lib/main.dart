@@ -148,7 +148,7 @@ class MyApp extends StatelessWidget {
             initialRoute: Routes.splashScreen,
             onGenerateRoute: appRouter.generateRoute,
             debugShowCheckedModeBanner: false,
-            title: 'Hola Academy',
+            title: 'BABY FIT',
             theme: ThemeData(
               scaffoldBackgroundColor: ColorManager.whiteColor,
               primaryColor: ColorManager.textRedColor,

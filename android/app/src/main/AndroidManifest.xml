@@ -8,7 +8,7 @@ package="com.example.hola_academy">
     <uses-permission android:name="android.permission.INTERNET"/>
    
     <application
-        android:label="Hola Academy"
+        android:label="BABY FIT"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
