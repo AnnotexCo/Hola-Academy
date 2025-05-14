@@ -103,7 +103,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                         state is UpdateUserDataLoading) {
                       return Center(
                           child: CircularProgressIndicator(
-                        color: ColorManager.textRedColor,
+                        color: ColorManager.primaryOrangeColor,
                       ));
                     } else if (state is UserDataFailure ||
                         state is UpdateUserDataFailure) {
@@ -142,7 +142,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   isBorder: true,
                                   suffixIcon: Icon(
                                     Icons.person,
-                                    color: ColorManager.textRedColor,
+                                    color: ColorManager.primaryOrangeColor,
                                   ),
                                   controller: nameController,
                                   keyboardType: TextInputType.name,
@@ -172,7 +172,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   isBorder: true,
                                   suffixIcon: Icon(
                                     Icons.person,
-                                    color: ColorManager.textRedColor,
+                                    color: ColorManager.primaryOrangeColor,
                                   ),
                                   controller: parentNameController,
                                   keyboardType: TextInputType.name,
@@ -203,7 +203,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   readOnly: true,
                                   suffixIcon: Icon(
                                     Icons.email,
-                                    color: ColorManager.textRedColor,
+                                    color: ColorManager.primaryOrangeColor,
                                   ),
                                   controller: emailController,
                                   keyboardType: TextInputType.emailAddress,
@@ -231,7 +231,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   isBorder: true,
                                   suffixIcon: Icon(
                                     Icons.person,
-                                    color: ColorManager.textRedColor,
+                                    color: ColorManager.primaryOrangeColor,
                                   ),
                                   controller: phoneController,
                                   keyboardType: TextInputType.phone,
@@ -255,7 +255,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                     isBorder: true,
                                     suffixIcon: Icon(
                                       Icons.person,
-                                      color: ColorManager.textRedColor,
+                                      color: ColorManager.primaryOrangeColor,
                                     ),
                                     controller: parentWhatsappNumberController,
                                     keyboardType: TextInputType.phone,
@@ -277,7 +277,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   readOnly: true,
                                   suffixIcon: GeneralTextFormField.createIcon(
                                     Icons.calendar_month,
-                                    color: ColorManager.textRedColor,
+                                    color: ColorManager.primaryOrangeColor,
                                   ),
                                   keyboardType: TextInputType.datetime,
                                   validator: (value) {
@@ -305,6 +305,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                           EdgeInsets.symmetric(horizontal: 0.w),
                                       child: SvgPicture.asset(
                                         ImageManager.gender,
+                                        color: ColorManager.primaryOrangeColor,
                                         width: 24.w,
                                       ),
                                     ),
@@ -317,7 +318,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                     title: AppString.editYourinformation,
                                     style: TextStyle(
                                         decoration: TextDecoration.none,
-                                        color: ColorManager.textRedColor,
+                                        color: ColorManager.primaryOrangeColor,
                                         fontSize: 16.sp,
                                         fontWeight: FontWeight.w600),
                                     radius: 30.r,

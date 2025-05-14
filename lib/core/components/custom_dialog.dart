@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:hola_academy/core/constants/color_manager.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CustomDialog extends StatelessWidget {
@@ -38,7 +39,8 @@ class CustomDialog extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
                 margin: EdgeInsets.only(top: 16.h),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFEF5E9),
+                  color: ColorManager.backgroundPinkColor,
+                  //const Color(0xFFFEF5E9),
                   borderRadius: BorderRadius.circular(30.r),
                 ),
                 child: Column(
@@ -68,7 +70,8 @@ class CustomDialog extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 20.sp,
                               fontWeight: FontWeight.w600,
-                              color: const Color(0xFFF09C1F),
+                              color: ColorManager.primaryOrangeColor,
+                              //const Color(0xFFF09C1F),
                             ),
                             textAlign: TextAlign.start,
                             overflow: TextOverflow
@@ -99,7 +102,8 @@ class CustomDialog extends StatelessWidget {
                     width: 32.w,
                     height: 32.h,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFC96852),
+                      color: ColorManager.errorRedColor,
+                      //const Color(0xFFC96852),
                       borderRadius: BorderRadius.circular(31.04.r / 2),
                     ),
                     child: const Icon(
@@ -139,7 +143,8 @@ class CustomDialog extends StatelessWidget {
       width: 60.r,
       height: 60.r,
       decoration: BoxDecoration(
-        color: Colors.grey[400],
+        color: ColorManager.linearGradient3,
+        //Colors.grey[400],
         shape: BoxShape.circle,
       ),
       child: Icon(Icons.person, size: 30.r, color: Colors.white),

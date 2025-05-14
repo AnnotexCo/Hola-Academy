@@ -55,7 +55,7 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
                 },
                 child: Icon(
                   Icons.arrow_back_ios_new,
-                  color: ColorManager.textRedColor,
+                  color: ColorManager.primaryOrangeColor,
                 ),
               ),
             ] else ...[
@@ -106,16 +106,19 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
                 ),
                 GestureDetector(
                   onTap: () {
-                     context.read<LoginCubit>().logout();
-                    Navigator.pushNamedAndRemoveUntil(context, Routes.logoutScreen,(route) => false);
+                    context.read<LoginCubit>().logout();
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, Routes.logoutScreen, (route) => false);
                   },
                   child: Row(
                     children: [
-                      SvgPicture.asset(ImageManager.logOut),
+                      SvgPicture.asset(ImageManager.logOut,
+                          color: ColorManager.primaryOrangeColor),
                       ShaderMask(
                         shaderCallback: (bounds) => LinearGradient(
                           colors: [
-                            ColorManager.linearGradient1,
+                            //ColorManager.linearGradient1,
+                            ColorManager.linearGradient2,
                             ColorManager.linearGradient2,
                           ],
                           begin: Alignment.topCenter,
@@ -141,5 +144,3 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
     );
   }
 }
-
-

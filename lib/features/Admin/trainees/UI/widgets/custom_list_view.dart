@@ -21,8 +21,8 @@ class CustomListView extends StatelessWidget {
     super.key,
     required this.data,
     this.itemHeight = 74.0,
-    this.backgroundColor = ColorManager.backgroundLightPink,
-    this.borderColor = ColorManager.textRedColor,
+    this.backgroundColor = ColorManager.backgroundPinkColor,
+    this.borderColor = ColorManager.primaryOrangeColor,
   });
 
   @override
@@ -59,7 +59,7 @@ class CustomListView extends StatelessWidget {
                         isBorder: true,
                         suffixIcon: Icon(
                           Icons.email,
-                          color: ColorManager.textRedColor,
+                          color: ColorManager.primaryOrangeColor,
                         ),
                       ),
                       GeneralTextFormField(
@@ -77,7 +77,7 @@ class CustomListView extends StatelessWidget {
                         isBorder: true,
                         suffixIcon: Icon(
                           Icons.phone,
-                          color: ColorManager.textRedColor,
+                          color: ColorManager.primaryOrangeColor,
                         ),
                       ),
                       GeneralTextFormField(
@@ -96,6 +96,7 @@ class CustomListView extends StatelessWidget {
                           padding: const EdgeInsets.all(12.0),
                           child: SvgPicture.asset(
                             ImageManager.category,
+                            color: ColorManager.primaryOrangeColor,
                             width: 24.w,
                             height: 24.h,
                           ),
@@ -128,7 +129,10 @@ class CustomListView extends StatelessWidget {
                         isBorder: true,
                         suffixIcon: Padding(
                           padding: const EdgeInsets.all(12.0),
-                          child: SvgPicture.asset(ImageManager.gender),
+                          child: SvgPicture.asset(
+                            ImageManager.gender,
+                            color: ColorManager.primaryOrangeColor,
+                          ),
                         ),
                       ),
                       SizedBox(height: 60.h),
@@ -166,7 +170,7 @@ class CustomListView extends StatelessWidget {
                           AdminClipShimmer(width: 36.w, height: 36.h),
                       // Fallback image on error
                       errorWidget: (context, url, error) => CircleAvatar(
-                        backgroundColor: ColorManager.lightYellow,
+                        backgroundColor: ColorManager.linearGradient3,
                         child: const Icon(Icons.person,
                             color: Colors.white, size: 30),
                       ),
@@ -185,7 +189,7 @@ class CustomListView extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
-                              color: ColorManager.textRedColor,
+                              color: ColorManager.primaryOrangeColor,
                             ),
                             children: [
                               TextSpan(
@@ -193,7 +197,7 @@ class CustomListView extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
-                                  color: ColorManager.grayColorHeadline,
+                                  color: ColorManager.errorRedColor,
                                 ),
                               ),
                             ],
@@ -207,7 +211,7 @@ class CustomListView extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w600,
-                              color: ColorManager.textRedColor,
+                              color: ColorManager.primaryOrangeColor,
                             ),
                             children: [
                               TextSpan(
@@ -215,7 +219,7 @@ class CustomListView extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w400,
-                                  color: ColorManager.grayColorHeadline,
+                                  color: ColorManager.errorRedColor,
                                 ),
                               ),
                             ],

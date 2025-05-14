@@ -18,6 +18,7 @@ class ImageManager {
   static const String checkBox = "assets/icons/rectangle.svg";
   static const String ellipse = "assets/icons/ellipse.svg";
   static const String hola = "assets/images/hola.png";
+  static const String logo = "assets/images/logo.jpeg";
 
   // login Icons
   static const String googleLogo = 'assets/icons/google_logo.svg';

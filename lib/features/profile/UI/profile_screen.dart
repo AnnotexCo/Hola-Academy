@@ -181,13 +181,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ListTile(
             leading: SvgPicture.asset(
               icon,
+              color: ColorManager.errorRedColor,
             ),
             title: Text(
               text,
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w500,
-                color: ColorManager.lightGreyForFontColor,
+                color: ColorManager.primaryOrangeColor,
               ),
             ),
             trailing: Icon(

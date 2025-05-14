@@ -79,16 +79,25 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              ImageManager.hola,
-              width: 298.w,
-              height: 152.h,
+            Container(
+              height: 150.h,
+              width: 280.w,
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                color: ColorManager.whiteColor,
+                shape: BoxShape.circle,
+              ),
+              child: Image.asset(
+                ImageManager.logo,
+                width: 298.w,
+                height: 152.h,
+              ),
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 70.h),
             JumpingDots(
               color: ColorManager.primaryOrangeColor,
               radius: 15.r,
-              numberOfDots: 3,
+              numberOfDots: 4,
               animationDuration: Duration(milliseconds: 600),
             ),
           ],

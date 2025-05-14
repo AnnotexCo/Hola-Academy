@@ -115,7 +115,8 @@ class _CustomProfileBackgroundState extends State<CustomProfileBackground> {
                           shape: BoxShape.circle,
                           gradient: LinearGradient(
                             colors: [
-                              ColorManager.linearGradient1,
+                              //ColorManager.linearGradient1,
+                              ColorManager.linearGradient2,
                               ColorManager.linearGradient2,
                             ],
                             begin: Alignment.topCenter,
@@ -168,7 +169,7 @@ class _CustomProfileBackgroundState extends State<CustomProfileBackground> {
                             backgroundColor: ColorManager.backgroundPinkColor,
                             child: Icon(
                               Icons.edit,
-                              color: ColorManager.textRedColor,
+                              color: ColorManager.primaryOrangeColor,
                               size: 20,
                             ),
                           ),
@@ -180,9 +181,9 @@ class _CustomProfileBackgroundState extends State<CustomProfileBackground> {
                 Text(
                   name,
                   style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                      color: ColorManager.primaryOrangeColor),
                 ),
               ],
             ),

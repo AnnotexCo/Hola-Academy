@@ -37,18 +37,19 @@ class _TraineesScreenState extends State<TraineesScreen> {
         child: Column(
           children: [
             SizedBox(height: 20.h),
-            Center(
+            /*Center(
               child: Image.asset(
-                ImageManager.hola,
+                ImageManager.logo,
                 width: 98.w,
               ),
-            ),
+            ),*/
             SizedBox(height: 8.h),
             Container(
               width: 439.w,
               height: 94.h,
               decoration: BoxDecoration(
-                color: const Color(0xFFF09C1F),
+                color: ColorManager.linearGradient3,
+                //const Color(0xFFF09C1F),
               ),
               child: Row(
                 children: [
@@ -86,7 +87,8 @@ class _TraineesScreenState extends State<TraineesScreen> {
                           .searchUsers(_searchController.text, widget.role);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFF5BD69),
+                      backgroundColor: ColorManager.primaryOrangeColor,
+                      //const Color(0xFFF5BD69),
                       minimumSize: Size(128.w, 42.h),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.r),

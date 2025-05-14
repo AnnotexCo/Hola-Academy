@@ -34,7 +34,7 @@ class PersonalInfoCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16.0.sp,
                 fontWeight: FontWeight.bold,
-                color: ColorManager.textRedColor,
+                color: ColorManager.errorRedColor,
               ),
             ),
             SizedBox(height: 16.0.h),
@@ -133,7 +133,7 @@ class PersonalInfoCard extends StatelessWidget {
   Widget _buildInfoRow(IconData icon, String text) {
     return Row(
       children: [
-        Icon(icon, size: 18.0.sp, color: ColorManager.textRedColor),
+        Icon(icon, size: 18.0.sp, color: ColorManager.errorRedColor),
         SizedBox(width: 8.0.w),
         Expanded(
           child: Text(

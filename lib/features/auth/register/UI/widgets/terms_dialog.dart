@@ -36,7 +36,7 @@ class TermsDialog extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Image.asset(
-                      ImageManager.hola,
+                      ImageManager.logo,
                       width: 60.w,
                       height: 30.77.h,
                     ),

@@ -70,7 +70,10 @@ class _PaymentUploadSectionState extends State<PaymentUploadSection> {
   }
 
   /// Builds individual picker option
-  Widget _buildPickerOption({required IconData icon, required String label, required ImageSource source}) {
+  Widget _buildPickerOption(
+      {required IconData icon,
+      required String label,
+      required ImageSource source}) {
     return ListTile(
       leading: Icon(icon),
       title: Text(label),
@@ -99,15 +102,17 @@ class _PaymentUploadSectionState extends State<PaymentUploadSection> {
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: ColorManager.backgroundLightPink,
+        color: ColorManager.backgroundPinkColor,
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: Center(
         child: Column(
           children: [
             _imageFile != null
-                ? Image.file(_imageFile!, height: 100.h, width: 100.w, fit: BoxFit.cover)
-                : SvgPicture.asset(ImageManager.upload, height: 80.h, width: 80.w, fit: BoxFit.contain),
+                ? Image.file(_imageFile!,
+                    height: 100.h, width: 100.w, fit: BoxFit.cover)
+                : SvgPicture.asset(ImageManager.upload,
+                    height: 80.h, width: 80.w, fit: BoxFit.contain),
             TextButton(
               onPressed: _showImagePickerOptions,
               child: TitleWidget(title: AppString.upload),

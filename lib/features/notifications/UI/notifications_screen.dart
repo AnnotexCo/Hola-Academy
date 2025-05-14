@@ -66,7 +66,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             title: "Notification",
             isBack: false,
             widget: PopupMenuButton<String>(
-              icon: Icon(Icons.more_vert, color: Colors.black87),
+              icon:
+                  Icon(Icons.more_vert, color: ColorManager.primaryOrangeColor),
               borderRadius: BorderRadius.circular(12.r),
               color: ColorManager.backgroundColor,
               offset: Offset(-15, 40.h),
@@ -149,7 +150,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               message: notification.message,
                               time: DateFormat('h:mm a').format(
                                   DateTime.parse(notification.createdAt)),
-                              icon: Icons.notifications_active_sharp,
+                              icon: Icons.notifications_active_outlined,
                               iconColor: Colors.amber,
                               isSelected: selectedNotifications
                                   .contains(notification.id),

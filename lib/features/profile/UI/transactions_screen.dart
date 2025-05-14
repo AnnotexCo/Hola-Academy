@@ -64,8 +64,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                               width: 383.w,
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(colors: [
-                                  ColorManager.linearGradient1,
-                                  ColorManager.linearGradient2
+                                  //ColorManager.linearGradient1,
+                                  ColorManager.linearGradient2,
+                                  ColorManager.linearGradient2,
                                 ]),
                                 borderRadius: BorderRadius.circular(20.r),
                               ),
@@ -80,7 +81,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                                       style: TextStyle(
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w700,
-                                          color: ColorManager.textRedColor),
+                                          color: ColorManager.whiteColor),
                                     ),
                                     Row(
                                       children: [
@@ -99,7 +100,8 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                                             width: 43.w,
                                             height: 39.h,
                                             decoration: BoxDecoration(
-                                              color: Color(0xffCB6928),
+                                              color: ColorManager.errorRedColor,
+                                              //Color(0xffCB6928),
                                               borderRadius:
                                                   BorderRadius.circular(8.r),
                                             ),

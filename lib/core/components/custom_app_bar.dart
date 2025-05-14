@@ -7,7 +7,8 @@ class CustomAppBar extends StatelessWidget {
   final void Function()? onPressed;
   final String? title;
   final bool isBack;
-  const CustomAppBar({super.key, this.onPressed, this.widget, this.title, this.isBack = true});
+  const CustomAppBar(
+      {super.key, this.onPressed, this.widget, this.title, this.isBack = true});
 
   @override
   Widget build(BuildContext context) {
@@ -34,21 +35,21 @@ class CustomAppBar extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if(isBack)
-            IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(
-                  Icons.arrow_back_ios_new,
-                  size: 24.r,
-                  color: ColorManager.redMagmaColor,
-                )),
+            if (isBack)
+              IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_ios_new,
+                    size: 24.r,
+                    color: ColorManager.redMagmaColor,
+                  )),
             Spacer(),
             Text(
               title ?? "Default name",
               style: TextStyle(
-                  color: Colors.black,
+                  color: ColorManager.primaryOrangeColor,
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w600),
             ),

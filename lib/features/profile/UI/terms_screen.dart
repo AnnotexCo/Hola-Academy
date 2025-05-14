@@ -32,7 +32,7 @@ class TermsScreen extends StatelessWidget {
                       spacing: 27.w,
                       children: [
                         Image.asset(
-                          ImageManager.hola,
+                          ImageManager.logo,
                           width: 60.w,
                           height: 30.77.h,
                         ),
@@ -125,7 +125,12 @@ class SubTitle extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(top: 3.h, right: 6.w),
-            child: SvgPicture.asset(ImageManager.ellipse),
+            child: Icon(
+              Icons.circle,
+              size: 14.sp,
+              color: ColorManager.primaryOrangeColor,
+            ),
+            //SvgPicture.asset(ImageManager.ellipse,),
           ),
           Expanded(
             child: Text(

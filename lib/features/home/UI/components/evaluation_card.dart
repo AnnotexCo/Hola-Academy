@@ -49,7 +49,7 @@ class EvaluationAppointmentCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 13.sp,
                 fontWeight: FontWeight.w600,
-                color: Colors.redAccent,
+                color: ColorManager.errorRedColor,
               ),
             ),
             Row(
@@ -94,7 +94,7 @@ class EvaluationAppointmentCard extends StatelessWidget {
       children: [
         Icon(
           Icons.help_outline,
-          color: Colors.redAccent,
+          color: ColorManager.errorRedColor,
           size: 20.r,
         ),
         SizedBox(width: 8.w),
@@ -116,7 +116,7 @@ class EvaluationAppointmentCard extends StatelessWidget {
                   TextSpan(
                     text: 'Click Here',
                     style: TextStyle(
-                      color: Colors.redAccent,
+                      color: ColorManager.errorRedColor,
                       decoration: TextDecoration.underline,
                     ),
                   ),
@@ -134,7 +134,7 @@ class EvaluationAppointmentCard extends StatelessWidget {
       children: [
         Icon(
           Icons.location_on_outlined,
-          color: Colors.redAccent,
+          color: ColorManager.errorRedColor,
           size: 20.r,
         ),
         SizedBox(width: 8.w),
@@ -157,7 +157,7 @@ class EvaluationAppointmentCard extends StatelessWidget {
       children: [
         Icon(
           Icons.timer,
-          color: Colors.redAccent,
+          color: ColorManager.errorRedColor,
           size: 20.r,
         ),
         SizedBox(width: 8.w),
@@ -180,7 +180,7 @@ class EvaluationAppointmentCard extends StatelessWidget {
       children: [
         Icon(
           Icons.calendar_month_rounded,
-          color: Colors.redAccent,
+          color: ColorManager.errorRedColor,
           size: 20.r,
         ),
         SizedBox(width: 8.w),
@@ -203,7 +203,7 @@ class EvaluationAppointmentCard extends StatelessWidget {
       children: [
         Icon(
           Icons.warning_amber_outlined,
-          color: Colors.redAccent,
+          color: ColorManager.errorRedColor,
           size: 20.r,
         ),
         SizedBox(width: 8.w),
@@ -229,7 +229,7 @@ class EvaluationAppointmentCard extends StatelessWidget {
           children: [
             Icon(
               Icons.circle,
-              color: Colors.redAccent,
+              color: ColorManager.errorRedColor,
               size: 20.r,
             ),
             SizedBox(width: 8.w),

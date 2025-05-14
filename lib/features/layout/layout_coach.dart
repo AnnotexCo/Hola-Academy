@@ -97,7 +97,7 @@ class _LayoutCoachScreenState extends State<LayoutCoachScreen> {
     if (_selectedIndex == index) {
       return ColorManager.primaryOrangeColor;
     } else {
-      return ColorManager.disabledColor;
+      return ColorManager.linearGradient3;
     }
   }
 
@@ -182,7 +182,7 @@ class _LayoutCoachScreenState extends State<LayoutCoachScreen> {
           selectedItemColor:
               ColorManager.primaryOrangeColor, // Color for selected item
           unselectedItemColor:
-              ColorManager.disabledColor, // Color for unselected items
+              ColorManager.linearGradient3, // Color for unselected items
           showUnselectedLabels: true, // Show labels for unselected items
           type: BottomNavigationBarType
               .fixed, // Fixed layout for consistent display)

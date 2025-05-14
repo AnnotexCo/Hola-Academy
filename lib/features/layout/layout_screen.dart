@@ -78,14 +78,14 @@ class _LayoutScreenState extends State<LayoutScreen> {
   void _onItemTapped(int index) {
     // Check if the new page is adjacent
     if ((index - _selectedIndex).abs() == 1) {
-     // If adjacent, use animation
+      // If adjacent, use animation
       setState(() {
         _selectedIndex = index;
       });
       _pageController.animateToPage(index,
           duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
     } else {
-     // If far apart, jump directly
+      // If far apart, jump directly
       setState(() {
         _selectedIndex = index;
       });
@@ -97,7 +97,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
     if (_selectedIndex == index) {
       return ColorManager.primaryOrangeColor;
     } else {
-      return ColorManager.disabledColor;
+      return ColorManager.textRedColor;
     }
   }
 
@@ -182,7 +182,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
           selectedItemColor:
               ColorManager.primaryOrangeColor, // Color for selected item
           unselectedItemColor:
-              ColorManager.disabledColor, // Color for unselected items
+              ColorManager.textRedColor, // Color for unselected items
           showUnselectedLabels: true, // Show labels for unselected items
           type: BottomNavigationBarType
               .fixed, // Fixed layout for consistent display)

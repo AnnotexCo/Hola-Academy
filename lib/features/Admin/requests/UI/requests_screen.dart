@@ -107,7 +107,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
               hintStyle: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
-                  color: ColorManager.textRedColor),
+                  color: ColorManager.primaryOrangeColor),
               readOnly: true,
             ),
             SizedBox(height: 10.h),
@@ -117,7 +117,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
               hintStyle: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
-                  color: ColorManager.textRedColor),
+                  color: ColorManager.primaryOrangeColor),
               readOnly: true,
             ),
             SizedBox(height: 10.h),
@@ -127,7 +127,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
               hintStyle: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
-                  color: ColorManager.textRedColor),
+                  color: ColorManager.primaryOrangeColor),
               readOnly: true,
             ),
             SizedBox(height: 10.h),
@@ -137,7 +137,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
               hintStyle: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
-                  color: ColorManager.textRedColor),
+                  color: ColorManager.primaryOrangeColor),
               readOnly: true,
             ),
             SizedBox(height: 10.h),
@@ -147,7 +147,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
               hintStyle: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
-                  color: ColorManager.textRedColor),
+                  color: ColorManager.primaryOrangeColor),
               readOnly: true,
             ),
           ],

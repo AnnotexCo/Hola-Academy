@@ -67,7 +67,7 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
   Color _selectedColor(int index) {
     return _selectedIndex == index
         ? ColorManager.primaryOrangeColor
-        : ColorManager.disabledColor;
+        : ColorManager.linearGradient3;
   }
 
   @override
@@ -148,7 +148,7 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                 ),
               ],
               selectedItemColor: ColorManager.primaryOrangeColor,
-              unselectedItemColor: ColorManager.disabledColor,
+              unselectedItemColor: ColorManager.linearGradient3,
               showUnselectedLabels: true,
               type: BottomNavigationBarType.fixed,
               currentIndex: _selectedIndex,
@@ -171,7 +171,9 @@ class _LayoutAdminScreenState extends State<LayoutAdminScreen> {
                       ]),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xffF09C1F).withValues(alpha: 0.6),
+                      color: ColorManager.primaryOrangeColor
+                          .withValues(alpha: 0.4),
+                      //Color(0xffF09C1F).withValues(alpha: 0.6),
                       blurRadius: 8,
                       spreadRadius: 4,
                       offset: Offset(0, 2),

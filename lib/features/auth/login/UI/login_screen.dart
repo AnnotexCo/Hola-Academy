@@ -129,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             child: Icon(
                               Icons.email,
-                              color: ColorManager.textRedColor,
+                              color: ColorManager.primaryOrangeColor,
                               size: 24.sp,
                             ),
                           ),
@@ -159,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             child: Icon(
                               Icons.lock_outline,
-                              color: ColorManager.textRedColor,
+                              color: ColorManager.primaryOrangeColor,
                               size: 24.sp,
                             ),
                           ),
@@ -177,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 _isPasswordVisible
                                     ? Icons.visibility_outlined
                                     : Icons.visibility_off_outlined,
-                                color: ColorManager.textRedColor,
+                                color: ColorManager.primaryOrangeColor,
                                 size: 24.sp,
                               ),
                             ),
@@ -227,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
         style: TextStyle(
           fontSize: 32.sp,
           fontWeight: FontWeight.w400,
-          color: ColorManager.textRedColor,
+          color: ColorManager.errorRedColor,
         ),
       ),
     );
@@ -280,7 +280,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Text(
           AppString.dontHaveAccount,
           style: TextStyle(
-            color: const Color(0xFFE17637),
+            color: ColorManager.errorRedColor,
             fontSize: 14.sp,
           ),
         ),

@@ -6,7 +6,8 @@ import '../../../../core/components/title_widget.dart';
 import '../../../../core/constants/app_string.dart';
 import '../../../../core/constants/color_manager.dart';
 
-Widget buildAdditionalNotesSection({required TextEditingController controller}) {
+Widget buildAdditionalNotesSection(
+    {required TextEditingController controller}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -19,7 +20,7 @@ Widget buildAdditionalNotesSection({required TextEditingController controller}) 
         keyboardType: TextInputType.multiline,
         maxLines: 5, // Allow up to 5 lines
         minLines: 4, // Minimum of 4 lines
-        fillColor: ColorManager.backgroundLightPink,
+        fillColor: ColorManager.backgroundPinkColor,
         borderRadius: 20.r,
         contentPadding: EdgeInsets.symmetric(
           vertical: 12.h,

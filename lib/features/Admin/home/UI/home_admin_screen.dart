@@ -173,7 +173,7 @@ class CoachCard extends StatelessWidget {
       width: 194.w,
       height: 126.h,
       decoration: BoxDecoration(
-        color: ColorManager.lightYellow, // Light orange background
+        color: ColorManager.backgroundPinkColor, // Light orange background
         border: Border.all(
           color: ColorManager.primaryOrangeColor, // Border color
           width: 1.w,
@@ -197,7 +197,7 @@ class CoachCard extends StatelessWidget {
                 fit: BoxFit.cover,
                 placeholder: (context, ur0l) => ShimmerCircle(size: 50.w),
                 errorWidget: (context, url, error) => CircleAvatar(
-                  backgroundColor: ColorManager.lightYellow,
+                  backgroundColor: ColorManager.linearGradient3,
                   child:
                       const Icon(Icons.person, color: Colors.white, size: 30),
                 ),
@@ -222,7 +222,7 @@ class CoachCard extends StatelessWidget {
                     // fontFamily: 'Poppins',
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
-                    color: ColorManager.whiteColor, // Orange text color
+                    color: ColorManager.errorRedColor, // Orange text color
                   ),
                 ),
               ],
@@ -237,7 +237,8 @@ class CoachCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w600,
-                color: const Color(0xFFFFA500), // Orange text color
+                color: ColorManager.primaryOrangeColor,
+                //const Color(0xFFFFA500), // Orange text color
               ),
               children: [
                 TextSpan(
@@ -246,7 +247,7 @@ class CoachCard extends StatelessWidget {
                     // fontFamily: 'Poppins',
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w400,
-                    color: ColorManager.whiteColor, // Orange text color
+                    color: ColorManager.errorRedColor, // Orange text color
                   ),
                 ),
               ],

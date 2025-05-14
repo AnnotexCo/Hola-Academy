@@ -50,7 +50,8 @@ class GeneralTextFormField extends StatelessWidget {
     this.contentPadding,
     this.borderRadius,
     this.iconColor,
-    this.maxLines, this.minLines,
+    this.maxLines,
+    this.minLines,
   });
 
   // Helper method to create an Icon widget from IconData
@@ -65,7 +66,7 @@ class GeneralTextFormField extends StatelessWidget {
       child: Icon(
         icon,
         size: size ?? 24.sp,
-        color: color ?? ColorManager.textRedColor,
+        color: color ?? ColorManager.primaryOrangeColor,
       ),
     );
   }
@@ -85,7 +86,7 @@ class GeneralTextFormField extends StatelessWidget {
               style: labelStyle ??
                   TextStyle(
                     fontSize: 16.sp,
-                    color: ColorManager.textRedColor,
+                    color: ColorManager.primaryOrangeColor,
                     fontWeight: FontWeight.w500,
                   ),
             ),
@@ -98,22 +99,22 @@ class GeneralTextFormField extends StatelessWidget {
           validator: validator,
           obscureText: isPassword,
           readOnly: readOnly,
-          maxLines: maxLines ?? 1, 
-          minLines: minLines ,
+          maxLines: maxLines ?? 1,
+          minLines: minLines,
           onTap: onTap,
           style: textStyle ??
               TextStyle(
-                color: ColorManager.textRedColor,
+                color: ColorManager.primaryOrangeColor,
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
               ),
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: hint,
-            iconColor: iconColor ?? ColorManager.textRedColor,
+            iconColor: iconColor ?? ColorManager.primaryOrangeColor,
             hintStyle: hintStyle ??
                 TextStyle(
-                  color: ColorManager.textRedColor,
+                  color: ColorManager.primaryOrangeColor,
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w400,
                 ),
@@ -132,16 +133,15 @@ class GeneralTextFormField extends StatelessWidget {
               borderSide: isBorder == false
                   ? BorderSide.none
                   : BorderSide(
-                      color: ColorManager.textRedColor,
+                      color: ColorManager.primaryOrangeColor,
                     ),
             ),
             focusedBorder: OutlineInputBorder(
-  
               borderRadius: BorderRadius.circular(borderRadius ?? 8.r),
               borderSide: isBorder == false
                   ? BorderSide.none
                   : BorderSide(
-                      color: ColorManager.textRedColor,
+                      color: ColorManager.primaryOrangeColor,
                       width: 2,
                     ),
             ),

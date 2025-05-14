@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hola_academy/core/constants/app_string.dart';
+import 'package:hola_academy/core/constants/color_manager.dart';
 
 import '../../../core/components/custom_app_bar.dart';
 import '../../../core/components/custom_app_button.dart';
@@ -93,9 +94,11 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
     final missingFields = <String>[];
     if (_bookingData!.address == null) missingFields.add("Address");
     if (_bookingData!.nationality == null) missingFields.add("Nationality");
-    if (_bookingData!.parentAddress == null)missingFields.add("Parent Address");
+    if (_bookingData!.parentAddress == null)
+      missingFields.add("Parent Address");
     if (_bookingData!.parentName == null) missingFields.add("Parent Name");
-    if (_bookingData!.parentNationality == null) missingFields.add("Parent Nationality");
+    if (_bookingData!.parentNationality == null)
+      missingFields.add("Parent Nationality");
     if (_bookingData!.phoneNumber == null) missingFields.add("Phone Number");
 
     if (missingFields.isNotEmpty) {
@@ -126,7 +129,8 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
 // 🔹 Helper function to reduce duplicate code
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: Colors.red),
+      SnackBar(
+          content: Text(message), backgroundColor: ColorManager.errorRedColor),
     );
   }
 
@@ -157,9 +161,12 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
                 builder: (context) => Scaffold(
                   appBar: AppBar(
                     elevation: 0,
-                    leading: IconButton(onPressed: (){
-                      Navigator.pop(context);
-                    }, icon: Icon(Icons.arrow_back_ios_new, size: 24.sp),),
+                    leading: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.arrow_back_ios_new, size: 24.sp),
+                    ),
                   ),
                   body: NotFoundScreen(
                     svgPath: ImageManager.successfullyPurchased,
@@ -173,7 +180,7 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
-                backgroundColor: Colors.red,
+                backgroundColor: ColorManager.errorRedColor,
               ),
             );
           }
@@ -203,7 +210,7 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(state.message),
-                    backgroundColor: Colors.red,
+                    backgroundColor: ColorManager.errorRedColor,
                   ),
                 );
               }
@@ -278,7 +285,7 @@ class _BookProgramScreenState extends State<BookProgramScreen> {
                     SnackBar(
                       content: Text(
                           'Please complete your profile to book the program.'),
-                      backgroundColor: Colors.red,
+                      backgroundColor: ColorManager.errorRedColor,
                     ),
                   );
                 }),
