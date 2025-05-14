@@ -49,22 +49,22 @@ class _CustomProfileBackgroundState extends State<CustomProfileBackground> {
               ListTile(
                 leading: const Icon(
                   Icons.photo_library,
-                  color: ColorManager.textRedColor,
+                  color: ColorManager.primaryOrangeColor,
                 ),
                 title: const Text(
                   "Pick from Gallery",
-                  style: TextStyle(color: ColorManager.textRedColor),
+                  style: TextStyle(color: ColorManager.primaryOrangeColor),
                 ),
                 onTap: pickImageFromGallery,
               ),
               ListTile(
                 leading: const Icon(
                   Icons.camera_alt,
-                  color: ColorManager.textRedColor,
+                  color: ColorManager.primaryOrangeColor,
                 ),
                 title: const Text(
                   "Take a Photo",
-                  style: TextStyle(color: ColorManager.textRedColor),
+                  style: TextStyle(color: ColorManager.primaryOrangeColor),
                 ),
                 onTap: pickImageFromCamera,
               ),
