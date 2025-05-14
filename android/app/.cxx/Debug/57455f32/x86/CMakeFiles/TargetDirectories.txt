@@ -1,0 +1,2 @@
+C:/Busnisses/Hola/Hola-Academy/android/app/.cxx/Debug/57455f32/x86/CMakeFiles/edit_cache.dir
+C:/Busnisses/Hola/Hola-Academy/android/app/.cxx/Debug/57455f32/x86/CMakeFiles/rebuild_cache.dir

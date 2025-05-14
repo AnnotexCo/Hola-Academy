@@ -11,12 +11,13 @@ import '../../../../core/dependency_injection/dependency.dart';
 class ListofTrainee extends StatelessWidget {
   final int classId;
   final String className;
-  final  List<User> allUsersModel;
+  final List<User> allUsersModel;
 
   const ListofTrainee({
     super.key,
     required this.allUsersModel,
-    required this.classId, required this.className,
+    required this.classId,
+    required this.className,
   });
 
   @override
@@ -39,7 +40,7 @@ class ListofTrainee extends StatelessWidget {
                   userId: user.id,
                   name: user.name,
                   phone: user.phoneNumber,
-                  image: user.profileImage!.path,
+                  image: user.profileImage?.path ?? '',
                   classId: classId,
                 ),
               );
