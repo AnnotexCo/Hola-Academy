@@ -1,0 +1,2 @@
+C:/Busnisses/Hola/Hola-Academy/android/app/.cxx/RelWithDebInfo/6s396m6g/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Busnisses/Hola/Hola-Academy/android/app/.cxx/RelWithDebInfo/6s396m6g/armeabi-v7a/CMakeFiles/rebuild_cache.dir
